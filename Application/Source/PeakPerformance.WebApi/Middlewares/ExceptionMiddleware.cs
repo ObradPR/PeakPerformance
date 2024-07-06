@@ -1,17 +1,17 @@
 ﻿using PeakPerformance.Application.Exceptions;
 using PeakPerformance.Common.Exceptions;
 using PeakPerformance.Common.Extensions;
+using PeakPerformance.Common.Interfaces;
 using PeakPerformance.WebApi.Objects;
 using System.Net;
 
 namespace PeakPerformance.WebApi.Middlewares;
 
-public class ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddleware> logger)
+public class ExceptionMiddleware(RequestDelegate next)
 {
     private readonly RequestDelegate _next = next;
-    private readonly ILogger<ExceptionMiddleware> _logger = logger;
 
-    public async Task InvokeAsync(HttpContext context)
+    public async Task InvokeAsync(HttpContext context, IExceptionLogger logger)
     {
         try
         {
@@ -19,12 +19,14 @@ public class ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddlewa
         }
         catch (Exception ex)
         {
-            await HandleExceptionAsync(context, ex);
+            await HandleExceptionAsync(context, ex, logger);
         }
     }
 
-    private async Task HandleExceptionAsync(HttpContext context, Exception ex)
+    private async Task HandleExceptionAsync(HttpContext context, Exception ex, IExceptionLogger logger)
     {
+        logger.LogException(ex);
+
         context.Response.ContentType = "application/json";
 
         context.Response.StatusCode = ex switch
@@ -36,8 +38,6 @@ public class ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddlewa
             ServerErrorException _ => (int)HttpStatusCode.InternalServerError,
             _ => (int)HttpStatusCode.InternalServerError,
         };
-
-        _logger.LogError(ex, ex.Message);
 
         var response = new ExceptionResponse();
 

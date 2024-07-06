@@ -1,8 +1,12 @@
+using PeakPerformance.DependencyInjection;
+
 using PeakPerformance.WebApi.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+builder.Services.AllApplicationServices(builder.Configuration);
 
 builder.Services.AddControllers();
 
