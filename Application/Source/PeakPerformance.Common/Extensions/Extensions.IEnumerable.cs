@@ -44,6 +44,7 @@ public static partial class Extensions
     }
 
     public static Dictionary<TKey, T> ToDictionary<TKey, T>(this IEnumerable<T> source, Func<T, TKey> keySelector)
+        where TKey : notnull
         => source.ToDictionary(keySelector, v => v);
 
     public static HashSet<T> ToHashSet<T>(this IEnumerable<T> source)
