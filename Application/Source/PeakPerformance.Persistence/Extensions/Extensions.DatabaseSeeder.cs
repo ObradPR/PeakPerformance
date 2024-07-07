@@ -43,7 +43,7 @@ public static partial class Extensions
 
         using (var transaction = context.Database.BeginTransaction())
         {
-            context.SetIdentityInsert(typeof(SystemRole));
+            context.SetIdentityInsert<TContext, SystemRole>();
 
             await context.Set<SystemRole>().AddRangeAsync(
                 new SystemRole { Id = eSystemRole.Admin.ToInt(), Name = eSystemRole.Admin.GetDescription() },
@@ -54,7 +54,7 @@ public static partial class Extensions
             // Save all changes
             await context.SaveChangesAsync();
 
-            context.SetIdentityInsert(typeof(SystemRole), true, eIdentitySwitch.Off);
+            context.SetIdentityInsert<TContext, SystemRole>(eIdentitySwitch.Off);
 
             transaction.Commit();
         }
@@ -68,7 +68,7 @@ public static partial class Extensions
 
         using (var transaction = context.Database.BeginTransaction())
         {
-            context.SetIdentityInsert(typeof(ActionType));
+            context.SetIdentityInsert<TContext, ActionType>();
 
             await context.Set<ActionType>().AddRangeAsync(
                 new ActionType { Id = eActionType.Create.ToInt(), Name = eActionType.Create.GetDescription() },
@@ -81,7 +81,7 @@ public static partial class Extensions
             // Save all changes
             await context.SaveChangesAsync();
 
-            context.SetIdentityInsert(typeof(ActionType), true, eIdentitySwitch.Off);
+            context.SetIdentityInsert<TContext, ActionType>(eIdentitySwitch.Off);
 
             transaction.Commit();
         }

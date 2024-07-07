@@ -5,12 +5,6 @@ namespace PeakPerformance.Common.Extensions;
 
 public static partial class Extensions
 {
-    public static bool IsNull(this object obj)
-        => obj == null;
-
-    public static bool IsNotNull(this object obj)
-        => obj != null;
-
     public static string ToJson(this object obj)
         => JsonConvert.SerializeObject(obj);
 
@@ -40,5 +34,13 @@ public static partial class Extensions
         }
 
         return false;
+    }
+
+    public static string GetPropertyNames<TClass>()
+        where TClass : class
+    {
+        var propertyNames = typeof(TClass).GetProperties().Select(_ => _.Name);
+
+        return string.Join(",", propertyNames);
     }
 }

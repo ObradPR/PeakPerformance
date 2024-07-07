@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PeakPerformance.Common.Extensions;
+using PeakPerformance.Domain.Entities._Base;
 using PeakPerformance.Persistence.Enums;
 
 namespace PeakPerformance.Persistence.Extensions;
@@ -10,11 +11,11 @@ public static partial class Extensions
         where TContext : DbContext
         => context.Database.ExecuteSql($"{sql}");
 
-    public static void SetIdentityInsert<TContext, TEntity>(this TContext context, TEntity table, bool lookupTable = true, eIdentitySwitch identitySwitch = eIdentitySwitch.On, string schema = "dbo")
+    public static void SetIdentityInsert<TContext, TEntity>(this TContext context, eIdentitySwitch identitySwitch = eIdentitySwitch.On, bool lookupTable = true, string schema = "dbo")
         where TContext : DbContext
-        where TEntity : Type
+        where TEntity : class
     {
-        string tableName = lookupTable ? table.Name.ToPlural() + "_lu" : table.Name.ToPlural();
+        string tableName = lookupTable ? typeof(TEntity).Name.ToPlural() + "_lu" : typeof(TEntity).Name.ToPlural();
         string sql = identitySwitch switch
         {
             eIdentitySwitch.On => eIdentitySwitch.On.GetDescription(),
@@ -36,4 +37,20 @@ public static partial class Extensions
     public static void DetachAllTrackedChanges<TContext>(this TContext context)
         where TContext : DbContext
         => context.ChangeTracker.Entries().ForEach(_ => _.State = EntityState.Detached);
+
+    public static string GetAuditTriggerName<TEntity>()
+        => $"trg_{typeof(TEntity).Name.ToPlural()}_aud";
+
+    public static string DropAuditTrigger<TEntity>()
+        where TEntity : AuditableEntity
+        => $"DROP TRIGGER IF EXISTS {GetAuditTriggerName<TEntity>()}";
+
+    public static string GetNullFilterForProperty<T>(this string propertyName)
+    {
+        var property = typeof(T).GetProperty(propertyName);
+
+        return property is null
+            ? throw new ArgumentException($"Property '{propertyName}' not found on type '{typeof(T).Name}'")
+            : $"[{property.Name}] IS NOT NULL";
+    }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using PeakPerformance.Common.Enums;
 using PeakPerformance.Common.Exceptions;
 using PeakPerformance.WebApi.Attributes;
@@ -7,7 +8,7 @@ using PeakPerformance.WebApi.Controllers._Base;
 namespace PeakPerformance.WebApi.Controllers;
 
 [Authorization(eSystemRole.Admin)]
-public class TestController : BaseController
+public class TestController(IMediator mediator) : BaseController(mediator)
 {
     [HttpGet("{id}")]
     public IActionResult Test([FromRoute] int id)

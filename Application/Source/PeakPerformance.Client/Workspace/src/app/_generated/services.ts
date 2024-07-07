@@ -8,6 +8,13 @@ import { map } from 'rxjs/operators';
 {
 	constructor (protected httpClient: HttpClient, protected settingsService: SettingsService) { } 
 }
+@Injectable() export class AuthController extends BaseController
+{
+	constructor (httpClient: HttpClient, settingsService: SettingsService)
+	{
+		super(httpClient, settingsService);
+	}
+}
 @Injectable() export class TestController extends BaseController
 {
 	constructor (httpClient: HttpClient, settingsService: SettingsService)
