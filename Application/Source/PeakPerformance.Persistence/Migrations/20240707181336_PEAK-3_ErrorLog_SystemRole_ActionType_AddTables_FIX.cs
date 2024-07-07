@@ -1,15 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore.Infrastructure;
+﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
-using PeakPerformance.Persistence.Contexts;
 
 #nullable disable
 
 namespace PeakPerformance.Persistence.Migrations
 {
     /// <inheritdoc />
-    [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240707083244_PEAK-3_SystemRole_ActionType_AddTables")]
-    public partial class PEAK3_SystemRole_ActionType_AddTables : Migration
+    public partial class PEAK3_ErrorLog_SystemRole_ActionType_AddTables_FIX : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -25,6 +22,22 @@ namespace PeakPerformance.Persistence.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ActionTypes_lu", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ErrorLogs",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Message = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    StackTrace = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    InnerException = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    RecordDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ErrorLogs", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -58,6 +71,9 @@ namespace PeakPerformance.Persistence.Migrations
         {
             migrationBuilder.DropTable(
                 name: "ActionTypes_lu");
+
+            migrationBuilder.DropTable(
+                name: "ErrorLogs");
 
             migrationBuilder.DropTable(
                 name: "SystemRoles_lu");
