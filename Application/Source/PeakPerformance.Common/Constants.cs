@@ -11,6 +11,13 @@ public class Constants
 
     public const int TOKEN_EXPIRATION_TIME = 12;
 
+    // Claims
+
+    public const string CLAIM_ID = "id";
+    public const string CLAIM_USERNAME = "username";
+    public const string CLAIM_ROLES = "roles";
+    public const string CLAIM_EMAIL = "email";
+
     // Policies
 
     public const string ADMIN = "Admin";

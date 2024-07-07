@@ -25,7 +25,7 @@ public class ExceptionMiddleware(RequestDelegate next)
 
     private async Task HandleExceptionAsync(HttpContext context, Exception ex, IExceptionLogger logger)
     {
-        logger.LogException(ex);
+        await logger.LogExceptionAsync(ex);
 
         context.Response.ContentType = "application/json";
 
@@ -34,6 +34,7 @@ public class ExceptionMiddleware(RequestDelegate next)
             NotFoundException _ => (int)HttpStatusCode.NotFound,
             UnauthorizedException _ => (int)HttpStatusCode.Unauthorized,
             ValidationException _ => (int)HttpStatusCode.BadRequest,
+            ForbiddenException _ => (int)HttpStatusCode.Forbidden,
             FluentValidationException _ => (int)HttpStatusCode.UnprocessableEntity,
             ServerErrorException _ => (int)HttpStatusCode.InternalServerError,
             _ => (int)HttpStatusCode.InternalServerError,

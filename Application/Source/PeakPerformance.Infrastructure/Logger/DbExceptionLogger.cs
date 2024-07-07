@@ -8,7 +8,7 @@ public class DbExceptionLogger(IUnitOfWork unitOfWork) : IExceptionLogger
 {
     private readonly IUnitOfWork _unitOfWork = unitOfWork;
 
-    public async void LogException(Exception ex)
+    public async Task LogExceptionAsync(Exception ex)
     {
         ErrorLog error = new()
         {
@@ -17,7 +17,7 @@ public class DbExceptionLogger(IUnitOfWork unitOfWork) : IExceptionLogger
             InnerException = ex.InnerException?.Message
         };
 
-        _unitOfWork.ErrorLogRepository.Add(error);
+        await _unitOfWork.ErrorLogRepository.AddAsync(error);
 
         await _unitOfWork.SaveAsync();
     }

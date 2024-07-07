@@ -2,5 +2,5 @@
 
 public interface IExceptionLogger
 {
-    void LogException(Exception ex);
+    Task LogExceptionAsync(Exception ex);
 }

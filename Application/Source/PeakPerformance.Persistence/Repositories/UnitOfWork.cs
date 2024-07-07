@@ -4,8 +4,12 @@ using PeakPerformance.Persistence.Repositories._Base;
 
 namespace PeakPerformance.Persistence.Repositories;
 
-public class UnitOfWork(ApplicationDbContext context) : BaseRepository(context), IUnitOfWork
+public class UnitOfWork : BaseRepository, IUnitOfWork
 {
+    public UnitOfWork(ApplicationDbContext context) : base(context)
+    {
+    }
+
     // Repositories
 
     public IErrorLogRepository ErrorLogRepository => new ErrorLogRepository(Context);

@@ -10,3 +10,5 @@ public class UnauthorizedException() : Exception("Unauthorized access. Authentic
 { }
 
 public class ValidationException() : Exception("Validation failed for the request.");
+
+public class ForbiddenException() : Exception("Access forbidden.");

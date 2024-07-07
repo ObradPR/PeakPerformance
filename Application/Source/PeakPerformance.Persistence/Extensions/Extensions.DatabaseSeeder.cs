@@ -31,7 +31,7 @@ public static partial class Extensions
 
             IExceptionLogger logger = scope.ServiceProvider.GetService<IExceptionLogger>()!;
 
-            logger?.LogException(ex);
+            await logger?.LogExceptionAsync(ex)!;
         }
     }
 

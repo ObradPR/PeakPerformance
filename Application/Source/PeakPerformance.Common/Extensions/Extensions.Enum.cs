@@ -40,4 +40,14 @@ public static partial class Extensions
     public static int ToInt<T>(this T enumValue)
         where T : Enum
         => Convert.ToInt32(enumValue);
+
+    public static List<T> ParseEnumList<T>(this IEnumerable<string> values)
+        where T : struct, Enum
+    {
+        return values
+            .Where(_ => _.TryParseEnum(out T _))
+            .Select(_ => _.ParseEnum<T>())
+            .Cast<T>()
+            .ToList();
+    }
 }
