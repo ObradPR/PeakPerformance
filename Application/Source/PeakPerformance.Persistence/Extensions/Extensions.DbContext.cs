@@ -1,18 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PeakPerformance.Common.Extensions;
-using PeakPerformance.Domain.Entities._Base;
-using System.ComponentModel;
+using PeakPerformance.Persistence.Enums;
 
 namespace PeakPerformance.Persistence.Extensions;
-
-public enum eIdentitySwitch
-{
-    [Description("ON")]
-    On = 1,
-
-    [Description("OFF")]
-    Off = 2
-}
 
 public static partial class Extensions
 {

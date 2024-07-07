@@ -5,6 +5,7 @@ namespace PeakPerformance.Application.Exceptions;
 public class FluentValidationException : Exception
 {
     public IDictionary<string, string[]> Failures { get; }
+
     public string Type { get; set; } = string.Empty;
 
     public FluentValidationException()

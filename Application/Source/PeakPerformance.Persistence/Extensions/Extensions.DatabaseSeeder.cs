@@ -4,6 +4,7 @@ using PeakPerformance.Common.Enums;
 using PeakPerformance.Common.Extensions;
 using PeakPerformance.Common.Interfaces;
 using PeakPerformance.Domain.Entities.Application_lu;
+using PeakPerformance.Persistence.Enums;
 
 namespace PeakPerformance.Persistence.Extensions;
 

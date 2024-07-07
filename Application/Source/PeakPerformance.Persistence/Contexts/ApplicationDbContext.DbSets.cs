@@ -13,5 +13,6 @@ public partial class ApplicationDbContext
     // Lookup Tables
 
     public virtual DbSet<SystemRole> SystemRoles { get; set; }
+
     public virtual DbSet<ActionType> ActionTypes { get; set; }
 }
