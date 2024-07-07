@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\PeakPerformance.Application.Identity\PeakPerformance.Application.Identity.csproj" />
     <ProjectReference Include="..\PeakPerformance.Application\PeakPerformance.Application.csproj" />
     <ProjectReference Include="..\PeakPerformance.Infrastructure\PeakPerformance.Infrastructure.csproj" />
     <ProjectReference Include="..\PeakPerformance.Persistence\PeakPerformance.Persistence.csproj" />
