@@ -14,9 +14,11 @@ public class Constants
     // Claims
 
     public const string CLAIM_ID = "id";
+    public const string CLAIM_FULLNAME = "fullName";
     public const string CLAIM_USERNAME = "username";
     public const string CLAIM_ROLES = "roles";
     public const string CLAIM_EMAIL = "email";
+    public const string CLAIM_ISSUER = "issuer";
 
     // Policies
 

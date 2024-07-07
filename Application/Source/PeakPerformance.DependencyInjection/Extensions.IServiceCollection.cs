@@ -1,11 +1,16 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
+using PeakPerformance.Application.Identity.Interfaces;
+using PeakPerformance.Application.Identity.Services;
 using PeakPerformance.Common.Interfaces;
 using PeakPerformance.Domain.Repositories;
 using PeakPerformance.Infrastructure.Logger;
 using PeakPerformance.Persistence.Contexts;
 using PeakPerformance.Persistence.Repositories;
+using System.Text;
 
 namespace PeakPerformance.DependencyInjection;
 
@@ -15,7 +20,7 @@ public static partial class Extensions
     {
         PersistenceServices(services, configuration);
         //ApplicationServices(services);
-        //ApplicationIdentityService(services, configuration);
+        ApplicationIdentityService(services, configuration);
         InfrastructureServices(services);
 
         return services;
@@ -27,6 +32,33 @@ public static partial class Extensions
             opt => opt.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
         services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+        return services;
+    }
+
+    private static IServiceCollection ApplicationIdentityService(IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddAuthentication(opt =>
+        {
+            opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+        }).AddJwtBearer(opt =>
+        {
+            opt.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidateLifetime = true,
+                ValidateIssuerSigningKey = true,
+                ValidIssuer = configuration["Jwt:Issuer"],
+                ValidAudience = configuration["Jwt:Audience"],
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]!)),
+                ClockSkew = TimeSpan.Zero
+            };
+        });
+
+        services.AddScoped<IUserManager, UserManager>();
+        services.AddScoped<ITokenService, TokenService>();
 
         return services;
     }

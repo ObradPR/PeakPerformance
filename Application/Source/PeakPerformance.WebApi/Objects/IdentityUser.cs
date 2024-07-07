@@ -67,7 +67,7 @@ public class IdentityUser(IHttpContextAccessor httpContextAccessor) : IIdentityU
 
     private void ParseIdentity()
     {
-        if (!_isParsed)
+        if (_isParsed.Not())
         {
             var user = _httpContextAccessor?.HttpContext?.User;
 
