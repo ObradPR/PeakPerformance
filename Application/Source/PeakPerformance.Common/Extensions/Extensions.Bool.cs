@@ -2,17 +2,17 @@
 
 public static partial class Extensions
 {
-    public static bool Toogle(this bool value)
+    public static bool Toggle(this bool value)
         => !value;
 
     public static int ToInt(this bool value)
         => value ? 1 : 0;
 
-    public static string ToString(this bool value)
-        => value ? "True" : "False";
-
     public static bool And(this bool value, params bool[] others)
     {
+        if (!value)
+            return false;
+
         foreach (var other in others)
             if (!other)
                 return false;
@@ -22,6 +22,9 @@ public static partial class Extensions
 
     public static bool Or(this bool value, params bool[] others)
     {
+        if (value)
+            return true;
+
         foreach (var other in others)
             if (other)
                 return true;
@@ -37,9 +40,6 @@ public static partial class Extensions
 
     public static bool Nor(this bool value, params bool[] others)
         => !value.Or(others);
-
-    public static bool Equals(this bool value, bool other)
-        => value == other;
 
     public static bool Not(this bool value)
         => !value;
