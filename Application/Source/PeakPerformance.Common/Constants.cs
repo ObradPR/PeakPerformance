@@ -4,7 +4,7 @@ namespace PeakPerformance.Common;
 
 public class Constants
 {
-    public const string SOULUTION_NAME = "PeakPerformance";
+    public const string SOLUTION_NAME = "PeakPerformance";
     public const long SYSTEM_USER_ID = -1;
 
     // Token

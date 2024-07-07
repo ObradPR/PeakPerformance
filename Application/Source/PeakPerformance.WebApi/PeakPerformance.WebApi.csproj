@@ -7,9 +7,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.OData" Version="8.2.5" />
+    <PackageReference Include="Reinforced.Typings" Version="1.6.3" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\PeakPerformance.Application\PeakPerformance.Application.csproj" />
     <ProjectReference Include="..\PeakPerformance.Common\PeakPerformance.Common.csproj" />
     <ProjectReference Include="..\PeakPerformance.DependencyInjection\PeakPerformance.DependencyInjection.csproj" />
   </ItemGroup>
+
+  <Target Name="CompileTypeScript" />
 
 </Project>
