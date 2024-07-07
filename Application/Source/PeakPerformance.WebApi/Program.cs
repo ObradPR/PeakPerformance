@@ -1,5 +1,6 @@
 using PeakPerformance.DependencyInjection;
-
+using PeakPerformance.Persistence.Contexts;
+using PeakPerformance.Persistence.Extensions;
 using PeakPerformance.WebApi.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,5 +23,7 @@ app.UseAuthentication();
 app.UseMiddleware<ExceptionMiddleware>();
 
 app.MapControllers();
+
+await app.Services.SeedData<ApplicationDbContext>();
 
 app.Run();

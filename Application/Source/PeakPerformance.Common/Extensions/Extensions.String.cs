@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using System.Text.RegularExpressions;
 
 namespace PeakPerformance.Common.Extensions;
 
@@ -55,4 +56,15 @@ public static partial class Extensions
 
     public static bool IsNumeric(this string value)
         => int.TryParse(value, out _);
+
+    public static string ToPlural(this string singular)
+    {
+        if (singular.EndsWith("y"))
+            return singular.Truncate(singular.Length - 1) + "ies";
+
+        if (Regex.IsMatch(singular, "(s|ss|sh|ch|x|z)$"))
+            return singular + "es";
+
+        return singular + "s";
+    }
 }

@@ -13,7 +13,5 @@ public class UnitOfWork(ApplicationDbContext context) : BaseRepository(context),
     // Methods
 
     public async Task<bool> SaveAsync()
-    {
-        return await Context.SaveChangesAsync() > 0;
-    }
+        => await Context.SaveChangesAsync() > 0;
 }

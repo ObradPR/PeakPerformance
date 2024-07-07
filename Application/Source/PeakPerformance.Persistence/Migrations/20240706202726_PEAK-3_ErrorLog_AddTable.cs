@@ -1,11 +1,14 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
+using PeakPerformance.Persistence.Contexts;
 
 #nullable disable
 
 namespace PeakPerformance.Persistence.Migrations
 {
     /// <inheritdoc />
+    [DbContext(typeof(ApplicationDbContext))]
+    [Migration("20240706202726_PEAK-3_ErrorLog_AddTable")]
     public partial class PEAK3_ErrorLog_AddTable : Migration
     {
         /// <inheritdoc />

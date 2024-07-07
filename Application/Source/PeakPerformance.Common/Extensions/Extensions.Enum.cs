@@ -36,4 +36,8 @@ public static partial class Extensions
     public static bool IsDefined<T>(this T value)
         where T : struct, Enum
         => Enum.IsDefined(typeof(T), value);
+
+    public static int ToInt<T>(this T enumValue)
+        where T : Enum
+        => Convert.ToInt32(enumValue);
 }

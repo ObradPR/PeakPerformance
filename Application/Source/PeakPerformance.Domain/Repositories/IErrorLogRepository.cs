@@ -4,5 +4,5 @@ namespace PeakPerformance.Domain.Repositories;
 
 public interface IErrorLogRepository
 {
-    Task AddAsync(ErrorLog error);
+    void Add(ErrorLog error);
 }
