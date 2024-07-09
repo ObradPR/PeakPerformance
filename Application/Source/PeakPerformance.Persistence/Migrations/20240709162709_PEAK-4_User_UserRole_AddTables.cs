@@ -29,11 +29,17 @@ namespace PeakPerformance.Persistence.Migrations
                     DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     DeletedBy = table.Column<long>(type: "bigint", nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: true),
+                    ActionTypeId = table.Column<int>(type: "int", nullable: true),
                     DetailsJson = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_UserRoles_aud", x => x.AuditId);
+                    table.ForeignKey(
+                        name: "FK_UserRoles_aud_ActionTypes_lu_ActionTypeId",
+                        column: x => x.ActionTypeId,
+                        principalTable: "ActionTypes_lu",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -75,11 +81,17 @@ namespace PeakPerformance.Persistence.Migrations
                     DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     DeletedBy = table.Column<long>(type: "bigint", nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: true),
+                    ActionTypeId = table.Column<int>(type: "int", nullable: true),
                     DetailsJson = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users_aud", x => x.AuditId);
+                    table.ForeignKey(
+                        name: "FK_Users_aud_ActionTypes_lu_ActionTypeId",
+                        column: x => x.ActionTypeId,
+                        principalTable: "ActionTypes_lu",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -127,6 +139,11 @@ namespace PeakPerformance.Persistence.Migrations
                 filter: "[UserId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_UserRoles_aud_ActionTypeId",
+                table: "UserRoles_aud",
+                column: "ActionTypeId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Users_Email",
                 table: "Users",
                 column: "Email",
@@ -143,6 +160,11 @@ namespace PeakPerformance.Persistence.Migrations
                 table: "Users",
                 column: "Username",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_aud_ActionTypeId",
+                table: "Users_aud",
+                column: "ActionTypeId");
 
             migrationBuilder.CreateAuditTriggersForTable<User_aud, User>();
             migrationBuilder.CreateAuditTriggersForTable<UserRole_aud, UserRole>();

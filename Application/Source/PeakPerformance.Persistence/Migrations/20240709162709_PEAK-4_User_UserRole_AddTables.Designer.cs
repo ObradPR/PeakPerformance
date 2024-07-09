@@ -12,7 +12,7 @@ using PeakPerformance.Persistence.Contexts;
 namespace PeakPerformance.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240709062557_PEAK-4_User_UserRole_AddTables")]
+    [Migration("20240709162709_PEAK-4_User_UserRole_AddTables")]
     partial class PEAK4_User_UserRole_AddTables
     {
         /// <inheritdoc />
@@ -225,6 +225,9 @@ namespace PeakPerformance.Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("AuditId"));
 
+                    b.Property<int?>("ActionTypeId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime?>("CreatedOn")
                         .HasColumnType("datetime2");
 
@@ -257,6 +260,8 @@ namespace PeakPerformance.Persistence.Migrations
 
                     b.HasKey("AuditId");
 
+                    b.HasIndex("ActionTypeId");
+
                     b.ToTable("UserRoles_aud", (string)null);
                 });
 
@@ -267,6 +272,9 @@ namespace PeakPerformance.Persistence.Migrations
                         .HasColumnType("bigint");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("AuditId"));
+
+                    b.Property<int?>("ActionTypeId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -294,6 +302,8 @@ namespace PeakPerformance.Persistence.Migrations
 
                     b.HasKey("AuditId");
 
+                    b.HasIndex("ActionTypeId");
+
                     b.ToTable("Users_aud", (string)null);
                 });
 
@@ -315,9 +325,34 @@ namespace PeakPerformance.Persistence.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("PeakPerformance.Domain.Entities.Audits.UserRole_aud", b =>
+                {
+                    b.HasOne("PeakPerformance.Domain.Entities.Application_lu.ActionType", "ActionType")
+                        .WithMany("UserRoles_aud")
+                        .HasForeignKey("ActionTypeId");
+
+                    b.Navigation("ActionType");
+                });
+
+            modelBuilder.Entity("PeakPerformance.Domain.Entities.Audits.User_aud", b =>
+                {
+                    b.HasOne("PeakPerformance.Domain.Entities.Application_lu.ActionType", "ActionType")
+                        .WithMany("Users_aud")
+                        .HasForeignKey("ActionTypeId");
+
+                    b.Navigation("ActionType");
+                });
+
             modelBuilder.Entity("PeakPerformance.Domain.Entities.Application.User", b =>
                 {
                     b.Navigation("UserRoles");
+                });
+
+            modelBuilder.Entity("PeakPerformance.Domain.Entities.Application_lu.ActionType", b =>
+                {
+                    b.Navigation("UserRoles_aud");
+
+                    b.Navigation("Users_aud");
                 });
 
             modelBuilder.Entity("PeakPerformance.Domain.Entities.Application_lu.SystemRole", b =>

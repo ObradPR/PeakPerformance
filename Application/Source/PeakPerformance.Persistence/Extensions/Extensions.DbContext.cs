@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using PeakPerformance.Common.Extensions;
 using PeakPerformance.Domain.Entities._Base;
+using PeakPerformance.Domain.Entities.Application_lu;
 using PeakPerformance.Persistence.Enums;
 
 namespace PeakPerformance.Persistence.Extensions;
@@ -52,5 +54,27 @@ public static partial class Extensions
         return property is null
             ? throw new ArgumentException($"Property '{propertyName}' not found on type '{typeof(T).Name}'")
             : $"[{property.Name}] IS NOT NULL";
+    }
+
+    public static void ConfigureAuditRelationship<T>(this EntityTypeBuilder<T> builder)
+            where T : Audit
+    {
+        // Get the collection navigation property for the ActionType
+        var actionTypeCollectionProperty = typeof(ActionType).GetProperties()
+            .FirstOrDefault(_ => _.PropertyType.IsGenericType &&
+                                 _.PropertyType.GetGenericTypeDefinition() == typeof(ICollection<>) &&
+                                 _.PropertyType.GetGenericArguments()[0] == typeof(T));
+
+        if (actionTypeCollectionProperty is not null)
+        {
+            var withManyMethod = typeof(EntityTypeBuilder<T>).GetMethod("WithMany", [typeof(string)]);
+            var hasForeignKeyMethod = typeof(EntityTypeBuilder<T>).GetMethod("HasForeignKey", [typeof(string)]);
+
+            if (withManyMethod is not null && hasForeignKeyMethod is not null)
+            {
+                var withManyCall = withManyMethod.Invoke(builder.HasOne<ActionType>("ActionType"), [actionTypeCollectionProperty.Name]);
+                hasForeignKeyMethod.Invoke(withManyCall, ["ActionTypeId"]);
+            }
+        }
     }
 }

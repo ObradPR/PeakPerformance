@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using PeakPerformance.Common.Extensions;
 using PeakPerformance.Domain.Entities._Base;
+using PeakPerformance.Domain.Entities.Application_lu;
+using PeakPerformance.Persistence.Extensions;
 
 namespace PeakPerformance.Persistence.Configurations._Base;
 
@@ -13,6 +15,10 @@ internal abstract class Entity_audConfiguration<T> : IEntityTypeConfiguration<T>
         builder.ToTable(typeof(T).Name.Replace("_aud", string.Empty).ToPlural() + "_aud");
 
         builder.HasKey(_ => _.AuditId);
+
+        // Relationships
+
+        builder.ConfigureAuditRelationship();
 
         ConfigureEntity(builder);
     }

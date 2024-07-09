@@ -1,4 +1,6 @@
-﻿namespace PeakPerformance.Domain.Entities._Base;
+﻿using PeakPerformance.Domain.Entities.Application_lu;
+
+namespace PeakPerformance.Domain.Entities._Base;
 
 public abstract class Audit : IAudit
 {
@@ -16,5 +18,11 @@ public abstract class Audit : IAudit
 
     public bool? IsActive { get; set; }
 
+    public int? ActionTypeId { get; set; }
+
     public string? DetailsJson { get; set; }
+
+    // Relationships
+
+    public virtual ActionType ActionType { get; set; }
 }

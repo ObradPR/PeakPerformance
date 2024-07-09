@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
+using PeakPerformance.Common.Enums;
 using PeakPerformance.Common.Extensions;
 using PeakPerformance.Domain.Entities._Base;
 
@@ -29,18 +30,23 @@ public static partial class Extensions
                 IF EXISTS (SELECT * FROM inserted)
                 BEGIN
                     -- Handle INSERT and UPDATE
-                    INSERT INTO {auditTableName} ({columns}, DetailsJson)
+                    INSERT INTO {auditTableName} ({columns}, ActionTypeId, DetailsJson)
                     SELECT
                         {insertValues},
+                        CASE
+                            WHEN EXISTS (SELECT * FROM deleted) THEN {eActionType.Update.ToInt()}
+                            ELSE {eActionType.Create.ToInt()}
+                        END,
                         (SELECT CAST((SELECT * FROM inserted i FOR JSON PATH, WITHOUT_ARRAY_WRAPPER) AS NVARCHAR(MAX)))
                     FROM inserted i;
                 END
                 ELSE IF EXISTS (SELECT * FROM deleted)
                 BEGIN
                     -- Handle DELETE
-                    INSERT INTO {auditTableName} ({columns}, DetailsJson)
+                    INSERT INTO {auditTableName} ({columns}, ActionTypeId, DetailsJson)
                     SELECT
                         {deleteValues},
+                        {eActionType.Delete.ToInt()},
                         (SELECT CAST((SELECT * FROM deleted d FOR JSON PATH, WITHOUT_ARRAY_WRAPPER) AS NVARCHAR(MAX)))
                     FROM deleted d;
                 END
@@ -53,7 +59,10 @@ public static partial class Extensions
         where TAuditTable : Audit
     {
         var properties = typeof(TAuditTable).GetProperties()
-            .Where(_ => _.Name != nameof(Audit.AuditId) && _.Name != nameof(Audit.DetailsJson))
+            .Where(_ => _.Name != nameof(Audit.AuditId)
+                && _.Name != nameof(Audit.DetailsJson)
+                && _.Name != nameof(Audit.ActionTypeId)
+                && _.Name != nameof(Audit.ActionType))
             .Select(_ => $"i.{_.Name}");
 
         return string.Join(",", properties);
@@ -63,7 +72,10 @@ public static partial class Extensions
         where TAuditTable : Audit
     {
         var properties = typeof(TAuditTable).GetProperties()
-            .Where(_ => _.Name != nameof(Audit.AuditId) && _.Name != nameof(Audit.DetailsJson))
+            .Where(_ => _.Name != nameof(Audit.AuditId)
+                && _.Name != nameof(Audit.DetailsJson)
+                && _.Name != nameof(Audit.ActionTypeId)
+                && _.Name != nameof(Audit.ActionType))
             .Select(_ => $"d.{_.Name}");
         return string.Join(",", properties);
     }
@@ -72,7 +84,10 @@ public static partial class Extensions
         where TAuditTable : Audit
     {
         var properties = typeof(TAuditTable).GetProperties()
-            .Where(_ => _.Name != nameof(Audit.AuditId) && _.Name != nameof(Audit.DetailsJson))
+            .Where(_ => _.Name != nameof(Audit.AuditId)
+                && _.Name != nameof(Audit.DetailsJson)
+                && _.Name != nameof(Audit.ActionTypeId)
+                && _.Name != nameof(Audit.ActionType))
             .Select(_ => _.Name);
 
         return string.Join(",", properties);
