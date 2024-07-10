@@ -8,5 +8,5 @@ public interface IUserActivityLogRepository
 
     // Add, Remove, Edit
 
-    Task AddAsync(UserActivityLog userActivityLog, CancellationToken cancellationToken);
+    Task AddAsync(UserActivityLog userActivityLog, CancellationToken cancellationToken = default);
 }

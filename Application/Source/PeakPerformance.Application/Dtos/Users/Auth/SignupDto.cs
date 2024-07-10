@@ -51,8 +51,7 @@ public class SignupDto
 
         user.UserActivityLogs.Add(new UserActivityLog
         {
-            ActionTypeId = eActionType.Signin.ToInt(),
-            RecordDate = DateTime.UtcNow
+            ActionTypeId = eActionType.Signin.ToInt()
         });
     }
 }

@@ -13,8 +13,11 @@ public class UserRepository(ApplicationDbContext context) : BaseRepository(conte
     public async Task<User?> GetExistingUserAsync(string email, string username, CancellationToken cancellationToken = default)
         => await Context.Users.SingleOrDefaultAsync(_ => _.Email.Equals(email) || _.Username.Equals(username), cancellationToken);
 
+    public async Task<User?> GetUserByUsernameAsync(string username, CancellationToken cancellationToken = default)
+        => await Context.Users.SingleOrDefaultAsync(_ => _.Username.Equals(username), cancellationToken);
+
     // Add, Remove, Edit
 
-    public async Task AddAsync(User user, CancellationToken cancellationToken)
+    public async Task AddAsync(User user, CancellationToken cancellationToken = default)
         => await Context.Users.AddAsync(user, cancellationToken);
 }

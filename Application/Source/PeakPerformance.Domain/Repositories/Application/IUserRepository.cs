@@ -8,7 +8,9 @@ public interface IUserRepository
 
     Task<User?> GetExistingUserAsync(string email, string username, CancellationToken cancellationToken = default);
 
+    Task<User?> GetUserByUsernameAsync(string username, CancellationToken cancellationToken = default);
+
     // Add, Remove, Edit
 
-    Task AddAsync(User user, CancellationToken cancellationToken);
+    Task AddAsync(User user, CancellationToken cancellationToken = default);
 }

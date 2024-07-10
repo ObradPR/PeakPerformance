@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { IAuthorizationDto } from './interfaces';
 import { ISignupDto } from './interfaces';
+import { ISigninDto } from './interfaces';
 
 @Injectable() export abstract class BaseController
 {
@@ -17,6 +18,20 @@ import { ISignupDto } from './interfaces';
 		const body = <any>user;
 		return this.httpClient.post<IAuthorizationDto>(
 		this.settingsService.createApiUrl('Auth/Signup'),
+		body,
+		{
+			responseType: 'json',
+			observe: 'response',
+			withCredentials: true
+		})
+		.pipe(map(response => response.body));
+		
+	}
+	public Signin(user: ISigninDto) : Observable<IAuthorizationDto | null>
+	{
+		const body = <any>user;
+		return this.httpClient.post<IAuthorizationDto>(
+		this.settingsService.createApiUrl('Auth/Signin'),
 		body,
 		{
 			responseType: 'json',

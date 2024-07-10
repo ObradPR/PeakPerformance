@@ -12,6 +12,6 @@ public class UserActivityLogRepository(ApplicationDbContext context)
 
     // Add, Remove, Edit
 
-    public async Task AddAsync(UserActivityLog userActivityLog, CancellationToken cancellationToken)
+    public async Task AddAsync(UserActivityLog userActivityLog, CancellationToken cancellationToken = default)
         => await Context.UserActivityLogs.AddAsync(userActivityLog, cancellationToken);
 }

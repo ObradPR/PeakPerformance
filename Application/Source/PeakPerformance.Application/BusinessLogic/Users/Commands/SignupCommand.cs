@@ -120,18 +120,17 @@ public class SignupCommand(SignupDto user) : BaseCommand<AuthorizationDto>
 
             await _unitOfWork.UserRepository.AddAsync(user, cancellationToken);
 
-            if (!await _unitOfWork.SaveAsync())
-                throw new ServerErrorException();
-
-            return new AuthorizationDto
-            {
-                Token = _tokenService.GenerateJwtToken(
+            return await _unitOfWork.SaveAsync()
+                ? new AuthorizationDto
+                {
+                    Token = _tokenService.GenerateJwtToken(
                     user.Id,
                     Extensions.GetStringValuesFromEnums(eSystemRole.User),
                     Extensions.GetUserFullName(user.FirstName, user.LastName, user.MiddleName),
                     user.Email,
                     user.Username)
-            };
+                }
+                : throw new ServerErrorException();
         }
     }
 }
