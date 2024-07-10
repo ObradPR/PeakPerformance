@@ -43,11 +43,16 @@ public class SignupDto
         user.Password = userManager.HashPassword(Password);
         user.DateOfBirth = DateOfBirth;
         user.PhoneNumber = PhoneNumber;
-        //user.CreatedOn = DateTime.UtcNow;
 
         user.UserRoles.Add(new UserRole
         {
             RoleId = eSystemRole.User.ToInt()
+        });
+
+        user.UserActivityLogs.Add(new UserActivityLog
+        {
+            ActionTypeId = eActionType.Signin.ToInt(),
+            RecordDate = DateTime.UtcNow
         });
     }
 }

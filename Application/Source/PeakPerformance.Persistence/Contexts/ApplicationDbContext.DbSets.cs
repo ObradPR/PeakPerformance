@@ -15,6 +15,8 @@ public partial class ApplicationDbContext
 
     public virtual DbSet<UserRole> UserRoles { get; set; }
 
+    public virtual DbSet<UserActivityLog> UserActivityLogs { get; set; }
+
     // Lookup Tables
 
     public virtual DbSet<SystemRole> SystemRoles { get; set; }

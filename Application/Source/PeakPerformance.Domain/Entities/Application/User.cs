@@ -23,4 +23,6 @@ public class User : AuditableEntity
     // Relationships
 
     public virtual ICollection<UserRole> UserRoles { get; set; } = [];
+
+    public virtual ICollection<UserActivityLog> UserActivityLogs { get; set; } = [];
 }

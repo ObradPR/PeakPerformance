@@ -1,17 +1,17 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PeakPerformance.Domain.Entities.Application;
-using PeakPerformance.Domain.Repositories;
+using PeakPerformance.Domain.Repositories.Application;
 using PeakPerformance.Persistence.Contexts;
 using PeakPerformance.Persistence.Repositories._Base;
 
-namespace PeakPerformance.Persistence.Repositories;
+namespace PeakPerformance.Persistence.Repositories.Application;
 
 public class UserRepository(ApplicationDbContext context) : BaseRepository(context), IUserRepository
 {
     // Get
 
-    public async Task<User?> GetUserByEmailAsync(string email, CancellationToken cancellationToken = default)
-        => await Context.Users.SingleOrDefaultAsync(_ => _.Email.Equals(email), cancellationToken);
+    public async Task<User?> GetExistingUserAsync(string email, string username, CancellationToken cancellationToken = default)
+        => await Context.Users.SingleOrDefaultAsync(_ => _.Email.Equals(email) || _.Username.Equals(username), cancellationToken);
 
     // Add, Remove, Edit
 

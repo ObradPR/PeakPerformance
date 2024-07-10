@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using PeakPerformance.Common.Extensions;
 using PeakPerformance.Domain.Entities._Base;
-using PeakPerformance.Domain.Entities.Application_lu;
 using PeakPerformance.Persistence.Extensions;
 
 namespace PeakPerformance.Persistence.Configurations._Base;

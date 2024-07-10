@@ -1,6 +1,6 @@
 ﻿using PeakPerformance.Domain.Entities.Application;
 
-namespace PeakPerformance.Domain.Repositories;
+namespace PeakPerformance.Domain.Repositories.Application;
 
 public interface IErrorLogRepository
 {

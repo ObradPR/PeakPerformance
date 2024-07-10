@@ -47,6 +47,14 @@ public class SignupCommand(SignupDto user) : BaseCommand<AuthorizationDto>
                 .MinimumLength(2)
                 .WithMessage(ResourceValidation.Minimum_Characters.AppendArgument(lastName, "2"));
 
+            RuleFor(_ => _.User.Username)
+                .NotEmpty()
+                .WithMessage(ResourceValidation.Required.AppendArgument(username))
+                .MaximumLength(30)
+                .WithMessage(ResourceValidation.Maximum_Characters.AppendArgument(username, "30"))
+                .MinimumLength(2)
+                .WithMessage(ResourceValidation.Minimum_Characters.AppendArgument(username, "2"));
+
             RuleFor(_ => _.User.Email)
                 .NotEmpty()
                 .WithMessage(ResourceValidation.Required.AppendArgument(email))
@@ -96,10 +104,15 @@ public class SignupCommand(SignupDto user) : BaseCommand<AuthorizationDto>
 
         public override async Task<AuthorizationDto> Handle(SignupCommand request, CancellationToken cancellationToken)
         {
-            var existingUser = await _unitOfWork.UserRepository.GetUserByEmailAsync(request.User.Email, cancellationToken);
+            var existingUser = await _unitOfWork.UserRepository.GetExistingUserAsync(request.User.Email, request.User.Username, cancellationToken);
 
             if (existingUser is not null)
-                throw new FluentValidationException(nameof(request.User.Email), ResourceValidation.Already_Exist.AppendArgument(nameof(User)));
+            {
+                if (existingUser.Email.Equals(request.User.Email))
+                    throw new FluentValidationException(nameof(request.User.Email), ResourceValidation.Already_Exist.AppendArgument(nameof(User)));
+                else if (existingUser.Username.Equals(request.User.Username))
+                    throw new FluentValidationException(nameof(request.User.Username), ResourceValidation.Already_Exist.AppendArgument(nameof(User)));
+            }
 
             User user = new();
 

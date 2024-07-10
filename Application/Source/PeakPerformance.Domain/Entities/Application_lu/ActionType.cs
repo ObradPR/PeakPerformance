@@ -11,4 +11,6 @@ public class ActionType : Entity_lu
     public virtual ICollection<User_aud> Users_aud { get; set; } = [];
 
     public virtual ICollection<UserRole_aud> UserRoles_aud { get; set; } = [];
+
+    public virtual ICollection<UserActivityLog> UserActivityLogs { get; set; } = [];
 }

@@ -2,8 +2,8 @@ export enum eActionType {
 	Create = 1,
 	Update = 2,
 	Delete = 3,
-	Login = 4,
-	Logout = 5
+	Signin = 4,
+	Signout = 5
 }
 export enum eSystemRole {
 	Admin = 1,
