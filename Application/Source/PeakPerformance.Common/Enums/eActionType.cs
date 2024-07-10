@@ -13,14 +13,17 @@ public enum eActionType
     [Description("Delete")]
     Delete = 3,
 
+    [Description("Deactivate")]
+    Deactivate = 4,
+
     [Description("Sign up")]
-    Signup = 4,
+    Signup = 5,
 
     [Description("Sign in")]
-    Signin = 5,
+    Signin = 6,
 
     [Description("Sign out")]
-    Signout = 6,
+    Signout = 7,
 
     //[Description("Read")]
     //Read = 6

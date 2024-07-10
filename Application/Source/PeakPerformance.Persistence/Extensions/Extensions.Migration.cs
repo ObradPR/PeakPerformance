@@ -34,11 +34,18 @@ public static partial class Extensions
                     SELECT
                         {insertValues},
                         CASE
-                            WHEN EXISTS (SELECT * FROM deleted) THEN {eActionType.Update.ToInt()}
+                            WHEN EXISTS (SELECT * FROM deleted) THEN
+                                CASE
+                                    WHEN i.IsActive = 0 AND d.IsActive = 1
+                                        THEN {eActionType.Deactivate.ToInt()}
+                                    ELSE {eActionType.Update.ToInt()}
+                                END
                             ELSE {eActionType.Create.ToInt()}
                         END,
                         (SELECT CAST((SELECT * FROM inserted i FOR JSON PATH, WITHOUT_ARRAY_WRAPPER) AS NVARCHAR(MAX)))
-                    FROM inserted i;
+                    FROM inserted i
+                    LEFT JOIN deleted d ON i.Id = d.Id
+                    WHERE i.Id IS NOT NULL;
                 END
                 ELSE IF EXISTS (SELECT * FROM deleted)
                 BEGIN
