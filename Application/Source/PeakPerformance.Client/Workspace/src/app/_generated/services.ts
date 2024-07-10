@@ -41,6 +41,19 @@ import { ISigninDto } from './interfaces';
 		.pipe(map(response => response.body));
 		
 	}
+	public Signout() : Observable<any>
+	{
+		return this.httpClient.post<any>(
+		this.settingsService.createApiUrl('Auth/Signout'),
+		null,
+		{
+			responseType: 'json',
+			observe: 'response',
+			withCredentials: true
+		})
+		.pipe(map(response => response.body));
+		
+	}
 	constructor (httpClient: HttpClient, settingsService: SettingsService)
 	{
 		super(httpClient, settingsService);

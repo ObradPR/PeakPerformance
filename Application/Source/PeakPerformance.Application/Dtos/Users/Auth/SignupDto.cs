@@ -33,7 +33,7 @@ public class SignupDto
 
     // Logic
 
-    public void ToModel(User user, IUserManager userManager)
+    public void ToModel(User user, IUserManager userManager, bool isSigningUp = true)
     {
         user.FirstName = FirstName;
         user.MiddleName = MiddleName ?? null;
@@ -49,9 +49,10 @@ public class SignupDto
             RoleId = eSystemRole.User.ToInt()
         });
 
-        user.UserActivityLogs.Add(new UserActivityLog
-        {
-            ActionTypeId = eActionType.Signin.ToInt()
-        });
+        if (isSigningUp)
+            user.UserActivityLogs.Add(new UserActivityLog
+            {
+                ActionTypeId = eActionType.Signup.ToInt()
+            });
     }
 }

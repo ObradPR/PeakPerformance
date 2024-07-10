@@ -1,5 +1,4 @@
 ﻿using PeakPerformance.Application.Dtos.Users.Auth;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace PeakPerformance.Application.BusinessLogic.Users.Commands;
 

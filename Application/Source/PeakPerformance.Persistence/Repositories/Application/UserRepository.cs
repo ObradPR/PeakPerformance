@@ -14,7 +14,10 @@ public class UserRepository(ApplicationDbContext context) : BaseRepository(conte
         => await Context.Users.SingleOrDefaultAsync(_ => _.Email.Equals(email) || _.Username.Equals(username), cancellationToken);
 
     public async Task<User?> GetUserByUsernameAsync(string username, CancellationToken cancellationToken = default)
-        => await Context.Users.SingleOrDefaultAsync(_ => _.Username.Equals(username), cancellationToken);
+        => await Context.Users
+        .Include(_ => _.UserRoles)
+        .ThenInclude(_ => _.Role)
+        .SingleOrDefaultAsync(_ => _.Username.Equals(username), cancellationToken);
 
     // Add, Remove, Edit
 
