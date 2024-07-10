@@ -17,4 +17,6 @@ public static class ResourceValidation
     public static string Minimum_Age => "Person must be at least {0} years old.";
 
     public static string Already_Exist => "{0} already exist.";
+
+    public static string Phone_Number => "{0} must be in format 333-333-3333.";
 }

@@ -20,8 +20,8 @@ public static partial class Extensions
         string tableName = lookupTable ? typeof(TEntity).Name.ToPlural() + "_lu" : typeof(TEntity).Name.ToPlural();
         string sql = identitySwitch switch
         {
-            eIdentitySwitch.On => eIdentitySwitch.On.GetDescription(),
-            eIdentitySwitch.Off => eIdentitySwitch.Off.GetDescription(),
+            eIdentitySwitch.On => eIdentitySwitch.On.GetEnumDescription(),
+            eIdentitySwitch.Off => eIdentitySwitch.Off.GetEnumDescription(),
             _ => throw new ArgumentException("Invalid identity switch value.", nameof(identitySwitch)),
         };
 

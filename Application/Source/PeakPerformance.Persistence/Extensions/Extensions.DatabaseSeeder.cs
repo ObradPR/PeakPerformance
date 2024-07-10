@@ -46,9 +46,9 @@ public static partial class Extensions
             context.SetIdentityInsert<TContext, SystemRole>();
 
             await context.Set<SystemRole>().AddRangeAsync(
-                new SystemRole { Id = eSystemRole.Admin.ToInt(), Name = eSystemRole.Admin.GetDescription() },
-                new SystemRole { Id = eSystemRole.User.ToInt(), Name = eSystemRole.User.GetDescription() },
-                new SystemRole { Id = eSystemRole.Guest.ToInt(), Name = eSystemRole.Guest.GetDescription() }
+                new SystemRole { Id = eSystemRole.Admin.ToInt(), Name = eSystemRole.Admin.GetEnumDescription() },
+                new SystemRole { Id = eSystemRole.User.ToInt(), Name = eSystemRole.User.GetEnumDescription() },
+                new SystemRole { Id = eSystemRole.Guest.ToInt(), Name = eSystemRole.Guest.GetEnumDescription() }
             );
 
             // Save all changes
@@ -71,11 +71,11 @@ public static partial class Extensions
             context.SetIdentityInsert<TContext, ActionType>();
 
             await context.Set<ActionType>().AddRangeAsync(
-                new ActionType { Id = eActionType.Create.ToInt(), Name = eActionType.Create.GetDescription() },
-                new ActionType { Id = eActionType.Update.ToInt(), Name = eActionType.Update.GetDescription() },
-                new ActionType { Id = eActionType.Delete.ToInt(), Name = eActionType.Delete.GetDescription() },
-                new ActionType { Id = eActionType.Login.ToInt(), Name = eActionType.Login.GetDescription() },
-                new ActionType { Id = eActionType.Logout.ToInt(), Name = eActionType.Logout.GetDescription() }
+                new ActionType { Id = eActionType.Create.ToInt(), Name = eActionType.Create.GetEnumDescription() },
+                new ActionType { Id = eActionType.Update.ToInt(), Name = eActionType.Update.GetEnumDescription() },
+                new ActionType { Id = eActionType.Delete.ToInt(), Name = eActionType.Delete.GetEnumDescription() },
+                new ActionType { Id = eActionType.Login.ToInt(), Name = eActionType.Login.GetEnumDescription() },
+                new ActionType { Id = eActionType.Logout.ToInt(), Name = eActionType.Logout.GetEnumDescription() }
             );
 
             // Save all changes

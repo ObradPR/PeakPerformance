@@ -9,6 +9,8 @@ internal class UserConfiguration : EntityConfiguration<User>
 {
     protected override void ConfigureEntity(EntityTypeBuilder<User> builder)
     {
+        builder.ToTable(_ => _.HasTrigger(Extensions.Extensions.GetAuditTriggerName<User>()));
+
         builder.Property(_ => _.FirstName)
             .IsRequired()
             .HasMaxLength(20);

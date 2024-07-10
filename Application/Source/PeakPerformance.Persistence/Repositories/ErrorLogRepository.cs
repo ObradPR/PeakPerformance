@@ -8,8 +8,10 @@ namespace PeakPerformance.Persistence.Repositories;
 public class ErrorLogRepository(ApplicationDbContext context)
     : BaseRepository(context), IErrorLogRepository
 {
+    // Get
+
+    // Add, Remove, Edit
+
     public async Task AddAsync(ErrorLog error)
-    {
-        await Context.ErrorLogs.AddAsync(error);
-    }
+        => await Context.ErrorLogs.AddAsync(error);
 }

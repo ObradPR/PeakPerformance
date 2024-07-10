@@ -6,6 +6,8 @@ public interface IUnitOfWork
 
     IErrorLogRepository ErrorLogRepository { get; }
 
+    IUserRepository UserRepository { get; }
+
     // Methods
 
     Task<bool> SaveAsync();

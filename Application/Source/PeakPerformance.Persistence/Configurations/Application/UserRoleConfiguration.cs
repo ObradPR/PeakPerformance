@@ -10,6 +10,8 @@ internal class UserRoleConfiguration : EntityConfiguration<UserRole>
 {
     protected override void ConfigureEntity(EntityTypeBuilder<UserRole> builder)
     {
+        builder.ToTable(_ => _.HasTrigger(Extensions.Extensions.GetAuditTriggerName<UserRole>()));
+
         builder.HasIndex(_ => new { _.UserId, _.RoleId })
             .IsUnique()
             .HasFilter(nameof(UserRole.UserId).GetNullFilterForProperty<UserRole>());

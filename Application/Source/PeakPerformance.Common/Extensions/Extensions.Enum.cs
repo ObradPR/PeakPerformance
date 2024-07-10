@@ -17,8 +17,8 @@ public static partial class Extensions
         where T : struct, Enum
         => Enum.GetNames(typeof(T));
 
-    public static string GetDescription<T>(this T enumValue)
-        where T : struct, Enum
+    public static string GetEnumDescription<TEnum>(this TEnum enumValue)
+        where TEnum : struct, Enum
     {
         FieldInfo? fi = enumValue.GetType().GetField(enumValue.ToString());
         DescriptionAttribute[] attributes = fi?.GetCustomAttributes(typeof(DescriptionAttribute), false) as DescriptionAttribute[] ?? Array.Empty<DescriptionAttribute>();

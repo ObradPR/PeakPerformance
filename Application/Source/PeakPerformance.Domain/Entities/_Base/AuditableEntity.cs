@@ -2,7 +2,11 @@
 
 public abstract partial class AuditableEntity : IAuditableEntity
 {
-    public AuditableEntity() => CreatedOn = DateTime.UtcNow;
+    public AuditableEntity()
+    {
+        CreatedOn = DateTime.UtcNow;
+        IsActive = true;
+    }
 
     public long Id { get; set; }
 

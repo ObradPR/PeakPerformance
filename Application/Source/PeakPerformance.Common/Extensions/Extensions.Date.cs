@@ -48,6 +48,6 @@ public static partial class Extensions
         return date.AddDays(diff).Date;
     }
 
-    public static bool BeAtLeastEighteenYearsOld(DateOnly dob)
+    public static bool BeAtLeastEighteenYearsOld(this DateOnly dob)
         => dob <= DateOnly.FromDateTime(DateTime.Today).AddYears(-18);
 }

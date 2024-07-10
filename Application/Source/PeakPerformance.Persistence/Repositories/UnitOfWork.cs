@@ -14,6 +14,8 @@ public class UnitOfWork : BaseRepository, IUnitOfWork
 
     public IErrorLogRepository ErrorLogRepository => new ErrorLogRepository(Context);
 
+    public IUserRepository UserRepository => new UserRepository(Context);
+
     // Methods
 
     public async Task<bool> SaveAsync()

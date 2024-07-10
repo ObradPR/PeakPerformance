@@ -1,10 +1,17 @@
-﻿using System.Globalization;
+﻿using System.ComponentModel;
+using System.Globalization;
+using System.Linq.Expressions;
+using System.Reflection;
 using System.Text.RegularExpressions;
 
 namespace PeakPerformance.Common.Extensions;
 
 public static partial class Extensions
 {
+    public static string AppendArgument(this string value, string argument) => string.Format(value, argument);
+
+    public static string AppendArgument(this string value, params string[] args) => string.Format(value, args);
+
     public static bool IsNullOrEmpty(this string value)
         => string.IsNullOrEmpty(value);
 
@@ -66,5 +73,29 @@ public static partial class Extensions
             return singular + "es";
 
         return singular + "s";
+    }
+
+    public static string GetPropertyDescription<T>(Expression<Func<T, object>> propertyExpression)
+    {
+        MemberExpression memberExpression;
+
+        // Check if the expression is Unary (boxing value types like DateTime)
+        if (propertyExpression.Body is UnaryExpression unaryExpression && unaryExpression.Operand is MemberExpression unaryMember)
+        {
+            memberExpression = unaryMember;
+        }
+        else if (propertyExpression.Body is MemberExpression member)
+        {
+            memberExpression = member;
+        }
+        else
+        {
+            throw new ArgumentException("Expression is not a member access expression.", nameof(propertyExpression));
+        }
+
+        var propertyInfo = (PropertyInfo)memberExpression.Member;
+        var descriptionAttribute = propertyInfo.GetCustomAttribute<DescriptionAttribute>();
+
+        return descriptionAttribute?.Description ?? propertyInfo.Name;
     }
 }
