@@ -1,0 +1,56 @@
+<div class="sign-up-holder">
+  <h1>Sign <span class="highlight-text-yellow">up</span></h1>
+  <form>
+    <div class="form-row">
+      <p>Your personal information</p>
+      <div class="form-items-group-row">
+        <input type="text" name="fName" id="fName" placeholder="First Name" />
+        <input type="text" name="mName" id="mName" placeholder="Middle Name" />
+        <input type="text" name="lName" id="lName" placeholder="Last Name" />
+      </div>
+    </div>
+    <div class="form-row">
+      <input type="email" name="email" id="email" placeholder="Email" />
+    </div>
+    <div class="form-row">
+      <div class="form-items-group-row">
+        <input
+          type="tel"
+          name="phoneNumber"
+          id="phoneNumber"
+          placeholder="Phone Number"
+        />
+        <input type="date" name="dob" id="dob" />
+      </div>
+    </div>
+
+    <div class="form-row">
+      <p>Your account details</p>
+      <input type="text" name="username" id="username" placeholder="Username" />
+    </div>
+    <div class="form-row">
+      <div class="form-items-group-row">
+        <input
+          type="password"
+          name="password"
+          id="password"
+          placeholder="Password"
+        />
+        <input
+          type="password"
+          name="confirmPassword"
+          id="confirmPassword"
+          placeholder="Confirm Password"
+        />
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-items-group-column">
+        <input type="submit" value="Sign up" />
+        <a class="already-have-acc-msg" (click)="onShowSignIn()">Already have an account? Sign in</a>
+        <a href="#">Privacy Policy and Terms of Use</a>
+      </div>
+    </div>
+  </form>
+</div>

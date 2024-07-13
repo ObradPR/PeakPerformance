@@ -1,0 +1,46 @@
+<main class="auth">
+  <owl-carousel-o [options]="customOptions">
+    <ng-template carouselSlide>
+      <img src="../../../assets/images/auth/auth-cover-1.jpg" />
+    </ng-template>
+    <ng-template carouselSlide>
+      <img src="../../../assets/images/auth/auth-cover-2.jpg" />
+    </ng-template>
+    <ng-template carouselSlide>
+      <img src="../../../assets/images/auth/auth-cover-3.jpg" />
+    </ng-template>
+    <ng-template carouselSlide>
+      <img src="../../../assets/images/auth/auth-cover-4.jpg" />
+    </ng-template>
+  </owl-carousel-o>
+  <section class="auth-forms-holder">
+    <div class="top">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        class="to-home-btn"
+      >
+        <title>arrow-left-bold-circle</title>
+        <path
+          d="M22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2A10,10 0 0,1 22,12M7,12L12,17V14H16V10H12V7L7,12Z"
+        />
+      </svg>
+      <p>Home</p>
+    </div>
+    <div class="bottom">
+      @if(isSignInForm()){
+      <app-sign-in
+        (showSignUpFormEvent)="toggleForms($event, false)"
+        [@formAnimation]
+        class="form-container sign-in-form"
+      />
+      } @if(isSignUpForm()){
+      <app-sign-up
+        (showSignInFormEvent)="toggleForms($event, true)"
+        [@formAnimation]
+        class="form-container sign-up-form"
+      />
+      }
+    </div>
+  </section>
+</main>

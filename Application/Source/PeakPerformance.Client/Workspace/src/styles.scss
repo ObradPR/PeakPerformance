@@ -1,1 +1,101 @@
-/* You can add global styles to this file, and also import other style files */
+// Variable
+$yellow-rgb: rgba(255, 193, 7, 1);
+$yellow-hex: #ffc107;
+$light-yellow-rgb: rgba(255, 213, 79, 1);
+$light-yellow-hex: #ffd54f;
+$white-rgb: rgba(255, 255, 255, 1);
+$white-hex: #ffffff;
+$dark-grey-rgb: rgba(52, 58, 64, 1);
+$dark-grey-hex: #343a40;
+$light-grey-rgb: rgba(248, 249, 250, 1);
+$light-grey-hex: #f8f9fa;
+$teal-rgb: rgba(32, 201, 151, 1);
+$teal-hex: #20c997;
+$grey-rgb: rgba(108, 117, 125, 1);
+$grey-hex: #6c757d;
+$blue-rgb: rgba(0, 123, 255, 1);
+$blue-hex: #007bff;
+$light-blue-rgb: rgba(102, 178, 255, 1);
+$light-blue-hex: #66b2ff;
+$dark-blue-rgb: rgb(0, 86, 179, 1);
+$dark-blue-hex: #0056b3;
+
+$border-radius: 10px;
+$transition: all 0.2s ease-in-out;
+$input-box-shadow: 0px 0px 3px 4px $yellow-rgb;
+
+// Mixins
+@mixin border($width: 1px, $style: solid, $color: $light-green) {
+  border: $width $style $color;
+}
+
+@mixin flex($direction: row, $justify: center, $wrap: nowrap, $align: center) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $justify;
+  flex-wrap: $wrap;
+  align-items: $align;
+}
+
+@mixin size($width, $height) {
+  width: $width;
+  height: $height;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+span.highlight-text-yellow {
+  color: $yellow-hex;
+}
+
+a {
+  color: $blue-hex;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+a:hover {
+  color: $light-blue-hex;
+}
+
+// Form
+[type="text"],
+[type="password"],
+[type="submit"],
+[type="email"],
+[type="tel"],
+[type="date"] {
+  padding: 0.7rem 1rem;
+  border-radius: $border-radius;
+  border: none;
+  font-size: 1em;
+  transition: $transition;
+}
+
+[type="text"]:focus,
+[type="password"]:focus,
+[type="email"]:focus,
+[type="tel"]:focus,
+[type="date"]:focus {
+  outline: none;
+  box-shadow: $input-box-shadow;
+}
+
+[type="submit"] {
+  cursor: pointer;
+  background-color: $yellow-hex;
+}
+
+// Ngx-owl-carousel-o
+
+main.auth .owl-carousel .owl-item img {
+  max-width: auto;
+  height: 100dvh;
+  object-fit: cover;
+}
+
+// PrimeNg

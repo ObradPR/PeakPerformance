@@ -1,0 +1,50 @@
+@import "../../../styles.scss";
+
+main.auth {
+  position: relative;
+  width: 100dvw;
+
+  section.auth-forms-holder {
+    @include size(40%, 100dvh);
+    @include flex(column, start, nowrap, start);
+    padding: 2.5rem;
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: rgba($dark-grey-rgb, 0.85);
+    z-index: 1;
+    color: $white-hex;
+
+    .top {
+      @include flex(row, start, nowrap, center);
+
+      svg.to-home-btn {
+        @include size(70px, 70px);
+        cursor: pointer;
+        filter: invert(100%) sepia(4%) saturate(1476%) hue-rotate(175deg)
+          brightness(100%) contrast(97%);
+        transition: $transition;
+      }
+
+      svg.to-home-btn:hover {
+        filter: invert(47%) sepia(16%) saturate(281%) hue-rotate(166deg)
+          brightness(91%) contrast(80%);
+      }
+
+      p {
+        margin-left: 0.8rem;
+        font-size: 1.3em;
+      }
+    }
+
+    .bottom {
+      @include size(100%, auto);
+      position: relative;
+
+      app-sign-in {
+        // position: absolute;
+        // top: -100;
+      }
+    }
+  }
+}

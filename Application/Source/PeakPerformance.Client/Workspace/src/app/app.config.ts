@@ -12,7 +12,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideClientHydration(),
     provideAnimations(),
-    provideHttpClient(withInterceptors([jwtInterceptor, errorInterceptor])),
-    MessageService
+    // provideHttpClient(withInterceptors([jwtInterceptor, errorInterceptor])),
+    // MessageService
   ],
 };

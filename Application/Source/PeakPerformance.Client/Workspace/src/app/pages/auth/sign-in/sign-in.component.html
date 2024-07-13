@@ -1,0 +1,21 @@
+<div class="sign-in-holder">
+  <h1>Sign <span class="highlight-text-yellow">in</span></h1>
+  <form [formGroup]="signInForm">
+    <div class="form-row">
+      <input type="text" name="username" id="username" placeholder="Username" />
+    </div>
+    <div class="form-row">
+      <input
+        type="password"
+        name="password"
+        id="password"
+        placeholder="Password"
+      />
+      <a href="#" class="forgot-password">Forgot Password?</a>
+    </div>
+    <div class="form-row">
+      <input type="submit" value="Sign in" />
+      <a (click)="onShowSignUp()">Don't have an account? Sign up</a>
+    </div>
+  </form>
+</div>

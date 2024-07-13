@@ -1,0 +1,56 @@
+@import "../../../../styles.scss";
+
+div.sign-in-holder {
+  @include size(60%, 70dvh);
+  text-align: center;
+  margin: 10rem auto 0;
+
+  h1 {
+    margin-bottom: 3rem;
+    font-size: 2em;
+  }
+
+  form {
+    @include flex(column, space-between, nowrap, center);
+    @include size(100%, auto);
+
+    div.form-row {
+      width: 100%;
+
+      [type="text"],
+      [type="password"] {
+        width: 100%;
+      }
+
+      [type="text"] {
+        margin-bottom: 1.5rem;
+      }
+
+      [type="password"],
+      [type="submit"] {
+        margin-bottom: 0.8rem;
+      }
+
+      [type="submit"] {
+        width: 30%;
+        margin-top: 2rem;
+      }
+
+      [type="submit"]:hover {
+        background-color: $light-yellow-hex;
+      }
+
+      a:hover {
+        color: $light-blue-hex;
+      }
+
+      a.forgot-password {
+        margin-bottom: 2rem;
+      }
+
+      &:nth-child(3) {
+        @include flex(column, center, nowrap, center);
+      }
+    }
+  }
+}
