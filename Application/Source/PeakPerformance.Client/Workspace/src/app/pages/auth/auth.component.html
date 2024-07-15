@@ -28,15 +28,15 @@
       <p>Home</p>
     </div>
     <div class="bottom">
-      @if(isSignInForm()){
+      @if(isSigninForm()){
       <app-sign-in
-        (showSignUpFormEvent)="toggleForms($event, false)"
+        (showSignupFormEvent)="toggleForms($event, false)"
         [@formAnimation]
         class="form-container sign-in-form"
       />
-      } @if(isSignUpForm()){
+      } @if(isSignupForm()){
       <app-sign-up
-        (showSignInFormEvent)="toggleForms($event, true)"
+        (showSigninFormEvent)="toggleForms($event, true)"
         [@formAnimation]
         class="form-container sign-up-form"
       />

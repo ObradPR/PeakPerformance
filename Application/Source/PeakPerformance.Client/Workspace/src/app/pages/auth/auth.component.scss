@@ -40,11 +40,6 @@ main.auth {
     .bottom {
       @include size(100%, auto);
       position: relative;
-
-      app-sign-in {
-        // position: absolute;
-        // top: -100;
-      }
     }
   }
 }

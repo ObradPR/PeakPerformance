@@ -1,46 +1,97 @@
 <div class="sign-up-holder">
   <h1>Sign <span class="highlight-text-yellow">up</span></h1>
-  <form>
+  <form [formGroup]="signupForm" (ngSubmit)="onSignUp()">
     <div class="form-row">
       <p>Your personal information</p>
       <div class="form-items-group-row">
-        <input type="text" name="fName" id="fName" placeholder="First Name" />
-        <input type="text" name="mName" id="mName" placeholder="Middle Name" />
-        <input type="text" name="lName" id="lName" placeholder="Last Name" />
+        <input
+          type="text"
+          name="fName"
+          id="fName"
+          placeholder="First Name"
+          formControlName="firstName"
+        />
+        <input
+          type="text"
+          name="mName"
+          id="mName"
+          placeholder="Middle Name"
+          formControlName="middleName"
+        />
+        <input
+          type="text"
+          name="lName"
+          id="lName"
+          placeholder="Last Name"
+          formControlName="lastName"
+        />
       </div>
     </div>
     <div class="form-row">
-      <input type="email" name="email" id="email" placeholder="Email" />
+      <input
+        type="email"
+        name="email"
+        id="email"
+        placeholder="Email"
+        formControlName="email"
+      />
     </div>
     <div class="form-row">
       <div class="form-items-group-row">
-        <input
-          type="tel"
-          name="phoneNumber"
-          id="phoneNumber"
+        <p-inputMask
+          mask="999-999-9999"
           placeholder="Phone Number"
+          formControlName="phoneNumber"
         />
-        <input type="date" name="dob" id="dob" />
+        <p-calendar
+          dateFormat="dd.mm.yy"
+          [iconDisplay]="'input'"
+          [showIcon]="true"
+          placeholder="Date of Birth"
+          formControlName="dateOfBirth"
+        />
       </div>
     </div>
 
     <div class="form-row">
       <p>Your account details</p>
-      <input type="text" name="username" id="username" placeholder="Username" />
+      <input
+        type="text"
+        name="username"
+        id="username"
+        placeholder="Username"
+        formControlName="username"
+      />
     </div>
     <div class="form-row">
       <div class="form-items-group-row">
-        <input
-          type="password"
-          name="password"
-          id="password"
+        <p-password
           placeholder="Password"
-        />
+          [toggleMask]="true"
+          formControlName="password"
+        >
+          <ng-template pTemplate="header">
+            <h6>Pick a password</h6>
+          </ng-template>
+          <ng-template pTemplate="footer">
+            <p-divider />
+            <p class="mt-2">Suggestions</p>
+            <ul class="pl-2 ml-2 mt-0" style="line-height: 1.5">
+              <li>Minimum 8 characters</li>
+              <li>At least one lowercase</li>
+              <li>At least one uppercase</li>
+              <li>At least one numeric</li>
+              <li>At least one special character</li>
+            </ul>
+          </ng-template>
+        </p-password>
+
         <input
           type="password"
           name="confirmPassword"
           id="confirmPassword"
           placeholder="Confirm Password"
+          formControlName="confirmPassword"
         />
       </div>
     </div>
@@ -48,7 +99,9 @@
     <div class="form-row">
       <div class="form-items-group-column">
         <input type="submit" value="Sign up" />
-        <a class="already-have-acc-msg" (click)="onShowSignIn()">Already have an account? Sign in</a>
+        <a class="already-have-acc-msg" (click)="onShowSignin()"
+          >Already have an account? Sign in</a
+        >
         <a href="#">Privacy Policy and Terms of Use</a>
       </div>
     </div>

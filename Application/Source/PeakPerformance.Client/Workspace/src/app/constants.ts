@@ -8,4 +8,10 @@ export class Constants {
 
   // Route Titles
   static readonly TITLE = 'PeakPerformance';
+
+  // RegEx
+
+  static readonly REGEX_PASSWORD =
+    /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[^a-zA-Z0-9]).{8,}$/;
+  static readonly REGEX_PHONE_NUMBER = /^\d{3}-\d{3}-\d{4}$/;
 }

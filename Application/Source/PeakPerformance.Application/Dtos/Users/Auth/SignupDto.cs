@@ -26,7 +26,7 @@ public class SignupDto
     public string ConfirmPassword { get; set; } = string.Empty;
 
     [Description("Date of Birth")]
-    public DateOnly DateOfBirth { get; set; }
+    public DateTime DateOfBirth { get; set; }
 
     [Description("Phone Number")]
     public string PhoneNumber { get; set; } = string.Empty;

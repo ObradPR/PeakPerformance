@@ -25,6 +25,13 @@ div.sign-up-holder {
         @include flex(column, center, nowrap, center);
       }
 
+      p-password {
+        text-align: start;
+      }
+
+      p-inputMask,
+      p-calendar,
+      p-password,
       input {
         margin-bottom: 1.5rem;
       }
@@ -40,9 +47,10 @@ div.sign-up-holder {
         width: 100%;
       }
 
-      [type="tel"],
-      [type="date"],
-      [type="password"] {
+      [type="password"],
+      p-inputMask,
+      p-calendar,
+      p-password {
         width: 47%;
       }
 

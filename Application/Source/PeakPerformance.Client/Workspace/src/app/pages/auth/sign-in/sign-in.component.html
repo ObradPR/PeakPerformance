@@ -1,6 +1,6 @@
 <div class="sign-in-holder">
   <h1>Sign <span class="highlight-text-yellow">in</span></h1>
-  <form [formGroup]="signInForm">
+  <form [formGroup]="signinForm">
     <div class="form-row">
       <input type="text" name="username" id="username" placeholder="Username" />
     </div>
@@ -15,7 +15,7 @@
     </div>
     <div class="form-row">
       <input type="submit" value="Sign in" />
-      <a (click)="onShowSignUp()">Don't have an account? Sign up</a>
+      <a (click)="onShowSignup()">Don't have an account? Sign up</a>
     </div>
   </form>
 </div>

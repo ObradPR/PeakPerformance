@@ -1,17 +1,11 @@
-import {
-  Component,
-  ElementRef,
-  OnInit,
-  Renderer2,
-  signal,
-} from '@angular/core';
-import { ActivatedRoute, RedirectCommand, Router } from '@angular/router';
+import { Component, OnInit, signal } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
+import { take } from 'rxjs';
+import { formAnimation } from '../../animations/form-animation';
+import { Constants } from '../../constants';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
-import { Constants } from '../../constants';
-import { formAnimation } from '../../animations/form-animation';
-import { take } from 'rxjs';
 
 type TLayoutType = 'sign-in' | 'sign-up';
 type TUrlSegment = string | null | TLayoutType | undefined;
@@ -26,8 +20,8 @@ type TUrlSegment = string | null | TLayoutType | undefined;
 })
 export class AuthComponent implements OnInit {
   formType?: TUrlSegment;
-  isSignInForm = signal(true);
-  isSignUpForm = signal(false);
+  isSigninForm = signal(true);
+  isSignupForm = signal(false);
 
   customOptions: OwlOptions = {
     loop: true,
@@ -43,43 +37,29 @@ export class AuthComponent implements OnInit {
     navSpeed: 1000,
   };
 
-  constructor(
-    private elementRef: ElementRef,
-    private renderer: Renderer2,
-    private route: ActivatedRoute,
-    private router: Router
-  ) {}
+  constructor(private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit(): void {
     this.takeUrlParam();
-    this.selectLayout(this.formType);
   }
 
-  private selectLayout(type: TUrlSegment) {}
-
-  private activeFormsState() {}
-
-  private nonActiveFormsState() {}
-  count = 0;
-  animationDelay = 1000;
-  toggleForms(type: TUrlSegment, isSignIn: boolean) {
-    console.log(type);
+  toggleForms(type: TUrlSegment, isSignin: boolean) {
     if (type === Constants.ROUTE_SIGN_UP) {
       this.router.navigateByUrl('/auth/' + Constants.ROUTE_SIGN_UP);
     } else if (type === Constants.ROUTE_SIGN_IN) {
       this.router.navigateByUrl('auth/' + Constants.ROUTE_SIGN_IN);
     }
 
-    if (isSignIn) {
-      this.isSignUpForm.set(false);
+    if (isSignin) {
+      this.isSignupForm.set(false);
 
       setTimeout(() => {
-        this.isSignInForm.set(true);
-      }, 1000);
+        this.isSigninForm.set(true);
+      }, 900);
     } else {
-      this.isSignInForm.set(false);
+      this.isSigninForm.set(false);
       setTimeout(() => {
-        this.isSignUpForm.set(true);
+        this.isSignupForm.set(true);
       }, 450);
     }
   }
@@ -87,10 +67,18 @@ export class AuthComponent implements OnInit {
   private takeUrlParam() {
     this.route.paramMap.pipe(take(1)).subscribe((params) => {
       this.formType = params.get('type');
-      this.toggleForms(
-        this.formType,
-        this.formType === Constants.ROUTE_SIGN_IN ? true : false
-      );
+
+      if (
+        this.formType !== Constants.ROUTE_SIGN_IN &&
+        this.formType !== Constants.ROUTE_SIGN_UP
+      ) {
+        this.toggleForms(Constants.ROUTE_SIGN_IN, true);
+      } else {
+        this.toggleForms(
+          this.formType,
+          this.formType === Constants.ROUTE_SIGN_IN ? true : false
+        );
+      }
     });
   }
 }

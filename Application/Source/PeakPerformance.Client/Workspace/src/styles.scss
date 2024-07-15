@@ -1,28 +1,6 @@
-// Variable
-$yellow-rgb: rgba(255, 193, 7, 1);
-$yellow-hex: #ffc107;
-$light-yellow-rgb: rgba(255, 213, 79, 1);
-$light-yellow-hex: #ffd54f;
-$white-rgb: rgba(255, 255, 255, 1);
-$white-hex: #ffffff;
-$dark-grey-rgb: rgba(52, 58, 64, 1);
-$dark-grey-hex: #343a40;
-$light-grey-rgb: rgba(248, 249, 250, 1);
-$light-grey-hex: #f8f9fa;
-$teal-rgb: rgba(32, 201, 151, 1);
-$teal-hex: #20c997;
-$grey-rgb: rgba(108, 117, 125, 1);
-$grey-hex: #6c757d;
-$blue-rgb: rgba(0, 123, 255, 1);
-$blue-hex: #007bff;
-$light-blue-rgb: rgba(102, 178, 255, 1);
-$light-blue-hex: #66b2ff;
-$dark-blue-rgb: rgb(0, 86, 179, 1);
-$dark-blue-hex: #0056b3;
-
-$border-radius: 10px;
-$transition: all 0.2s ease-in-out;
-$input-box-shadow: 0px 0px 3px 4px $yellow-rgb;
+@import "assets/styles/variables";
+@import "assets/styles/ngx-owl-carousel-o";
+@import "assets/styles/primeng";
 
 // Mixins
 @mixin border($width: 1px, $style: solid, $color: $light-green) {
@@ -46,6 +24,7 @@ $input-box-shadow: 0px 0px 3px 4px $yellow-rgb;
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+  font-family: "Roboto", sans-serif;
 }
 
 span.highlight-text-yellow {
@@ -74,6 +53,7 @@ a:hover {
   border: none;
   font-size: 1em;
   transition: $transition;
+  width: 100%;
 }
 
 [type="text"]:focus,
@@ -90,12 +70,10 @@ a:hover {
   background-color: $yellow-hex;
 }
 
-// Ngx-owl-carousel-o
-
-main.auth .owl-carousel .owl-item img {
-  max-width: auto;
-  height: 100dvh;
-  object-fit: cover;
+.validation-input-icon {
+  color: $red-hex;
+  position: absolute;
+  top: 50%;
+  right: -1.5rem;
+  transform: translateY(-50%);
 }
-
-// PrimeNg
