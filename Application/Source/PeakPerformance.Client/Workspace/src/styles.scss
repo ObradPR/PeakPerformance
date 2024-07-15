@@ -21,10 +21,13 @@
 }
 
 * {
+  font-family: "Roboto", sans-serif;
+}
+
+body {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  font-family: "Roboto", sans-serif;
 }
 
 span.highlight-text-yellow {
@@ -70,10 +73,7 @@ a:hover {
   background-color: $yellow-hex;
 }
 
-.validation-input-icon {
-  color: $red-hex;
-  position: absolute;
-  top: 50%;
-  right: -1.5rem;
-  transform: translateY(-50%);
+.is-invalid {
+  box-shadow: $is-invalid-box-shadow;
+  border-radius: $border-radius;
 }

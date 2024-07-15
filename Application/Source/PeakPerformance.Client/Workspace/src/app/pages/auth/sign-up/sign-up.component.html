@@ -1,6 +1,6 @@
 <div class="sign-up-holder">
   <h1>Sign <span class="highlight-text-yellow">up</span></h1>
-  <form [formGroup]="signupForm" (ngSubmit)="onSignUp()">
+  <form [formGroup]="signupForm" (ngSubmit)="onSignup()">
     <div class="form-row">
       <p>Your personal information</p>
       <div class="form-items-group-row">
@@ -10,6 +10,21 @@
           id="fName"
           placeholder="First Name"
           formControlName="firstName"
+          pTooltip="First name is required and has to be between 2 and 20 characters."
+          tooltipPosition="top"
+          tooltipEvent="focus"
+          [tooltipDisabled]="
+            !(
+              signupForm.get('firstName')?.touched &&
+              signupForm.get('firstName')?.invalid
+            )
+          "
+          [ngClass]="{
+            'is-invalid':
+              signupForm.get('firstName')?.invalid &&
+              (signupForm.get('firstName')?.touched ||
+                signupForm.get('firstName')?.dirty)
+          }"
         />
         <input
           type="text"
@@ -24,6 +39,21 @@
           id="lName"
           placeholder="Last Name"
           formControlName="lastName"
+          pTooltip="Last name is required and has to be between 2 and 30 characters."
+          tooltipPosition="top"
+          tooltipEvent="focus"
+          [tooltipDisabled]="
+            !(
+              signupForm.get('lastName')?.touched &&
+              signupForm.get('lastName')?.invalid
+            )
+          "
+          [ngClass]="{
+            'is-invalid':
+              signupForm.get('lastName')?.invalid &&
+              (signupForm.get('lastName')?.touched ||
+                signupForm.get('lastName')?.dirty)
+          }"
         />
       </div>
     </div>
@@ -34,6 +64,19 @@
         id="email"
         placeholder="Email"
         formControlName="email"
+        pTooltip="Email is required with having 100 characters at most, with proper email format."
+        tooltipPosition="top"
+        tooltipEvent="focus"
+        [tooltipDisabled]="
+          !(
+            signupForm.get('email')?.touched && signupForm.get('email')?.invalid
+          )
+        "
+        [ngClass]="{
+          'is-invalid':
+            signupForm.get('email')?.invalid &&
+            (signupForm.get('email')?.touched || signupForm.get('email')?.dirty)
+        }"
       />
     </div>
     <div class="form-row">
@@ -42,6 +85,21 @@
           mask="999-999-9999"
           placeholder="Phone Number"
           formControlName="phoneNumber"
+          pTooltip="Phone is required."
+          tooltipPosition="top"
+          tooltipEvent="focus"
+          [tooltipDisabled]="
+            !(
+              signupForm.get('phoneNumber')?.touched &&
+              signupForm.get('phoneNumber')?.invalid
+            )
+          "
+          [ngClass]="{
+            'is-invalid':
+              signupForm.get('phoneNumber')?.invalid &&
+              (signupForm.get('phoneNumber')?.touched ||
+                signupForm.get('phoneNumber')?.dirty)
+          }"
         />
         <p-calendar
           dateFormat="dd.mm.yy"
@@ -49,6 +107,21 @@
           [showIcon]="true"
           placeholder="Date of Birth"
           formControlName="dateOfBirth"
+          pTooltip="Date of Birth is required, you have to be at least 18yso."
+          tooltipPosition="top"
+          tooltipEvent="focus"
+          [tooltipDisabled]="
+            !(
+              signupForm.get('dateOfBirth')?.touched &&
+              signupForm.get('dateOfBirth')?.invalid
+            )
+          "
+          [ngClass]="{
+            'is-invalid':
+              signupForm.get('dateOfBirth')?.invalid &&
+              (signupForm.get('dateOfBirth')?.touched ||
+                signupForm.get('dateOfBirth')?.dirty)
+          }"
         />
       </div>
     </div>
@@ -61,6 +134,21 @@
         id="username"
         placeholder="Username"
         formControlName="username"
+        pTooltip="Username is required."
+        tooltipPosition="top"
+        tooltipEvent="focus"
+        [tooltipDisabled]="
+          !(
+            signupForm.get('username')?.touched &&
+            signupForm.get('username')?.invalid
+          )
+        "
+        [ngClass]="{
+          'is-invalid':
+            signupForm.get('username')?.invalid &&
+            (signupForm.get('username')?.touched ||
+              signupForm.get('username')?.dirty)
+        }"
       />
     </div>
     <div class="form-row">
@@ -69,10 +157,22 @@
           placeholder="Password"
           [toggleMask]="true"
           formControlName="password"
+          pTooltip="Password is required, with proper password format."
+          tooltipPosition="top"
+          tooltipEvent="focus"
+          [tooltipDisabled]="
+            !(
+              signupForm.get('password')?.touched &&
+              signupForm.get('password')?.invalid
+            )
+          "
+          [ngClass]="{
+            'is-invalid':
+              signupForm.get('password')?.invalid &&
+              (signupForm.get('password')?.touched ||
+                signupForm.get('password')?.dirty)
+          }"
         >
-          <ng-template pTemplate="header">
-            <h6>Pick a password</h6>
-          </ng-template>
           <ng-template pTemplate="footer">
             <p-divider />
             <p class="mt-2">Suggestions</p>
@@ -92,6 +192,21 @@
           id="confirmPassword"
           placeholder="Confirm Password"
           formControlName="confirmPassword"
+          pTooltip="Confirmed Password is required."
+          tooltipPosition="top"
+          tooltipEvent="focus"
+          [tooltipDisabled]="
+            !(
+              signupForm.get('confirmPassword')?.touched &&
+              signupForm.get('confirmPassword')?.invalid
+            )
+          "
+          [ngClass]="{
+            'is-invalid':
+              signupForm.get('confirmPassword')?.invalid &&
+              (signupForm.get('confirmPassword')?.touched ||
+                signupForm.get('confirmPassword')?.dirty)
+          }"
         />
       </div>
     </div>

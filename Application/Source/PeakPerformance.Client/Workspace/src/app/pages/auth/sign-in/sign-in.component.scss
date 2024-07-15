@@ -54,3 +54,11 @@ div.sign-in-holder {
     }
   }
 }
+
+::ng-deep.p-tooltip-text {
+  background-color: $red-hex;
+}
+
+::ng-deep.p-tooltip-arrow {
+  border-top-color: $red-hex;
+}

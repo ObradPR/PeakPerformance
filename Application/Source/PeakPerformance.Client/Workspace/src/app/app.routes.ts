@@ -3,10 +3,17 @@ import { Constants } from './constants';
 
 export const routes: Routes = [
   {
-    path: Constants.ROUTE_AUTH + '/:type',
-    title: 'Auth | ' + Constants.TITLE,
+    path: Constants.ROUTE_AUTH,
     loadComponent: () =>
       import('./pages/auth/auth.component').then((m) => m.AuthComponent),
+    children: [
+      {
+        path: ':type',
+        title: 'Auth | ' + Constants.TITLE,
+        loadComponent: () =>
+          import('./pages/auth/auth.component').then((m) => m.AuthComponent),
+      },
+    ],
   },
   {
     path: Constants.ROUTE_NOT_FOUND,

@@ -1,8 +1,29 @@
 <div class="sign-in-holder">
   <h1>Sign <span class="highlight-text-yellow">in</span></h1>
-  <form [formGroup]="signinForm">
+  <form [formGroup]="signinForm" (ngSubmit)="onSignin()">
     <div class="form-row">
-      <input type="text" name="username" id="username" placeholder="Username" />
+      <input
+        type="text"
+        name="username"
+        id="username"
+        placeholder="Username"
+        formControlName="username"
+        pTooltip="Username is required."
+        tooltipPosition="top"
+        tooltipEvent="focus"
+        [tooltipDisabled]="
+          !(
+            signinForm.get('username')?.touched &&
+            signinForm.get('username')?.invalid
+          )
+        "
+        [ngClass]="{
+          'is-invalid':
+            signinForm.get('username')?.invalid &&
+            (signinForm.get('username')?.touched ||
+              signinForm.get('username')?.dirty)
+        }"
+      />
     </div>
     <div class="form-row">
       <input
@@ -10,6 +31,22 @@
         name="password"
         id="password"
         placeholder="Password"
+        formControlName="password"
+        pTooltip="Is empty or it is wrong format."
+        tooltipPosition="top"
+        tooltipEvent="focus"
+        [tooltipDisabled]="
+          !(
+            signinForm.get('password')?.touched &&
+            signinForm.get('password')?.invalid
+          )
+        "
+        [ngClass]="{
+          'is-invalid':
+            signinForm.get('password')?.invalid &&
+            (signinForm.get('password')?.touched ||
+              signinForm.get('password')?.dirty)
+        }"
       />
       <a href="#" class="forgot-password">Forgot Password?</a>
     </div>

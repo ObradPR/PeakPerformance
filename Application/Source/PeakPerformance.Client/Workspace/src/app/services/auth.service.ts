@@ -1,7 +1,11 @@
 import { Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, map } from 'rxjs';
-import { IAuthorizationDto, ISignupDto } from '../_generated/interfaces';
+import {
+  IAuthorizationDto,
+  ISigninDto,
+  ISignupDto,
+} from '../_generated/interfaces';
 import { AuthController } from '../_generated/services';
 import { DateTime } from 'luxon';
 
@@ -25,7 +29,14 @@ export class AuthService {
 
   constructor(private router: Router, private authController: AuthController) {}
 
-  signin(credentials: any) {}
+  signin(user: ISigninDto) {
+    return this.authController.Signin(user).pipe(
+      map((result) => {
+        if (result) this.setCurrentUser(result);
+        return result;
+      })
+    );
+  }
 
   signup(user: ISignupDto) {
     return this.authController.Signup(user).pipe(
@@ -45,8 +56,6 @@ export class AuthService {
   setCurrentUser(result: IAuthorizationDto) {
     const tokenInfo = this.getDecodedToken(result.token);
 
-    console.log(tokenInfo);
-
     const userSource: IUserSource = {
       id: tokenInfo.ID,
       username: tokenInfo.USERNAME,
@@ -59,8 +68,6 @@ export class AuthService {
     Array.isArray(tokenInfo.roles)
       ? (userSource.roles = tokenInfo.ROLES)
       : userSource.roles.push(tokenInfo.ROLES);
-
-    console.log(userSource);
 
     localStorage.setItem('token', result.token);
     this.currentUserSource.next(userSource);

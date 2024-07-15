@@ -1,3 +1,5 @@
+import { CommonModule } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, output } from '@angular/core';
 import {
   FormBuilder,
@@ -6,18 +8,16 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { CommonModule, DatePipe } from '@angular/common';
-import { HttpErrorResponse } from '@angular/common/http';
-
-import { InputMaskModule } from 'primeng/inputmask';
 import { CalendarModule } from 'primeng/calendar';
-import { PasswordModule } from 'primeng/password';
 import { DividerModule } from 'primeng/divider';
-
-import { Constants } from '../../../constants';
-import * as validators from '../../../validators';
+import { InputMaskModule } from 'primeng/inputmask';
+import { PasswordModule } from 'primeng/password';
 import { ISignupDto } from '../../../_generated/interfaces';
+import { Constants } from '../../../constants';
 import { AuthService } from '../../../services/auth.service';
+import * as validators from '../../../validators';
+import { TooltipModule } from 'primeng/tooltip';
+import { ToastService } from '../../../services/toast.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -30,20 +30,19 @@ import { AuthService } from '../../../services/auth.service';
     DividerModule,
     ReactiveFormsModule,
     FormsModule,
+    TooltipModule,
   ],
   templateUrl: './sign-up.component.html',
   styleUrl: './sign-up.component.scss',
-  providers: [DatePipe],
 })
 export class SignUpComponent implements OnInit {
   showSigninFormEvent = output<string>();
   signupForm: FormGroup = this.fb.group({});
-  signupErrors: string[] = [];
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private datePipe: DatePipe
+    private toastService: ToastService
   ) {}
 
   ngOnInit(): void {
@@ -60,7 +59,7 @@ export class SignUpComponent implements OnInit {
           Validators.minLength(2),
         ],
       ],
-      middleName: [''],
+      middleName: [null],
       lastName: [
         '',
         [
@@ -100,17 +99,15 @@ export class SignUpComponent implements OnInit {
     this.showSigninFormEvent.emit(Constants.ROUTE_SIGN_IN);
   }
 
-  async onSignUp() {
+  async onSignup() {
     if (this.signupForm.invalid) return;
 
     const signupUser: ISignupDto = this.signupForm.value;
 
     try {
       await this.authService.signup(signupUser).toResult();
+      this.toastService.showSuccess('Success', 'Successfully signed up.');
     } catch (ex) {
-      const errors: string[] = (ex as HttpErrorResponse).error.error.user;
-      this.signupErrors = errors;
-      console.log(this.signupErrors);
       throw ex;
     } finally {
       // this.pageLoader.hideLoader();

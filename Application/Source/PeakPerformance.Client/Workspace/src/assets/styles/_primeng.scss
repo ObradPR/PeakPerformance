@@ -1,17 +1,36 @@
 // PrimeNg
 
-::ng-deep.p-input-icon-right > .p-icon-wrapper {
+.p-input-icon-right > .p-icon-wrapper {
   margin-top: -0.5rem;
 }
 
-::ng-deep.p-password-panel {
-  padding: 0.5rem 1.8rem;
+.p-password-panel {
+  padding: 0.2rem 0.5rem;
 }
 
-::ng-deep.p-password {
+.p-password {
   width: 100%;
 }
 
-::ng-deep.p-calendar {
+.p-calendar {
   width: 100%;
+}
+
+.p-tooltip {
+  padding-bottom: 8px;
+  max-width: 300px;
+  width: auto;
+  overflow: hidden;
+  white-space: normal;
+}
+
+.p-tooltip-text {
+  padding: 0.5rem;
+  width: auto;
+  max-width: 300px;
+  white-space: normal;
+}
+
+.p-tooltip-arrow {
+  margin-bottom: 2px;
 }
