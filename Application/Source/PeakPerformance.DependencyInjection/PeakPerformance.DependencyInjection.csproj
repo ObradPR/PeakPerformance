@@ -4,9 +4,15 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <UserSecretsId>e2790704-d1cb-4ad9-ba7b-cc6249e68bd7</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="6.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PeakPerformance.AbstractAPI\PeakPerformance.AbstractAPI.csproj" />
     <ProjectReference Include="..\PeakPerformance.Application.Identity\PeakPerformance.Application.Identity.csproj" />
     <ProjectReference Include="..\PeakPerformance.Application\PeakPerformance.Application.csproj" />
     <ProjectReference Include="..\PeakPerformance.Infrastructure\PeakPerformance.Infrastructure.csproj" />

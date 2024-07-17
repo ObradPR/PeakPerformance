@@ -37,6 +37,7 @@ import { ToastService } from '../../../services/toast.service';
 })
 export class SignUpComponent implements OnInit {
   showSigninFormEvent = output<string>();
+  showCodeVerifyEvent = output<ISignupDto>();
   signupForm: FormGroup = this.fb.group({});
 
   constructor(
@@ -105,8 +106,10 @@ export class SignUpComponent implements OnInit {
     const signupUser: ISignupDto = this.signupForm.value;
 
     try {
-      await this.authService.signup(signupUser).toResult();
-      this.toastService.showSuccess('Success', 'Successfully signed up.');
+      await this.authService
+        .validateEmail(signupUser.email, signupUser.username)
+        .toResult();
+      this.showCodeVerifyEvent.emit(signupUser);
     } catch (ex) {
       throw ex;
     } finally {

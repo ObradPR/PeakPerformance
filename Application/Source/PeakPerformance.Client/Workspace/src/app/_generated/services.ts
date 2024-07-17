@@ -54,6 +54,20 @@ import { ISigninDto } from './interfaces';
 		.pipe(map(response => response.body));
 		
 	}
+	public ValidateEmail(email: string, username: string) : Observable<any>
+	{
+		const body = <any>{'email': email,'username': username};
+		return this.httpClient.get<any>(
+		this.settingsService.createApiUrl('Auth/ValidateEmail'),
+		{
+			params: new HttpParams({ fromObject: body }),
+			responseType: 'json',
+			observe: 'response',
+			withCredentials: true
+		})
+		.pipe(map(response => response.body));
+		
+	}
 	constructor (httpClient: HttpClient, settingsService: SettingsService)
 	{
 		super(httpClient, settingsService);

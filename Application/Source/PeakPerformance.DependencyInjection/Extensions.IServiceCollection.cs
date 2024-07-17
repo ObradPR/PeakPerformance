@@ -5,10 +5,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using PeakPerformance.AbstractAPI.Handlers;
 using PeakPerformance.Application.BusinessLogic._Base;
 using PeakPerformance.Application.BusinessLogic._Behaviors;
 using PeakPerformance.Application.Identity.Interfaces;
 using PeakPerformance.Application.Identity.Services;
+using PeakPerformance.Application.Interfaces;
+using PeakPerformance.Application.Services;
+using PeakPerformance.Common.Extensions;
 using PeakPerformance.Common.Interfaces;
 using PeakPerformance.Domain.Repositories;
 using PeakPerformance.Infrastructure.Logger;
@@ -22,10 +26,13 @@ public static partial class Extensions
 {
     public static IServiceCollection AllApplicationServices(this IServiceCollection services, IConfiguration configuration)
     {
+        var secrets = CreateSecretConfiguration();
+
         PersistenceServices(services, configuration);
-        ApplicationServices(services);
-        ApplicationIdentityService(services, configuration);
+        ApplicationServices(services, secrets);
+        ApplicationIdentityService(services, secrets);
         InfrastructureServices(services);
+        IntegrationServices(services, secrets);
 
         return services;
     }
@@ -40,20 +47,29 @@ public static partial class Extensions
         return services;
     }
 
-    private static IServiceCollection ApplicationServices(IServiceCollection services)
+    private static IServiceCollection ApplicationServices(IServiceCollection services, IConfiguration secrets)
     {
         var assembly = typeof(BaseCommand<>).Assembly;
 
         services.AddMediatR(config => config.RegisterServicesFromAssembly(assembly));
         services.AddValidatorsFromAssembly(assembly);
         services.AddAutoMapper(assembly);
+        services.AddSingleton<IEmailService>(provider =>
+            new EmailService(
+                secrets["SmtpSettings:Server"]!,
+                secrets["SmtpSettings:Port"]!.ToInt(),
+                secrets["SmtpSettings:Username"]!,
+                secrets["SmtpSettings:Password"]!
+            )
+        );
+        services.AddScoped<IVerificationCodeService, VerificationCodeService>();
 
         ApplicationPipelineBehaviors(services);
 
         return services;
     }
 
-    private static IServiceCollection ApplicationIdentityService(IServiceCollection services, IConfiguration configuration)
+    private static IServiceCollection ApplicationIdentityService(IServiceCollection services, IConfiguration secrets)
     {
         services.AddAuthentication(opt =>
         {
@@ -67,9 +83,9 @@ public static partial class Extensions
                 ValidateAudience = true,
                 ValidateLifetime = true,
                 ValidateIssuerSigningKey = true,
-                ValidIssuer = configuration["Jwt:Issuer"],
-                ValidAudience = configuration["Jwt:Audience"],
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]!)),
+                ValidIssuer = secrets["Jwt:Issuer"],
+                ValidAudience = secrets["Jwt:Audience"],
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secrets["Jwt:Key"]!)),
                 ClockSkew = TimeSpan.Zero
             };
         });
@@ -92,6 +108,13 @@ public static partial class Extensions
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(PerformanceMonitoringBehavior<,>));
+
+        return services;
+    }
+
+    private static IServiceCollection IntegrationServices(IServiceCollection services, IConfiguration secrets)
+    {
+        services.AddSingleton(new EmailValidation(secrets["AbstractAPI:ApiCredentials"]!));
 
         return services;
     }

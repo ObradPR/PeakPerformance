@@ -37,8 +37,15 @@
       } @if(isSignupForm()){
       <app-sign-up
         (showSigninFormEvent)="toggleForms($event, true)"
+        (showCodeVerifyEvent)="showSignupCodeVerify($event)"
         [@formAnimation]
         class="form-container sign-up-form"
+      />
+      } @if(isCodeVerify()){
+      <app-code-verification
+        [@formAnimation]
+        [signupUser]="signupUser"
+        class="form-container code-verify"
       />
       }
     </div>

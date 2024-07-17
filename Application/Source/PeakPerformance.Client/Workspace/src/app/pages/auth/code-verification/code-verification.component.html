@@ -1,0 +1,18 @@
+<div class="code-verification-holder">
+  <h1>Verification <span class="highlight-text-yellow">code</span></h1>
+  <form (ngSubmit)="onCodeVerify()">
+    <div class="form-row">
+      <p>Code is sent to your email address</p>
+      <p-inputOtp
+        [integerOnly]="true"
+        [length]="6"
+        [(ngModel)]="codeValue"
+        name="codeValue"
+      />
+    </div>
+    <div class="form-row">
+      <input type="submit" value="Submit code" />
+      <a (click)="onResendCode()">Resend Code</a>
+    </div>
+  </form>
+</div>

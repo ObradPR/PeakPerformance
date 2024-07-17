@@ -4,8 +4,10 @@ import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
 import { take } from 'rxjs';
 import { formAnimation } from '../../animations/form-animation';
 import { Constants } from '../../constants';
+import { CodeVerificationComponent } from './code-verification/code-verification.component';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
+import { ISignupDto } from '../../_generated/interfaces';
 
 type TLayoutType = 'sign-in' | 'sign-up';
 type TUrlSegment = string | null | TLayoutType | undefined;
@@ -13,7 +15,12 @@ type TUrlSegment = string | null | TLayoutType | undefined;
 @Component({
   selector: 'app-auth',
   standalone: true,
-  imports: [SignInComponent, SignUpComponent, CarouselModule],
+  imports: [
+    SignInComponent,
+    SignUpComponent,
+    CarouselModule,
+    CodeVerificationComponent,
+  ],
   templateUrl: './auth.component.html',
   styleUrl: './auth.component.scss',
   animations: [formAnimation],
@@ -22,6 +29,8 @@ export class AuthComponent implements OnInit {
   formType?: TUrlSegment;
   isSigninForm = signal(true);
   isSignupForm = signal(false);
+  isCodeVerify = signal(false);
+  signupUser: ISignupDto | undefined = undefined;
 
   customOptions: OwlOptions = {
     loop: true,
@@ -62,6 +71,16 @@ export class AuthComponent implements OnInit {
         this.isSignupForm.set(true);
       }, 450);
     }
+  }
+
+  showSignupCodeVerify(signupUser: ISignupDto) {
+    // if (!signupUser) return;
+
+    this.isSignupForm.set(false);
+    setTimeout(() => {
+      this.signupUser = signupUser;
+      this.isCodeVerify.set(true);
+    }, 900);
   }
 
   private takeUrlParam() {

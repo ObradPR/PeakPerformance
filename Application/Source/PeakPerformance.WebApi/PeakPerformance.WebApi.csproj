@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\PeakPerformance.AbstractAPI\PeakPerformance.AbstractAPI.csproj" />
     <ProjectReference Include="..\PeakPerformance.Application\PeakPerformance.Application.csproj" />
     <ProjectReference Include="..\PeakPerformance.Common\PeakPerformance.Common.csproj" />
     <ProjectReference Include="..\PeakPerformance.DependencyInjection\PeakPerformance.DependencyInjection.csproj" />

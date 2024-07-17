@@ -14,6 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\PeakPerformance.AbstractAPI\PeakPerformance.AbstractAPI.csproj" />
     <ProjectReference Include="..\PeakPerformance.Application.Identity\PeakPerformance.Application.Identity.csproj" />
     <ProjectReference Include="..\PeakPerformance.Common\PeakPerformance.Common.csproj" />
     <ProjectReference Include="..\PeakPerformance.Domain\PeakPerformance.Domain.csproj" />

@@ -98,4 +98,7 @@ public static partial class Extensions
 
         return descriptionAttribute?.Description ?? propertyInfo.Name;
     }
+
+    public static int ToInt(this string value)
+        => int.Parse(value);
 }

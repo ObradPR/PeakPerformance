@@ -1,0 +1,30 @@
+@import "../../../../styles.scss";
+
+div.code-verification-holder {
+  @include size(50%, 70dvh);
+  text-align: center;
+  margin: 10rem auto 0;
+
+  h1 {
+    margin-bottom: 3rem;
+    font-size: 2em;
+  }
+
+  form {
+    @include flex(column, space-between, nowrap, center);
+    @include size(100%, auto);
+
+    div.form-row {
+      width: 100%;
+
+      [type="submit"] {
+        width: auto;
+        margin-bottom: 0.8rem;
+      }
+
+      &:nth-child(2) {
+        @include flex(column, center, nowrap, center);
+      }
+    }
+  }
+}

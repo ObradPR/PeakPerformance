@@ -31,6 +31,8 @@ public class SignupDto
     [Description("Phone Number")]
     public string PhoneNumber { get; set; } = string.Empty;
 
+    public int VerifyCode { get; set; }
+
     // Logic
 
     public void ToModel(User user, IUserManager userManager, bool isSigningUp = true)

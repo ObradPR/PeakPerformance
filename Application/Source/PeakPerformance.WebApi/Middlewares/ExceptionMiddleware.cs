@@ -36,6 +36,9 @@ public class ExceptionMiddleware(RequestDelegate next)
             ValidationException _ => (int)HttpStatusCode.BadRequest,
             ForbiddenException _ => (int)HttpStatusCode.Forbidden,
             FluentValidationException _ => (int)HttpStatusCode.UnprocessableEntity,
+            EmailValidationException _ => (int)HttpStatusCode.BadRequest,
+            VerificationCodeException _ => (int)HttpStatusCode.BadRequest,
+            AccountExistsException _ => (int)HttpStatusCode.BadRequest,
             ServerErrorException _ => (int)HttpStatusCode.InternalServerError,
             _ => (int)HttpStatusCode.InternalServerError,
         };

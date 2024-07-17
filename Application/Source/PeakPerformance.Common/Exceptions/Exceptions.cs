@@ -12,3 +12,9 @@ public class UnauthorizedException() : Exception("Unauthorized access. Authentic
 public class ValidationException() : Exception("Validation failed for the request.");
 
 public class ForbiddenException() : Exception("Access forbidden.");
+
+public class EmailValidationException() : Exception("Email does not exist.");
+
+public class VerificationCodeException() : Exception("Verification code does not match the one provided.");
+
+public class AccountExistsException() : Exception("Account with given email or username already exists.");

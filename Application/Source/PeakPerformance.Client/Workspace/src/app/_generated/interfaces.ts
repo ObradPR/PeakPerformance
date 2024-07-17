@@ -18,4 +18,11 @@ export interface ISignupDto
 	confirmPassword: string;
 	dateOfBirth: Date;
 	phoneNumber: string;
+	verifyCode: number;
+}
+export interface IEmailDto
+{
+	toEmail: string;
+	subject: string;
+	body: string;
 }

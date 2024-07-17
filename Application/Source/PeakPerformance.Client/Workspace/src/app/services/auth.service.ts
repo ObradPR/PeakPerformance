@@ -81,4 +81,8 @@ export class AuthService {
   getToken() {
     return localStorage.getItem('token');
   }
+
+  validateEmail(email: string, username: string) {
+    return this.authController.ValidateEmail(email, username);
+  }
 }

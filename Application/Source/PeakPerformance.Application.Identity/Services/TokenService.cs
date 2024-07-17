@@ -3,25 +3,28 @@ using Microsoft.IdentityModel.Tokens;
 using PeakPerformance.Application.Identity.Interfaces;
 using PeakPerformance.Common;
 using System.IdentityModel.Tokens.Jwt;
+using System.Reflection;
 using System.Security.Claims;
 using System.Text;
 using System.Text.RegularExpressions;
 
 namespace PeakPerformance.Application.Identity.Services;
 
-public class TokenService(IConfiguration configuration) : ITokenService
+public class TokenService : ITokenService
 {
-    private readonly IConfiguration _configuration = configuration;
-
     public string GenerateJwtToken(long userId, string[] roles, string fullName, string email, string username)
     {
+        IConfiguration secrets = new ConfigurationBuilder()
+            .AddUserSecrets(Assembly.GetExecutingAssembly())
+            .Build();
+
         var tokenHandler = new JwtSecurityTokenHandler();
 
         var jwtSecrets = new
         {
-            Key = Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]!),
-            Issuer = _configuration["Jwt:Issuer"],
-            Audience = _configuration["Jwt:Audience"]
+            Key = Encoding.UTF8.GetBytes(secrets["Jwt:Key"]!),
+            Issuer = secrets["Jwt:Issuer"],
+            Audience = secrets["Jwt:Audience"]
         };
 
         var claims = new List<Claim>
