@@ -7,7 +7,8 @@ import { Constants } from '../../constants';
 import { CodeVerificationComponent } from './code-verification/code-verification.component';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
-import { ISignupDto } from '../../_generated/interfaces';
+import { ISignupDto, IValidateUserDto } from '../../_generated/interfaces';
+import { PasswordRecoveryComponent } from './password-recovery/password-recovery.component';
 
 type TLayoutType = 'sign-in' | 'sign-up';
 type TUrlSegment = string | null | TLayoutType | undefined;
@@ -20,6 +21,7 @@ type TUrlSegment = string | null | TLayoutType | undefined;
     SignUpComponent,
     CarouselModule,
     CodeVerificationComponent,
+    PasswordRecoveryComponent,
   ],
   templateUrl: './auth.component.html',
   styleUrl: './auth.component.scss',
@@ -30,7 +32,10 @@ export class AuthComponent implements OnInit {
   isSigninForm = signal(true);
   isSignupForm = signal(false);
   isCodeVerify = signal(false);
+  isPasswordRecovery = signal(false);
+  isChangePassword = signal(false);
   signupUser: ISignupDto | undefined = undefined;
+  passwordRecoveryUser: IValidateUserDto | undefined = undefined;
 
   customOptions: OwlOptions = {
     loop: true,
@@ -73,14 +78,60 @@ export class AuthComponent implements OnInit {
     }
   }
 
-  showSignupCodeVerify(signupUser: ISignupDto) {
-    // if (!signupUser) return;
+  showCodeVerify(user: ISignupDto | IValidateUserDto) {
+    if (this.isSignupDto(user)) {
+      this.isSignupForm.set(false);
 
-    this.isSignupForm.set(false);
+      setTimeout(() => {
+        this.signupUser = user;
+        this.isCodeVerify.set(true);
+      }, 900);
+    } else if (this.isValidateUserDto(user)) {
+      this.isPasswordRecovery.set(false);
+
+      setTimeout(() => {
+        this.passwordRecoveryUser = user;
+        this.isCodeVerify.set(true);
+      }, 450);
+    }
+  }
+
+  private isSignupDto(obj: any): obj is ISignupDto {
+    return 'password' in obj && 'verifyCode' in obj;
+  }
+
+  private isValidateUserDto(obj: any): obj is IValidateUserDto {
+    return 'username' in obj && 'email' in obj;
+  }
+
+  showPasswordRecovery(
+    user: IValidateUserDto | undefined,
+    changePassword: boolean
+  ) {
+    if (changePassword) {
+      this.isCodeVerify.set(false);
+      this.isChangePassword.set(true);
+
+      setTimeout(() => {
+        this.passwordRecoveryUser = user;
+        this.isPasswordRecovery.set(true);
+      }, 300);
+    } else {
+      this.isSigninForm.set(false);
+      this.isChangePassword.set(false);
+
+      setTimeout(() => {
+        this.isPasswordRecovery.set(true);
+      }, 450);
+    }
+  }
+
+  backToSignin() {
+    this.isPasswordRecovery.set(false);
+
     setTimeout(() => {
-      this.signupUser = signupUser;
-      this.isCodeVerify.set(true);
-    }, 900);
+      this.isSigninForm.set(true);
+    }, 450);
   }
 
   private takeUrlParam() {

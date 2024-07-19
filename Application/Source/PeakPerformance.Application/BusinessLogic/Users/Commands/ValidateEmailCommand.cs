@@ -1,14 +1,13 @@
 ﻿using PeakPerformance.AbstractAPI.Handlers;
 using PeakPerformance.Application.Dtos.Emails;
+using PeakPerformance.Application.Dtos.Users.Auth;
 using PeakPerformance.Application.Interfaces;
 
 namespace PeakPerformance.Application.BusinessLogic.Users.Commands;
 
-public class ValidateEmailCommand(string email, string username) : BaseCommand
+public class ValidateEmailCommand(ValidateUserDto user) : BaseCommand
 {
-    public string Email { get; set; } = email;
-
-    public string Username { get; set; } = username;
+    public ValidateUserDto User { get; set; } = user;
 
     // Handlers
     public class ValidateEmailCommandHandler : BaseCommandHandler<ValidateEmailCommand>
@@ -26,17 +25,17 @@ public class ValidateEmailCommand(string email, string username) : BaseCommand
 
         public override async Task Handle(ValidateEmailCommand request, CancellationToken cancellationToken)
         {
-            if (await _unitOfWork.UserRepository.GetExistingUserAsync(request.Email, request.Username, cancellationToken) is not null)
+            if (await _unitOfWork.UserRepository.GetExistingUserAsync(request.User.Email, request.User.Username, strict: false, cancellationToken) is not null)
                 throw new AccountExistsException();
 
-            if ((await _emailValidation.ValidateEmailAsync(request.Email)).Not())
+            if ((await _emailValidation.ValidateEmailAsync(request.User.Email)).Not())
                 throw new EmailValidationException();
 
-            var code = _verificationCodeService.GenerateAndStoreCode(request.Email);
+            var code = _verificationCodeService.GenerateAndStoreCode(request.User.Email);
 
             await _emailService.SendEmailAsync(new EmailDto
             {
-                ToEmail = request.Email,
+                ToEmail = request.User.Email,
                 Subject = "Verification Code",
                 Body = $"Your verification code is: {code}"
             });

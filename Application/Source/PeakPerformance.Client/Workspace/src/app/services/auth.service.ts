@@ -3,11 +3,15 @@ import { Router } from '@angular/router';
 import { BehaviorSubject, map } from 'rxjs';
 import {
   IAuthorizationDto,
+  IChangePasswordDto,
   ISigninDto,
   ISignupDto,
+  IValidateUserCodeDto,
+  IValidateUserDto,
 } from '../_generated/interfaces';
 import { AuthController } from '../_generated/services';
 import { DateTime } from 'luxon';
+import { Constants } from '../constants';
 
 // Interfaces
 interface IUserSource {
@@ -82,7 +86,19 @@ export class AuthService {
     return localStorage.getItem('token');
   }
 
-  validateEmail(email: string, username: string) {
-    return this.authController.ValidateEmail(email, username);
+  validateEmail(validateUser: IValidateUserDto) {
+    return this.authController.ValidateEmail(validateUser);
+  }
+
+  validateUser(validateUser: IValidateUserDto) {
+    return this.authController.ValidateUser(validateUser);
+  }
+
+  validateCode(validateUserCode: IValidateUserCodeDto) {
+    return this.authController.ValidateCode(validateUserCode);
+  }
+
+  changePassword(user: IChangePasswordDto) {
+    return this.authController.ChangePassword(user);
   }
 }

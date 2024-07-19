@@ -6,7 +6,7 @@ public interface IUserRepository
 {
     // Get
 
-    Task<User?> GetExistingUserAsync(string email, string username, CancellationToken cancellationToken = default);
+    Task<User?> GetExistingUserAsync(string email, string username, bool strict, CancellationToken cancellationToken = default);
 
     Task<User?> GetUserByUsernameAsync(string username, CancellationToken cancellationToken = default);
 

@@ -40,11 +40,39 @@ public class AuthController(IMediator mediator, IVerificationCodeService verific
         return NoContent();
     }
 
-    [HttpGet]
+    [HttpPost]
     [AngularMethod(typeof(void))]
-    public async Task<IActionResult> ValidateEmail(string email, string username)
+    public async Task<IActionResult> ValidateEmail(ValidateUserDto user)
     {
-        await Mediator.Send(new ValidateEmailCommand(email, username));
+        await Mediator.Send(new ValidateEmailCommand(user));
+
+        return NoContent();
+    }
+
+    [HttpPost]
+    [AngularMethod(typeof(void))]
+    public async Task<IActionResult> ValidateUser(ValidateUserDto user)
+    {
+        await Mediator.Send(new ValidateUserCommand(user));
+
+        return NoContent();
+    }
+
+    [HttpPost]
+    [AngularMethod(typeof(void))]
+    public async Task<IActionResult> ValidateCode(ValidateUserCodeDto user)
+    {
+        if (!_verificationCodeService.ValidateCode(user.Email, user.VerifyCode))
+            throw new ValidationException();
+
+        return NoContent();
+    }
+
+    [HttpPost]
+    [AngularMethod(typeof(void))]
+    public async Task<IActionResult> ChangePassword(ChangePasswordDto user)
+    {
+        await Mediator.Send(new ChangePasswordCommand(user));
 
         return NoContent();
     }

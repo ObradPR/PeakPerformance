@@ -103,7 +103,7 @@ public class SignupCommand(SignupDto user) : BaseCommand<AuthorizationDto>
 
         public override async Task<AuthorizationDto> Handle(SignupCommand request, CancellationToken cancellationToken)
         {
-            var existingUser = await _unitOfWork.UserRepository.GetExistingUserAsync(request.User.Email, request.User.Username, cancellationToken);
+            var existingUser = await _unitOfWork.UserRepository.GetExistingUserAsync(request.User.Email, request.User.Username, strict: false, cancellationToken);
 
             if (existingUser is not null)
             {

@@ -6,6 +6,9 @@ import { map } from 'rxjs/operators';
 import { IAuthorizationDto } from './interfaces';
 import { ISignupDto } from './interfaces';
 import { ISigninDto } from './interfaces';
+import { IValidateUserDto } from './interfaces';
+import { IValidateUserCodeDto } from './interfaces';
+import { IChangePasswordDto } from './interfaces';
 
 @Injectable() export abstract class BaseController
 {
@@ -54,13 +57,55 @@ import { ISigninDto } from './interfaces';
 		.pipe(map(response => response.body));
 		
 	}
-	public ValidateEmail(email: string, username: string) : Observable<any>
+	public ValidateEmail(user: IValidateUserDto) : Observable<any>
 	{
-		const body = <any>{'email': email,'username': username};
-		return this.httpClient.get<any>(
+		const body = <any>user;
+		return this.httpClient.post<any>(
 		this.settingsService.createApiUrl('Auth/ValidateEmail'),
+		body,
 		{
-			params: new HttpParams({ fromObject: body }),
+			responseType: 'json',
+			observe: 'response',
+			withCredentials: true
+		})
+		.pipe(map(response => response.body));
+		
+	}
+	public ValidateUser(user: IValidateUserDto) : Observable<any>
+	{
+		const body = <any>user;
+		return this.httpClient.post<any>(
+		this.settingsService.createApiUrl('Auth/ValidateUser'),
+		body,
+		{
+			responseType: 'json',
+			observe: 'response',
+			withCredentials: true
+		})
+		.pipe(map(response => response.body));
+		
+	}
+	public ValidateCode(user: IValidateUserCodeDto) : Observable<any>
+	{
+		const body = <any>user;
+		return this.httpClient.post<any>(
+		this.settingsService.createApiUrl('Auth/ValidateCode'),
+		body,
+		{
+			responseType: 'json',
+			observe: 'response',
+			withCredentials: true
+		})
+		.pipe(map(response => response.body));
+		
+	}
+	public ChangePassword(user: IChangePasswordDto) : Observable<any>
+	{
+		const body = <any>user;
+		return this.httpClient.post<any>(
+		this.settingsService.createApiUrl('Auth/ChangePassword'),
+		body,
+		{
 			responseType: 'json',
 			observe: 'response',
 			withCredentials: true

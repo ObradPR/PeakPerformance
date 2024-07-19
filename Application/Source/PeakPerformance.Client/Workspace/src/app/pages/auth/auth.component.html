@@ -31,21 +31,33 @@
       @if(isSigninForm()){
       <app-sign-in
         (showSignupFormEvent)="toggleForms($event, false)"
+        (showPasswordRecoveryEvent)="showPasswordRecovery(undefined, false)"
         [@formAnimation]
         class="form-container sign-in-form"
       />
       } @if(isSignupForm()){
       <app-sign-up
         (showSigninFormEvent)="toggleForms($event, true)"
-        (showCodeVerifyEvent)="showSignupCodeVerify($event)"
+        (showCodeVerifyEvent)="showCodeVerify($event)"
         [@formAnimation]
         class="form-container sign-up-form"
       />
       } @if(isCodeVerify()){
       <app-code-verification
+        (showPasswordRecovery)="showPasswordRecovery($event, true)"
         [@formAnimation]
         [signupUser]="signupUser"
+        [passwordRecoveryUser]="passwordRecoveryUser"
         class="form-container code-verify"
+      />
+      } @if(isPasswordRecovery()){
+      <app-password-recovery
+        (backToSigninEvent)="backToSignin()"
+        (showCodeVerifyEvent)="showCodeVerify($event)"
+        [@formAnimation]
+        [isChangePassword]="isChangePassword()"
+        [passwordRecoveryUser]="passwordRecoveryUser"
+        class="form-container password-recovery"
       />
       }
     </div>

@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit, output } from '@angular/core';
 import {
   FormBuilder,
@@ -7,12 +8,10 @@ import {
   Validators,
 } from '@angular/forms';
 import { PasswordModule } from 'primeng/password';
-import { Constants } from '../../../constants';
-import { ISigninDto } from '../../../_generated/interfaces';
-import { HttpErrorResponse } from '@angular/common/http';
-import { AuthService } from '../../../services/auth.service';
 import { TooltipModule } from 'primeng/tooltip';
-import { CommonModule } from '@angular/common';
+import { ISigninDto } from '../../../_generated/interfaces';
+import { Constants } from '../../../constants';
+import { AuthService } from '../../../services/auth.service';
 import { ToastService } from '../../../services/toast.service';
 
 @Component({
@@ -30,6 +29,7 @@ import { ToastService } from '../../../services/toast.service';
 })
 export class SignInComponent implements OnInit {
   showSignupFormEvent = output<string>();
+  showPasswordRecoveryEvent = output<void>();
   signinForm: FormGroup = this.fb.group({});
 
   constructor(
@@ -54,6 +54,10 @@ export class SignInComponent implements OnInit {
 
   onShowSignup() {
     this.showSignupFormEvent.emit(Constants.ROUTE_SIGN_UP);
+  }
+
+  onShowPasswordRecovery() {
+    this.showPasswordRecoveryEvent.emit();
   }
 
   async onSignin() {

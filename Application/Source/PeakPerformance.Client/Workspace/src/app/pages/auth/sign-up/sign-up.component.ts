@@ -1,5 +1,4 @@
 import { CommonModule } from '@angular/common';
-import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, output } from '@angular/core';
 import {
   FormBuilder,
@@ -12,12 +11,12 @@ import { CalendarModule } from 'primeng/calendar';
 import { DividerModule } from 'primeng/divider';
 import { InputMaskModule } from 'primeng/inputmask';
 import { PasswordModule } from 'primeng/password';
-import { ISignupDto } from '../../../_generated/interfaces';
+import { TooltipModule } from 'primeng/tooltip';
+import { ISignupDto, IValidateUserDto } from '../../../_generated/interfaces';
 import { Constants } from '../../../constants';
 import { AuthService } from '../../../services/auth.service';
-import * as validators from '../../../validators';
-import { TooltipModule } from 'primeng/tooltip';
 import { ToastService } from '../../../services/toast.service';
+import * as validators from '../../../validators';
 
 @Component({
   selector: 'app-sign-up',
@@ -105,10 +104,13 @@ export class SignUpComponent implements OnInit {
 
     const signupUser: ISignupDto = this.signupForm.value;
 
+    const validateUser: IValidateUserDto = {
+      username: signupUser.username,
+      email: signupUser.email,
+    };
+
     try {
-      await this.authService
-        .validateEmail(signupUser.email, signupUser.username)
-        .toResult();
+      await this.authService.validateEmail(validateUser).toResult();
       this.showCodeVerifyEvent.emit(signupUser);
     } catch (ex) {
       throw ex;
