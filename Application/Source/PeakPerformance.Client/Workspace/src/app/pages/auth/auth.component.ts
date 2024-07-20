@@ -69,12 +69,12 @@ export class AuthComponent implements OnInit {
 
       setTimeout(() => {
         this.isSigninForm.set(true);
-      }, 900);
+      }, 6 * Constants.FORM_ANIMATION_PERIOD + 100);
     } else {
       this.isSigninForm.set(false);
       setTimeout(() => {
         this.isSignupForm.set(true);
-      }, 450);
+      }, 3 * Constants.FORM_ANIMATION_PERIOD + 100);
     }
   }
 
@@ -85,19 +85,19 @@ export class AuthComponent implements OnInit {
       setTimeout(() => {
         this.signupUser = user;
         this.isCodeVerify.set(true);
-      }, 900);
+      }, 6 * Constants.FORM_ANIMATION_PERIOD + 100);
     } else if (this.isValidateUserDto(user)) {
       this.isPasswordRecovery.set(false);
 
       setTimeout(() => {
         this.passwordRecoveryUser = user;
         this.isCodeVerify.set(true);
-      }, 450);
+      }, 3 * Constants.FORM_ANIMATION_PERIOD + 100);
     }
   }
 
   private isSignupDto(obj: any): obj is ISignupDto {
-    return 'password' in obj && 'verifyCode' in obj;
+    return 'password' in obj && 'dateOfBirth' in obj && 'middleName' in obj;
   }
 
   private isValidateUserDto(obj: any): obj is IValidateUserDto {
@@ -115,14 +115,14 @@ export class AuthComponent implements OnInit {
       setTimeout(() => {
         this.passwordRecoveryUser = user;
         this.isPasswordRecovery.set(true);
-      }, 300);
+      }, 2 * Constants.FORM_ANIMATION_PERIOD + 100);
     } else {
       this.isSigninForm.set(false);
       this.isChangePassword.set(false);
 
       setTimeout(() => {
         this.isPasswordRecovery.set(true);
-      }, 450);
+      }, 3 * Constants.FORM_ANIMATION_PERIOD + 100);
     }
   }
 
@@ -131,7 +131,7 @@ export class AuthComponent implements OnInit {
 
     setTimeout(() => {
       this.isSigninForm.set(true);
-    }, 450);
+    }, 3 * Constants.FORM_ANIMATION_PERIOD + 100);
   }
 
   private takeUrlParam() {

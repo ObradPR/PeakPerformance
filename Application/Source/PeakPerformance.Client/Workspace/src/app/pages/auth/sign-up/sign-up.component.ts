@@ -59,7 +59,7 @@ export class SignUpComponent implements OnInit {
           Validators.minLength(2),
         ],
       ],
-      middleName: [null],
+      middleName: [null, [Validators.minLength(2), Validators.maxLength(20)]],
       lastName: [
         '',
         [

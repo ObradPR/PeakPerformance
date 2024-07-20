@@ -14,4 +14,7 @@ export class Constants {
   static readonly REGEX_PASSWORD =
     /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[^a-zA-Z0-9]).{8,}$/;
   static readonly REGEX_PHONE_NUMBER = /^\d{3}-\d{3}-\d{4}$/;
+
+  // Animations
+  static readonly FORM_ANIMATION_PERIOD = 150;
 }
