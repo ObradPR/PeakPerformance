@@ -32,6 +32,21 @@
           id="mName"
           placeholder="Middle Name"
           formControlName="middleName"
+          pTooltip="Middle name has to be between 2 and 20 characters."
+          tooltipPosition="top"
+          tooltipEvent="focus"
+          [tooltipDisabled]="
+            !(
+              signupForm.get('middleName')?.touched &&
+              signupForm.get('middleName')?.invalid
+            )
+          "
+          [ngClass]="{
+            'is-invalid':
+              signupForm.get('middleName')?.invalid &&
+              (signupForm.get('middleName')?.touched ||
+                signupForm.get('middleName')?.dirty)
+          }"
         />
         <input
           type="text"
