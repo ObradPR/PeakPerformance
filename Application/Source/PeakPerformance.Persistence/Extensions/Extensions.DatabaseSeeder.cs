@@ -24,6 +24,7 @@ public static partial class Extensions
             // Seed data
             await SeedSystemRolesAsync(context);
             await SeedActionTypesAsync(context);
+            await SeedMeasurementUnitsAsync(context);
         }
         catch (Exception ex)
         {
@@ -84,6 +85,32 @@ public static partial class Extensions
             await context.SaveChangesAsync();
 
             context.SetIdentityInsert<TContext, ActionType>(eIdentitySwitch.Off);
+
+            transaction.Commit();
+        }
+    }
+
+    private static async Task SeedMeasurementUnitsAsync<TContext>(TContext context)
+        where TContext : DbContext
+    {
+        if (await context.Set<MeasurementUnit>().AnyAsync())
+            return;
+
+        using (var transaction = context.Database.BeginTransaction())
+        {
+            context.SetIdentityInsert<TContext, MeasurementUnit>();
+
+            await context.Set<MeasurementUnit>().AddRangeAsync(
+                new MeasurementUnit { Id = eMeasurementUnit.Kilograms.ToInt(), Name = eMeasurementUnit.Kilograms.GetEnumDescription() },
+               new MeasurementUnit { Id = eMeasurementUnit.Pounds.ToInt(), Name = eMeasurementUnit.Pounds.GetEnumDescription() },
+               new MeasurementUnit { Id = eMeasurementUnit.Centimeters.ToInt(), Name = eMeasurementUnit.Centimeters.GetEnumDescription() },
+               new MeasurementUnit { Id = eMeasurementUnit.Inches.ToInt(), Name = eMeasurementUnit.Inches.GetEnumDescription() }
+            );
+
+            // Save all changes
+            await context.SaveChangesAsync();
+
+            context.SetIdentityInsert<TContext, MeasurementUnit>(eIdentitySwitch.Off);
 
             transaction.Commit();
         }

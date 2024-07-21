@@ -17,15 +17,21 @@ public partial class ApplicationDbContext
 
     public virtual DbSet<UserActivityLog> UserActivityLogs { get; set; }
 
+    public virtual DbSet<UserMeasurementPreference> UserMeasurementPreferences { get; set; }
+
     // Lookup Tables
 
     public virtual DbSet<SystemRole> SystemRoles { get; set; }
 
     public virtual DbSet<ActionType> ActionTypes { get; set; }
 
+    public virtual DbSet<MeasurementUnit> MeasurementsUnits { get; set; }
+
     // Audit Tables
 
     public virtual DbSet<User_aud> Users_aud { get; set; }
 
     public virtual DbSet<UserRole_aud> UserRoles_aud { get; set; }
+
+    public virtual DbSet<UserMeasurementPreference_aud> UserMeasurementPreferences_aud { get; set; }
 }

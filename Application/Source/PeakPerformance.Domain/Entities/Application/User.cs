@@ -20,9 +20,13 @@ public class User : AuditableEntity
 
     public string PhoneNumber { get; set; } = string.Empty;
 
+    public bool ReceiveAppNews { get; set; } = false;
+
     // Relationships
 
     public virtual ICollection<UserRole> UserRoles { get; set; } = [];
 
     public virtual ICollection<UserActivityLog> UserActivityLogs { get; set; } = [];
+
+    public virtual ICollection<UserMeasurementPreference> UserMeasurementPreferences { get; set; } = [];
 }
