@@ -5,7 +5,11 @@
 );
 
 
+
+
 GO
 CREATE UNIQUE NONCLUSTERED INDEX [IX_ActionTypes_lu_Name]
-    ON [dbo].[ActionTypes_lu]([Name] ASC) WHERE ([Name] IS NOT NULL);
+    ON [dbo].[ActionTypes_lu]([Name] ASC);
+
+
 
