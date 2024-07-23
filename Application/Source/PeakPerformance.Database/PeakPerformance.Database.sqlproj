@@ -64,5 +64,10 @@
     <Build Include="dbo\Tables\ErrorLogs.sql" />
     <Build Include="dbo\Tables\ActionTypes_lu.sql" />
     <Build Include="dbo\Tables\__EFMigrationsHistory.sql" />
+    <Build Include="dbo\Tables\Users_aud.sql" />
+    <Build Include="dbo\Tables\Users.sql" />
+    <Build Include="dbo\Tables\UserRoles_aud.sql" />
+    <Build Include="dbo\Tables\UserRoles.sql" />
+    <Build Include="dbo\Tables\UserActivityLogs.sql" />
   </ItemGroup>
 </Project>

@@ -5,7 +5,11 @@
 );
 
 
+
+
 GO
 CREATE UNIQUE NONCLUSTERED INDEX [IX_SystemRoles_lu_Name]
-    ON [dbo].[SystemRoles_lu]([Name] ASC) WHERE ([Name] IS NOT NULL);
+    ON [dbo].[SystemRoles_lu]([Name] ASC);
+
+
 
