@@ -10,4 +10,6 @@ public partial class ApplicationDbContext
     public virtual DbSet<ActionType> ActionTypes { get; set; }
 
     public virtual DbSet<MeasurementUnit> MeasurementsUnits { get; set; }
+
+    public virtual DbSet<TrainingGoal> TrainingGoals { get; set; }
 }

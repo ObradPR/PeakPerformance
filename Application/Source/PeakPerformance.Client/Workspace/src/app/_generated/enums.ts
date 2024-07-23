@@ -18,3 +18,14 @@ export enum eSystemRole {
 	User = 2,
 	Guest = 3
 }
+export enum eTrainingGoal {
+	Strength = 1,
+	Bulking = 2,
+	Cutting = 3,
+	Cardio = 4,
+	Explosivness = 5,
+	Endurance = 6,
+	Flexibility = 7,
+	Balance = 8,
+	Agility = 9
+}

@@ -25,6 +25,7 @@ public static partial class Extensions
             await SeedSystemRolesAsync(context);
             await SeedActionTypesAsync(context);
             await SeedMeasurementUnitsAsync(context);
+            await SeedTrainingGoalsAsync(context);
         }
         catch (Exception ex)
         {
@@ -111,6 +112,37 @@ public static partial class Extensions
             await context.SaveChangesAsync();
 
             context.SetIdentityInsert<TContext, MeasurementUnit>(eIdentitySwitch.Off);
+
+            transaction.Commit();
+        }
+    }
+
+    private static async Task SeedTrainingGoalsAsync<TContext>(TContext context)
+        where TContext : DbContext
+    {
+        if (await context.Set<TrainingGoal>().AnyAsync())
+            return;
+
+        using (var transaction = context.Database.BeginTransaction())
+        {
+            context.SetIdentityInsert<TContext, TrainingGoal>();
+
+            await context.Set<TrainingGoal>().AddRangeAsync(
+                new TrainingGoal { Id = eTrainingGoal.Strength.ToInt(), Name = eTrainingGoal.Strength.GetEnumDescription() },
+                new TrainingGoal { Id = eTrainingGoal.Bulking.ToInt(), Name = eTrainingGoal.Bulking.GetEnumDescription() },
+                new TrainingGoal { Id = eTrainingGoal.Cutting.ToInt(), Name = eTrainingGoal.Cutting.GetEnumDescription() },
+                new TrainingGoal { Id = eTrainingGoal.Cardio.ToInt(), Name = eTrainingGoal.Cardio.GetEnumDescription() },
+                new TrainingGoal { Id = eTrainingGoal.Explosivness.ToInt(), Name = eTrainingGoal.Explosivness.GetEnumDescription() },
+                new TrainingGoal { Id = eTrainingGoal.Endurance.ToInt(), Name = eTrainingGoal.Endurance.GetEnumDescription() },
+                new TrainingGoal { Id = eTrainingGoal.Flexibility.ToInt(), Name = eTrainingGoal.Flexibility.GetEnumDescription() },
+                new TrainingGoal { Id = eTrainingGoal.Balance.ToInt(), Name = eTrainingGoal.Balance.GetEnumDescription() },
+                new TrainingGoal { Id = eTrainingGoal.Agility.ToInt(), Name = eTrainingGoal.Agility.GetEnumDescription() }
+            );
+
+            // Save all changes
+            await context.SaveChangesAsync();
+
+            context.SetIdentityInsert<TContext, TrainingGoal>(eIdentitySwitch.Off);
 
             transaction.Commit();
         }

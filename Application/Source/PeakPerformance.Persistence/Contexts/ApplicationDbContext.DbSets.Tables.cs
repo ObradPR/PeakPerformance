@@ -20,4 +20,10 @@ public partial class ApplicationDbContext
     public virtual DbSet<Weight> Weights { get; set; }
 
     public virtual DbSet<BodyMeasurement> BodyMeasurements { get; set; }
+
+    public virtual DbSet<UserTrainingGoal> UserTrainingGoals { get; set; }
+
+    public virtual DbSet<WeightGoal> WeightGoals { get; set; }
+
+    public virtual DbSet<BodyFatGoal> BodyFatGoals { get; set; }
 }

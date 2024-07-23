@@ -1,4 +1,5 @@
 ﻿using PeakPerformance.Domain.Entities._Base;
+using PeakPerformance.Domain.Entities.Application_lu;
 
 namespace PeakPerformance.Domain.Entities.Application;
 
@@ -33,4 +34,10 @@ public class User : AuditableEntity
     public virtual ICollection<Weight> Weights { get; set; } = [];
 
     public virtual ICollection<BodyMeasurement> BodyMeasurements { get; set; } = [];
+
+    public virtual ICollection<UserTrainingGoal> UserTrainingGoals { get; set; } = [];
+
+    public virtual ICollection<WeightGoal> WeightsGoals { get; set; } = [];
+
+    public virtual ICollection<BodyFatGoal> BodyFatGoals { get; set; } = [];
 }
