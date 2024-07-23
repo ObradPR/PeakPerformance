@@ -69,5 +69,15 @@
     <Build Include="dbo\Tables\UserRoles_aud.sql" />
     <Build Include="dbo\Tables\UserRoles.sql" />
     <Build Include="dbo\Tables\UserActivityLogs.sql" />
+    <Build Include="dbo\Tables\Weights.sql" />
+    <Build Include="dbo\Tables\WeightGoals.sql" />
+    <Build Include="dbo\Tables\UserTrainingGoals_aud.sql" />
+    <Build Include="dbo\Tables\UserTrainingGoals.sql" />
+    <Build Include="dbo\Tables\UserMeasurementPreferences_aud.sql" />
+    <Build Include="dbo\Tables\UserMeasurementPreferences.sql" />
+    <Build Include="dbo\Tables\TrainingGoals_lu.sql" />
+    <Build Include="dbo\Tables\MeasurementUnits_lu.sql" />
+    <Build Include="dbo\Tables\BodyMeasurements.sql" />
+    <Build Include="dbo\Tables\BodyFatGoals.sql" />
   </ItemGroup>
 </Project>
