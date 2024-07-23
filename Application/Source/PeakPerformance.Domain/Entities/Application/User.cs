@@ -29,4 +29,8 @@ public class User : AuditableEntity
     public virtual ICollection<UserActivityLog> UserActivityLogs { get; set; } = [];
 
     public virtual ICollection<UserMeasurementPreference> UserMeasurementPreferences { get; set; } = [];
+
+    public virtual ICollection<Weight> Weights { get; set; } = [];
+
+    public virtual ICollection<BodyMeasurement> BodyMeasurements { get; set; } = [];
 }

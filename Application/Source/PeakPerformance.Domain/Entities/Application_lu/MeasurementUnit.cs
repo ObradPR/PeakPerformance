@@ -10,4 +10,8 @@ public class MeasurementUnit : Entity_lu
     public virtual ICollection<UserMeasurementPreference> WeightUnitPreferences { get; set; } = [];
 
     public virtual ICollection<UserMeasurementPreference> MeasurementUnitPreferences { get; set; } = [];
+
+    public virtual ICollection<Weight> Weights { get; set; } = [];
+
+    public virtual ICollection<BodyMeasurement> BodyMeasurements { get; set; } = [];
 }

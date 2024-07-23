@@ -35,4 +35,8 @@ public class Constants
     public static readonly Regex REGEX_PASSWORD = new(@"^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[^a-zA-Z0-9]).{8,}$");
     public static readonly Regex REGEX_ZIPCODE = new(@"^\d{5}(-\d{4})?$");
     public static readonly Regex REGEX_PHONE_NUMBER = new(@"^\d{3}-\d{3}-\d{4}$");
+
+    // Types
+
+    public static readonly string MeasurementDecimalType = "decimal(5, 2)";
 }
