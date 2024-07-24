@@ -14,4 +14,6 @@ public partial class ApplicationDbContext
     public virtual DbSet<TrainingGoal> TrainingGoals { get; set; }
 
     public virtual DbSet<SocialMediaPlatform> SocialMediaPlatforms { get; set; }
+
+    public virtual DbSet<InjuryType> InjuryTypes { get; set; }
 }

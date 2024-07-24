@@ -7,13 +7,18 @@ namespace PeakPerformance.Persistence.Extensions;
 
 public static partial class Extensions
 {
-    public static void CreateAuditTriggersForTable<TAuditTable, TEntity>(this MigrationBuilder migrationBuilder)
+    public static void CreateAuditTriggersForTable<TAuditTable, TEntity>(this MigrationBuilder migrationBuilder, bool plural = true)
         where TAuditTable : Audit
         where TEntity : class
     {
-        var triggerName = GetAuditTriggerName<TEntity>();
-        var tableName = typeof(TEntity).Name.ToPlural();
-        var auditTableName = typeof(TEntity).Name.ToPlural() + "_aud";
+        var triggerName = GetAuditTriggerName<TEntity>(plural);
+        var tableName = plural
+            ? typeof(TEntity).Name.ToPlural()
+            : typeof(TEntity).Name;
+
+        var auditTableName = plural
+            ? typeof(TEntity).Name.ToPlural() + "_aud"
+            : typeof(TAuditTable).Name;
 
         var columns = GetAuditColumns<TAuditTable>();
         var insertValues = GetInsertValues<TAuditTable>();

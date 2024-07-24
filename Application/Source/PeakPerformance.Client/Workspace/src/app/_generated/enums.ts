@@ -7,6 +7,33 @@ export enum eActionType {
 	Signin = 6,
 	Signout = 7
 }
+export enum eInjuryType {
+	KneeInjury = 1,
+	ShoulderInjury = 2,
+	BackInjury = 3,
+	ElbowInjury = 4,
+	WristInjury = 5,
+	AnkleInjury = 6,
+	HipInjury = 7,
+	NeckInjury = 8,
+	Asthma = 9,
+	HeartCondition = 10,
+	Diabetes = 11,
+	Arthritis = 12,
+	HighBloodPressure = 13,
+	LowBloodPressure = 14,
+	Pregnancy = 15,
+	ChronicFatigue = 16,
+	Scoliosis = 17,
+	PlantarFasciitis = 18,
+	Tendinitis = 19,
+	CarpalTunnelSyndrome = 20,
+	ChestInjury = 21,
+	BicepInjury = 22,
+	TricepInjury = 23,
+	QuadInjury = 24,
+	HamstringInjury = 25
+}
 export enum eMeasurementUnit {
 	Kilograms = 1,
 	Pounds = 2,

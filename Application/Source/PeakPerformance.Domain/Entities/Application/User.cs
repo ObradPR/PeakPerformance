@@ -45,4 +45,6 @@ public class User : AuditableEntity
     public virtual ICollection<BodyFatGoal> BodyFatGoals { get; set; } = [];
 
     public virtual ICollection<SocialMedia> SocialMedia { get; set; } = [];
+
+    public virtual ICollection<HealthInformation> HealthInformation { get; set; } = [];
 }

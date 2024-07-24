@@ -40,12 +40,14 @@ public static partial class Extensions
         where TContext : DbContext
         => context.ChangeTracker.Entries().ForEach(_ => _.State = EntityState.Detached);
 
-    public static string GetAuditTriggerName<TEntity>()
-        => $"trg_{typeof(TEntity).Name.ToPlural()}_aud";
+    public static string GetAuditTriggerName<TEntity>(bool plural = true)
+        => plural
+            ? $"trg_{typeof(TEntity).Name.ToPlural()}_aud"
+            : $"trg_{typeof(TEntity).Name}_aud";
 
-    public static string DropAuditTrigger<TEntity>()
+    public static string DropAuditTrigger<TEntity>(bool plural = true)
         where TEntity : AuditableEntity
-        => $"DROP TRIGGER IF EXISTS {GetAuditTriggerName<TEntity>()}";
+        => $"DROP TRIGGER IF EXISTS {GetAuditTriggerName<TEntity>(plural)}";
 
     public static string GetNullFilterForProperty<T>(this string propertyName)
     {

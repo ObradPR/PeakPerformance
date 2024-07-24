@@ -27,6 +27,7 @@ public static partial class Extensions
             await SeedMeasurementUnitsAsync(context);
             await SeedTrainingGoalsAsync(context);
             await SeedSocialMediaPlatformsAsync(context);
+            await SeedInjuryTypesAsync(context);
         }
         catch (Exception ex)
         {
@@ -177,6 +178,53 @@ public static partial class Extensions
             await context.SaveChangesAsync();
 
             context.SetIdentityInsert<TContext, SocialMediaPlatform>(eIdentitySwitch.Off);
+
+            transaction.Commit();
+        }
+    }
+
+    private static async Task SeedInjuryTypesAsync<TContext>(TContext context)
+        where TContext : DbContext
+    {
+        if (await context.Set<InjuryType>().AnyAsync())
+            return;
+
+        using (var transaction = context.Database.BeginTransaction())
+        {
+            context.SetIdentityInsert<TContext, InjuryType>();
+
+            await context.Set<InjuryType>().AddRangeAsync(
+                new InjuryType { Id = eInjuryType.KneeInjury.ToInt(), Name = eInjuryType.KneeInjury.GetEnumDescription() },
+                new InjuryType { Id = eInjuryType.ShoulderInjury.ToInt(), Name = eInjuryType.ShoulderInjury.GetEnumDescription() },
+                new InjuryType { Id = eInjuryType.BackInjury.ToInt(), Name = eInjuryType.BackInjury.GetEnumDescription() },
+                new InjuryType { Id = eInjuryType.ElbowInjury.ToInt(), Name = eInjuryType.ElbowInjury.GetEnumDescription() },
+                new InjuryType { Id = eInjuryType.WristInjury.ToInt(), Name = eInjuryType.WristInjury.GetEnumDescription() },
+                new InjuryType { Id = eInjuryType.AnkleInjury.ToInt(), Name = eInjuryType.AnkleInjury.GetEnumDescription() },
+                new InjuryType { Id = eInjuryType.HipInjury.ToInt(), Name = eInjuryType.HipInjury.GetEnumDescription() },
+                new InjuryType { Id = eInjuryType.NeckInjury.ToInt(), Name = eInjuryType.NeckInjury.GetEnumDescription() },
+                new InjuryType { Id = eInjuryType.Asthma.ToInt(), Name = eInjuryType.Asthma.GetEnumDescription() },
+                new InjuryType { Id = eInjuryType.HeartCondition.ToInt(), Name = eInjuryType.HeartCondition.GetEnumDescription() },
+                new InjuryType { Id = eInjuryType.Diabetes.ToInt(), Name = eInjuryType.Diabetes.GetEnumDescription() },
+                new InjuryType { Id = eInjuryType.Arthritis.ToInt(), Name = eInjuryType.Arthritis.GetEnumDescription() },
+                new InjuryType { Id = eInjuryType.HighBloodPressure.ToInt(), Name = eInjuryType.HighBloodPressure.GetEnumDescription() },
+                new InjuryType { Id = eInjuryType.LowBloodPressure.ToInt(), Name = eInjuryType.LowBloodPressure.GetEnumDescription() },
+                new InjuryType { Id = eInjuryType.Pregnancy.ToInt(), Name = eInjuryType.Pregnancy.GetEnumDescription() },
+                new InjuryType { Id = eInjuryType.ChronicFatigue.ToInt(), Name = eInjuryType.ChronicFatigue.GetEnumDescription() },
+                new InjuryType { Id = eInjuryType.Scoliosis.ToInt(), Name = eInjuryType.Scoliosis.GetEnumDescription() },
+                new InjuryType { Id = eInjuryType.PlantarFasciitis.ToInt(), Name = eInjuryType.PlantarFasciitis.GetEnumDescription() },
+                new InjuryType { Id = eInjuryType.Tendinitis.ToInt(), Name = eInjuryType.Tendinitis.GetEnumDescription() },
+                new InjuryType { Id = eInjuryType.CarpalTunnelSyndrome.ToInt(), Name = eInjuryType.CarpalTunnelSyndrome.GetEnumDescription() },
+                new InjuryType { Id = eInjuryType.ChestInjury.ToInt(), Name = eInjuryType.ChestInjury.GetEnumDescription() },
+                new InjuryType { Id = eInjuryType.BicepInjury.ToInt(), Name = eInjuryType.BicepInjury.GetEnumDescription() },
+                new InjuryType { Id = eInjuryType.TricepInjury.ToInt(), Name = eInjuryType.TricepInjury.GetEnumDescription() },
+                new InjuryType { Id = eInjuryType.QuadInjury.ToInt(), Name = eInjuryType.QuadInjury.GetEnumDescription() },
+                new InjuryType { Id = eInjuryType.HamstringInjury.ToInt(), Name = eInjuryType.HamstringInjury.GetEnumDescription() }
+            );
+
+            // Save all changes
+            await context.SaveChangesAsync();
+
+            context.SetIdentityInsert<TContext, InjuryType>(eIdentitySwitch.Off);
 
             transaction.Commit();
         }
