@@ -15,8 +15,12 @@
     [DeletedBy]      BIGINT         NULL,
     [IsActive]       BIT            DEFAULT (CONVERT([bit],(1))) NOT NULL,
     [ReceiveAppNews] BIT            DEFAULT (CONVERT([bit],(0))) NOT NULL,
+    [Description]    NVARCHAR (500) NULL,
+    [ProfilePicture] NVARCHAR (255) NULL,
     CONSTRAINT [PK_Users] PRIMARY KEY CLUSTERED ([Id] ASC)
 );
+
+
 
 
 GO
