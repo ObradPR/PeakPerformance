@@ -22,6 +22,10 @@ public class User : AuditableEntity
 
     public bool ReceiveAppNews { get; set; } = false;
 
+    public string? ProfilePicture { get; set; }
+
+    public string? Description { get; set; }
+
     // Relationships
 
     public virtual ICollection<UserRole> UserRoles { get; set; } = [];
@@ -39,4 +43,6 @@ public class User : AuditableEntity
     public virtual ICollection<WeightGoal> WeightsGoals { get; set; } = [];
 
     public virtual ICollection<BodyFatGoal> BodyFatGoals { get; set; } = [];
+
+    public virtual ICollection<SocialMedia> SocialMedia { get; set; } = [];
 }

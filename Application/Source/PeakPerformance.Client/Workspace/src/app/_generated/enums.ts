@@ -13,6 +13,19 @@ export enum eMeasurementUnit {
 	Centimeters = 3,
 	Inches = 4
 }
+export enum eSocialMediaPlatform {
+	Facebook = 1,
+	Twitter = 2,
+	Instagram = 3,
+	LinkedIn = 4,
+	YouTube = 5,
+	TikTok = 6,
+	Pinterest = 7,
+	Snapchat = 8,
+	WhatsApp = 9,
+	Telegram = 10,
+	Reddit = 11
+}
 export enum eSystemRole {
 	Admin = 1,
 	User = 2,

@@ -40,6 +40,12 @@ internal class UserConfiguration : EntityConfiguration<User>
             .IsRequired()
             .HasMaxLength(15);
 
+        builder.Property(_ => _.ProfilePicture)
+            .HasMaxLength(255);
+
+        builder.Property(_ => _.Description)
+            .HasMaxLength(500);
+
         // Indexes
 
         builder.HasIndex(_ => _.Email)

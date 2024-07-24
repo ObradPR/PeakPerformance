@@ -26,6 +26,7 @@ public static partial class Extensions
             await SeedActionTypesAsync(context);
             await SeedMeasurementUnitsAsync(context);
             await SeedTrainingGoalsAsync(context);
+            await SeedSocialMediaPlatformsAsync(context);
         }
         catch (Exception ex)
         {
@@ -143,6 +144,39 @@ public static partial class Extensions
             await context.SaveChangesAsync();
 
             context.SetIdentityInsert<TContext, TrainingGoal>(eIdentitySwitch.Off);
+
+            transaction.Commit();
+        }
+    }
+
+    private static async Task SeedSocialMediaPlatformsAsync<TContext>(TContext context)
+        where TContext : DbContext
+    {
+        if (await context.Set<SocialMediaPlatform>().AnyAsync())
+            return;
+
+        using (var transaction = context.Database.BeginTransaction())
+        {
+            context.SetIdentityInsert<TContext, SocialMediaPlatform>();
+
+            await context.Set<SocialMediaPlatform>().AddRangeAsync(
+                new SocialMediaPlatform { Id = eSocialMediaPlatform.Facebook.ToInt(), Name = eSocialMediaPlatform.Facebook.GetEnumDescription() },
+                new SocialMediaPlatform { Id = eSocialMediaPlatform.Twitter.ToInt(), Name = eSocialMediaPlatform.Twitter.GetEnumDescription() },
+                new SocialMediaPlatform { Id = eSocialMediaPlatform.Instagram.ToInt(), Name = eSocialMediaPlatform.Instagram.GetEnumDescription() },
+                new SocialMediaPlatform { Id = eSocialMediaPlatform.LinkedIn.ToInt(), Name = eSocialMediaPlatform.LinkedIn.GetEnumDescription() },
+                new SocialMediaPlatform { Id = eSocialMediaPlatform.YouTube.ToInt(), Name = eSocialMediaPlatform.YouTube.GetEnumDescription() },
+                new SocialMediaPlatform { Id = eSocialMediaPlatform.TikTok.ToInt(), Name = eSocialMediaPlatform.TikTok.GetEnumDescription() },
+                new SocialMediaPlatform { Id = eSocialMediaPlatform.Pinterest.ToInt(), Name = eSocialMediaPlatform.Pinterest.GetEnumDescription() },
+                new SocialMediaPlatform { Id = eSocialMediaPlatform.Snapchat.ToInt(), Name = eSocialMediaPlatform.Snapchat.GetEnumDescription() },
+                new SocialMediaPlatform { Id = eSocialMediaPlatform.WhatsApp.ToInt(), Name = eSocialMediaPlatform.WhatsApp.GetEnumDescription() },
+                new SocialMediaPlatform { Id = eSocialMediaPlatform.Telegram.ToInt(), Name = eSocialMediaPlatform.Telegram.GetEnumDescription() },
+                new SocialMediaPlatform { Id = eSocialMediaPlatform.Reddit.ToInt(), Name = eSocialMediaPlatform.Reddit.GetEnumDescription() }
+            );
+
+            // Save all changes
+            await context.SaveChangesAsync();
+
+            context.SetIdentityInsert<TContext, SocialMediaPlatform>(eIdentitySwitch.Off);
 
             transaction.Commit();
         }

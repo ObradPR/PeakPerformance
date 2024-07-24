@@ -79,5 +79,7 @@
     <Build Include="dbo\Tables\MeasurementUnits_lu.sql" />
     <Build Include="dbo\Tables\BodyMeasurements.sql" />
     <Build Include="dbo\Tables\BodyFatGoals.sql" />
+    <Build Include="dbo\Tables\SocialMediaPlatforms_lu.sql" />
+    <Build Include="dbo\Tables\SocialMedia.sql" />
   </ItemGroup>
 </Project>
