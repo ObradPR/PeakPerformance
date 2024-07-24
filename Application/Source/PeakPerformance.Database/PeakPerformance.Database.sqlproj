@@ -81,5 +81,8 @@
     <Build Include="dbo\Tables\BodyFatGoals.sql" />
     <Build Include="dbo\Tables\SocialMediaPlatforms_lu.sql" />
     <Build Include="dbo\Tables\SocialMedia.sql" />
+    <Build Include="dbo\Tables\InjuryTypes_lu.sql" />
+    <Build Include="dbo\Tables\HealthInformation_aud.sql" />
+    <Build Include="dbo\Tables\HealthInformation.sql" />
   </ItemGroup>
 </Project>

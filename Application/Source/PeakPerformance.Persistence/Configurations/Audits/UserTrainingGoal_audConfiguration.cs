@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using PeakPerformance.Persistence.Configurations._Base;
 using PeakPerformance.Domain.Entities.Audits;
+
+using PeakPerformance.Persistence.Configurations._Base;
 
 namespace PeakPerformance.Persistence.Configurations.Audits;
 
