@@ -10,7 +10,7 @@ public class DbExceptionLogger(IUnitOfWork unitOfWork) : IExceptionLogger
 
     public async Task LogExceptionAsync(Exception ex)
     {
-        ErrorLog error = new()
+        var error = new ErrorLog()
         {
             Message = ex.Message,
             StackTrace = ex.StackTrace,

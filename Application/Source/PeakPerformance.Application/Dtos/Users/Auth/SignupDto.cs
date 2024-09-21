@@ -46,13 +46,13 @@ public class SignupDto
 
         user.UserRoles.Add(new UserRole
         {
-            RoleId = eSystemRole.User.ToInt()
+            RoleId = (int)eSystemRole.User
         });
 
         if (isSigningUp)
             user.UserActivityLogs.Add(new UserActivityLog
             {
-                ActionTypeId = eActionType.Signup.ToInt()
+                ActionTypeId = (int)eActionType.Signup
             });
     }
 }

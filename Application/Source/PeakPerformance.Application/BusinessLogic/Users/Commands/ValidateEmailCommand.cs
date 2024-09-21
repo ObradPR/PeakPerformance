@@ -28,7 +28,7 @@ public class ValidateEmailCommand(ValidateUserDto user) : BaseCommand
             if (await _unitOfWork.UserRepository.GetExistingUserAsync(request.User.Email, request.User.Username, strict: false, cancellationToken) is not null)
                 throw new AccountExistsException();
 
-            if ((await _emailValidation.ValidateEmailAsync(request.User.Email)).Not())
+            if (!await _emailValidation.ValidateEmailAsync(request.User.Email))
                 throw new EmailValidationException();
 
             var code = _verificationCodeService.GenerateAndStoreCode(request.User.Email);
