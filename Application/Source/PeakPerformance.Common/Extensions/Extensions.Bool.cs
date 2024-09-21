@@ -8,39 +8,18 @@ public static partial class Extensions
     public static int ToInt(this bool value)
         => value ? 1 : 0;
 
-    public static bool And(this bool value, params bool[] others)
+    public static void IfTrue(this bool value, Action action)
     {
-        if (!value)
-            return false;
-
-        foreach (var other in others)
-            if (!other)
-                return false;
-
-        return true;
+        if (value) action();
     }
 
-    public static bool Or(this bool value, params bool[] others)
+    public static void IfFalse(this bool value, Action action)
     {
-        if (value)
-            return true;
-
-        foreach (var other in others)
-            if (other)
-                return true;
-
-        return false;
+        if (!value) action();
     }
 
-    public static bool Xor(this bool value, bool other)
-        => value != other;
-
-    public static bool Nand(this bool value, params bool[] others)
-        => !value.And(others);
-
-    public static bool Nor(this bool value, params bool[] others)
-        => !value.Or(others);
-
-    public static bool Not(this bool value)
-        => !value;
+    public static Action ToAction(this bool value, Action trueAction, Action falseAction)
+        => value
+        ? trueAction
+        : falseAction;
 }

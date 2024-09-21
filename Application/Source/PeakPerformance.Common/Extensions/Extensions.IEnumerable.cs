@@ -5,6 +5,9 @@ public static partial class Extensions
     public static bool In<T>(this T item, IEnumerable<T> source)
         => source.Contains(item);
 
+    public static bool NotIn<T>(this T item, IEnumerable<T> source)
+        => !source.Contains(item);
+
     public static bool IsEmpty<T>(this IEnumerable<T> source)
         => !source.Any();
 
@@ -34,6 +37,7 @@ public static partial class Extensions
                 yield return item;
     }
 
+    [Obsolete("Use Batch instead of Chunk for better performance.")]
     public static IEnumerable<IEnumerable<T>> Chunk<T>(this IEnumerable<T> source, int chunkSize)
     {
         while (source.Any())
@@ -48,7 +52,7 @@ public static partial class Extensions
         => source.ToDictionary(keySelector, v => v);
 
     public static HashSet<T> ToHashSet<T>(this IEnumerable<T> source)
-        => new HashSet<T>(source);
+        => new(source);
 
     public static IEnumerable<T> Shuffle<T>(this IEnumerable<T> source)
     {
@@ -83,7 +87,7 @@ public static partial class Extensions
             }
         }
 
-        if (batch.Any())
+        if (batch.Count != 0)
             yield return batch;
     }
 }

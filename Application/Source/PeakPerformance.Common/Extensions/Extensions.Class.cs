@@ -6,16 +6,16 @@ namespace PeakPerformance.Common.Extensions;
 
 public static partial class Extensions
 {
-    public static string ToJson(this object obj)
-        => JsonConvert.SerializeObject(obj);
+    public static string ToJson(this object data)
+        => JsonConvert.SerializeObject(data);
 
-    public static string ToXml(this object obj)
+    public static string ToXml(this object data)
     {
-        XmlSerializer serializer = new XmlSerializer(obj.GetType());
+        var serializer = new XmlSerializer(data.GetType());
 
-        using (StringWriter writer = new StringWriter())
+        using (var writer = new StringWriter())
         {
-            serializer.Serialize(writer, obj);
+            serializer.Serialize(writer, data);
             return writer.ToString();
         }
     }
@@ -53,9 +53,7 @@ public static partial class Extensions
 
         foreach (var property in type.GetProperties())
         {
-            var descriptionAttribute = property.GetCustomAttributes(typeof(DescriptionAttribute), false).FirstOrDefault() as DescriptionAttribute;
-
-            if (descriptionAttribute is not null)
+            if (property.GetCustomAttributes(typeof(DescriptionAttribute), false).FirstOrDefault() is DescriptionAttribute descriptionAttribute)
                 descriptions[property.Name] = descriptionAttribute.Description;
         }
 
