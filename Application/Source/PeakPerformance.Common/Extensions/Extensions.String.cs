@@ -8,34 +8,42 @@ namespace PeakPerformance.Common.Extensions;
 
 public static partial class Extensions
 {
-    public static string AppendArgument(this string value, string argument) => string.Format(value, argument);
+    public static string AppendArgument(this string value, string argument)
+        => string.Format(value, argument);
 
-    public static string AppendArgument(this string value, params string[] args) => string.Format(value, args);
+    public static string AppendArgument(this string value, params string[] args)
+        => string.Format(value, args);
 
     public static bool IsNullOrEmpty(this string value)
         => string.IsNullOrEmpty(value);
 
+    public static bool IsNotNullOrEmpty(this string value)
+        => !string.IsNullOrEmpty(value);
+
     public static bool IsNullOrWhiteSpace(this string value)
         => string.IsNullOrWhiteSpace(value);
 
+    public static bool IsNotNullOrWhiteSpace(this string value)
+        => !string.IsNullOrWhiteSpace(value);
+
     public static string? ToTitleCase(this string value)
         =>
-        value is null
-        ? null
-        : CultureInfo.CurrentCulture.TextInfo.ToTitleCase(value.ToLower());
+        value.IsNotNullOrEmpty()
+        ? CultureInfo.CurrentCulture.TextInfo.ToTitleCase(value.ToLower())
+        : value;
 
     public static bool ContainsIgnoreCase(this string source, string toCheck)
         => source?.IndexOf(toCheck, StringComparison.OrdinalIgnoreCase) >= 0;
 
     public static string Truncate(this string value, int maxLength)
         =>
-        value.IsNullOrEmpty()
-        ? value
-        : (value.Length <= maxLength ? value : value.Substring(0, maxLength));
+        value.IsNotNullOrEmpty()
+        ? (value.Length <= maxLength ? value : value[..maxLength])
+        : value;
 
     public static string? Reverse(this string value)
     {
-        if (value is null)
+        if (value == null)
             return null;
 
         char[] array = value.ToCharArray();
@@ -45,15 +53,15 @@ public static partial class Extensions
 
     public static string? RemoveWhitespace(this string value)
         =>
-        value is null
-        ? null
-        : new string(value.Where(c => !char.IsWhiteSpace(c)).ToArray());
+        value.IsNotNullOrEmpty()
+        ? new string(value.Where(c => !char.IsWhiteSpace(c)).ToArray())
+        : value;
 
     public static string ToCamelCase(this string value)
         =>
-        value.IsNullOrEmpty()
-        ? value
-        : char.ToLowerInvariant(value[0]) + value.Substring(1);
+        value.IsNotNullOrEmpty()
+        ? char.ToLowerInvariant(value[0]) + value[1..]
+        : value;
 
     public static string FormatWith(this string value, params object[] args)
         => string.Format(value, args);
@@ -66,7 +74,7 @@ public static partial class Extensions
 
     public static string ToPlural(this string singular)
     {
-        if (singular.EndsWith("y"))
+        if (singular.EndsWith('y'))
             return singular.Truncate(singular.Length - 1) + "ies";
 
         if (Regex.IsMatch(singular, "(s|ss|sh|ch|x|z)$"))
@@ -100,5 +108,7 @@ public static partial class Extensions
     }
 
     public static int ToInt(this string value)
-        => int.Parse(value);
+        => value.IsNumeric()
+        ? int.Parse(value)
+        : 0;
 }

@@ -21,7 +21,7 @@ public static partial class Extensions
         where TEnum : struct, Enum
     {
         FieldInfo? fi = enumValue.GetType().GetField(enumValue.ToString());
-        DescriptionAttribute[] attributes = fi?.GetCustomAttributes(typeof(DescriptionAttribute), false) as DescriptionAttribute[] ?? Array.Empty<DescriptionAttribute>();
+        DescriptionAttribute[] attributes = fi?.GetCustomAttributes(typeof(DescriptionAttribute), false) as DescriptionAttribute[] ?? [];
         return attributes.Length > 0 ? attributes[0].Description : enumValue.ToString();
     }
 
@@ -36,10 +36,6 @@ public static partial class Extensions
     public static bool IsDefined<T>(this T value)
         where T : struct, Enum
         => Enum.IsDefined(typeof(T), value);
-
-    public static int ToInt<T>(this T enumValue)
-        where T : Enum
-        => Convert.ToInt32(enumValue);
 
     public static List<T> ParseEnumList<T>(this IEnumerable<string> values)
         where T : struct, Enum
