@@ -43,7 +43,7 @@ public class ProfileSetupCommand(ProfileSetupDto settings) : BaseCommand
                 .When(_ => _.Settings.Weight.BodyFatPercentage.HasValue)
                 .WithMessage(ResourceValidation.Less_Than.AppendArgument(weightDescriptions[nameof(WeightDto.BodyFatPercentage)], "1000"));
 
-            RuleFor
+            //RuleFor
         }
     }
 

@@ -14,10 +14,10 @@ public class AuthorizationAttribute(params eSystemRole[] roles) : Attribute, IAu
     {
         var user = context.HttpContext.RequestServices.GetService<IIdentityUser>();
 
-        if ((user is null).Or(!user!.IsAuthenticated))
+        if (user == null || !user!.IsAuthenticated)
             throw new UnauthorizedException();
 
-        if (_roles.IsEmpty().Or(!user!.HasRole(_roles)))
+        if (_roles.IsEmpty() || !user!.HasRole(_roles))
             throw new ForbiddenException();
     }
 }

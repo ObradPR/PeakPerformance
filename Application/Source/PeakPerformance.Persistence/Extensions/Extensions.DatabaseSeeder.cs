@@ -50,9 +50,9 @@ public static partial class Extensions
             context.SetIdentityInsert<TContext, SystemRole>();
 
             await context.Set<SystemRole>().AddRangeAsync(
-                new SystemRole { Id = eSystemRole.Admin.ToInt(), Name = eSystemRole.Admin.GetEnumDescription() },
-                new SystemRole { Id = eSystemRole.User.ToInt(), Name = eSystemRole.User.GetEnumDescription() },
-                new SystemRole { Id = eSystemRole.Guest.ToInt(), Name = eSystemRole.Guest.GetEnumDescription() }
+                new SystemRole { Id = (int)eSystemRole.Admin, Name = eSystemRole.Admin.GetEnumDescription() },
+                new SystemRole { Id = (int)eSystemRole.User, Name = eSystemRole.User.GetEnumDescription() },
+                new SystemRole { Id = (int)eSystemRole.Guest, Name = eSystemRole.Guest.GetEnumDescription() }
             );
 
             // Save all changes
@@ -75,13 +75,13 @@ public static partial class Extensions
             context.SetIdentityInsert<TContext, ActionType>();
 
             await context.Set<ActionType>().AddRangeAsync(
-                new ActionType { Id = eActionType.Create.ToInt(), Name = eActionType.Create.GetEnumDescription() },
-                new ActionType { Id = eActionType.Update.ToInt(), Name = eActionType.Update.GetEnumDescription() },
-                new ActionType { Id = eActionType.Delete.ToInt(), Name = eActionType.Delete.GetEnumDescription() },
-                new ActionType { Id = eActionType.Deactivate.ToInt(), Name = eActionType.Deactivate.GetEnumDescription() },
-                new ActionType { Id = eActionType.Signup.ToInt(), Name = eActionType.Signup.GetEnumDescription() },
-                new ActionType { Id = eActionType.Signin.ToInt(), Name = eActionType.Signin.GetEnumDescription() },
-                new ActionType { Id = eActionType.Signout.ToInt(), Name = eActionType.Signout.GetEnumDescription() }
+                new ActionType { Id = (int)eActionType.Create, Name = eActionType.Create.GetEnumDescription() },
+                new ActionType { Id = (int)eActionType.Update, Name = eActionType.Update.GetEnumDescription() },
+                new ActionType { Id = (int)eActionType.Delete, Name = eActionType.Delete.GetEnumDescription() },
+                new ActionType { Id = (int)eActionType.Deactivate, Name = eActionType.Deactivate.GetEnumDescription() },
+                new ActionType { Id = (int)eActionType.Signup, Name = eActionType.Signup.GetEnumDescription() },
+                new ActionType { Id = (int)eActionType.Signin, Name = eActionType.Signin.GetEnumDescription() },
+                new ActionType { Id = (int)eActionType.Signout, Name = eActionType.Signout.GetEnumDescription() }
             );
 
             // Save all changes
@@ -104,10 +104,10 @@ public static partial class Extensions
             context.SetIdentityInsert<TContext, MeasurementUnit>();
 
             await context.Set<MeasurementUnit>().AddRangeAsync(
-                new MeasurementUnit { Id = eMeasurementUnit.Kilograms.ToInt(), Name = eMeasurementUnit.Kilograms.GetEnumDescription() },
-               new MeasurementUnit { Id = eMeasurementUnit.Pounds.ToInt(), Name = eMeasurementUnit.Pounds.GetEnumDescription() },
-               new MeasurementUnit { Id = eMeasurementUnit.Centimeters.ToInt(), Name = eMeasurementUnit.Centimeters.GetEnumDescription() },
-               new MeasurementUnit { Id = eMeasurementUnit.Inches.ToInt(), Name = eMeasurementUnit.Inches.GetEnumDescription() }
+                new MeasurementUnit { Id = (int)eMeasurementUnit.Kilograms, Name = eMeasurementUnit.Kilograms.GetEnumDescription() },
+               new MeasurementUnit { Id = (int)eMeasurementUnit.Pounds, Name = eMeasurementUnit.Pounds.GetEnumDescription() },
+               new MeasurementUnit { Id = (int)eMeasurementUnit.Centimeters, Name = eMeasurementUnit.Centimeters.GetEnumDescription() },
+               new MeasurementUnit { Id = (int)eMeasurementUnit.Inches, Name = eMeasurementUnit.Inches.GetEnumDescription() }
             );
 
             // Save all changes
@@ -130,15 +130,15 @@ public static partial class Extensions
             context.SetIdentityInsert<TContext, TrainingGoal>();
 
             await context.Set<TrainingGoal>().AddRangeAsync(
-                new TrainingGoal { Id = eTrainingGoal.Strength.ToInt(), Name = eTrainingGoal.Strength.GetEnumDescription() },
-                new TrainingGoal { Id = eTrainingGoal.Bulking.ToInt(), Name = eTrainingGoal.Bulking.GetEnumDescription() },
-                new TrainingGoal { Id = eTrainingGoal.Cutting.ToInt(), Name = eTrainingGoal.Cutting.GetEnumDescription() },
-                new TrainingGoal { Id = eTrainingGoal.Cardio.ToInt(), Name = eTrainingGoal.Cardio.GetEnumDescription() },
-                new TrainingGoal { Id = eTrainingGoal.Explosivness.ToInt(), Name = eTrainingGoal.Explosivness.GetEnumDescription() },
-                new TrainingGoal { Id = eTrainingGoal.Endurance.ToInt(), Name = eTrainingGoal.Endurance.GetEnumDescription() },
-                new TrainingGoal { Id = eTrainingGoal.Flexibility.ToInt(), Name = eTrainingGoal.Flexibility.GetEnumDescription() },
-                new TrainingGoal { Id = eTrainingGoal.Balance.ToInt(), Name = eTrainingGoal.Balance.GetEnumDescription() },
-                new TrainingGoal { Id = eTrainingGoal.Agility.ToInt(), Name = eTrainingGoal.Agility.GetEnumDescription() }
+                new TrainingGoal { Id = (int)eTrainingGoal.Strength, Name = eTrainingGoal.Strength.GetEnumDescription() },
+                new TrainingGoal { Id = (int)eTrainingGoal.Bulking, Name = eTrainingGoal.Bulking.GetEnumDescription() },
+                new TrainingGoal { Id = (int)eTrainingGoal.Cutting, Name = eTrainingGoal.Cutting.GetEnumDescription() },
+                new TrainingGoal { Id = (int)eTrainingGoal.Cardio, Name = eTrainingGoal.Cardio.GetEnumDescription() },
+                new TrainingGoal { Id = (int)eTrainingGoal.Explosivness, Name = eTrainingGoal.Explosivness.GetEnumDescription() },
+                new TrainingGoal { Id = (int)eTrainingGoal.Endurance, Name = eTrainingGoal.Endurance.GetEnumDescription() },
+                new TrainingGoal { Id = (int)eTrainingGoal.Flexibility, Name = eTrainingGoal.Flexibility.GetEnumDescription() },
+                new TrainingGoal { Id = (int)eTrainingGoal.Balance, Name = eTrainingGoal.Balance.GetEnumDescription() },
+                new TrainingGoal { Id = (int)eTrainingGoal.Agility, Name = eTrainingGoal.Agility.GetEnumDescription() }
             );
 
             // Save all changes
@@ -161,17 +161,17 @@ public static partial class Extensions
             context.SetIdentityInsert<TContext, SocialMediaPlatform>();
 
             await context.Set<SocialMediaPlatform>().AddRangeAsync(
-                new SocialMediaPlatform { Id = eSocialMediaPlatform.Facebook.ToInt(), Name = eSocialMediaPlatform.Facebook.GetEnumDescription() },
-                new SocialMediaPlatform { Id = eSocialMediaPlatform.Twitter.ToInt(), Name = eSocialMediaPlatform.Twitter.GetEnumDescription() },
-                new SocialMediaPlatform { Id = eSocialMediaPlatform.Instagram.ToInt(), Name = eSocialMediaPlatform.Instagram.GetEnumDescription() },
-                new SocialMediaPlatform { Id = eSocialMediaPlatform.LinkedIn.ToInt(), Name = eSocialMediaPlatform.LinkedIn.GetEnumDescription() },
-                new SocialMediaPlatform { Id = eSocialMediaPlatform.YouTube.ToInt(), Name = eSocialMediaPlatform.YouTube.GetEnumDescription() },
-                new SocialMediaPlatform { Id = eSocialMediaPlatform.TikTok.ToInt(), Name = eSocialMediaPlatform.TikTok.GetEnumDescription() },
-                new SocialMediaPlatform { Id = eSocialMediaPlatform.Pinterest.ToInt(), Name = eSocialMediaPlatform.Pinterest.GetEnumDescription() },
-                new SocialMediaPlatform { Id = eSocialMediaPlatform.Snapchat.ToInt(), Name = eSocialMediaPlatform.Snapchat.GetEnumDescription() },
-                new SocialMediaPlatform { Id = eSocialMediaPlatform.WhatsApp.ToInt(), Name = eSocialMediaPlatform.WhatsApp.GetEnumDescription() },
-                new SocialMediaPlatform { Id = eSocialMediaPlatform.Telegram.ToInt(), Name = eSocialMediaPlatform.Telegram.GetEnumDescription() },
-                new SocialMediaPlatform { Id = eSocialMediaPlatform.Reddit.ToInt(), Name = eSocialMediaPlatform.Reddit.GetEnumDescription() }
+                new SocialMediaPlatform { Id = (int)eSocialMediaPlatform.Facebook, Name = eSocialMediaPlatform.Facebook.GetEnumDescription() },
+                new SocialMediaPlatform { Id = (int)eSocialMediaPlatform.Twitter, Name = eSocialMediaPlatform.Twitter.GetEnumDescription() },
+                new SocialMediaPlatform { Id = (int)eSocialMediaPlatform.Instagram, Name = eSocialMediaPlatform.Instagram.GetEnumDescription() },
+                new SocialMediaPlatform { Id = (int)eSocialMediaPlatform.LinkedIn, Name = eSocialMediaPlatform.LinkedIn.GetEnumDescription() },
+                new SocialMediaPlatform { Id = (int)eSocialMediaPlatform.YouTube, Name = eSocialMediaPlatform.YouTube.GetEnumDescription() },
+                new SocialMediaPlatform { Id = (int)eSocialMediaPlatform.TikTok, Name = eSocialMediaPlatform.TikTok.GetEnumDescription() },
+                new SocialMediaPlatform { Id = (int)eSocialMediaPlatform.Pinterest, Name = eSocialMediaPlatform.Pinterest.GetEnumDescription() },
+                new SocialMediaPlatform { Id = (int)eSocialMediaPlatform.Snapchat, Name = eSocialMediaPlatform.Snapchat.GetEnumDescription() },
+                new SocialMediaPlatform { Id = (int)eSocialMediaPlatform.WhatsApp, Name = eSocialMediaPlatform.WhatsApp.GetEnumDescription() },
+                new SocialMediaPlatform { Id = (int)eSocialMediaPlatform.Telegram, Name = eSocialMediaPlatform.Telegram.GetEnumDescription() },
+                new SocialMediaPlatform { Id = (int)eSocialMediaPlatform.Reddit, Name = eSocialMediaPlatform.Reddit.GetEnumDescription() }
             );
 
             // Save all changes
@@ -194,31 +194,31 @@ public static partial class Extensions
             context.SetIdentityInsert<TContext, InjuryType>();
 
             await context.Set<InjuryType>().AddRangeAsync(
-                new InjuryType { Id = eInjuryType.KneeInjury.ToInt(), Name = eInjuryType.KneeInjury.GetEnumDescription() },
-                new InjuryType { Id = eInjuryType.ShoulderInjury.ToInt(), Name = eInjuryType.ShoulderInjury.GetEnumDescription() },
-                new InjuryType { Id = eInjuryType.BackInjury.ToInt(), Name = eInjuryType.BackInjury.GetEnumDescription() },
-                new InjuryType { Id = eInjuryType.ElbowInjury.ToInt(), Name = eInjuryType.ElbowInjury.GetEnumDescription() },
-                new InjuryType { Id = eInjuryType.WristInjury.ToInt(), Name = eInjuryType.WristInjury.GetEnumDescription() },
-                new InjuryType { Id = eInjuryType.AnkleInjury.ToInt(), Name = eInjuryType.AnkleInjury.GetEnumDescription() },
-                new InjuryType { Id = eInjuryType.HipInjury.ToInt(), Name = eInjuryType.HipInjury.GetEnumDescription() },
-                new InjuryType { Id = eInjuryType.NeckInjury.ToInt(), Name = eInjuryType.NeckInjury.GetEnumDescription() },
-                new InjuryType { Id = eInjuryType.Asthma.ToInt(), Name = eInjuryType.Asthma.GetEnumDescription() },
-                new InjuryType { Id = eInjuryType.HeartCondition.ToInt(), Name = eInjuryType.HeartCondition.GetEnumDescription() },
-                new InjuryType { Id = eInjuryType.Diabetes.ToInt(), Name = eInjuryType.Diabetes.GetEnumDescription() },
-                new InjuryType { Id = eInjuryType.Arthritis.ToInt(), Name = eInjuryType.Arthritis.GetEnumDescription() },
-                new InjuryType { Id = eInjuryType.HighBloodPressure.ToInt(), Name = eInjuryType.HighBloodPressure.GetEnumDescription() },
-                new InjuryType { Id = eInjuryType.LowBloodPressure.ToInt(), Name = eInjuryType.LowBloodPressure.GetEnumDescription() },
-                new InjuryType { Id = eInjuryType.Pregnancy.ToInt(), Name = eInjuryType.Pregnancy.GetEnumDescription() },
-                new InjuryType { Id = eInjuryType.ChronicFatigue.ToInt(), Name = eInjuryType.ChronicFatigue.GetEnumDescription() },
-                new InjuryType { Id = eInjuryType.Scoliosis.ToInt(), Name = eInjuryType.Scoliosis.GetEnumDescription() },
-                new InjuryType { Id = eInjuryType.PlantarFasciitis.ToInt(), Name = eInjuryType.PlantarFasciitis.GetEnumDescription() },
-                new InjuryType { Id = eInjuryType.Tendinitis.ToInt(), Name = eInjuryType.Tendinitis.GetEnumDescription() },
-                new InjuryType { Id = eInjuryType.CarpalTunnelSyndrome.ToInt(), Name = eInjuryType.CarpalTunnelSyndrome.GetEnumDescription() },
-                new InjuryType { Id = eInjuryType.ChestInjury.ToInt(), Name = eInjuryType.ChestInjury.GetEnumDescription() },
-                new InjuryType { Id = eInjuryType.BicepInjury.ToInt(), Name = eInjuryType.BicepInjury.GetEnumDescription() },
-                new InjuryType { Id = eInjuryType.TricepInjury.ToInt(), Name = eInjuryType.TricepInjury.GetEnumDescription() },
-                new InjuryType { Id = eInjuryType.QuadInjury.ToInt(), Name = eInjuryType.QuadInjury.GetEnumDescription() },
-                new InjuryType { Id = eInjuryType.HamstringInjury.ToInt(), Name = eInjuryType.HamstringInjury.GetEnumDescription() }
+                new InjuryType { Id = (int)eInjuryType.KneeInjury, Name = eInjuryType.KneeInjury.GetEnumDescription() },
+                new InjuryType { Id = (int)eInjuryType.ShoulderInjury, Name = eInjuryType.ShoulderInjury.GetEnumDescription() },
+                new InjuryType { Id = (int)eInjuryType.BackInjury, Name = eInjuryType.BackInjury.GetEnumDescription() },
+                new InjuryType { Id = (int)eInjuryType.ElbowInjury, Name = eInjuryType.ElbowInjury.GetEnumDescription() },
+                new InjuryType { Id = (int)eInjuryType.WristInjury, Name = eInjuryType.WristInjury.GetEnumDescription() },
+                new InjuryType { Id = (int)eInjuryType.AnkleInjury, Name = eInjuryType.AnkleInjury.GetEnumDescription() },
+                new InjuryType { Id = (int)eInjuryType.HipInjury, Name = eInjuryType.HipInjury.GetEnumDescription() },
+                new InjuryType { Id = (int)eInjuryType.NeckInjury, Name = eInjuryType.NeckInjury.GetEnumDescription() },
+                new InjuryType { Id = (int)eInjuryType.Asthma, Name = eInjuryType.Asthma.GetEnumDescription() },
+                new InjuryType { Id = (int)eInjuryType.HeartCondition, Name = eInjuryType.HeartCondition.GetEnumDescription() },
+                new InjuryType { Id = (int)eInjuryType.Diabetes, Name = eInjuryType.Diabetes.GetEnumDescription() },
+                new InjuryType { Id = (int)eInjuryType.Arthritis, Name = eInjuryType.Arthritis.GetEnumDescription() },
+                new InjuryType { Id = (int)eInjuryType.HighBloodPressure, Name = eInjuryType.HighBloodPressure.GetEnumDescription() },
+                new InjuryType { Id = (int)eInjuryType.LowBloodPressure, Name = eInjuryType.LowBloodPressure.GetEnumDescription() },
+                new InjuryType { Id = (int)eInjuryType.Pregnancy, Name = eInjuryType.Pregnancy.GetEnumDescription() },
+                new InjuryType { Id = (int)eInjuryType.ChronicFatigue, Name = eInjuryType.ChronicFatigue.GetEnumDescription() },
+                new InjuryType { Id = (int)eInjuryType.Scoliosis, Name = eInjuryType.Scoliosis.GetEnumDescription() },
+                new InjuryType { Id = (int)eInjuryType.PlantarFasciitis, Name = eInjuryType.PlantarFasciitis.GetEnumDescription() },
+                new InjuryType { Id = (int)eInjuryType.Tendinitis, Name = eInjuryType.Tendinitis.GetEnumDescription() },
+                new InjuryType { Id = (int)eInjuryType.CarpalTunnelSyndrome, Name = eInjuryType.CarpalTunnelSyndrome.GetEnumDescription() },
+                new InjuryType { Id = (int)eInjuryType.ChestInjury, Name = eInjuryType.ChestInjury.GetEnumDescription() },
+                new InjuryType { Id = (int)eInjuryType.BicepInjury, Name = eInjuryType.BicepInjury.GetEnumDescription() },
+                new InjuryType { Id = (int)eInjuryType.TricepInjury, Name = eInjuryType.TricepInjury.GetEnumDescription() },
+                new InjuryType { Id = (int)eInjuryType.QuadInjury, Name = eInjuryType.QuadInjury.GetEnumDescription() },
+                new InjuryType { Id = (int)eInjuryType.HamstringInjury, Name = eInjuryType.HamstringInjury.GetEnumDescription() }
             );
 
             // Save all changes

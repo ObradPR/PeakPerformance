@@ -47,7 +47,7 @@ public class ChangePasswordCommand(ChangePasswordDto user) : BaseCommand
 
             request.User.ChangePassword(user, _userManager);
 
-            if ((await _unitOfWork.SaveAsync()).Not())
+            if (!await _unitOfWork.SaveAsync())
                 throw new ServerErrorException();
         }
     }

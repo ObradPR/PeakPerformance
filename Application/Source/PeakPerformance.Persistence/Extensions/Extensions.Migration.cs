@@ -42,10 +42,10 @@ public static partial class Extensions
                             WHEN EXISTS (SELECT * FROM deleted) THEN
                                 CASE
                                     WHEN i.IsActive = 0 AND d.IsActive = 1
-                                        THEN {eActionType.Deactivate.ToInt()}
-                                    ELSE {eActionType.Update.ToInt()}
+                                        THEN {(int)eActionType.Deactivate}
+                                    ELSE {(int)eActionType.Update}
                                 END
-                            ELSE {eActionType.Create.ToInt()}
+                            ELSE {(int)eActionType.Create}
                         END,
                         (SELECT CAST((SELECT * FROM inserted i FOR JSON PATH, WITHOUT_ARRAY_WRAPPER) AS NVARCHAR(MAX)))
                     FROM inserted i
@@ -58,7 +58,7 @@ public static partial class Extensions
                     INSERT INTO {auditTableName} ({columns}, ActionTypeId, DetailsJson)
                     SELECT
                         {deleteValues},
-                        {eActionType.Delete.ToInt()},
+                        {(int)eActionType.Delete},
                         (SELECT CAST((SELECT * FROM deleted d FOR JSON PATH, WITHOUT_ARRAY_WRAPPER) AS NVARCHAR(MAX)))
                     FROM deleted d;
                 END

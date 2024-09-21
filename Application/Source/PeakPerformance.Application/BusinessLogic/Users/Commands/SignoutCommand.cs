@@ -17,12 +17,12 @@ public class SignoutCommand : BaseCommand
             UserActivityLog userActivityLog = new()
             {
                 UserId = userId,
-                ActionTypeId = eActionType.Signout.ToInt()
+                ActionTypeId = (int)eActionType.Signout
             };
 
             await _unitOfWork.UserActivityLogRepository.AddAsync(userActivityLog, cancellationToken);
 
-            if ((await _unitOfWork.SaveAsync()).Not())
+            if (!await _unitOfWork.SaveAsync())
                 throw new ServerErrorException();
         }
     }

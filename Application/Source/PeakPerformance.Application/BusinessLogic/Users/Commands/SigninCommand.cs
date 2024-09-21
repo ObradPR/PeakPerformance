@@ -51,13 +51,13 @@ public class SigninCommand(SigninDto user) : BaseCommand<AuthorizationDto>
 
             bool passwordMatch = _userManager.VerifyPassword(request.User.Password, existingUser.Password);
 
-            if (passwordMatch.Not())
+            if (!passwordMatch)
                 throw new FluentValidationException(nameof(request.User), ResourceValidation.Wrong_Credentials);
 
             UserActivityLog userActivityLog = new()
             {
                 UserId = existingUser.Id,
-                ActionTypeId = eActionType.Signin.ToInt()
+                ActionTypeId = (int)eActionType.Signin
             };
 
             await _unitOfWork.UserActivityLogRepository.AddAsync(userActivityLog, cancellationToken);
