@@ -26,10 +26,10 @@ internal class BodyMeasurementConfiguration : IEntityTypeConfiguration<BodyMeasu
         builder.Property(_ => _.Shoulders)
            .HasColumnType(Constants.MeasurementDecimalType);
 
-        builder.Property(_ => _.RightBiceps)
+        builder.Property(_ => _.RightBicep)
            .HasColumnType(Constants.MeasurementDecimalType);
 
-        builder.Property(_ => _.LeftBiceps)
+        builder.Property(_ => _.LeftBicep)
            .HasColumnType(Constants.MeasurementDecimalType);
 
         builder.Property(_ => _.RightForearm)

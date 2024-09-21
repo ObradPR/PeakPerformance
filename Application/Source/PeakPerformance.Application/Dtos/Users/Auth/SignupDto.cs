@@ -1,6 +1,4 @@
-﻿using System.ComponentModel;
-
-namespace PeakPerformance.Application.Dtos.Users.Auth;
+﻿namespace PeakPerformance.Application.Dtos.Users.Auth;
 
 public class SignupDto
 {

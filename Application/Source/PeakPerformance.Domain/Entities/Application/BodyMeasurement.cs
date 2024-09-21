@@ -20,9 +20,9 @@ public class BodyMeasurement
 
     public decimal? Shoulders { get; set; }
 
-    public decimal? RightBiceps { get; set; }
+    public decimal? RightBicep { get; set; }
 
-    public decimal? LeftBiceps { get; set; }
+    public decimal? LeftBicep { get; set; }
 
     public decimal? RightForearm { get; set; }
 

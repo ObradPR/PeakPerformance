@@ -21,4 +21,8 @@ public static class ResourceValidation
     public static string Wrong_Credentials => "User credentials are wrong. Please try again.";
 
     public static string Wrong_Format => "{0} is in the wrong format.";
+
+    public static string Greater_Than => "{0} must be greater than {1}.";
+
+    public static string Less_Than => "{0} must be less than {1}.";
 }

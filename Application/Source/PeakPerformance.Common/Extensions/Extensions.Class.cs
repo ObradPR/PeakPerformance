@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.ComponentModel;
 using System.Xml.Serialization;
 
 namespace PeakPerformance.Common.Extensions;
@@ -42,5 +43,22 @@ public static partial class Extensions
         var propertyNames = typeof(TClass).GetProperties().Select(_ => _.Name);
 
         return string.Join(",", propertyNames);
+    }
+
+    public static Dictionary<string, string> GetAllPropertyDescriptions<TClass>()
+        where TClass : class
+    {
+        var type = typeof(TClass);
+        var descriptions = new Dictionary<string, string>();
+
+        foreach (var property in type.GetProperties())
+        {
+            var descriptionAttribute = property.GetCustomAttributes(typeof(DescriptionAttribute), false).FirstOrDefault() as DescriptionAttribute;
+
+            if (descriptionAttribute is not null)
+                descriptions[property.Name] = descriptionAttribute.Description;
+        }
+
+        return descriptions;
     }
 }
