@@ -1,8 +1,9 @@
-﻿using PeakPerformance.Domain.Entities.Application_lu;
+﻿using PeakPerformance.Domain.Entities._Base;
+using PeakPerformance.Domain.Entities.Application_lu;
 
 namespace PeakPerformance.Domain.Entities.Application;
 
-public class SocialMedia
+public class SocialMedia : _BaseEntity
 {
     public SocialMedia() => RecordDate = DateTime.UtcNow;
 
@@ -21,4 +22,8 @@ public class SocialMedia
     public virtual User User { get; set; }
 
     public virtual SocialMediaPlatform Platform { get; set; }
+
+    // Override
+
+    public override bool ShouldPluralize => false;
 }

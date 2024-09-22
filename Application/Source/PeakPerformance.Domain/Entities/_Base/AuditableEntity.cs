@@ -1,6 +1,6 @@
 ﻿namespace PeakPerformance.Domain.Entities._Base;
 
-public abstract partial class AuditableEntity : IAuditableEntity
+public abstract partial class AuditableEntity : _BaseEntity, IAuditableEntity
 {
     public AuditableEntity()
     {

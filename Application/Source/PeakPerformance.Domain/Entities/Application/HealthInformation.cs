@@ -20,4 +20,8 @@ public class HealthInformation : AuditableEntity
     public virtual User User { get; set; }
 
     public virtual InjuryType InjuryType { get; set; }
+
+    // Override
+
+    public override bool ShouldPluralize => false;
 }

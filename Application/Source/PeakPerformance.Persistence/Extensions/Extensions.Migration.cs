@@ -4,6 +4,7 @@ using PeakPerformance.Common.Enums;
 using PeakPerformance.Common.Extensions;
 using PeakPerformance.Domain.Entities._Base;
 using PeakPerformance.Persistence.Enums;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Data;
 using System.Reflection;
 
@@ -20,26 +21,23 @@ public static partial class Extensions
         prop.Name != nameof(Audit.AuditId) &&
         prop.Name != nameof(Audit.DetailsJson) &&
         prop.Name != nameof(Audit.ActionTypeId) &&
-        prop.Name != nameof(Audit.ActionType);
+        prop.Name != nameof(Audit.ActionType) &&
+        !Attribute.IsDefined(prop, typeof(NotMappedAttribute));
 
     // Methods
 
-    public static void CreateAuditTriggersForTable<TAuditTable, TEntity>(this MigrationBuilder migrationBuilder, bool plural = true)
-        where TAuditTable : Audit
-        where TEntity : class
+    public static void CreateAuditTriggersForTable<TAudit, TEntity>(this MigrationBuilder migrationBuilder)
+        where TAudit : Audit
+        where TEntity : _BaseEntity
     {
-        var triggerName = GetAuditTriggerName<TEntity>(plural);
-        var tableName = plural
-            ? typeof(TEntity).Name.ToPlural()
-            : typeof(TEntity).Name;
+        var triggerName = GetAuditTriggerName<TEntity>();
 
-        var auditTableName = plural
-            ? typeof(TEntity).Name.ToPlural() + "_aud"
-            : typeof(TAuditTable).Name;
+        var tableName = GetTableName<TEntity>();
+        var auditTableName = GetTableName<TEntity>(eTableType.Audit);
 
-        var columns = GetAuditColumnsOrValues<TAuditTable>();
-        var insertValues = GetAuditColumnsOrValues<TAuditTable>("i");
-        var deleteValues = GetAuditColumnsOrValues<TAuditTable>("d");
+        var columns = GetAuditColumnsOrValues<TAudit>();
+        var insertValues = GetAuditColumnsOrValues<TAudit>("i");
+        var deleteValues = GetAuditColumnsOrValues<TAudit>("d");
 
         migrationBuilder.Sql($@"
             CREATE TRIGGER {triggerName}
@@ -84,10 +82,10 @@ public static partial class Extensions
         ");
     }
 
-    private static string GetAuditColumnsOrValues<TAuditTable>(string prefix = "")
-        where TAuditTable : class
+    private static string GetAuditColumnsOrValues<TAudit>(string prefix = "")
+        where TAudit : class
     {
-        var properties = typeof(TAuditTable).GetProperties()
+        var properties = typeof(TAudit).GetProperties()
             .Where(excludeAuditProperties)
             .Select(_ => prefix.IsNullOrEmpty()
                 ? _.Name
@@ -150,5 +148,35 @@ public static partial class Extensions
 
             connection.SetIdentityInsert<TEntity>(eIdentitySwitch.Off);
         }
+    }
+
+    public static string GetTableName<TEntity>(eTableType type = eTableType.Normal)
+        where TEntity : _BaseEntity
+    {
+        var name = typeof(TEntity).Name;
+        var auditSufix = eTableType.Audit.GetDescription();
+        var lookupSufix = eTableType.Lookup.GetDescription();
+
+        if (name.EndsWith(auditSufix))
+        {
+            name = name.Replace(auditSufix, string.Empty);
+        }
+        else if (name.EndsWith(lookupSufix))
+        {
+            name = name.Replace(lookupSufix, string.Empty);
+        }
+
+        var plural = Activator.CreateInstance<TEntity>().ShouldPluralize;
+
+        if (plural)
+            name = name.ToPlural();
+
+        return type switch
+        {
+            eTableType.Normal => name,
+            eTableType.Audit => name + auditSufix,
+            eTableType.Lookup => name + lookupSufix,
+            _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
+        };
     }
 }

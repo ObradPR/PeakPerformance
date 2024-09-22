@@ -1,8 +1,9 @@
-﻿using PeakPerformance.Domain.Entities.Application_lu;
+﻿using PeakPerformance.Domain.Entities._Base;
+using PeakPerformance.Domain.Entities.Application_lu;
 
 namespace PeakPerformance.Domain.Entities.Application;
 
-public class Weight
+public class Weight : _BaseEntity
 {
     public Weight() => RecordDate = DateTime.UtcNow;
 

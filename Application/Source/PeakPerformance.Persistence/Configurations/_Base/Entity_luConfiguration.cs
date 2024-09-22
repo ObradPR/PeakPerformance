@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using PeakPerformance.Common.Extensions;
 using PeakPerformance.Domain.Entities._Base;
+using PeakPerformance.Persistence.Enums;
 
 namespace PeakPerformance.Persistence.Configurations._Base;
 
@@ -10,7 +10,7 @@ internal abstract class Entity_luConfiguration<T> : IEntityTypeConfiguration<T>
 {
     public virtual void Configure(EntityTypeBuilder<T> builder)
     {
-        builder.ToTable(typeof(T).Name.ToPlural() + "_lu");
+        builder.ToTable(Extensions.Extensions.GetTableName<T>(eTableType.Lookup));
 
         builder.HasKey(_ => _.Id);
 

@@ -1,6 +1,8 @@
-﻿namespace PeakPerformance.Domain.Entities.Application;
+﻿using PeakPerformance.Domain.Entities._Base;
 
-public class WeightGoal
+namespace PeakPerformance.Domain.Entities.Application;
+
+public class WeightGoal : _BaseEntity
 {
     public WeightGoal() => RecordDate = DateTime.UtcNow;
 
