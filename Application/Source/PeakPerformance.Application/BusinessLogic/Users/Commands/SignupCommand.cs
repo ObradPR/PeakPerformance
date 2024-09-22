@@ -124,7 +124,7 @@ public class SignupCommand(SignupDto user) : BaseCommand<AuthorizationDto>
                 {
                     Token = _tokenService.GenerateJwtToken(
                     user.Id,
-                    Extensions.GetStringValuesFromEnums(eSystemRole.User),
+                    Extensions.GetStringValues(eSystemRole.User),
                     Extensions.GetUserFullName(user.FirstName, user.LastName, user.MiddleName),
                     user.Email,
                     user.Username)

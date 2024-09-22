@@ -71,7 +71,7 @@ public class IdentityUser(IHttpContextAccessor httpContextAccessor) : IIdentityU
         {
             var user = _httpContextAccessor?.HttpContext?.User;
 
-            if (user is null)
+            if (user == null)
                 return;
 
             _isAuthenticated = user.Identity!.IsAuthenticated;
@@ -81,7 +81,7 @@ public class IdentityUser(IHttpContextAccessor httpContextAccessor) : IIdentityU
                 _id = user.Claims.GetId();
                 _email = user.Claims.GetEmail();
                 _username = user.Claims.GetUsername();
-                _roles = user.Claims.GetRoles().ParseEnumList<eSystemRole>();
+                _roles = user.Claims.GetRoles().ParseList<eSystemRole>();
             }
         }
 

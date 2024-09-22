@@ -69,8 +69,8 @@ public static partial class Extensions
     public static string GetUserFullName(string firstName, string lastName, string? middleName)
         => string.Join(" ", firstName, middleName, lastName);
 
-    public static bool IsNumeric(this string value)
-        => int.TryParse(value, out _);
+    public static bool IsNumeric(this string value, out int result)
+        => int.TryParse(value, out result);
 
     public static string ToPlural(this string singular)
     {
@@ -108,7 +108,10 @@ public static partial class Extensions
     }
 
     public static int ToInt(this string value)
-        => value.IsNumeric()
-        ? int.Parse(value)
+        => value.IsNumeric(out var result)
+        ? result
         : 0;
+
+    public static string Join(this IEnumerable<string> values, string separator)
+        => string.Join(separator, values);
 }
