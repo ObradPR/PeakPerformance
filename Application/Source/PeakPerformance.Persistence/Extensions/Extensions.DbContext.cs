@@ -45,6 +45,7 @@ public static partial class Extensions
         where TEntity : _BaseEntity
         => $"trg_{GetTableName<TEntity>(eTableType.Audit)}";
 
+    [Obsolete("Since migration will not be reverted")]
     public static string DropAuditTrigger<TEntity>()
         where TEntity : AuditableEntity
         => $"DROP TRIGGER IF EXISTS {GetAuditTriggerName<TEntity>()}";

@@ -1,7 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
-using PeakPerformance.Domain.Entities.Application;
-using PeakPerformance.Domain.Entities.Audits;
-using PeakPerformance.Persistence.Extensions;
 
 #nullable disable
 
@@ -108,8 +105,6 @@ namespace PeakPerformance.Persistence.Migrations
                 table: "InjuryTypes_lu",
                 column: "Name",
                 unique: true);
-
-            migrationBuilder.CreateAuditTriggersForTable<HealthInformation_aud, HealthInformation>();
         }
 
         /// <inheritdoc />
@@ -123,8 +118,6 @@ namespace PeakPerformance.Persistence.Migrations
 
             migrationBuilder.DropTable(
                 name: "InjuryTypes_lu");
-
-            migrationBuilder.Sql(Persistence.Extensions.Extensions.DropAuditTrigger<HealthInformation>());
         }
     }
 }

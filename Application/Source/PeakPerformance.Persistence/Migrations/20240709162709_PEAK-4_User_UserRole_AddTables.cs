@@ -1,7 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
-using PeakPerformance.Domain.Entities.Application;
-using PeakPerformance.Domain.Entities.Audits;
-using PeakPerformance.Persistence.Extensions;
 
 #nullable disable
 
@@ -164,9 +161,6 @@ namespace PeakPerformance.Persistence.Migrations
                 name: "IX_Users_aud_ActionTypeId",
                 table: "Users_aud",
                 column: "ActionTypeId");
-
-            migrationBuilder.CreateAuditTriggersForTable<User_aud, User>();
-            migrationBuilder.CreateAuditTriggersForTable<UserRole_aud, UserRole>();
         }
 
         /// <inheritdoc />
@@ -183,9 +177,6 @@ namespace PeakPerformance.Persistence.Migrations
 
             migrationBuilder.DropTable(
                 name: "Users");
-
-            migrationBuilder.Sql(Persistence.Extensions.Extensions.DropAuditTrigger<User>());
-            migrationBuilder.Sql(Persistence.Extensions.Extensions.DropAuditTrigger<UserRole>());
         }
     }
 }

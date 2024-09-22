@@ -40,45 +40,17 @@ public static partial class Extensions
         var deleteValues = GetAuditColumnsOrValues<TAudit>("d");
 
         migrationBuilder.Sql($@"
-            CREATE TRIGGER {triggerName}
-            ON {tableName}
-            AFTER INSERT, UPDATE, DELETE
-            AS
-            BEGIN
-                SET NOCOUNT ON;
-
-                IF EXISTS (SELECT * FROM inserted)
-                BEGIN
-                    -- Handle INSERT and UPDATE
-                    INSERT INTO {auditTableName} ({columns}, ActionTypeId, DetailsJson)
-                    SELECT
-                        {insertValues},
-                        CASE
-                            WHEN EXISTS (SELECT * FROM deleted) THEN
-                                CASE
-                                    WHEN i.IsActive = 0 AND d.IsActive = 1
-                                        THEN {(int)eActionType.Deactivate}
-                                    ELSE {(int)eActionType.Update}
-                                END
-                            ELSE {(int)eActionType.Create}
-                        END,
-                        (SELECT CAST((SELECT * FROM inserted i FOR JSON PATH, WITHOUT_ARRAY_WRAPPER) AS NVARCHAR(MAX)))
-                    FROM inserted i
-                    LEFT JOIN deleted d ON i.Id = d.Id
-                    WHERE i.Id IS NOT NULL;
-                END
-                ELSE IF EXISTS (SELECT * FROM deleted)
-                BEGIN
-                    -- Handle DELETE
-                    INSERT INTO {auditTableName} ({columns}, ActionTypeId, DetailsJson)
-                    SELECT
-                        {deleteValues},
-                        {(int)eActionType.Delete},
-                        (SELECT CAST((SELECT * FROM deleted d FOR JSON PATH, WITHOUT_ARRAY_WRAPPER) AS NVARCHAR(MAX)))
-                    FROM deleted d;
-                END
-            END
-            GO
+            EXEC [dbo].[usp_CreateAuditTrigger]
+                @TriggerName = N'{triggerName}',
+                @TableName = N'{tableName}',
+                @AuditTableName = N'{auditTableName}',
+                @Columns = N'{columns}',
+                @InsertValues = N'{insertValues}',
+                @DeleteValues = N'{deleteValues}',
+                @CreateAction = {(int)eActionType.Create},
+                @UpdateAction = {(int)eActionType.Update},
+                @DeleteAction = {(int)eActionType.Delete},
+                @DeactivateAction = {(int)eActionType.Deactivate}
         ");
     }
 
