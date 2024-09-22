@@ -1,12 +1,29 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore.Migrations;
 using PeakPerformance.Common.Enums;
 using PeakPerformance.Common.Extensions;
 using PeakPerformance.Domain.Entities._Base;
+using PeakPerformance.Persistence.Enums;
+using System.Data;
+using System.Reflection;
 
 namespace PeakPerformance.Persistence.Extensions;
 
 public static partial class Extensions
 {
+    // Connection String
+    private static string ConnectionString => "Data Source = localhost; Initial Catalog = PeakPerformance; TrustServerCertificate = True; Integrated security = True;";
+
+    // Predicates
+
+    private static readonly Func<PropertyInfo, bool> excludeAuditProperties = prop =>
+        prop.Name != nameof(Audit.AuditId) &&
+        prop.Name != nameof(Audit.DetailsJson) &&
+        prop.Name != nameof(Audit.ActionTypeId) &&
+        prop.Name != nameof(Audit.ActionType);
+
+    // Methods
+
     public static void CreateAuditTriggersForTable<TAuditTable, TEntity>(this MigrationBuilder migrationBuilder, bool plural = true)
         where TAuditTable : Audit
         where TEntity : class
@@ -20,9 +37,9 @@ public static partial class Extensions
             ? typeof(TEntity).Name.ToPlural() + "_aud"
             : typeof(TAuditTable).Name;
 
-        var columns = GetAuditColumns<TAuditTable>();
-        var insertValues = GetInsertValues<TAuditTable>();
-        var deleteValues = GetDeleteValues<TAuditTable>();
+        var columns = GetAuditColumnsOrValues<TAuditTable>();
+        var insertValues = GetAuditColumnsOrValues<TAuditTable>("i");
+        var deleteValues = GetAuditColumnsOrValues<TAuditTable>("d");
 
         migrationBuilder.Sql($@"
             CREATE TRIGGER {triggerName}
@@ -67,41 +84,71 @@ public static partial class Extensions
         ");
     }
 
-    private static string GetInsertValues<TAuditTable>()
-        where TAuditTable : Audit
+    private static string GetAuditColumnsOrValues<TAuditTable>(string prefix = "")
+        where TAuditTable : class
     {
         var properties = typeof(TAuditTable).GetProperties()
-            .Where(_ => _.Name != nameof(Audit.AuditId)
-                && _.Name != nameof(Audit.DetailsJson)
-                && _.Name != nameof(Audit.ActionTypeId)
-                && _.Name != nameof(Audit.ActionType))
-            .Select(_ => $"i.{_.Name}");
+            .Where(excludeAuditProperties)
+            .Select(_ => prefix.IsNullOrEmpty()
+                ? _.Name
+                : $"{prefix}.{_.Name}");
 
-        return string.Join(",", properties);
+        return properties.Join(",");
     }
 
-    private static string GetDeleteValues<TAuditTable>()
-        where TAuditTable : Audit
+    private static void ReadAndExecuteQuery(this MigrationBuilder migrationBuilder, string sqlFile)
+        => migrationBuilder.Sql(File.ReadAllText(sqlFile));
+
+    public static void CreateTableValuedParameterType(this MigrationBuilder migrationBuilder, string name)
     {
-        var properties = typeof(TAuditTable).GetProperties()
-            .Where(_ => _.Name != nameof(Audit.AuditId)
-                && _.Name != nameof(Audit.DetailsJson)
-                && _.Name != nameof(Audit.ActionTypeId)
-                && _.Name != nameof(Audit.ActionType))
-            .Select(_ => $"d.{_.Name}");
-        return string.Join(",", properties);
+        var sqlFile = Path.Combine("Scripts", "Types", "Table", $"{name}.sql");
+
+        migrationBuilder.ReadAndExecuteQuery(sqlFile);
     }
 
-    private static string GetAuditColumns<TAuditTable>()
-        where TAuditTable : Audit
+    public static void CreateStoreProcedure(this MigrationBuilder migrationBuilder, string name)
     {
-        var properties = typeof(TAuditTable).GetProperties()
-            .Where(_ => _.Name != nameof(Audit.AuditId)
-                && _.Name != nameof(Audit.DetailsJson)
-                && _.Name != nameof(Audit.ActionTypeId)
-                && _.Name != nameof(Audit.ActionType))
-            .Select(_ => _.Name);
+        var sqlFile = Path.Combine("Scripts", "StoreProcedures", $"{name}.sql");
 
-        return string.Join(",", properties);
+        migrationBuilder.ReadAndExecuteQuery(sqlFile);
+    }
+
+    public static void SeedLookupTable<TEntity, TEnum>()
+        where TEntity : Entity_lu
+        where TEnum : struct, Enum
+    {
+        var tableName = typeof(TEntity).Name.ToPlural() + "_lu";
+
+        var dataTable = new DataTable();
+        dataTable.Columns.Add("Id", typeof(int));
+        dataTable.Columns.Add("Name", typeof(string));
+
+        foreach (var (id, name) in Common.Extensions.Extensions.GetValuesAndDescriptions<TEnum>())
+            dataTable.Rows.Add(id, name);
+
+        using (var connection = new SqlConnection(ConnectionString))
+        {
+            connection.Open();
+
+            connection.SetIdentityInsert<TEntity>();
+
+            using (var command = new SqlCommand("EXEC [dbo].[usp_SeedLookupTables] @TableName, @IdAndDescriptions", connection))
+            {
+                command.Parameters.AddWithValue("@TableName", tableName);
+
+                var param = new SqlParameter
+                {
+                    ParameterName = "@IdAndDescriptions",
+                    SqlDbType = SqlDbType.Structured,
+                    TypeName = "[dbo].[IdAndDescriptionsType]",
+                    Value = dataTable
+                };
+
+                command.Parameters.Add(param);
+                command.ExecuteNonQuery();
+            }
+
+            connection.SetIdentityInsert<TEntity>(eIdentitySwitch.Off);
+        }
     }
 }

@@ -20,12 +20,12 @@ public static partial class Extensions
         string tableName = lookupTable ? typeof(TEntity).Name.ToPlural() + "_lu" : typeof(TEntity).Name.ToPlural();
         string sql = identitySwitch switch
         {
-            eIdentitySwitch.On => eIdentitySwitch.On.GetEnumDescription(),
-            eIdentitySwitch.Off => eIdentitySwitch.Off.GetEnumDescription(),
+            eIdentitySwitch.On => eIdentitySwitch.On.GetDescription(),
+            eIdentitySwitch.Off => eIdentitySwitch.Off.GetDescription(),
             _ => throw new ArgumentException("Invalid identity switch value.", nameof(identitySwitch)),
         };
 
-        context.Database.ExecuteSqlRaw($"SET IDENTITY_INSERT {schema}.{tableName} {sql}");
+        context.Database.ExecuteSql($"SET IDENTITY_INSERT {schema}.{tableName} {sql}");
     }
 
     public static async Task<bool> DatabaseExistsAsync<TContext>(this TContext context)
@@ -53,7 +53,7 @@ public static partial class Extensions
     {
         var property = typeof(T).GetProperty(propertyName);
 
-        return property is null
+        return property == null
             ? throw new ArgumentException($"Property '{propertyName}' not found on type '{typeof(T).Name}'")
             : $"[{property.Name}] IS NOT NULL";
     }
@@ -67,12 +67,12 @@ public static partial class Extensions
                                  _.PropertyType.GetGenericTypeDefinition() == typeof(ICollection<>) &&
                                  _.PropertyType.GetGenericArguments()[0] == typeof(T));
 
-        if (actionTypeCollectionProperty is not null)
+        if (actionTypeCollectionProperty != null)
         {
             var withManyMethod = typeof(EntityTypeBuilder<T>).GetMethod("WithMany", [typeof(string)]);
             var hasForeignKeyMethod = typeof(EntityTypeBuilder<T>).GetMethod("HasForeignKey", [typeof(string)]);
 
-            if (withManyMethod is not null && hasForeignKeyMethod is not null)
+            if (withManyMethod != null && hasForeignKeyMethod != null)
             {
                 var withManyCall = withManyMethod.Invoke(builder.HasOne<ActionType>("ActionType"), [actionTypeCollectionProperty.Name]);
                 hasForeignKeyMethod.Invoke(withManyCall, ["ActionTypeId"]);

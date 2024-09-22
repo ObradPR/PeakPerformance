@@ -13,7 +13,7 @@ public partial class ApplicationDbContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         if (!optionsBuilder.IsConfigured)
-            optionsBuilder.UseSqlServer("Data Source=localhost;Initial Catalog=PeakPerformance;TrustServerCertificate=True;Integrated security=True;");
+            optionsBuilder.UseSqlServer("Data Source = localhost; Initial Catalog = PeakPerformance; TrustServerCertificate = True; Integrated security = True;");
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
