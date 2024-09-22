@@ -13,6 +13,7 @@ public static partial class Extensions
         where TContext : DbContext
         => context.Database.ExecuteSql($"{sql}");
 
+    [Obsolete("Seeding data is done by migration")]
     public static void SetIdentityInsert<TContext, TEntity>(this TContext context, eIdentitySwitch identitySwitch = eIdentitySwitch.On, bool lookupTable = true, string schema = "dbo")
         where TContext : DbContext
         where TEntity : class
@@ -40,14 +41,13 @@ public static partial class Extensions
         where TContext : DbContext
         => context.ChangeTracker.Entries().ForEach(_ => _.State = EntityState.Detached);
 
-    public static string GetAuditTriggerName<TEntity>(bool plural = true)
-        => plural
-            ? $"trg_{typeof(TEntity).Name.ToPlural()}_aud"
-            : $"trg_{typeof(TEntity).Name}_aud";
+    public static string GetAuditTriggerName<TEntity>()
+        where TEntity : _BaseEntity
+        => $"trg_{GetTableName<TEntity>(eTableType.Audit)}";
 
-    public static string DropAuditTrigger<TEntity>(bool plural = true)
+    public static string DropAuditTrigger<TEntity>()
         where TEntity : AuditableEntity
-        => $"DROP TRIGGER IF EXISTS {GetAuditTriggerName<TEntity>(plural)}";
+        => $"DROP TRIGGER IF EXISTS {GetAuditTriggerName<TEntity>()}";
 
     public static string GetNullFilterForProperty<T>(this string propertyName)
     {

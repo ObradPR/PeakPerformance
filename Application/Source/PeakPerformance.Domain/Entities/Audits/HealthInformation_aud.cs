@@ -7,4 +7,8 @@ public class HealthInformation_aud : Audit
     public long? Id { get; set; }
 
     public long? UserId { get; set; }
+
+    // Override
+
+    public override bool ShouldPluralize => false;
 }

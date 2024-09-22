@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 using PeakPerformance.Domain.Entities.Application;
 using PeakPerformance.Domain.Entities.Audits;
 using PeakPerformance.Persistence.Extensions;
@@ -110,7 +109,7 @@ namespace PeakPerformance.Persistence.Migrations
                 column: "Name",
                 unique: true);
 
-            migrationBuilder.CreateAuditTriggersForTable<HealthInformation_aud, HealthInformation>(plural: false);
+            migrationBuilder.CreateAuditTriggersForTable<HealthInformation_aud, HealthInformation>();
         }
 
         /// <inheritdoc />
@@ -125,7 +124,7 @@ namespace PeakPerformance.Persistence.Migrations
             migrationBuilder.DropTable(
                 name: "InjuryTypes_lu");
 
-            migrationBuilder.Sql(Persistence.Extensions.Extensions.DropAuditTrigger<HealthInformation>(plural: false));
+            migrationBuilder.Sql(Persistence.Extensions.Extensions.DropAuditTrigger<HealthInformation>());
         }
     }
 }

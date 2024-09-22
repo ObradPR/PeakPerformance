@@ -1,6 +1,8 @@
-﻿namespace PeakPerformance.Domain.Entities.Application;
+﻿using PeakPerformance.Domain.Entities._Base;
 
-public class ErrorLog
+namespace PeakPerformance.Domain.Entities.Application;
+
+public class ErrorLog : _BaseEntity
 {
     public ErrorLog() => RecordDate = DateTime.UtcNow;
 
