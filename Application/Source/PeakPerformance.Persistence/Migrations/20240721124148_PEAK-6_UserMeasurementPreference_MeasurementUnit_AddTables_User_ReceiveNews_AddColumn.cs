@@ -1,8 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
-using PeakPerformance.Domain.Entities.Application;
-using PeakPerformance.Domain.Entities.Audits;
-using PeakPerformance.Persistence.Extensions;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -135,9 +131,6 @@ namespace PeakPerformance.Persistence.Migrations
                 name: "IX_UserMeasurementPreferences_aud_ActionTypeId",
                 table: "UserMeasurementPreferences_aud",
                 column: "ActionTypeId");
-
-
-            migrationBuilder.CreateAuditTriggersForTable<UserMeasurementPreference_aud, UserMeasurementPreference>();
         }
 
         /// <inheritdoc />
@@ -163,8 +156,6 @@ namespace PeakPerformance.Persistence.Migrations
                 nullable: false,
                 oldClrType: typeof(DateTime),
                 oldType: "datetime2");
-
-            migrationBuilder.Sql(Persistence.Extensions.Extensions.DropAuditTrigger<UserMeasurementPreference>());
         }
     }
 }

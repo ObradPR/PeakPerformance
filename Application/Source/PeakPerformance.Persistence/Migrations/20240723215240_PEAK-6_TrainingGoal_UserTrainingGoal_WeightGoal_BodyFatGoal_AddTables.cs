@@ -1,8 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
-using PeakPerformance.Domain.Entities.Application;
-using PeakPerformance.Domain.Entities.Audits;
-using PeakPerformance.Persistence.Extensions;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -164,8 +160,6 @@ namespace PeakPerformance.Persistence.Migrations
                 name: "IX_WeightGoals_UserId",
                 table: "WeightGoals",
                 column: "UserId");
-
-            migrationBuilder.CreateAuditTriggersForTable<UserTrainingGoal_aud, UserTrainingGoal>();
         }
 
         /// <inheritdoc />
@@ -185,8 +179,6 @@ namespace PeakPerformance.Persistence.Migrations
 
             migrationBuilder.DropTable(
                 name: "TrainingGoals_lu");
-
-            migrationBuilder.Sql(Persistence.Extensions.Extensions.DropAuditTrigger<UserTrainingGoal>());
         }
     }
 }
