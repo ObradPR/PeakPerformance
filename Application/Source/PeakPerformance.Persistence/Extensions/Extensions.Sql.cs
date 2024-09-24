@@ -26,4 +26,13 @@ public static partial class Extensions
             command.ExecuteNonQuery();
         }
     }
+
+    public static string GetNullFilterForProperty<T>(this string propertyName)
+    {
+        var property = typeof(T).GetProperty(propertyName);
+
+        return property == null
+            ? throw new ArgumentException($"Property '{propertyName}' not found on type '{typeof(T).Name}'")
+            : $"[{property.Name}] IS NOT NULL";
+    }
 }

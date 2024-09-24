@@ -1,7 +1,5 @@
-﻿using System.ComponentModel;
+﻿using Newtonsoft.Json;
 using System.Globalization;
-using System.Linq.Expressions;
-using System.Reflection;
 using System.Text.RegularExpressions;
 
 namespace PeakPerformance.Common.Extensions;
@@ -83,30 +81,6 @@ public static partial class Extensions
         return singular + "s";
     }
 
-    public static string GetPropertyDescription<T>(Expression<Func<T, object>> propertyExpression)
-    {
-        MemberExpression memberExpression;
-
-        // Check if the expression is Unary (boxing value types like DateTime)
-        if (propertyExpression.Body is UnaryExpression unaryExpression && unaryExpression.Operand is MemberExpression unaryMember)
-        {
-            memberExpression = unaryMember;
-        }
-        else if (propertyExpression.Body is MemberExpression member)
-        {
-            memberExpression = member;
-        }
-        else
-        {
-            throw new ArgumentException("Expression is not a member access expression.", nameof(propertyExpression));
-        }
-
-        var propertyInfo = (PropertyInfo)memberExpression.Member;
-        var descriptionAttribute = propertyInfo.GetCustomAttribute<DescriptionAttribute>();
-
-        return descriptionAttribute?.Description ?? propertyInfo.Name;
-    }
-
     public static int ToInt(this string value)
         => value.IsNumeric(out var result)
         ? result
@@ -114,4 +88,26 @@ public static partial class Extensions
 
     public static string Join(this IEnumerable<string> values, string separator)
         => string.Join(separator, values);
+
+    public static bool IsValidJson(this string json)
+    {
+        json = json.Trim();
+
+        if ((json.StartsWith("{") && json.EndsWith("}")) || (json.StartsWith("[") && json.EndsWith("]")))
+        {
+            try
+            {
+                var obj = JsonConvert.DeserializeObject<object>(json);
+                return true;
+            }
+            catch { }
+        }
+
+        return false;
+    }
+
+    public static T? FromJson<T>(this string json)
+        => json.IsValidJson()
+        ? JsonConvert.DeserializeObject<T>(json)
+        : default;
 }
