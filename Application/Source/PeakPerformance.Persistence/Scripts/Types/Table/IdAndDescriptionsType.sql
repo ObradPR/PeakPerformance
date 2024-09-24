@@ -1,5 +1,5 @@
 ﻿CREATE TYPE [dbo].[IdAndDescriptionsType] AS TABLE
 (
 	Id INT,
-	Name NVARCHAR(255)
+	Name NVARCHAR(30)
 );

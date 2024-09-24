@@ -1,5 +1,5 @@
 ﻿CREATE PROCEDURE [dbo].[usp_SeedLookupTables]
-	@TableName NVARCHAR(128),
+	@TableName NVARCHAR(255),
 	@IdAndDescriptions [dbo].[IdAndDescriptionsType] READONLY
 AS
 BEGIN
