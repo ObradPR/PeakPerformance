@@ -2,31 +2,29 @@
 
 public abstract class BaseHandlerProcess
 {
-    protected static bool TryRun(Action action, ILogger logger)
+    protected static void TryRun(Action action, ILogger logger)
     {
         try
         {
             action();
-            return true;
         }
         catch (Exception ex)
         {
             logger.LogError(ex, ex.Message);
-            return false;
+            throw;
         }
     }
 
-    protected static async Task<bool> TryRunAsync(Func<Task> action, ILogger logger)
+    protected static async Task TryRunAsync(Func<Task> action, ILogger logger)
     {
         try
         {
             await action();
-            return true;
         }
         catch (Exception ex)
         {
             logger.LogError(ex, ex.Message);
-            return false;
+            throw;
         }
     }
 

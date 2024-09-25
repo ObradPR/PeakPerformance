@@ -3,7 +3,7 @@ using PeakPerformance.Domain.Entities.Application_lu;
 
 namespace PeakPerformance.Domain.Entities.Application;
 
-public class UserActivityLog : _BaseEntity
+public class UserActivityLog : BaseEntity
 {
     public UserActivityLog() => RecordDate = DateTime.UtcNow;
 

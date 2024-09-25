@@ -8,7 +8,7 @@ namespace PeakPerformance.Persistence.Extensions;
 public static partial class Extensions
 {
     public static string GetAuditTriggerName<TEntity>()
-        where TEntity : _BaseEntity
+        where TEntity : BaseEntity
         => $"trg_{GetTableName<TEntity>(eTableType.Audit)}";
 
     [Obsolete("Since migration will not be reverted")]
