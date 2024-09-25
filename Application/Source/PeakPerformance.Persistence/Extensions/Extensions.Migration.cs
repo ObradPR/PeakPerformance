@@ -68,7 +68,7 @@ public static partial class Extensions
     }
 
     public static string GetTableName<TEntity>(eTableType type = eTableType.Normal)
-        where TEntity : _BaseEntity
+        where TEntity : BaseEntity
     {
         var name = typeof(TEntity).Name;
         var auditSufix = eTableType.Audit.GetDescription();

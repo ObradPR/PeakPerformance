@@ -8,7 +8,7 @@ namespace PeakPerformance.Persistence.Extensions;
 public static partial class Extensions
 {
     public static void SetIdentityInsert<TEntity>(this SqlConnection connection, eIdentitySwitch identitySwitch = eIdentitySwitch.On, string schema = "dbo")
-        where TEntity : _BaseEntity
+        where TEntity : BaseEntity
     {
         var tableName = GetTableName<TEntity>(eTableType.Lookup);
 

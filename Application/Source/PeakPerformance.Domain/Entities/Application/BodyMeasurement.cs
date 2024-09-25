@@ -3,7 +3,7 @@ using PeakPerformance.Domain.Entities.Application_lu;
 
 namespace PeakPerformance.Domain.Entities.Application;
 
-public class BodyMeasurement : _BaseEntity
+public class BodyMeasurement : BaseEntity
 {
     public BodyMeasurement() => RecordDate = DateTime.UtcNow;
 

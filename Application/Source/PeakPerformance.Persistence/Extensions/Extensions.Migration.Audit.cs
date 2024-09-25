@@ -23,7 +23,7 @@ public static partial class Extensions
 
     public static void CreateAuditTriggersForTable<TAudit, TEntity>(this MigrationBuilder migrationBuilder)
         where TAudit : Audit
-        where TEntity : _BaseEntity
+        where TEntity : BaseEntity
     {
         var triggerName = GetAuditTriggerName<TEntity>();
 

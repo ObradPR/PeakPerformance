@@ -2,7 +2,7 @@
 
 namespace PeakPerformance.Domain.Entities._Base;
 
-public abstract class Audit : _BaseEntity, IAudit
+public abstract class Audit : BaseEntity, IAudit
 {
     public long AuditId { get; set; }
 

@@ -1,6 +1,6 @@
 ﻿namespace PeakPerformance.Domain.Entities._Base;
 
-public abstract class Entity_lu : _BaseEntity, IEntity_lu
+public abstract class Entity_lu : BaseEntity, IEntity_lu
 {
     public int Id { get; set; }
 

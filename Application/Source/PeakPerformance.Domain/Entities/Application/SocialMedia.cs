@@ -3,7 +3,7 @@ using PeakPerformance.Domain.Entities.Application_lu;
 
 namespace PeakPerformance.Domain.Entities.Application;
 
-public class SocialMedia : _BaseEntity
+public class SocialMedia : BaseEntity
 {
     public SocialMedia() => RecordDate = DateTime.UtcNow;
 
