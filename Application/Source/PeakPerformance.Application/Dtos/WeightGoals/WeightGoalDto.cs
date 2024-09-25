@@ -2,12 +2,12 @@
 
 public class WeightGoalDto
 {
-    [Description("Target Weight")]
+    [Display(Name = "Target Weight")]
     public decimal TargetWeight { get; set; }
 
-    [Description("Start Date")]
+    [Display(Name = "Start Date")]
     public DateTime StartDate { get; set; }
 
-    [Description("End Date")]
+    [Display(Name = "End Date")]
     public DateTime EndDate { get; set; }
 }

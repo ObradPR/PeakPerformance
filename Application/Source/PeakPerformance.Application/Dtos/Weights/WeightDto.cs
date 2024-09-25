@@ -2,12 +2,12 @@
 
 public class WeightDto
 {
-    [Description("Weight")]
+    [Display(Name = "Weight")]
     public decimal? Weight { get; set; }
 
-    [Description("Weight Unit")]
+    [Display(Name = "Weight Unit")]
     public eMeasurementUnit WeightUnitId { get; set; }
 
-    [Description("Body Fat Percentage")]
+    [Display(Name = "Body Fat Percentage")]
     public decimal? BodyFatPercentage { get; set; }
 }

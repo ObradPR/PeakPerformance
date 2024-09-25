@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 using PeakPerformance.Common.Enums;
+using PeakPerformance.Common.Extensions;
 using PeakPerformance.Domain.Entities._Base;
 using PeakPerformance.Persistence.Enums;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -9,7 +10,7 @@ namespace PeakPerformance.Persistence.Extensions;
 
 public static partial class Extensions
 {
-    // Predicates
+    // predicates
 
     private static readonly Func<PropertyInfo, bool> excludeAuditProperties = prop =>
         prop.Name != nameof(Audit.AuditId) &&
@@ -18,7 +19,7 @@ public static partial class Extensions
         prop.Name != nameof(Audit.ActionType) &&
         !Attribute.IsDefined(prop, typeof(NotMappedAttribute));
 
-    // Methods
+    // methods
 
     public static void CreateAuditTriggersForTable<TAudit, TEntity>(this MigrationBuilder migrationBuilder)
         where TAudit : Audit
@@ -47,6 +48,8 @@ public static partial class Extensions
                 @DeactivateAction = {(int)eActionType.Deactivate}
         ");
     }
+
+    // private
 
     private static string GetAuditColumnsOrValues<TAudit>(string prefix = "")
         where TAudit : class

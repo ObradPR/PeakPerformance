@@ -9,26 +9,17 @@ public class ValidateUserCommand(ValidateUserDto user) : BaseCommand
 {
     public ValidateUserDto User { get; set; } = user;
 
-    // Handlers
-    public class ValidateUserCommandHandler : BaseCommandHandler<ValidateUserCommand>
+    public class ValidateUserCommandHandler(IUnitOfWork unitOfWork, IVerificationCodeService verificationCodeService, IEmailService emailService)
+        : BaseCommandHandler<ValidateUserCommand>(unitOfWork)
     {
-        private readonly IVerificationCodeService _verificationCodeService;
-        private readonly IEmailService _emailService;
-
-        public ValidateUserCommandHandler(IUnitOfWork unitOfWork, IVerificationCodeService verificationCodeService, IEmailService emailService) : base(unitOfWork)
-        {
-            _verificationCodeService = verificationCodeService;
-            _emailService = emailService;
-        }
-
         public override async Task Handle(ValidateUserCommand request, CancellationToken cancellationToken)
         {
             if (await _unitOfWork.UserRepository.GetExistingUserAsync(request.User.Email, request.User.Username, strict: true, cancellationToken) is null)
                 throw new ValidationException();
 
-            var code = _verificationCodeService.GenerateAndStoreCode(request.User.Email);
+            var code = verificationCodeService.GenerateAndStoreCode(request.User.Email);
 
-            await _emailService.SendEmailAsync(new EmailDto
+            await emailService.SendEmailAsync(new EmailDto
             {
                 ToEmail = request.User.Email,
                 Subject = "Verification Code",

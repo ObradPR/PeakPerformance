@@ -2,12 +2,12 @@
 
 public class UserTrainingGoalDto
 {
-    [Description("Training Goal")]
+    [Display(Name = "Training Goal")]
     public eTrainingGoal TrainingGoalId { get; set; }
 
-    [Description("Start Date")]
+    [Display(Name = "Start Date")]
     public DateTime StartDate { get; set; }
 
-    [Description("End Date")]
+    [Display(Name = "End Date")]
     public DateTime? EndDate { get; set; }
 }

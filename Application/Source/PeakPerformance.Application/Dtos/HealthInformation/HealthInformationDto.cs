@@ -2,15 +2,15 @@
 
 public class HealthInformationDto
 {
-    [Description("Injury Type")]
+    [Display(Name = "Injury Type")]
     public eInjuryType InjuryTypeId { get; set; }
 
-    [Description("Description")]
-    public string Description { get; set; } = string.Empty;
+    [Display(Name = "Description")]
+    public string Description { get; set; }
 
-    [Description("Start Date")]
+    [Display(Name = "Start Date")]
     public DateTime? StartDate { get; set; }
 
-    [Description("End Date")]
+    [Display(Name = "End Date")]
     public DateTime? EndDate { get; set; }
 }
