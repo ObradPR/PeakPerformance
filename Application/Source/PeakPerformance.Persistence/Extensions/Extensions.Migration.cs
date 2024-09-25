@@ -9,11 +9,10 @@ namespace PeakPerformance.Persistence.Extensions;
 
 public static partial class Extensions
 {
-    // Connection String
+    // connection string
     private static string ConnectionString => "Data Source = localhost; Initial Catalog = PeakPerformance; TrustServerCertificate = True; Integrated security = True;";
 
-    private static void ReadAndExecuteQuery(this MigrationBuilder migrationBuilder, string sqlFile)
-        => migrationBuilder.Sql(File.ReadAllText(sqlFile));
+    // methods
 
     public static void CreateTableValuedParameterType(this MigrationBuilder migrationBuilder, string name)
     {
@@ -97,4 +96,9 @@ public static partial class Extensions
             _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
         };
     }
+
+    // private
+
+    private static void ReadAndExecuteQuery(this MigrationBuilder migrationBuilder, string sqlFile)
+        => migrationBuilder.Sql(File.ReadAllText(sqlFile));
 }

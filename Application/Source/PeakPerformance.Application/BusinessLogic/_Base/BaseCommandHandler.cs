@@ -12,7 +12,7 @@ public abstract class BaseCommandHandler<TCommand> : BaseHandler<TCommand>
     {
     }
 
-    protected BaseCommandHandler(IUnitOfWork unitOfWork, IIdentityUser identityUser = null)
+    protected BaseCommandHandler(IUnitOfWork unitOfWork, IIdentityUser identityUser)
         : base(unitOfWork, identityUser)
     {
     }
@@ -29,12 +29,12 @@ public abstract class BaseCommandHandler<TCommand, TResponse> : BaseHandler<TCom
     {
     }
 
-    protected BaseCommandHandler(IUnitOfWork unitOfWork, IIdentityUser identityUser = null)
+    protected BaseCommandHandler(IUnitOfWork unitOfWork, IIdentityUser identityUser)
         : base(unitOfWork, identityUser)
     {
     }
 
-    protected BaseCommandHandler(IUnitOfWork unitOfWork, IMapper mapper = null, IIdentityUser identityUser = null, IMediator mediator = null, ILogger logger = null)
+    protected BaseCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, IIdentityUser identityUser, IMediator mediator, ILogger logger)
         : base(unitOfWork, mapper, identityUser, mediator, logger)
     {
     }

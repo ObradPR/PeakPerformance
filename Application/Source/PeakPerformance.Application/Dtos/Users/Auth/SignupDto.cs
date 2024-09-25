@@ -2,36 +2,37 @@
 
 public class SignupDto
 {
-    [Description("First Name")]
-    public string FirstName { get; set; } = string.Empty;
+    [Display(Name = "First Name")]
+    public string FirstName { get; set; }
 
-    [Description("Middle Name")]
+    [Display(Name = "Middle Name")]
     public string? MiddleName { get; set; }
 
-    [Description("Last Name")]
-    public string LastName { get; set; } = string.Empty;
+    [Display(Name = "Last Name")]
+    public string LastName { get; set; }
 
-    [Description("Username")]
-    public string Username { get; set; } = string.Empty;
+    [Display(Name = "Username")]
+    public string Username { get; set; }
 
-    [Description("Email")]
-    public string Email { get; set; } = string.Empty;
+    [Display(Name = "Email")]
+    public string Email { get; set; }
 
-    [Description("Password")]
-    public string Password { get; set; } = string.Empty;
+    [Display(Name = "Password")]
+    public string Password { get; set; }
 
-    [Description("Confirm Password")]
-    public string ConfirmPassword { get; set; } = string.Empty;
+    [Display(Name = "Confirm Password")]
+    public string ConfirmPassword { get; set; }
 
-    [Description("Date of Birth")]
+    [Display(Name = "Date of Birth")]
     public DateTime DateOfBirth { get; set; }
 
-    [Description("Phone Number")]
-    public string PhoneNumber { get; set; } = string.Empty;
+    [Display(Name = "Phone Number")]
+    public string PhoneNumber { get; set; }
 
+    [Display(Name = "Verify Code")]
     public int VerifyCode { get; set; }
 
-    // Logic
+    // methods
 
     public void ToModel(User user, IUserManager userManager, bool isSigningUp = true)
     {

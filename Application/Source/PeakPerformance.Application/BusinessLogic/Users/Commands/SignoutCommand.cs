@@ -2,14 +2,8 @@
 
 public class SignoutCommand : BaseCommand
 {
-    // Handlers
-
-    public class SignoutCommandHandler : BaseCommandHandler<SignoutCommand>
+    public class SignoutCommandHandler(IUnitOfWork unitOfWork, IIdentityUser identityUser) : BaseCommandHandler<SignoutCommand>(unitOfWork, identityUser)
     {
-        public SignoutCommandHandler(IUnitOfWork unitOfWork, IIdentityUser identityUser = null) : base(unitOfWork, identityUser)
-        {
-        }
-
         public override async Task Handle(SignoutCommand request, CancellationToken cancellationToken)
         {
             var userId = _identityUser.Id;

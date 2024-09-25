@@ -1,15 +1,13 @@
-﻿using System.ComponentModel;
-
-namespace PeakPerformance.Application.Dtos.BodyFatGoals;
+﻿namespace PeakPerformance.Application.Dtos.BodyFatGoals;
 
 public class BodyFatGoalDto
 {
-    [Description("Target Body Fat Percentage")]
+    [Display(Name = "Target Body Fat Percentage")]
     public decimal TargetBodyFatPercentage { get; set; }
 
-    [Description("Start Date")]
+    [Display(Name = "Start Date")]
     public DateTime StartDate { get; set; }
 
-    [Description("End Date")]
+    [Display(Name = "End Date")]
     public DateTime EndDate { get; set; }
 }

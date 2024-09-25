@@ -9,31 +9,20 @@ public class ValidateEmailCommand(ValidateUserDto user) : BaseCommand
 {
     public ValidateUserDto User { get; set; } = user;
 
-    // Handlers
-    public class ValidateEmailCommandHandler : BaseCommandHandler<ValidateEmailCommand>
+    public class ValidateEmailCommandHandler(IUnitOfWork unitOfWork, EmailValidation emailValidation, IVerificationCodeService verificationCodeService, IEmailService emailService)
+        : BaseCommandHandler<ValidateEmailCommand>(unitOfWork)
     {
-        private readonly EmailValidation _emailValidation;
-        private readonly IVerificationCodeService _verificationCodeService;
-        private readonly IEmailService _emailService;
-
-        public ValidateEmailCommandHandler(IUnitOfWork unitOfWork, EmailValidation emailValidation, IVerificationCodeService verificationCodeService, IEmailService emailService) : base(unitOfWork)
-        {
-            _emailValidation = emailValidation;
-            _verificationCodeService = verificationCodeService;
-            _emailService = emailService;
-        }
-
         public override async Task Handle(ValidateEmailCommand request, CancellationToken cancellationToken)
         {
-            if (await _unitOfWork.UserRepository.GetExistingUserAsync(request.User.Email, request.User.Username, strict: false, cancellationToken) is not null)
+            if (await _unitOfWork.UserRepository.GetExistingUserAsync(request.User.Email, request.User.Username, strict: false, cancellationToken) != null)
                 throw new AccountExistsException();
 
-            if (!await _emailValidation.ValidateEmailAsync(request.User.Email))
+            if (!await emailValidation.ValidateEmailAsync(request.User.Email))
                 throw new EmailValidationException();
 
-            var code = _verificationCodeService.GenerateAndStoreCode(request.User.Email);
+            var code = verificationCodeService.GenerateAndStoreCode(request.User.Email);
 
-            await _emailService.SendEmailAsync(new EmailDto
+            await emailService.SendEmailAsync(new EmailDto
             {
                 ToEmail = request.User.Email,
                 Subject = "Verification Code",
