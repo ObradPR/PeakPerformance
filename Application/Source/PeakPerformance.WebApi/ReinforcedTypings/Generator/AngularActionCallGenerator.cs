@@ -1,14 +1,14 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Mvc;
-using Reinforced.Typings.Ast.TypeNames;
-using Reinforced.Typings.Ast;
-using Reinforced.Typings.Generators;
-using Reinforced.Typings;
-using System.Reflection;
-using System.Text.RegularExpressions;
-using System.Text;
+using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.OData.Query;
+using Reinforced.Typings;
+using Reinforced.Typings.Ast;
+using Reinforced.Typings.Ast.TypeNames;
+using Reinforced.Typings.Generators;
+using System.Reflection;
+using System.Text;
+using System.Text.RegularExpressions;
 
 namespace PeakPerformance.WebApi.ReinforcedTypings.Generator;
 
