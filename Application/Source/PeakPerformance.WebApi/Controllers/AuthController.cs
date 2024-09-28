@@ -20,7 +20,7 @@ public class AuthController(IMediator mediator, IVerificationCodeService verific
     [AngularMethod(typeof(AuthorizationDto))]
     public async Task<IActionResult> Signup([FromBody] SignupDto user)
     {
-        if (!_verificationCodeService.ValidateCode(user.Email, user.VerifyCode))
+        if (!_verificationCodeService.ValidateCode(user.Email, user.VerificationCode))
             throw new ValidationException();
 
         return Ok(await Mediator.Send(new SignupCommand(user)));
