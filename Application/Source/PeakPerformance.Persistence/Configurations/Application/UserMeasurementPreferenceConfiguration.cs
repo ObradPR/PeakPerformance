@@ -10,13 +10,11 @@ internal class UserMeasurementPreferenceConfiguration : EntityConfiguration<User
 {
     protected override void ConfigureEntity(EntityTypeBuilder<UserMeasurementPreference> builder)
     {
-        builder.ToTable(_ => _.HasTrigger(Extensions.Extensions.GetAuditTriggerName<UserMeasurementPreference>()));
-
         builder.HasIndex(_ => new { _.UserId, _.WeightUnitId, _.MeasurementUnitId })
             .IsUnique()
             .HasFilter(nameof(UserMeasurementPreference.UserId).GetNullFilterForProperty<UserMeasurementPreference>());
 
-        // Relationships
+        // relationships
 
         builder.HasOne(_ => _.User)
             .WithMany(u => u.UserMeasurementPreferences)

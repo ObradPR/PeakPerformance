@@ -15,7 +15,7 @@ internal class BodyFatGoalConfiguration : IEntityTypeConfiguration<BodyFatGoal>
             .IsRequired()
             .HasColumnType(Constants.MeasurementDecimalType);
 
-        // Relationships
+        // relationships
 
         builder.HasOne(_ => _.User)
             .WithMany(u => u.BodyFatGoals)

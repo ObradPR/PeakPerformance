@@ -9,9 +9,7 @@ internal class HealthInformationConfiguration : EntityConfiguration<HealthInform
 {
     protected override void ConfigureEntity(EntityTypeBuilder<HealthInformation> builder)
     {
-        builder.ToTable(_ => _.HasTrigger(Extensions.Extensions.GetAuditTriggerName<HealthInformation>()));
-
-        // Relationships
+        // relationships
 
         builder.HasOne(_ => _.User)
             .WithMany(u => u.HealthInformation)

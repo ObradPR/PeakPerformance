@@ -60,6 +60,6 @@ public static partial class Extensions
                 ? _.Name
                 : $"{prefix}.{_.Name}");
 
-        return properties.Join(",");
+        return properties.Join(", ");
     }
 }

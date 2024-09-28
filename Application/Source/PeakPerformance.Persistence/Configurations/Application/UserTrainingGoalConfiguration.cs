@@ -9,9 +9,7 @@ internal class UserTrainingGoalConfiguration : EntityConfiguration<UserTrainingG
 {
     protected override void ConfigureEntity(EntityTypeBuilder<UserTrainingGoal> builder)
     {
-        builder.ToTable(_ => _.HasTrigger(Extensions.Extensions.GetAuditTriggerName<UserTrainingGoal>()));
-
-        // Relationships
+        // relationships
 
         builder.HasOne(_ => _.User)
             .WithMany(u => u.UserTrainingGoals)
