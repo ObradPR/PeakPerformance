@@ -30,7 +30,7 @@ export interface ISignupDto
 	confirmPassword: string;
 	dateOfBirth: Date;
 	phoneNumber: string;
-	verifyCode: number;
+	verificationCode: number;
 }
 export interface IValidateUserCodeDto
 {

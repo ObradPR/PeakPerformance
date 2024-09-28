@@ -48,25 +48,19 @@ public partial class ApplicationDbContext : DbContext
             {
                 var table = StoreObjectIdentifier.Create(entityType, StoreObjectType.Table);
 
-                if (table != null)
+                if (table != null && entityType.GetDeclaredTriggers().All(t => t.GetDatabaseName(table.Value) == null))
                 {
-                    var auditTriggerName = GetAuditTriggerName(entityType.ClrType);
+                    entityType.Builder.HasTrigger(table.Value.Name + "_Trigger");
+                }
 
-                    if (entityType.GetDeclaredTriggers().Any(_ => _.GetDatabaseName(table.Value) == auditTriggerName))
+                foreach (var fragment in entityType.GetMappingFragments(StoreObjectType.Table))
+                {
+                    if (entityType.GetDeclaredTriggers().All(t => t.GetDatabaseName(fragment.StoreObject) == null))
                     {
-                        entityType.Builder.HasTrigger(auditTriggerName);
+                        entityType.Builder.HasTrigger(fragment.StoreObject.Name + "_Trigger");
                     }
                 }
             }
-        }
-
-        private static string GetAuditTriggerName(Type entityType)
-        {
-            var method = typeof(Extensions.Extensions)
-                .GetMethod(nameof(Extensions.Extensions.GetAuditTriggerName))!
-                .MakeGenericMethod(entityType);
-
-            return (string)method.Invoke(null, null)!;
         }
     }
 }

@@ -30,7 +30,7 @@ public class SignupDto
     public string PhoneNumber { get; set; }
 
     [Display(Name = "Verify Code")]
-    public int VerifyCode { get; set; }
+    public int VerificationCode { get; set; }
 
     // methods
 
