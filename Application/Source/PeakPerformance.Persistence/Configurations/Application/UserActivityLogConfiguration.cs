@@ -10,7 +10,7 @@ internal class UserActivityLogConfiguration : IEntityTypeConfiguration<UserActiv
     {
         builder.HasKey(_ => _.Id);
 
-        // Relationships
+        // relationships
 
         builder.HasOne(_ => _.User)
             .WithMany(u => u.UserActivityLogs)

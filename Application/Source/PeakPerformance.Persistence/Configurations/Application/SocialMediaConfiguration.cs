@@ -14,7 +14,7 @@ internal class SocialMediaConfiguration : IEntityTypeConfiguration<SocialMedia>
             .IsRequired()
             .HasMaxLength(255);
 
-        // Relationships
+        // relationships
 
         builder.HasOne(_ => _.User)
             .WithMany(u => u.SocialMedia)

@@ -18,7 +18,7 @@ internal class WeightConfiguration : IEntityTypeConfiguration<Weight>
         builder.Property(_ => _.BodyFatPercentage)
             .HasColumnType(Constants.MeasurementDecimalType);
 
-        // Relationships
+        // relationships
 
         builder.HasOne(_ => _.User)
             .WithMany(u => u.Weights)
