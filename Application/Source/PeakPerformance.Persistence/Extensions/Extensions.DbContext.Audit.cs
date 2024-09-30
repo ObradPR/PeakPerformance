@@ -1,10 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using PeakPerformance.Domain.Entities._Base;
-using PeakPerformance.Domain.Entities._Base.Audit;
-using PeakPerformance.Domain.Entities.Application_lu;
-using PeakPerformance.Persistence.Enums;
-
-namespace PeakPerformance.Persistence.Extensions;
+﻿namespace PeakPerformance.Persistence.Extensions;
 
 public static partial class Extensions
 {

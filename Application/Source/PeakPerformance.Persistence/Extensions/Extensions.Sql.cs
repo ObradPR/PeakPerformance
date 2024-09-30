@@ -1,9 +1,4 @@
-﻿using Microsoft.Data.SqlClient;
-using PeakPerformance.Common.Extensions;
-using PeakPerformance.Domain.Entities._Base;
-using PeakPerformance.Persistence.Enums;
-
-namespace PeakPerformance.Persistence.Extensions;
+﻿namespace PeakPerformance.Persistence.Extensions;
 
 public static partial class Extensions
 {

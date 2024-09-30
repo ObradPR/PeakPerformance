@@ -1,7 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using PeakPerformance.Domain.Entities.Application_lu;
-
-namespace PeakPerformance.Persistence.Contexts;
+﻿namespace PeakPerformance.Persistence.Contexts;
 
 public partial class ApplicationDbContext
 {

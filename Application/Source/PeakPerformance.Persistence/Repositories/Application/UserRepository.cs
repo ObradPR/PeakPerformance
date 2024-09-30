@@ -1,28 +1,22 @@
-﻿using Microsoft.EntityFrameworkCore;
-using PeakPerformance.Domain.Entities.Application;
-using PeakPerformance.Domain.Repositories.Application;
-using PeakPerformance.Persistence.Contexts;
-using PeakPerformance.Persistence.Repositories._Base;
-
-namespace PeakPerformance.Persistence.Repositories.Application;
+﻿namespace PeakPerformance.Persistence.Repositories.Application;
 
 public class UserRepository(ApplicationDbContext context) : BaseRepository(context), IUserRepository
 {
     // Get
 
-    public async Task<User> GetExistingUserAsync(string email, string username, bool strict, CancellationToken cancellationToken = default)
-        => strict
-            ? await Context.Users.SingleOrDefaultAsync(_ => _.Email.Equals(email) && _.Username.Equals(username), cancellationToken)
-            : await Context.Users.SingleOrDefaultAsync(_ => _.Email.Equals(email) || _.Username.Equals(username), cancellationToken);
+    public async Task<User> GetExistingUserAsync(string email, string username, bool strict)
+        => await db.Users.GetSingleAsync(_ => strict
+            ? _.Email == email && _.Username == username
+            : _.Email == email || _.Username == username);
 
-    public async Task<User> GetUserByUsernameAsync(string username, CancellationToken cancellationToken = default)
-        => await Context.Users
-        .Include(_ => _.UserRoles)
-        .ThenInclude(_ => _.Role)
-        .SingleOrDefaultAsync(_ => _.Username.Equals(username), cancellationToken);
+    public async Task<User> GetUserByUsernameAsync(string username)
+        => await db.Users.GetSingleAsync(_ => _.Username == username,
+            includeProperties: [
+                _ => _.UserRoles,
+                _ => _.UserRoles.Select(_ => _.Role)
+            ]);
 
-    // Add, Remove, Edit
+    // Add / Remove / Edit
 
-    public async Task AddAsync(User user, CancellationToken cancellationToken = default)
-        => await Context.Users.AddAsync(user, cancellationToken);
+    public async Task AddAsync(User user) => await db.CreateAsync(user);
 }

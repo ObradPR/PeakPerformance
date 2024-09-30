@@ -1,7 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-using PeakPerformance.Persistence.Extensions;
-
-#nullable disable
+﻿#nullable disable
 
 namespace PeakPerformance.Persistence.Migrations
 {

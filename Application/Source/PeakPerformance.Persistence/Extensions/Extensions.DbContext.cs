@@ -1,9 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using PeakPerformance.Common.Extensions;
-using PeakPerformance.Persistence.Enums;
-using System.Linq.Expressions;
-
-namespace PeakPerformance.Persistence.Extensions;
+﻿namespace PeakPerformance.Persistence.Extensions;
 
 public static partial class Extensions
 {
@@ -40,9 +35,14 @@ public static partial class Extensions
         => context.ChangeTracker.Entries().ForEach(_ => _.State = EntityState.Detached);
 
     public static void Create<TContext, TEntity>(this TContext context, TEntity model)
-    where TEntity : class
+        where TEntity : class
         where TContext : DbContext
-    	=> context.Set<TEntity>().Add(model);
+        => context.Set<TEntity>().Add(model);
+
+    public static async Task CreateAsync<TContext, TEntity>(this TContext context, TEntity model)
+        where TEntity : class
+        where TContext : DbContext
+        => await context.Set<TEntity>().AddAsync(model);
 
     public static void DeleteSingle<TContext, TEntity>(this TContext context, TEntity model)
         where TEntity : class
