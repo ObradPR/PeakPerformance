@@ -1,7 +1,4 @@
-﻿using PeakPerformance.Common.Enums;
-using PeakPerformance.Common.Interfaces;
-
-namespace PeakPerformance.Common;
+﻿namespace PeakPerformance.Persistence;
 
 public class MockIdentityUser : IIdentityUser
 {

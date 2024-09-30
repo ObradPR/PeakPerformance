@@ -14,7 +14,7 @@ public class SignoutCommand : BaseCommand
                 ActionTypeId = eActionType.Signout
             };
 
-            await _unitOfWork.UserActivityLogRepository.AddAsync(userActivityLog, cancellationToken);
+            await _unitOfWork.UserActivityLogRepository.AddAsync(userActivityLog);
 
             if (!await _unitOfWork.SaveAsync())
                 throw new ServerErrorException();

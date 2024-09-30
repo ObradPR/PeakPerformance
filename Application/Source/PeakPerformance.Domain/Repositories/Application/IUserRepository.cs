@@ -4,11 +4,11 @@ public interface IUserRepository
 {
     // Get
 
-    Task<User?> GetExistingUserAsync(string email, string username, bool strict, CancellationToken cancellationToken = default);
+    Task<User> GetExistingUserAsync(string email, string username, bool strict);
 
-    Task<User?> GetUserByUsernameAsync(string username, CancellationToken cancellationToken = default);
+    Task<User> GetUserByUsernameAsync(string username);
 
-    // Add, Remove, Edit
+    // Add / Remove / Edit
 
-    Task AddAsync(User user, CancellationToken cancellationToken = default);
+    Task AddAsync(User user);
 }

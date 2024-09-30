@@ -11,7 +11,7 @@ public class SigninCommand(SigninDto user) : BaseCommand<AuthorizationDto>
     {
         public override async Task<AuthorizationDto> Handle(SigninCommand request, CancellationToken cancellationToken)
         {
-            var existingUser = await _unitOfWork.UserRepository.GetUserByUsernameAsync(request.User.Username, cancellationToken)
+            var existingUser = await _unitOfWork.UserRepository.GetUserByUsernameAsync(request.User.Username)
                 ?? throw new FluentValidationException(nameof(request.User), ResourceValidation.Wrong_Credentials);
 
             bool passwordMatch = userManager.VerifyPassword(request.User.Password, existingUser.Password);
@@ -25,7 +25,7 @@ public class SigninCommand(SigninDto user) : BaseCommand<AuthorizationDto>
                 ActionTypeId = eActionType.Signin
             };
 
-            await _unitOfWork.UserActivityLogRepository.AddAsync(userActivityLog, cancellationToken);
+            await _unitOfWork.UserActivityLogRepository.AddAsync(userActivityLog);
 
             return await _unitOfWork.SaveAsync()
                 ? new AuthorizationDto

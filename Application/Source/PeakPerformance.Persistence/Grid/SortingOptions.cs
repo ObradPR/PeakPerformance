@@ -1,6 +1,4 @@
-﻿using PeakPerformance.Common;
-
-namespace PeakPerformance.Persistence.Grid;
+﻿namespace PeakPerformance.Persistence.Grid;
 
 public class SortingOptions
 {

@@ -12,7 +12,7 @@ public class ChangePasswordCommand(ChangePasswordDto user) : BaseCommand
     {
         public override async Task Handle(ChangePasswordCommand request, CancellationToken cancellationToken)
         {
-            var user = await _unitOfWork.UserRepository.GetExistingUserAsync(request.User.Email, request.User.Username, strict: true, cancellationToken)
+            var user = await _unitOfWork.UserRepository.GetExistingUserAsync(request.User.Email, request.User.Username, strict: true)
                 ?? throw new ValidationException();
 
             request.User.ChangePassword(user, userManager);

@@ -1,6 +1,4 @@
-﻿using System.Linq.Expressions;
-
-namespace PeakPerformance.Persistence.Extensions;
+﻿namespace PeakPerformance.Persistence.Extensions;
 
 public static partial class Extensions
 {

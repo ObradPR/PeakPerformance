@@ -17,8 +17,13 @@ public static partial class Extensions
         where T : struct, Enum
         => Enum.GetNames(typeof(T));
 
-    public static string[] GetNames<T>(this IEnumerable<int> enums) where T : struct, Enum
+    public static string[] GetNames<T>(this IEnumerable<int> enums)
+        where T : struct, Enum
         => enums.Any() ? enums.Select(_ => ((T)(object)_).ToString()).ToArray() : [];
+
+    public static string[] GetNames<T>(this IEnumerable<T> enums)
+        where T : struct, Enum
+        => enums.Any() ? enums.Select(_ => Enum.GetName(typeof(T), _)).ToArray() : [];
 
     public static string GetDescription<T>(this T value)
         where T : struct, Enum

@@ -1,6 +1,4 @@
-﻿using System.ComponentModel;
-
-namespace PeakPerformance.Persistence.Enums;
+﻿namespace PeakPerformance.Persistence.Enums;
 
 public enum eIdentitySwitch
 {

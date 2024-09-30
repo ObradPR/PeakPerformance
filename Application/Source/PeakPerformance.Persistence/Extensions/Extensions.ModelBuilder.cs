@@ -1,12 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using PeakPerformance.Common.Extensions;
-using PeakPerformance.Domain.Attributes;
-using PeakPerformance.Domain.Entities._Base.Interfaces;
-using PeakPerformance.Persistence.Enums;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Reflection;
-
-namespace PeakPerformance.Persistence.Extensions;
+﻿namespace PeakPerformance.Persistence.Extensions;
 
 public static partial class Extensions
 {

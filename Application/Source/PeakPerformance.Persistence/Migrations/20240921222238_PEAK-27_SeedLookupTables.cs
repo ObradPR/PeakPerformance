@@ -1,8 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-using PeakPerformance.Common.Enums;
-using PeakPerformance.Domain.Entities.Application_lu;
-
-#nullable disable
+﻿#nullable disable
 
 namespace PeakPerformance.Persistence.Migrations
 {

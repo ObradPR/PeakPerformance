@@ -1,13 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Microsoft.EntityFrameworkCore.Metadata.Conventions;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using PeakPerformance.Domain.Entities._Base;
-using PeakPerformance.Persistence.Extensions;
-using System.Diagnostics;
-
-namespace PeakPerformance.Persistence.Contexts;
+﻿namespace PeakPerformance.Persistence.Contexts;
 
 public partial class ApplicationDbContext : DbContext
 {

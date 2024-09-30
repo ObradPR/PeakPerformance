@@ -1,11 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using PeakPerformance.Common.Extensions;
-using PeakPerformance.Domain.Entities._Base;
-using PeakPerformance.Domain.Entities._Base.Interfaces;
-using PeakPerformance.Persistence.Grid;
-using System.Linq.Expressions;
-
-namespace PeakPerformance.Persistence.Extensions;
+﻿namespace PeakPerformance.Persistence.Extensions;
 
 public static partial class Extensions
 {

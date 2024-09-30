@@ -11,15 +11,15 @@ public class SignupCommand(SignupDto user) : BaseCommand<AuthorizationDto>
     {
         public override async Task<AuthorizationDto> Handle(SignupCommand request, CancellationToken cancellationToken)
         {
-            var existingUser = await _unitOfWork.UserRepository.GetExistingUserAsync(request.User.Email, request.User.Username, strict: false, cancellationToken);
+            var existingUser = await _unitOfWork.UserRepository.GetExistingUserAsync(request.User.Email, request.User.Username, strict: false);
 
-            if (existingUser is not null)
+            if (existingUser != null)
             {
-                if (existingUser.Email.Equals(request.User.Email))
+                if (existingUser.Email == request.User.Email)
                 {
                     throw new FluentValidationException(nameof(request.User.Email), ResourceValidation.Already_Exist.AppendArgument(nameof(User)));
                 }
-                else if (existingUser.Username.Equals(request.User.Username))
+                else if (existingUser.Username == request.User.Username)
                 {
                     throw new FluentValidationException(nameof(request.User.Username), ResourceValidation.Already_Exist.AppendArgument(nameof(User)));
                 }
@@ -29,15 +29,15 @@ public class SignupCommand(SignupDto user) : BaseCommand<AuthorizationDto>
 
             request.User.ToModel(user, userManager);
 
-            await _unitOfWork.UserRepository.AddAsync(user, cancellationToken);
+            await _unitOfWork.UserRepository.AddAsync(user);
 
             return await _unitOfWork.SaveAsync()
                 ? new AuthorizationDto
                 {
                     Token = tokenService.GenerateJwtToken(
                     user.Id,
-                    Common.Extensions.Extensions.GetStringValues(eSystemRole.User),
-                    Common.Extensions.Extensions.GetUserFullName(user.FirstName, user.LastName, user.MiddleName),
+                    (new[] { eSystemRole.User }).GetNames(),
+                    user.FullName,
                     user.Email,
                     user.Username)
                 }

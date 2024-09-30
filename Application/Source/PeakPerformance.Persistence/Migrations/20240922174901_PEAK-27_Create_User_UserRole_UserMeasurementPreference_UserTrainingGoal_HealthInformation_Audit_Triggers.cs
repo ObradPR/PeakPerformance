@@ -1,9 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-using PeakPerformance.Domain.Entities.Application;
-using PeakPerformance.Domain.Entities.Audits;
-using PeakPerformance.Persistence.Extensions;
-
-#nullable disable
+﻿#nullable disable
 
 namespace PeakPerformance.Persistence.Migrations
 {
