@@ -1,23 +1,18 @@
-﻿using PeakPerformance.Domain.Entities._Base;
-using PeakPerformance.Domain.Entities.Application_lu;
+﻿namespace PeakPerformance.Domain.Entities.Application;
 
-namespace PeakPerformance.Domain.Entities.Application;
-
-public class UserActivityLog : BaseEntity
+public class UserActivityLog : BaseDomain<long>
 {
-    public UserActivityLog() => RecordDate = DateTime.UtcNow;
-
-    public long Id { get; set; }
-
     public long UserId { get; set; }
 
-    public int ActionTypeId { get; set; }
+    public eActionType ActionTypeId { get; set; }
 
-    public DateTime RecordDate { get; set; }
+    #region Relationships
 
-    // Relationships
-
+    [ForeignKey(nameof(UserId))]
     public virtual User User { get; set; }
 
+    [ForeignKey(nameof(ActionTypeId))]
     public virtual ActionType ActionType { get; set; }
+
+    #endregion Relationships
 }

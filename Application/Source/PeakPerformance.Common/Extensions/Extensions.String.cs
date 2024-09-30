@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Text.RegularExpressions;
 
 namespace PeakPerformance.Common.Extensions;
@@ -24,7 +23,13 @@ public static partial class Extensions
     public static bool IsNotNullOrWhiteSpace(this string value)
         => !string.IsNullOrWhiteSpace(value);
 
-    public static string? ToTitleCase(this string value)
+    public static string IfNotNullOrWhiteSpace(this string text, string format = null, string defaultValue = "")
+        => text.IsNotNullOrWhiteSpace() ? (format.IsNotNullOrEmpty() ? string.Format(format, text) : text) : defaultValue;
+
+    public static string IfNotNullOrEmpty(this string text, string format = null, string defaultValue = "")
+        => text.IsNotNullOrEmpty() ? (format.IsNotNullOrEmpty() ? string.Format(format, text) : text) : defaultValue;
+
+    public static string ToTitleCase(this string value)
         =>
         value.IsNotNullOrEmpty()
         ? CultureInfo.CurrentCulture.TextInfo.ToTitleCase(value.ToLower())
@@ -39,7 +44,7 @@ public static partial class Extensions
         ? (value.Length <= maxLength ? value : value[..maxLength])
         : value;
 
-    public static string? Reverse(this string value)
+    public static string Reverse(this string value)
     {
         if (value == null)
             return null;
@@ -49,7 +54,7 @@ public static partial class Extensions
         return new string(array);
     }
 
-    public static string? RemoveWhitespace(this string value)
+    public static string RemoveWhitespace(this string value)
         =>
         value.IsNotNullOrEmpty()
         ? new string(value.Where(c => !char.IsWhiteSpace(c)).ToArray())
@@ -64,7 +69,7 @@ public static partial class Extensions
     public static string FormatWith(this string value, params object[] args)
         => string.Format(value, args);
 
-    public static string GetUserFullName(string firstName, string lastName, string? middleName)
+    public static string GetUserFullName(string firstName, string lastName, string middleName)
         => string.Join(" ", firstName, middleName, lastName);
 
     public static bool IsNumeric(this string value, out int result)
@@ -89,25 +94,9 @@ public static partial class Extensions
     public static string Join(this IEnumerable<string> values, string separator)
         => string.Join(separator, values);
 
-    public static bool IsValidJson(this string json)
-    {
-        json = json.Trim();
+    public static bool HasValue(this string text)
+        => text.IsNotNullOrEmpty() && text.IsNotNullOrWhiteSpace();
 
-        if ((json.StartsWith("{") && json.EndsWith("}")) || (json.StartsWith("[") && json.EndsWith("]")))
-        {
-            try
-            {
-                var obj = JsonConvert.DeserializeObject<object>(json);
-                return true;
-            }
-            catch { }
-        }
-
-        return false;
-    }
-
-    public static T? FromJson<T>(this string json)
-        => json.IsValidJson()
-        ? JsonConvert.DeserializeObject<T>(json)
-        : default;
+    public static bool In(this string text, params string[] args)
+        => args.Contains(text);
 }

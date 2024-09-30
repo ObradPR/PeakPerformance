@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Xml.Serialization;
@@ -8,9 +7,6 @@ namespace PeakPerformance.Common.Extensions;
 
 public static partial class Extensions
 {
-    public static string ToJson(this object data)
-        => JsonConvert.SerializeObject(data);
-
     public static string ToXml(this object data)
     {
         var serializer = new XmlSerializer(data.GetType());

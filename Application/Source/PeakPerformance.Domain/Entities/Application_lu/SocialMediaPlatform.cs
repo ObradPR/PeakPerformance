@@ -1,11 +1,14 @@
-﻿using PeakPerformance.Domain.Entities._Base;
-using PeakPerformance.Domain.Entities.Application;
+﻿namespace PeakPerformance.Domain.Entities.Application_lu;
 
-namespace PeakPerformance.Domain.Entities.Application_lu;
-
-public class SocialMediaPlatform : Entity_lu
+[Lookup]
+public class SocialMediaPlatform : BaseLookupDomain<SocialMediaPlatform, eSocialMediaPlatform>, IConfigurableEntity
 {
-    // Relationships
+    #region Relationships
 
+    [InverseProperty("Platform")]
     public virtual ICollection<SocialMedia> SocialMedia { get; set; }
+
+    #endregion Relationships
+
+    public void Configure(ModelBuilder builder) => builder.Entity<SocialMediaPlatform>(ConfigureLookup);
 }

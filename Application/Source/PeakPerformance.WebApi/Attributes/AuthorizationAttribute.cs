@@ -17,7 +17,7 @@ public class AuthorizationAttribute(params eSystemRole[] roles) : Attribute, IAu
         if (user == null || !user!.IsAuthenticated)
             throw new UnauthorizedException();
 
-        if (_roles.IsEmpty() || !user!.HasRole(_roles))
+        if (_roles.IsNullOrEmpty() || !user!.HasRole(_roles))
             throw new ForbiddenException();
     }
 }

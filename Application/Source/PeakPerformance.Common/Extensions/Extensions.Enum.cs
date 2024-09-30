@@ -17,12 +17,15 @@ public static partial class Extensions
         where T : struct, Enum
         => Enum.GetNames(typeof(T));
 
-    public static string GetDescription<TEnum>(this TEnum enumValue)
-        where TEnum : struct, Enum
+    public static string[] GetNames<T>(this IEnumerable<int> enums) where T : struct, Enum
+        => enums.Any() ? enums.Select(_ => ((T)(object)_).ToString()).ToArray() : [];
+
+    public static string GetDescription<T>(this T value)
+        where T : struct, Enum
     {
-        FieldInfo? fi = enumValue.GetType().GetField(enumValue.ToString());
+        FieldInfo fi = value.GetType().GetField(value.ToString());
         DescriptionAttribute[] attributes = fi?.GetCustomAttributes(typeof(DescriptionAttribute), false) as DescriptionAttribute[] ?? [];
-        return attributes.Length > 0 ? attributes[0].Description : enumValue.ToString();
+        return attributes.Length > 0 ? attributes[0].Description : value.ToString();
     }
 
     public static T Parse<T>(this string value)

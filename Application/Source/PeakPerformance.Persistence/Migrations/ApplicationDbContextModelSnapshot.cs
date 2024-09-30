@@ -17,7 +17,8 @@ namespace PeakPerformance.Persistence.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.6")
+                .HasDefaultSchema("dbo")
+                .HasAnnotation("ProductVersion", "8.0.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -30,17 +31,18 @@ namespace PeakPerformance.Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
-                    b.Property<DateTime>("EndDate")
+                    b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("RecordDate")
+                    b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
                     b.Property<decimal>("TargetBodyFatPercentage")
-                        .HasColumnType("decimal(5, 2)");
+                        .HasPrecision(5, 2)
+                        .HasColumnType("decimal(5,2)");
 
                     b.Property<long>("UserId")
                         .HasColumnType("bigint");
@@ -49,7 +51,7 @@ namespace PeakPerformance.Persistence.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("BodyFatGoals");
+                    b.ToTable("BodyFatGoals", "dbo");
                 });
 
             modelBuilder.Entity("PeakPerformance.Domain.Entities.Application.BodyMeasurement", b =>
@@ -61,52 +63,65 @@ namespace PeakPerformance.Persistence.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<decimal?>("Chest")
-                        .HasColumnType("decimal(5, 2)");
+                        .HasPrecision(5, 2)
+                        .HasColumnType("decimal(5,2)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
 
                     b.Property<decimal?>("Hips")
-                        .HasColumnType("decimal(5, 2)");
+                        .HasPrecision(5, 2)
+                        .HasColumnType("decimal(5,2)");
 
                     b.Property<decimal?>("LeftBicep")
-                        .HasColumnType("decimal(5, 2)");
+                        .HasPrecision(5, 2)
+                        .HasColumnType("decimal(5,2)");
 
                     b.Property<decimal?>("LeftCalf")
-                        .HasColumnType("decimal(5, 2)");
+                        .HasPrecision(5, 2)
+                        .HasColumnType("decimal(5,2)");
 
                     b.Property<decimal?>("LeftForearm")
-                        .HasColumnType("decimal(5, 2)");
+                        .HasPrecision(5, 2)
+                        .HasColumnType("decimal(5,2)");
 
                     b.Property<decimal?>("LeftThigh")
-                        .HasColumnType("decimal(5, 2)");
+                        .HasPrecision(5, 2)
+                        .HasColumnType("decimal(5,2)");
 
                     b.Property<int>("MeasurementUnitId")
                         .HasColumnType("int");
 
                     b.Property<decimal?>("Neck")
-                        .HasColumnType("decimal(5, 2)");
-
-                    b.Property<DateTime>("RecordDate")
-                        .HasColumnType("datetime2");
+                        .HasPrecision(5, 2)
+                        .HasColumnType("decimal(5,2)");
 
                     b.Property<decimal?>("RightBicep")
-                        .HasColumnType("decimal(5, 2)");
+                        .HasPrecision(5, 2)
+                        .HasColumnType("decimal(5,2)");
 
                     b.Property<decimal?>("RightCalf")
-                        .HasColumnType("decimal(5, 2)");
+                        .HasPrecision(5, 2)
+                        .HasColumnType("decimal(5,2)");
 
                     b.Property<decimal?>("RightForearm")
-                        .HasColumnType("decimal(5, 2)");
+                        .HasPrecision(5, 2)
+                        .HasColumnType("decimal(5,2)");
 
                     b.Property<decimal?>("RightThigh")
-                        .HasColumnType("decimal(5, 2)");
+                        .HasPrecision(5, 2)
+                        .HasColumnType("decimal(5,2)");
 
                     b.Property<decimal?>("Shoulders")
-                        .HasColumnType("decimal(5, 2)");
+                        .HasPrecision(5, 2)
+                        .HasColumnType("decimal(5,2)");
 
                     b.Property<long>("UserId")
                         .HasColumnType("bigint");
 
                     b.Property<decimal?>("Waist")
-                        .HasColumnType("decimal(5, 2)");
+                        .HasPrecision(5, 2)
+                        .HasColumnType("decimal(5,2)");
 
                     b.HasKey("Id");
 
@@ -114,7 +129,7 @@ namespace PeakPerformance.Persistence.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("BodyMeasurements");
+                    b.ToTable("BodyMeasurements", "dbo");
                 });
 
             modelBuilder.Entity("PeakPerformance.Domain.Entities.Application.ErrorLog", b =>
@@ -125,6 +140,9 @@ namespace PeakPerformance.Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("InnerException")
                         .HasColumnType("nvarchar(max)");
 
@@ -132,15 +150,12 @@ namespace PeakPerformance.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("RecordDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("StackTrace")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("ErrorLogs");
+                    b.ToTable("ErrorLogs", "dbo");
                 });
 
             modelBuilder.Entity("PeakPerformance.Domain.Entities.Application.HealthInformation", b =>
@@ -161,7 +176,6 @@ namespace PeakPerformance.Persistence.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("EndDate")
@@ -171,9 +185,7 @@ namespace PeakPerformance.Persistence.Migrations
                         .HasColumnType("int");
 
                     b.Property<bool>("IsActive")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(true);
+                        .HasColumnType("bit");
 
                     b.Property<long?>("ModifiedBy")
                         .HasColumnType("bigint");
@@ -184,7 +196,7 @@ namespace PeakPerformance.Persistence.Migrations
                     b.Property<DateTime?>("StartDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<long?>("UserId")
+                    b.Property<long>("UserId")
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
@@ -193,12 +205,7 @@ namespace PeakPerformance.Persistence.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("HealthInformation", t =>
-                        {
-                            t.HasTrigger("trg_HealthInformation_aud");
-                        });
-
-                    b.HasAnnotation("SqlServer:UseSqlOutputClause", false);
+                    b.ToTable("HealthInformation", "dbo");
                 });
 
             modelBuilder.Entity("PeakPerformance.Domain.Entities.Application.SocialMedia", b =>
@@ -209,6 +216,9 @@ namespace PeakPerformance.Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Link")
                         .IsRequired()
                         .HasMaxLength(255)
@@ -216,9 +226,6 @@ namespace PeakPerformance.Persistence.Migrations
 
                     b.Property<int>("PlatformId")
                         .HasColumnType("int");
-
-                    b.Property<DateTime>("RecordDate")
-                        .HasColumnType("datetime2");
 
                     b.Property<long>("UserId")
                         .HasColumnType("bigint");
@@ -229,7 +236,7 @@ namespace PeakPerformance.Persistence.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("SocialMedia");
+                    b.ToTable("SocialMedia", "dbo");
                 });
 
             modelBuilder.Entity("PeakPerformance.Domain.Entities.Application.User", b =>
@@ -267,9 +274,7 @@ namespace PeakPerformance.Persistence.Migrations
                         .HasColumnType("nvarchar(20)");
 
                     b.Property<bool>("IsActive")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(true);
+                        .HasColumnType("bit");
 
                     b.Property<string>("LastName")
                         .IsRequired()
@@ -309,22 +314,7 @@ namespace PeakPerformance.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Email")
-                        .IsUnique();
-
-                    b.HasIndex("Username")
-                        .IsUnique();
-
-                    b.HasIndex("FirstName", "MiddleName", "LastName");
-
-                    SqlServerIndexBuilderExtensions.IncludeProperties(b.HasIndex("FirstName", "MiddleName", "LastName"), new[] { "DateOfBirth" });
-
-                    b.ToTable("Users", t =>
-                        {
-                            t.HasTrigger("trg_Users_aud");
-                        });
-
-                    b.HasAnnotation("SqlServer:UseSqlOutputClause", false);
+                    b.ToTable("Users", "dbo");
                 });
 
             modelBuilder.Entity("PeakPerformance.Domain.Entities.Application.UserActivityLog", b =>
@@ -338,7 +328,7 @@ namespace PeakPerformance.Persistence.Migrations
                     b.Property<int>("ActionTypeId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("RecordDate")
+                    b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
                     b.Property<long>("UserId")
@@ -350,7 +340,7 @@ namespace PeakPerformance.Persistence.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserActivityLogs");
+                    b.ToTable("UserActivityLogs", "dbo");
                 });
 
             modelBuilder.Entity("PeakPerformance.Domain.Entities.Application.UserMeasurementPreference", b =>
@@ -371,9 +361,7 @@ namespace PeakPerformance.Persistence.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("IsActive")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(true);
+                        .HasColumnType("bit");
 
                     b.Property<int>("MeasurementUnitId")
                         .HasColumnType("int");
@@ -384,7 +372,7 @@ namespace PeakPerformance.Persistence.Migrations
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<long?>("UserId")
+                    b.Property<long>("UserId")
                         .HasColumnType("bigint");
 
                     b.Property<int>("WeightUnitId")
@@ -394,18 +382,11 @@ namespace PeakPerformance.Persistence.Migrations
 
                     b.HasIndex("MeasurementUnitId");
 
+                    b.HasIndex("UserId");
+
                     b.HasIndex("WeightUnitId");
 
-                    b.HasIndex("UserId", "WeightUnitId", "MeasurementUnitId")
-                        .IsUnique()
-                        .HasFilter("[UserId] IS NOT NULL");
-
-                    b.ToTable("UserMeasurementPreferences", t =>
-                        {
-                            t.HasTrigger("trg_UserMeasurementPreferences_aud");
-                        });
-
-                    b.HasAnnotation("SqlServer:UseSqlOutputClause", false);
+                    b.ToTable("UserMeasurementPreferences", "dbo");
                 });
 
             modelBuilder.Entity("PeakPerformance.Domain.Entities.Application.UserRole", b =>
@@ -426,9 +407,7 @@ namespace PeakPerformance.Persistence.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("IsActive")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(true);
+                        .HasColumnType("bit");
 
                     b.Property<long?>("ModifiedBy")
                         .HasColumnType("bigint");
@@ -439,23 +418,16 @@ namespace PeakPerformance.Persistence.Migrations
                     b.Property<int>("RoleId")
                         .HasColumnType("int");
 
-                    b.Property<long?>("UserId")
+                    b.Property<long>("UserId")
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
                     b.HasIndex("RoleId");
 
-                    b.HasIndex("UserId", "RoleId")
-                        .IsUnique()
-                        .HasFilter("[UserId] IS NOT NULL");
+                    b.HasIndex("UserId");
 
-                    b.ToTable("UserRoles", t =>
-                        {
-                            t.HasTrigger("trg_UserRoles_aud");
-                        });
-
-                    b.HasAnnotation("SqlServer:UseSqlOutputClause", false);
+                    b.ToTable("UserRoles", "dbo");
                 });
 
             modelBuilder.Entity("PeakPerformance.Domain.Entities.Application.UserTrainingGoal", b =>
@@ -479,9 +451,7 @@ namespace PeakPerformance.Persistence.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("IsActive")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(true);
+                        .HasColumnType("bit");
 
                     b.Property<long?>("ModifiedBy")
                         .HasColumnType("bigint");
@@ -495,7 +465,7 @@ namespace PeakPerformance.Persistence.Migrations
                     b.Property<int>("TrainingGoalId")
                         .HasColumnType("int");
 
-                    b.Property<long?>("UserId")
+                    b.Property<long>("UserId")
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
@@ -504,12 +474,7 @@ namespace PeakPerformance.Persistence.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserTrainingGoals", t =>
-                        {
-                            t.HasTrigger("trg_UserTrainingGoals_aud");
-                        });
-
-                    b.HasAnnotation("SqlServer:UseSqlOutputClause", false);
+                    b.ToTable("UserTrainingGoals", "dbo");
                 });
 
             modelBuilder.Entity("PeakPerformance.Domain.Entities.Application.Weight", b =>
@@ -521,16 +486,18 @@ namespace PeakPerformance.Persistence.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<decimal?>("BodyFatPercentage")
-                        .HasColumnType("decimal(5, 2)");
+                        .HasPrecision(5, 2)
+                        .HasColumnType("decimal(5,2)");
 
-                    b.Property<DateTime>("RecordDate")
+                    b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
                     b.Property<long>("UserId")
                         .HasColumnType("bigint");
 
                     b.Property<decimal>("Value")
-                        .HasColumnType("decimal(5, 2)");
+                        .HasPrecision(5, 2)
+                        .HasColumnType("decimal(5,2)");
 
                     b.Property<int>("WeightUnitId")
                         .HasColumnType("int");
@@ -541,7 +508,7 @@ namespace PeakPerformance.Persistence.Migrations
 
                     b.HasIndex("WeightUnitId");
 
-                    b.ToTable("Weights");
+                    b.ToTable("Weights", "dbo");
                 });
 
             modelBuilder.Entity("PeakPerformance.Domain.Entities.Application.WeightGoal", b =>
@@ -552,17 +519,18 @@ namespace PeakPerformance.Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
-                    b.Property<DateTime>("EndDate")
+                    b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("RecordDate")
+                    b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
                     b.Property<decimal>("TargetWeight")
-                        .HasColumnType("decimal(5, 2)");
+                        .HasPrecision(5, 2)
+                        .HasColumnType("decimal(5,2)");
 
                     b.Property<long>("UserId")
                         .HasColumnType("bigint");
@@ -571,16 +539,16 @@ namespace PeakPerformance.Persistence.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("WeightGoals");
+                    b.ToTable("WeightGoals", "dbo");
                 });
 
             modelBuilder.Entity("PeakPerformance.Domain.Entities.Application_lu.ActionType", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -592,16 +560,16 @@ namespace PeakPerformance.Persistence.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("ActionTypes_lu", (string)null);
+                    b.ToTable("ActionTypes_lu", "dbo");
                 });
 
             modelBuilder.Entity("PeakPerformance.Domain.Entities.Application_lu.InjuryType", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -613,16 +581,16 @@ namespace PeakPerformance.Persistence.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("InjuryTypes_lu", (string)null);
+                    b.ToTable("InjuryTypes_lu", "dbo");
                 });
 
             modelBuilder.Entity("PeakPerformance.Domain.Entities.Application_lu.MeasurementUnit", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -634,16 +602,16 @@ namespace PeakPerformance.Persistence.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("MeasurementUnits_lu", (string)null);
+                    b.ToTable("MeasurementUnits_lu", "dbo");
                 });
 
             modelBuilder.Entity("PeakPerformance.Domain.Entities.Application_lu.SocialMediaPlatform", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -655,16 +623,16 @@ namespace PeakPerformance.Persistence.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("SocialMediaPlatforms_lu", (string)null);
+                    b.ToTable("SocialMediaPlatforms_lu", "dbo");
                 });
 
             modelBuilder.Entity("PeakPerformance.Domain.Entities.Application_lu.SystemRole", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -676,16 +644,16 @@ namespace PeakPerformance.Persistence.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("SystemRoles_lu", (string)null);
+                    b.ToTable("SystemRoles_lu", "dbo");
                 });
 
             modelBuilder.Entity("PeakPerformance.Domain.Entities.Application_lu.TrainingGoal", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -697,7 +665,7 @@ namespace PeakPerformance.Persistence.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("TrainingGoals_lu", (string)null);
+                    b.ToTable("TrainingGoals_lu", "dbo");
                 });
 
             modelBuilder.Entity("PeakPerformance.Domain.Entities.Audits.HealthInformation_aud", b =>
@@ -723,7 +691,7 @@ namespace PeakPerformance.Persistence.Migrations
                     b.Property<string>("DetailsJson")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long?>("Id")
+                    b.Property<long>("Id")
                         .HasColumnType("bigint");
 
                     b.Property<bool?>("IsActive")
@@ -742,7 +710,7 @@ namespace PeakPerformance.Persistence.Migrations
 
                     b.HasIndex("ActionTypeId");
 
-                    b.ToTable("HealthInformation_aud", (string)null);
+                    b.ToTable("HealthInformation_aud", "dbo");
                 });
 
             modelBuilder.Entity("PeakPerformance.Domain.Entities.Audits.UserMeasurementPreference_aud", b =>
@@ -768,7 +736,7 @@ namespace PeakPerformance.Persistence.Migrations
                     b.Property<string>("DetailsJson")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long?>("Id")
+                    b.Property<long>("Id")
                         .HasColumnType("bigint");
 
                     b.Property<bool?>("IsActive")
@@ -787,7 +755,7 @@ namespace PeakPerformance.Persistence.Migrations
 
                     b.HasIndex("ActionTypeId");
 
-                    b.ToTable("UserMeasurementPreferences_aud", (string)null);
+                    b.ToTable("UserMeasurementPreferences_aud", "dbo");
                 });
 
             modelBuilder.Entity("PeakPerformance.Domain.Entities.Audits.UserRole_aud", b =>
@@ -813,7 +781,7 @@ namespace PeakPerformance.Persistence.Migrations
                     b.Property<string>("DetailsJson")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long?>("Id")
+                    b.Property<long>("Id")
                         .HasColumnType("bigint");
 
                     b.Property<bool?>("IsActive")
@@ -835,7 +803,7 @@ namespace PeakPerformance.Persistence.Migrations
 
                     b.HasIndex("ActionTypeId");
 
-                    b.ToTable("UserRoles_aud", (string)null);
+                    b.ToTable("UserRoles_aud", "dbo");
                 });
 
             modelBuilder.Entity("PeakPerformance.Domain.Entities.Audits.UserTrainingGoal_aud", b =>
@@ -861,7 +829,7 @@ namespace PeakPerformance.Persistence.Migrations
                     b.Property<string>("DetailsJson")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long?>("Id")
+                    b.Property<long>("Id")
                         .HasColumnType("bigint");
 
                     b.Property<bool?>("IsActive")
@@ -880,7 +848,7 @@ namespace PeakPerformance.Persistence.Migrations
 
                     b.HasIndex("ActionTypeId");
 
-                    b.ToTable("UserTrainingGoals_aud", (string)null);
+                    b.ToTable("UserTrainingGoals_aud", "dbo");
                 });
 
             modelBuilder.Entity("PeakPerformance.Domain.Entities.Audits.User_aud", b =>
@@ -906,7 +874,7 @@ namespace PeakPerformance.Persistence.Migrations
                     b.Property<string>("DetailsJson")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long?>("Id")
+                    b.Property<long>("Id")
                         .HasColumnType("bigint");
 
                     b.Property<bool?>("IsActive")
@@ -922,7 +890,7 @@ namespace PeakPerformance.Persistence.Migrations
 
                     b.HasIndex("ActionTypeId");
 
-                    b.ToTable("Users_aud", (string)null);
+                    b.ToTable("Users_aud", "dbo");
                 });
 
             modelBuilder.Entity("PeakPerformance.Domain.Entities.Application.BodyFatGoal", b =>
@@ -941,7 +909,7 @@ namespace PeakPerformance.Persistence.Migrations
                     b.HasOne("PeakPerformance.Domain.Entities.Application_lu.MeasurementUnit", "MeasurementUnit")
                         .WithMany("BodyMeasurements")
                         .HasForeignKey("MeasurementUnitId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("PeakPerformance.Domain.Entities.Application.User", "User")
@@ -960,13 +928,14 @@ namespace PeakPerformance.Persistence.Migrations
                     b.HasOne("PeakPerformance.Domain.Entities.Application_lu.InjuryType", "InjuryType")
                         .WithMany("HealthInformation")
                         .HasForeignKey("InjuryTypeId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("PeakPerformance.Domain.Entities.Application.User", "User")
                         .WithMany("HealthInformation")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("InjuryType");
 
@@ -978,7 +947,7 @@ namespace PeakPerformance.Persistence.Migrations
                     b.HasOne("PeakPerformance.Domain.Entities.Application_lu.SocialMediaPlatform", "Platform")
                         .WithMany("SocialMedia")
                         .HasForeignKey("PlatformId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("PeakPerformance.Domain.Entities.Application.User", "User")
@@ -997,7 +966,7 @@ namespace PeakPerformance.Persistence.Migrations
                     b.HasOne("PeakPerformance.Domain.Entities.Application_lu.ActionType", "ActionType")
                         .WithMany("UserActivityLogs")
                         .HasForeignKey("ActionTypeId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("PeakPerformance.Domain.Entities.Application.User", "User")
@@ -1016,18 +985,19 @@ namespace PeakPerformance.Persistence.Migrations
                     b.HasOne("PeakPerformance.Domain.Entities.Application_lu.MeasurementUnit", "MeasurementUnit")
                         .WithMany("MeasurementUnitPreferences")
                         .HasForeignKey("MeasurementUnitId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("PeakPerformance.Domain.Entities.Application.User", "User")
                         .WithMany("UserMeasurementPreferences")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("PeakPerformance.Domain.Entities.Application_lu.MeasurementUnit", "WeightUnit")
                         .WithMany("WeightUnitPreferences")
                         .HasForeignKey("WeightUnitId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("MeasurementUnit");
@@ -1042,13 +1012,14 @@ namespace PeakPerformance.Persistence.Migrations
                     b.HasOne("PeakPerformance.Domain.Entities.Application_lu.SystemRole", "Role")
                         .WithMany("UserRoles")
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("PeakPerformance.Domain.Entities.Application.User", "User")
                         .WithMany("UserRoles")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Role");
 
@@ -1060,13 +1031,14 @@ namespace PeakPerformance.Persistence.Migrations
                     b.HasOne("PeakPerformance.Domain.Entities.Application_lu.TrainingGoal", "TrainingGoal")
                         .WithMany("UserTrainingGoals")
                         .HasForeignKey("TrainingGoalId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("PeakPerformance.Domain.Entities.Application.User", "User")
                         .WithMany("UserTrainingGoals")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("TrainingGoal");
 
@@ -1084,7 +1056,7 @@ namespace PeakPerformance.Persistence.Migrations
                     b.HasOne("PeakPerformance.Domain.Entities.Application_lu.MeasurementUnit", "WeightUnit")
                         .WithMany("Weights")
                         .HasForeignKey("WeightUnitId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("User");

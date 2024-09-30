@@ -2,6 +2,9 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using PeakPerformance.Domain.Entities._Base;
+using PeakPerformance.Persistence.Extensions;
 using System.Diagnostics;
 
 namespace PeakPerformance.Persistence.Contexts;
@@ -23,7 +26,10 @@ public partial class ApplicationDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
+        modelBuilder.HasDefaultSchema("dbo");
+
+        modelBuilder.SetTableNames();
+        modelBuilder.ApplyEntityConfigurations(typeof(BaseDomain).Assembly);
 
         base.OnModelCreating(modelBuilder);
     }
