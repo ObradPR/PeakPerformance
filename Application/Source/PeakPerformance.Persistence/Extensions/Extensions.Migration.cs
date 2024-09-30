@@ -1,9 +1,12 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore.Migrations;
 using PeakPerformance.Common.Extensions;
+using PeakPerformance.Domain;
+using PeakPerformance.Domain.Attributes;
 using PeakPerformance.Domain.Entities._Base;
 using PeakPerformance.Persistence.Enums;
 using System.Data;
+using System.Reflection;
 
 namespace PeakPerformance.Persistence.Extensions;
 
@@ -29,7 +32,7 @@ public static partial class Extensions
     }
 
     public static void SeedLookupTable<TEntity, TEnum>()
-        where TEntity : Entity_lu
+        where TEntity : BaseLookupDomain<TEntity, TEnum>
         where TEnum : struct, Enum
     {
         var tableName = typeof(TEntity).Name.ToPlural() + "_lu";
@@ -68,7 +71,7 @@ public static partial class Extensions
     }
 
     public static string GetTableName<TEntity>(eTableType type = eTableType.Normal)
-        where TEntity : BaseEntity
+        where TEntity : BaseDomain
     {
         var name = typeof(TEntity).Name;
         var auditSufix = eTableType.Audit.GetDescription();
@@ -83,9 +86,9 @@ public static partial class Extensions
             name = name.Replace(lookupSufix, string.Empty);
         }
 
-        var plural = Activator.CreateInstance<TEntity>().ShouldPluralize;
+        var noPluralAttr = typeof(TEntity).GetCustomAttribute<NoPluralAttribute>();
 
-        if (plural)
+        if (noPluralAttr == null)
             name = name.ToPlural();
 
         return type switch
@@ -96,6 +99,19 @@ public static partial class Extensions
             _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
         };
     }
+
+    // Indexes
+    public static void Up(this MigrationBuilder migrationBuilder, IDatabaseIndex index)
+        => migrationBuilder.Sql(index.DropSql + "\n" + index.Sql);
+
+    public static void Down(this MigrationBuilder migrationBuilder, IDatabaseIndex index)
+        => migrationBuilder.Sql(index.DropSql);
+
+    public static void Up(this MigrationBuilder migrationBuilder, IEnumerable<IDatabaseIndex> indexes)
+        => indexes.ToList().ForEach(_ => migrationBuilder.Sql(_.DropSql + "\n" + _.Sql));
+
+    public static void Down(this MigrationBuilder migrationBuilder, IEnumerable<IDatabaseIndex> indexes)
+        => indexes.ToList().ForEach(_ => migrationBuilder.Sql(_.DropSql));
 
     // private
 

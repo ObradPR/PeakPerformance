@@ -22,7 +22,7 @@ public class SigninCommand(SigninDto user) : BaseCommand<AuthorizationDto>
             UserActivityLog userActivityLog = new()
             {
                 UserId = existingUser.Id,
-                ActionTypeId = (int)eActionType.Signin
+                ActionTypeId = eActionType.Signin
             };
 
             await _unitOfWork.UserActivityLogRepository.AddAsync(userActivityLog, cancellationToken);

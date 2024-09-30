@@ -11,7 +11,7 @@ public class SignoutCommand : BaseCommand
             UserActivityLog userActivityLog = new()
             {
                 UserId = userId,
-                ActionTypeId = (int)eActionType.Signout
+                ActionTypeId = eActionType.Signout
             };
 
             await _unitOfWork.UserActivityLogRepository.AddAsync(userActivityLog, cancellationToken);

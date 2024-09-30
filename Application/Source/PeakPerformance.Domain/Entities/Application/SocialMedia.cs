@@ -1,29 +1,29 @@
-﻿using PeakPerformance.Domain.Entities._Base;
-using PeakPerformance.Domain.Entities.Application_lu;
+﻿namespace PeakPerformance.Domain.Entities.Application;
 
-namespace PeakPerformance.Domain.Entities.Application;
-
-public class SocialMedia : BaseEntity
+[NoPlural]
+public class SocialMedia : BaseDomain<long>, IConfigurableEntity
 {
-    public SocialMedia() => RecordDate = DateTime.UtcNow;
-
-    public long Id { get; set; }
-
     public long UserId { get; set; }
 
-    public int PlatformId { get; set; }
+    public eSocialMediaPlatform PlatformId { get; set; }
 
-    public string Link { get; set; } = string.Empty;
+    public string Link { get; set; }
 
-    public DateTime RecordDate { get; set; }
+    #region Relationships
 
-    // Relationships
-
+    [ForeignKey(nameof(UserId))]
     public virtual User User { get; set; }
 
+    [ForeignKey(nameof(PlatformId))]
     public virtual SocialMediaPlatform Platform { get; set; }
 
-    // Override
+    #endregion Relationships
 
-    public override bool ShouldPluralize => false;
+    public void Configure(ModelBuilder builder)
+    {
+        builder.Entity<SocialMedia>(_ =>
+        {
+            _.Property(_ => _.Link).HasMaxLength(255).IsRequired();
+        });
+    }
 }

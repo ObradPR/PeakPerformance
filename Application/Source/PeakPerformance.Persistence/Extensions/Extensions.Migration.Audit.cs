@@ -2,6 +2,7 @@
 using PeakPerformance.Common.Enums;
 using PeakPerformance.Common.Extensions;
 using PeakPerformance.Domain.Entities._Base;
+using PeakPerformance.Domain.Entities._Base.Audit;
 using PeakPerformance.Persistence.Enums;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Reflection;
@@ -13,17 +14,17 @@ public static partial class Extensions
     // predicates
 
     private static readonly Func<PropertyInfo, bool> excludeAuditProperties = prop =>
-        prop.Name != nameof(Audit.AuditId) &&
-        prop.Name != nameof(Audit.DetailsJson) &&
-        prop.Name != nameof(Audit.ActionTypeId) &&
-        prop.Name != nameof(Audit.ActionType) &&
+        prop.Name != nameof(AuditDomain<object>.AuditId) &&
+        prop.Name != nameof(AuditDomain<object>.DetailsJson) &&
+        prop.Name != nameof(AuditDomain<object>.ActionTypeId) &&
+        prop.Name != nameof(AuditDomain<object>.ActionType) &&
         !Attribute.IsDefined(prop, typeof(NotMappedAttribute));
 
     // methods
 
     public static void CreateAuditTriggersForTable<TAudit, TEntity>(this MigrationBuilder migrationBuilder)
-        where TAudit : Audit
-        where TEntity : BaseEntity
+        where TAudit : AuditDomain
+        where TEntity : BaseDomain
     {
         var triggerName = GetAuditTriggerName<TEntity>();
 
@@ -52,7 +53,7 @@ public static partial class Extensions
     // private
 
     private static string GetAuditColumnsOrValues<TAudit>(string prefix = "")
-        where TAudit : class
+        where TAudit : AuditDomain
     {
         var properties = typeof(TAudit).GetProperties()
             .Where(excludeAuditProperties)

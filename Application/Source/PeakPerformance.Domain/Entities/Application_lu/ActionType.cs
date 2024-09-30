@@ -1,16 +1,20 @@
-﻿using PeakPerformance.Domain.Entities._Base;
-using PeakPerformance.Domain.Entities.Application;
-using PeakPerformance.Domain.Entities.Audits;
+﻿namespace PeakPerformance.Domain.Entities.Application_lu;
 
-namespace PeakPerformance.Domain.Entities.Application_lu;
-
-public class ActionType : Entity_lu
+[Lookup]
+public class ActionType : BaseLookupDomain<ActionType, eActionType>, IConfigurableEntity
 {
-    // Relationships
+    #region Relationships
 
+    [InverseProperty(nameof(ActionType))]
     public virtual ICollection<User_aud> Users_aud { get; set; } = [];
 
+    [InverseProperty(nameof(ActionType))]
     public virtual ICollection<UserRole_aud> UserRoles_aud { get; set; } = [];
 
+    [InverseProperty(nameof(ActionType))]
     public virtual ICollection<UserActivityLog> UserActivityLogs { get; set; } = [];
+
+    #endregion Relationships
+
+    public void Configure(ModelBuilder builder) => builder.Entity<ActionType>(ConfigureLookup);
 }

@@ -1,27 +1,25 @@
-﻿using PeakPerformance.Domain.Entities._Base;
-using PeakPerformance.Domain.Entities.Application_lu;
+﻿namespace PeakPerformance.Domain.Entities.Application;
 
-namespace PeakPerformance.Domain.Entities.Application;
-
-public class HealthInformation : AuditableEntity
+[NoPlural]
+public class HealthInformation : BaseAuditedDomain<long>
 {
-    public long? UserId { get; set; }
+    public long UserId { get; set; }
 
-    public int InjuryTypeId { get; set; }
+    public eInjuryType InjuryTypeId { get; set; }
 
-    public string Description { get; set; } = string.Empty;
+    public string Description { get; set; }
 
     public DateTime? StartDate { get; set; }
 
     public DateTime? EndDate { get; set; }
 
-    // Relationships
+    #region Relationships
 
+    [ForeignKey(nameof(UserId))]
     public virtual User User { get; set; }
 
+    [ForeignKey(nameof(InjuryTypeId))]
     public virtual InjuryType InjuryType { get; set; }
 
-    // Override
-
-    public override bool ShouldPluralize => false;
+    #endregion Relationships
 }

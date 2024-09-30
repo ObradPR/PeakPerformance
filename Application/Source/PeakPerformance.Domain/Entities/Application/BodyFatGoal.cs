@@ -1,13 +1,7 @@
-﻿using PeakPerformance.Domain.Entities._Base;
+﻿namespace PeakPerformance.Domain.Entities.Application;
 
-namespace PeakPerformance.Domain.Entities.Application;
-
-public class BodyFatGoal : BaseEntity
+public class BodyFatGoal : BaseDomain<long>, IConfigurableEntity
 {
-    public BodyFatGoal() => RecordDate = DateTime.UtcNow;
-
-    public long Id { get; set; }
-
     public long UserId { get; set; }
 
     public decimal TargetBodyFatPercentage { get; set; }
@@ -16,9 +10,18 @@ public class BodyFatGoal : BaseEntity
 
     public DateTime EndDate { get; set; }
 
-    public DateTime RecordDate { get; set; }
+    #region Relationships
 
-    // Relationships
-
+    [ForeignKey(nameof(UserId))]
     public virtual User User { get; set; }
+
+    #endregion Relationships
+
+    public void Configure(ModelBuilder builder)
+    {
+        builder.Entity<BodyFatGoal>(_ =>
+        {
+            _.Property(_ => _.TargetBodyFatPercentage).HasPrecision(5, 2).IsRequired();
+        });
+    }
 }

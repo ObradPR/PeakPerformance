@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using PeakPerformance.Domain.Entities._Base;
+using PeakPerformance.Domain.Entities._Base.Audit;
 using PeakPerformance.Domain.Entities.Application_lu;
 using PeakPerformance.Persistence.Enums;
 
@@ -8,27 +9,28 @@ namespace PeakPerformance.Persistence.Extensions;
 public static partial class Extensions
 {
     public static string GetAuditTriggerName<TEntity>()
-        where TEntity : BaseEntity
+        where TEntity : BaseDomain
         => $"trg_{GetTableName<TEntity>(eTableType.Audit)}";
 
     [Obsolete("Since migration will not be reverted")]
     public static string DropAuditTrigger<TEntity>()
-        where TEntity : AuditableEntity
+        where TEntity : BaseDomain
         => $"DROP TRIGGER IF EXISTS {GetAuditTriggerName<TEntity>()}";
 
-    public static void ConfigureAuditRelationship<T>(this EntityTypeBuilder<T> builder)
-            where T : Audit
+    [Obsolete("Configuration moved inside entities directly, with relationships configured via data annotations.")]
+    public static void ConfigureAuditRelationship<TAudit>(this EntityTypeBuilder<TAudit> builder)
+            where TAudit : AuditDomain
     {
         // Get the collection navigation property for the ActionType
         var actionTypeCollectionProperty = typeof(ActionType).GetProperties()
             .FirstOrDefault(_ => _.PropertyType.IsGenericType &&
                                  _.PropertyType.GetGenericTypeDefinition() == typeof(ICollection<>) &&
-                                 _.PropertyType.GetGenericArguments()[0] == typeof(T));
+                                 _.PropertyType.GetGenericArguments()[0] == typeof(TAudit));
 
         if (actionTypeCollectionProperty != null)
         {
-            var withManyMethod = typeof(EntityTypeBuilder<T>).GetMethod("WithMany", [typeof(string)]);
-            var hasForeignKeyMethod = typeof(EntityTypeBuilder<T>).GetMethod("HasForeignKey", [typeof(string)]);
+            var withManyMethod = typeof(EntityTypeBuilder<TAudit>).GetMethod("WithMany", [typeof(string)]);
+            var hasForeignKeyMethod = typeof(EntityTypeBuilder<TAudit>).GetMethod("HasForeignKey", [typeof(string)]);
 
             if (withManyMethod != null && hasForeignKeyMethod != null)
             {

@@ -1,11 +1,14 @@
-﻿using PeakPerformance.Domain.Entities._Base;
-using PeakPerformance.Domain.Entities.Application;
+﻿namespace PeakPerformance.Domain.Entities.Application_lu;
 
-namespace PeakPerformance.Domain.Entities.Application_lu;
-
-public class InjuryType : Entity_lu
+[Lookup]
+public class InjuryType : BaseLookupDomain<InjuryType, eInjuryType>, IConfigurableEntity
 {
-    // Relationships
+    #region Relationships
 
+    [InverseProperty(nameof(InjuryType))]
     public virtual ICollection<HealthInformation> HealthInformation { get; set; } = [];
+
+    #endregion Relationships
+
+    public void Configure(ModelBuilder builder) => builder.Entity<InjuryType>(ConfigureLookup);
 }

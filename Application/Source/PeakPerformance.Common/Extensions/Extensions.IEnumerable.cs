@@ -8,8 +8,17 @@ public static partial class Extensions
     public static bool NotIn<T>(this T item, IEnumerable<T> source)
         => !source.Contains(item);
 
-    public static bool IsEmpty<T>(this IEnumerable<T> source)
-        => !source.Any();
+    public static bool IsNullOrEmpty<T>(this IEnumerable<T> source)
+        => source == null || !source.Any();
+
+    public static bool IsNotNullOrEmpty<T>(this IEnumerable<T> source)
+        => !source.IsNullOrEmpty();
+
+    public static IEnumerable<T> IfNotNull<T>(this IEnumerable<T> source)
+        => source ?? [];
+
+    public static IEnumerable<T> IfNotNullOrEmpty<T>(this IEnumerable<T> source)
+        => source != null && source.Any() ? source : [];
 
     public static bool HasDuplicates<T>(this IEnumerable<T> source)
     {

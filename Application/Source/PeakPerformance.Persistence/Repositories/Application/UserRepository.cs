@@ -10,12 +10,12 @@ public class UserRepository(ApplicationDbContext context) : BaseRepository(conte
 {
     // Get
 
-    public async Task<User?> GetExistingUserAsync(string email, string username, bool strict, CancellationToken cancellationToken = default)
+    public async Task<User> GetExistingUserAsync(string email, string username, bool strict, CancellationToken cancellationToken = default)
         => strict
             ? await Context.Users.SingleOrDefaultAsync(_ => _.Email.Equals(email) && _.Username.Equals(username), cancellationToken)
             : await Context.Users.SingleOrDefaultAsync(_ => _.Email.Equals(email) || _.Username.Equals(username), cancellationToken);
 
-    public async Task<User?> GetUserByUsernameAsync(string username, CancellationToken cancellationToken = default)
+    public async Task<User> GetUserByUsernameAsync(string username, CancellationToken cancellationToken = default)
         => await Context.Users
         .Include(_ => _.UserRoles)
         .ThenInclude(_ => _.Role)

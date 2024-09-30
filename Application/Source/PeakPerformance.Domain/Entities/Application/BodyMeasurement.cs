@@ -1,14 +1,7 @@
-﻿using PeakPerformance.Domain.Entities._Base;
-using PeakPerformance.Domain.Entities.Application_lu;
+﻿namespace PeakPerformance.Domain.Entities.Application;
 
-namespace PeakPerformance.Domain.Entities.Application;
-
-public class BodyMeasurement : BaseEntity
+public class BodyMeasurement : BaseDomain<long>, IConfigurableEntity
 {
-    public BodyMeasurement() => RecordDate = DateTime.UtcNow;
-
-    public long Id { get; set; }
-
     public long UserId { get; set; }
 
     public decimal? Waist { get; set; }
@@ -37,13 +30,35 @@ public class BodyMeasurement : BaseEntity
 
     public decimal? LeftCalf { get; set; }
 
-    public int MeasurementUnitId { get; set; }
+    public eMeasurementUnit MeasurementUnitId { get; set; }
 
-    public DateTime RecordDate { get; set; }
+    #region Relationships
 
-    // Relationships
-
+    [ForeignKey(nameof(UserId))]
     public virtual User User { get; set; }
 
+    [ForeignKey(nameof(MeasurementUnitId))]
     public virtual MeasurementUnit MeasurementUnit { get; set; }
+
+    #endregion Relationships
+
+    public void Configure(ModelBuilder builder)
+    {
+        builder.Entity<BodyMeasurement>(_ =>
+        {
+            _.Property(_ => _.Waist).HasPrecision(5, 2);
+            _.Property(_ => _.Hips).HasPrecision(5, 2);
+            _.Property(_ => _.Neck).HasPrecision(5, 2);
+            _.Property(_ => _.Chest).HasPrecision(5, 2);
+            _.Property(_ => _.Shoulders).HasPrecision(5, 2);
+            _.Property(_ => _.RightBicep).HasPrecision(5, 2);
+            _.Property(_ => _.LeftBicep).HasPrecision(5, 2);
+            _.Property(_ => _.RightForearm).HasPrecision(5, 2);
+            _.Property(_ => _.LeftForearm).HasPrecision(5, 2);
+            _.Property(_ => _.RightThigh).HasPrecision(5, 2);
+            _.Property(_ => _.LeftThigh).HasPrecision(5, 2);
+            _.Property(_ => _.RightCalf).HasPrecision(5, 2);
+            _.Property(_ => _.LeftCalf).HasPrecision(5, 2);
+        });
+    }
 }

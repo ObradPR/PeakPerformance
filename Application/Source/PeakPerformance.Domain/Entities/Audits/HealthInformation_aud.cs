@@ -1,14 +1,7 @@
-﻿using PeakPerformance.Domain.Entities._Base;
+﻿namespace PeakPerformance.Domain.Entities.Audits;
 
-namespace PeakPerformance.Domain.Entities.Audits;
-
-public class HealthInformation_aud : Audit
+[NoPlural]
+public class HealthInformation_aud : AuditDomain<long>
 {
-    public long? Id { get; set; }
-
     public long? UserId { get; set; }
-
-    // Override
-
-    public override bool ShouldPluralize => false;
 }

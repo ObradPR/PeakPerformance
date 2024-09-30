@@ -5,7 +5,12 @@ namespace PeakPerformance.Common;
 public class Constants
 {
     public const string SOLUTION_NAME = "PeakPerformance";
+
+    // System User
+
     public const long SYSTEM_USER_ID = -1;
+    public const string SYSTEM_USER_USERNAME = "Peak Performance";
+    public const string SYSTEM_USER_EMAIL = "peakperformance690@gmail.com";
 
     // Token
 
@@ -29,6 +34,11 @@ public class Constants
 
     public const int DEFAULT_PAGE_SIZE = 10;
     public const int MAX_PAGE_SIZE = 50;
+
+    // Sorting
+
+    public const string SORTING_ORDER_DESC = "desc";
+    public const string SORTING_ORDER_ASC = "asc";
 
     // Validations
 

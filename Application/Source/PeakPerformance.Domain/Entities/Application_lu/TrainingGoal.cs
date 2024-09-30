@@ -1,11 +1,14 @@
-﻿using PeakPerformance.Domain.Entities._Base;
-using PeakPerformance.Domain.Entities.Application;
+﻿namespace PeakPerformance.Domain.Entities.Application_lu;
 
-namespace PeakPerformance.Domain.Entities.Application_lu;
-
-public class TrainingGoal : Entity_lu
+[Lookup]
+public class TrainingGoal : BaseLookupDomain<TrainingGoal, eTrainingGoal>, IConfigurableEntity
 {
-    // Relationships
+    #region Relationships
 
+    [InverseProperty(nameof(TrainingGoal))]
     public virtual ICollection<UserTrainingGoal> UserTrainingGoals { get; set; } = [];
+
+    #endregion Relationships
+
+    public void Configure(ModelBuilder builder) => builder.Entity<TrainingGoal>(ConfigureLookup);
 }
