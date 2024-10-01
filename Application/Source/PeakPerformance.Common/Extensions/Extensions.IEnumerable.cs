@@ -2,12 +2,6 @@
 
 public static partial class Extensions
 {
-    public static bool In<T>(this T item, IEnumerable<T> source)
-        => source.Contains(item);
-
-    public static bool NotIn<T>(this T item, IEnumerable<T> source)
-        => !source.Contains(item);
-
     public static bool IsNullOrEmpty<T>(this IEnumerable<T> source)
         => source == null || !source.Any();
 

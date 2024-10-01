@@ -6,6 +6,10 @@ public class UserRole : BaseIndexAuditedDomain<UserRole, long>
 
     public eSystemRole RoleId { get; set; }
 
+    //
+    // Relationships
+    //
+
     #region Relationships
 
     [ForeignKey(nameof(UserId))]
@@ -15,6 +19,10 @@ public class UserRole : BaseIndexAuditedDomain<UserRole, long>
     public virtual SystemRole Role { get; set; }
 
     #endregion Relationships
+
+    //
+    // Indexes
+    //
 
     #region Indexes
 

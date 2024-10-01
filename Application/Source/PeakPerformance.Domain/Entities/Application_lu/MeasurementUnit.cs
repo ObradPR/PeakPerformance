@@ -3,6 +3,10 @@
 [Lookup]
 public class MeasurementUnit : BaseLookupDomain<MeasurementUnit, eMeasurementUnit>, IConfigurableEntity
 {
+    //
+    // Relationships
+    //
+
     #region Relationships
 
     [InverseProperty(nameof(UserMeasurementPreference.WeightUnit))]
@@ -18,6 +22,10 @@ public class MeasurementUnit : BaseLookupDomain<MeasurementUnit, eMeasurementUni
     public virtual ICollection<BodyMeasurement> BodyMeasurements { get; set; } = [];
 
     #endregion Relationships
+
+    //
+    // Configuration
+    //
 
     public void Configure(ModelBuilder builder) => builder.Entity<MeasurementUnit>(ConfigureLookup);
 }

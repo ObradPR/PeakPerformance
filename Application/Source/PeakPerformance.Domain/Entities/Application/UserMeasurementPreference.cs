@@ -8,6 +8,10 @@ public class UserMeasurementPreference : BaseIndexAuditedDomain<UserMeasurementP
 
     public eMeasurementUnit MeasurementUnitId { get; set; }
 
+    //
+    // Relationships
+    //
+
     #region Relationships
 
     [ForeignKey(nameof(UserId))]
@@ -20,6 +24,10 @@ public class UserMeasurementPreference : BaseIndexAuditedDomain<UserMeasurementP
     public virtual MeasurementUnit MeasurementUnit { get; set; }
 
     #endregion Relationships
+
+    //
+    // Indexes
+    //
 
     #region Indexes
 

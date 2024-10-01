@@ -1,6 +1,6 @@
 ﻿namespace PeakPerformance.Domain.Entities.Application;
 
-public class BodyMeasurement : BaseDomain<long>, IConfigurableEntity
+public class BodyMeasurement : BaseAuditedDomain<long>, IConfigurableEntity
 {
     public long UserId { get; set; }
 
@@ -32,6 +32,10 @@ public class BodyMeasurement : BaseDomain<long>, IConfigurableEntity
 
     public eMeasurementUnit MeasurementUnitId { get; set; }
 
+    //
+    // Relationships
+    //
+
     #region Relationships
 
     [ForeignKey(nameof(UserId))]
@@ -41,6 +45,10 @@ public class BodyMeasurement : BaseDomain<long>, IConfigurableEntity
     public virtual MeasurementUnit MeasurementUnit { get; set; }
 
     #endregion Relationships
+
+    //
+    // Configuration
+    //
 
     public void Configure(ModelBuilder builder)
     {

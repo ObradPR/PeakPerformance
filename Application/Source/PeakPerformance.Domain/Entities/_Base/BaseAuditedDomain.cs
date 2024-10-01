@@ -3,6 +3,10 @@
 public class BaseAuditedDomain<TKey> : BaseDomain<TKey>, IAuditedEntity
     where TKey : struct
 {
+    public DateTime CreatedOn { get; set; }
+
+    public long CreatedBy { get; set; }
+
     public DateTime? ModifiedOn { get; set; }
 
     public long? ModifiedBy { get; set; }

@@ -1,5 +1,6 @@
 ﻿namespace PeakPerformance.Domain.Entities.Audits;
 
+[Audit]
 [NoPlural]
 public class HealthInformation_aud : AuditDomain<long>
 {

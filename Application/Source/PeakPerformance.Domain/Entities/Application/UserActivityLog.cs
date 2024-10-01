@@ -6,6 +6,12 @@ public class UserActivityLog : BaseDomain<long>
 
     public eActionType ActionTypeId { get; set; }
 
+    public DateTime RecordDate { get; set; }
+
+    //
+    // Relationships
+    //
+
     #region Relationships
 
     [ForeignKey(nameof(UserId))]

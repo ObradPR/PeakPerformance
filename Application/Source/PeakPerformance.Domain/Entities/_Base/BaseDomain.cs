@@ -11,7 +11,5 @@ public class BaseDomain<TKey> : BaseDomain, IBaseDomain<TKey>
     [Key]
     public TKey Id { get; set; }
 
-    public DateTime CreatedOn { get; set; }
-
     public bool IsNew => Id.Equals(default(TKey));
 }

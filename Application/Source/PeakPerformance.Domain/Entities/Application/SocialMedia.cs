@@ -1,13 +1,17 @@
 ﻿namespace PeakPerformance.Domain.Entities.Application;
 
 [NoPlural]
-public class SocialMedia : BaseDomain<long>, IConfigurableEntity
+public class SocialMedia : BaseAuditedDomain<long>, IConfigurableEntity
 {
     public long UserId { get; set; }
 
     public eSocialMediaPlatform PlatformId { get; set; }
 
     public string Link { get; set; }
+
+    //
+    // Relationships
+    //
 
     #region Relationships
 
@@ -18,6 +22,10 @@ public class SocialMedia : BaseDomain<long>, IConfigurableEntity
     public virtual SocialMediaPlatform Platform { get; set; }
 
     #endregion Relationships
+
+    //
+    // Configuration
+    //
 
     public void Configure(ModelBuilder builder)
     {
