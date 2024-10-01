@@ -26,6 +26,10 @@ public class User : BaseIndexAuditedDomain<User, long>, IConfigurableEntity
 
     public string Description { get; set; }
 
+    //
+    // Relationships
+    //
+
     #region Relationships
 
     [InverseProperty(nameof(User))]
@@ -60,6 +64,10 @@ public class User : BaseIndexAuditedDomain<User, long>, IConfigurableEntity
 
     #endregion Relationships
 
+    //
+    // Indexes
+    //
+
     #region Indexes
 
     public static IDatabaseIndex IX_Users_Email => new DatabaseIndex(nameof(IX_Users_Email))
@@ -82,6 +90,9 @@ public class User : BaseIndexAuditedDomain<User, long>, IConfigurableEntity
 
     #endregion Indexes
 
+    //
+    // Configuration
+    //
     public void Configure(ModelBuilder builder)
     {
         builder.Entity<User>(_ =>

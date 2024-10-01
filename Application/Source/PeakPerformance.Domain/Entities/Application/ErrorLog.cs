@@ -8,6 +8,12 @@ public class ErrorLog : BaseDomain<long>, IConfigurableEntity
 
     public string InnerException { get; set; }
 
+    public DateTime RecordDate { get; set; }
+
+    //
+    // Configuration
+    //
+
     public void Configure(ModelBuilder builder)
     {
         builder.Entity<ErrorLog>(_ =>

@@ -3,6 +3,10 @@
 [Lookup]
 public class ActionType : BaseLookupDomain<ActionType, eActionType>, IConfigurableEntity
 {
+    //
+    // Relationships
+    //
+
     #region Relationships
 
     [InverseProperty(nameof(ActionType))]
@@ -15,6 +19,10 @@ public class ActionType : BaseLookupDomain<ActionType, eActionType>, IConfigurab
     public virtual ICollection<UserActivityLog> UserActivityLogs { get; set; } = [];
 
     #endregion Relationships
+
+    //
+    // Configuration
+    //
 
     public void Configure(ModelBuilder builder) => builder.Entity<ActionType>(ConfigureLookup);
 }

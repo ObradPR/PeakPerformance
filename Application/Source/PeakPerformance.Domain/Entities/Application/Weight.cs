@@ -1,6 +1,6 @@
 ﻿namespace PeakPerformance.Domain.Entities.Application;
 
-public class Weight : BaseDomain<long>, IConfigurableEntity
+public class Weight : BaseAuditedDomain<long>, IConfigurableEntity
 {
     public long UserId { get; set; }
 
@@ -9,6 +9,10 @@ public class Weight : BaseDomain<long>, IConfigurableEntity
     public eMeasurementUnit WeightUnitId { get; set; }
 
     public decimal? BodyFatPercentage { get; set; }
+
+    //
+    // Relationships
+    //
 
     #region Relationships
 
@@ -19,6 +23,10 @@ public class Weight : BaseDomain<long>, IConfigurableEntity
     public virtual MeasurementUnit WeightUnit { get; set; }
 
     #endregion Relationships
+
+    //
+    // Configuration
+    //
 
     public void Configure(ModelBuilder builder)
     {

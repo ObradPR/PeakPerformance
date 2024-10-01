@@ -13,6 +13,10 @@ public class HealthInformation : BaseAuditedDomain<long>
 
     public DateTime? EndDate { get; set; }
 
+    //
+    // Relationships
+    //
+
     #region Relationships
 
     [ForeignKey(nameof(UserId))]

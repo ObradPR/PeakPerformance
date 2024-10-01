@@ -62,4 +62,8 @@ public static partial class Extensions
             .Cast<T>()
             .Select(_ => (Convert.ToInt32(_), _.GetDescription()));
     }
+
+    public static bool In<T>(this T value, params T[] args)
+        where T : struct, Enum
+        => args?.Contains(value) ?? false;
 }

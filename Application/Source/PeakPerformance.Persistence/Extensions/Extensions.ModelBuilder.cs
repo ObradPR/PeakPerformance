@@ -21,23 +21,22 @@ public static partial class Extensions
         {
             var entityType = entity.ClrType;
 
-            var noPluralAttr = entityType.GetCustomAttribute<NoPluralAttribute>();
             var tableAttr = entityType.GetCustomAttribute<TableAttribute>();
+            var noPluralAttr = entityType.GetCustomAttribute<NoPluralAttribute>();
             var lookupAttr = entityType.GetCustomAttribute<LookupAttribute>();
+            var auditAttr = entityType.GetCustomAttribute<AuditAttribute>();
 
             var tableName = tableAttr != null
                 ? tableAttr.Name
                 : entityType.Name;
 
-            var isAudit = tableName.EndsWith("_aud", StringComparison.OrdinalIgnoreCase);
-
-            if (isAudit)
+            if (auditAttr != null)
                 tableName = tableName.Replace(eTableType.Audit.GetDescription(), string.Empty);
 
             if (noPluralAttr == null)
                 tableName = tableName.ToPlural();
 
-            if (isAudit)
+            if (auditAttr != null)
                 tableName += eTableType.Audit.GetDescription();
 
             if (lookupAttr != null)
@@ -46,4 +45,28 @@ public static partial class Extensions
             builder.Entity(entityType).ToTable(tableName);
         }
     }
+
+    public static void ApplyGlobalSoftDeleteFilter(this ModelBuilder builder)
+    {
+        foreach (var entityType in builder.Model.GetEntityTypes())
+        {
+            if (typeof(ISoftDelete).IsAssignableFrom(entityType.ClrType))
+                builder.ApplySoftDeleteFilterForEntity(entityType.ClrType);
+        }
+    }
+
+    // private
+
+    private static void ApplySoftDeleteFilterForEntity(this ModelBuilder builder, Type entityType)
+    {
+        var method = typeof(ApplicationDbContext)
+            .GetMethod(nameof(ApplySoftDeleteFilter), BindingFlags.NonPublic | BindingFlags.Static)
+            .MakeGenericMethod(entityType);
+
+        method.Invoke(null, [builder]);
+    }
+
+    private static void ApplySoftDeleteFilter<TEntity>(ModelBuilder builder)
+        where TEntity : class, ISoftDelete
+        => builder.Entity<TEntity>().HasQueryFilter(_ => _.IsActive == true);
 }
