@@ -13,6 +13,8 @@ public class AuditDomain<TKey> : AuditDomain, IAuditDomainEntity<TKey>
 
     public TKey Id { get; set; }
 
+    public DateTime AuditTimeStamp { get; set; }
+
     public DateTime? CreatedOn { get; set; }
 
     public DateTime? ModifiedOn { get; set; }

@@ -8,11 +8,14 @@ namespace PeakPerformance.Persistence.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateAuditTriggersForTable<User_aud, User>();
-            migrationBuilder.CreateAuditTriggersForTable<UserRole_aud, UserRole>();
-            migrationBuilder.CreateAuditTriggersForTable<UserMeasurementPreference_aud, UserMeasurementPreference>();
-            migrationBuilder.CreateAuditTriggersForTable<UserTrainingGoal_aud, UserTrainingGoal>();
-            migrationBuilder.CreateAuditTriggersForTable<HealthInformation_aud, HealthInformation>();
+            // Moved to later migration cause of the added columns within Audits
+            // Moved to - PEAK-27_UPDATE_Audit_Tables_ADD_COLUMN_AuditTimeStamp
+
+            //migrationBuilder.CreateAuditTriggersForTable<User_aud, User>();
+            //migrationBuilder.CreateAuditTriggersForTable<UserRole_aud, UserRole>();
+            //migrationBuilder.CreateAuditTriggersForTable<UserMeasurementPreference_aud, UserMeasurementPreference>();
+            //migrationBuilder.CreateAuditTriggersForTable<UserTrainingGoal_aud, UserTrainingGoal>();
+            //migrationBuilder.CreateAuditTriggersForTable<HealthInformation_aud, HealthInformation>();
         }
 
         /// <inheritdoc />

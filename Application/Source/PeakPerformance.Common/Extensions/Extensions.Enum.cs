@@ -60,6 +60,7 @@ public static partial class Extensions
     {
         return Enum.GetValues(typeof(T))
             .Cast<T>()
+            .OrderBy(_ => Convert.ToInt32(_))
             .Select(_ => (Convert.ToInt32(_), _.GetDescription()));
     }
 

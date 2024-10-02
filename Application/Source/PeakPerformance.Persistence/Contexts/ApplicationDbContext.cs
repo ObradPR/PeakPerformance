@@ -1,4 +1,6 @@
-﻿namespace PeakPerformance.Persistence.Contexts;
+﻿using Microsoft.Extensions.Logging;
+
+namespace PeakPerformance.Persistence.Contexts;
 
 public partial class ApplicationDbContext : DbContext
 {
@@ -9,9 +11,14 @@ public partial class ApplicationDbContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         if (!optionsBuilder.IsConfigured)
+        {
             optionsBuilder
                 .UseSqlServer("Data Source = localhost; Initial Catalog = PeakPerformance; TrustServerCertificate = True; Integrated security = True;")
-                .LogTo(_ => Debug.WriteLine(_));
+                .LogTo(
+                    _ => Debug.WriteLine(_),
+                    LogLevel.Information
+                );
+        }
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -92,7 +99,11 @@ public partial class ApplicationDbContext : DbContext
 
         foreach (var entityEntry in softDeleteEntries)
         {
-            entityEntry.State = EntityState.Modified;
+            entityEntry.State = EntityState.Unchanged;
+
+            entityEntry.Property(nameof(ISoftDelete.IsActive)).IsModified = true;
+            entityEntry.Property(nameof(ISoftDelete.DeletedOn)).IsModified = true;
+            entityEntry.Property(nameof(ISoftDelete.DeletedBy)).IsModified = true;
 
             var entity = entityEntry.Entity;
 
@@ -127,10 +138,9 @@ public partial class ApplicationDbContext : DbContext
     {
         var now = DateTime.UtcNow;
 
-        var userId = CurrentUser.Id;
-
-        if (userId == default)
-            userId = Constants.SYSTEM_USER_ID;
+        var userId = CurrentUser?.Id != null
+            ? CurrentUser.Id
+            : Constants.SYSTEM_USER_ID;
 
         return (now, userId);
     }
