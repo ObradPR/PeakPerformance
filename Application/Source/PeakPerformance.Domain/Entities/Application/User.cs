@@ -1,4 +1,6 @@
-﻿namespace PeakPerformance.Domain.Entities.Application;
+﻿using PeakPerformance.Common;
+
+namespace PeakPerformance.Domain.Entities.Application;
 
 public class User : BaseIndexAuditedDomain<User, long>, IConfigurableEntity
 {
@@ -16,6 +18,7 @@ public class User : BaseIndexAuditedDomain<User, long>, IConfigurableEntity
 
     public string Password { get; set; }
 
+    [Column(TypeName = Constants.DB_TYPE_DATE)]
     public DateTime DateOfBirth { get; set; }
 
     public string PhoneNumber { get; set; }

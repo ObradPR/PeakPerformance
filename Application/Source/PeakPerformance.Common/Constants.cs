@@ -9,7 +9,7 @@ public class Constants
     // System User
 
     public const long SYSTEM_USER_ID = -1;
-    public const string SYSTEM_USER_USERNAME = "Peak Performance";
+    public const string SYSTEM_USER_USERNAME = "PeakPerformance";
     public const string SYSTEM_USER_EMAIL = "peakperformance690@gmail.com";
 
     // Token
@@ -46,7 +46,7 @@ public class Constants
     public static readonly Regex REGEX_ZIPCODE = new(@"^\d{5}(-\d{4})?$");
     public static readonly Regex REGEX_PHONE_NUMBER = new(@"^\d{3}-\d{3}-\d{4}$");
 
-    // Types
+    // DB Types
 
-    public static readonly string MeasurementDecimalType = "decimal(5, 2)";
+    public const string DB_TYPE_DATE = "date";
 }

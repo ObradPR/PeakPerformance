@@ -2,13 +2,17 @@
 
 namespace PeakPerformance.Domain.Entities._Base;
 
-public class BaseLookupDomain<TLookup, TEnum> : BaseDomain<TEnum>, ILookupEntity
-    where TLookup : BaseLookupDomain<TLookup, TEnum>
+public class BaseLookupDomain<T, TEnum> : BaseDomain<TEnum>, ILookupEntity
+    where T : BaseLookupDomain<T, TEnum>
     where TEnum : struct, Enum
 {
     public string Name { get; set; }
 
-    protected void ConfigureLookup(EntityTypeBuilder<TLookup> entity)
+    //
+    // Configuration
+    //
+
+    protected void ConfigureLookup(EntityTypeBuilder<T> entity)
     {
         entity.Property(nameof(Name))
             .HasMaxLength(30)

@@ -7,6 +7,13 @@ public static partial class Extensions
 
     // methods
 
+    public static void CreateSystemUser(this MigrationBuilder migrationBuilder)
+    {
+        var sqlFile = Path.Combine("Scripts", "_User", "SystemUser.sql");
+
+        migrationBuilder.ReadAndExecuteQuery(sqlFile);
+    }
+
     public static void CreateTableValuedParameterType(this MigrationBuilder migrationBuilder, string name)
     {
         var sqlFile = Path.Combine("Scripts", "Types", "Table", $"{name}.sql");

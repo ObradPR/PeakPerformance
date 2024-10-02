@@ -51,22 +51,40 @@ public static partial class Extensions
         foreach (var entityType in builder.Model.GetEntityTypes())
         {
             if (typeof(ISoftDelete).IsAssignableFrom(entityType.ClrType))
-                builder.ApplySoftDeleteFilterForEntity(entityType.ClrType);
+            {
+                var method = typeof(Extensions)
+                    .GetMethod(nameof(ApplySoftDeleteFilter), BindingFlags.NonPublic | BindingFlags.Static)
+                    .MakeGenericMethod(entityType.ClrType);
+
+                method.Invoke(null, [builder]);
+            }
+        }
+    }
+
+    public static void ApplySoftDeleteIndexes(this ModelBuilder builder)
+    {
+        foreach (var entityType in builder.Model.GetEntityTypes())
+        {
+            if (typeof(ISoftDelete).IsAssignableFrom(entityType.ClrType))
+            {
+                var method = typeof(Extensions)
+                    .GetMethod(nameof(CreateSoftDeleteIndex), BindingFlags.NonPublic | BindingFlags.Static)
+                    .MakeGenericMethod(entityType.ClrType);
+
+                method.Invoke(null, [builder]);
+            }
         }
     }
 
     // private
 
-    private static void ApplySoftDeleteFilterForEntity(this ModelBuilder builder, Type entityType)
-    {
-        var method = typeof(ApplicationDbContext)
-            .GetMethod(nameof(ApplySoftDeleteFilter), BindingFlags.NonPublic | BindingFlags.Static)
-            .MakeGenericMethod(entityType);
-
-        method.Invoke(null, [builder]);
-    }
-
     private static void ApplySoftDeleteFilter<TEntity>(ModelBuilder builder)
         where TEntity : class, ISoftDelete
         => builder.Entity<TEntity>().HasQueryFilter(_ => _.IsActive == true);
+
+    private static void CreateSoftDeleteIndex<TEntity>(ModelBuilder builder)
+        where TEntity : class, ISoftDelete
+        => builder.Entity<TEntity>()
+            .HasIndex(_ => _.IsActive)
+            .HasFilter($"[{nameof(ISoftDelete.IsActive)}] = 1");
 }
