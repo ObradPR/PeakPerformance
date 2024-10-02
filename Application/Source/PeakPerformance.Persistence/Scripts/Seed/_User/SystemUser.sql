@@ -30,8 +30,8 @@ VALUES
     ,'$2a$12$KhXkK8rfHcTA3WiOD6lnde.yA.MO5/T9OsFAak9CmWU7dmQfyrLbu'
     ,'2002-10-10'
     ,'000-000-0000'
-    ,CURRENT_TIMESTAMP
-    ,CURRENT_TIMESTAMP
+    ,GETUTCDATE()
+    ,GETUTCDATE()
     ,-1
     ,NULL
     ,NULL
@@ -58,8 +58,8 @@ INSERT INTO [dbo].[UserRoles]
 VALUES
     (-1
     ,1
-    ,CURRENT_TIMESTAMP
-    ,CURRENT_TIMESTAMP
+    ,GETUTCDATE()
+    ,GETUTCDATE()
     ,-1
     ,NULL
     ,NULL

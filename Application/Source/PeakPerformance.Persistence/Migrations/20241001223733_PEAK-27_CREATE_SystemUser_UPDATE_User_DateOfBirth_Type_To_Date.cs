@@ -21,7 +21,8 @@ namespace PeakPerformance.Persistence.Migrations
 
             migrationBuilder.Up(User.IX_Users_Name_DOB);
 
-            migrationBuilder.CreateSystemUser();
+            // Moved to PEAK-27_SEED_Lookups_SystemUser - due to fixing db
+            //migrationBuilder.CreateSystemUser();
         }
 
         /// <inheritdoc />

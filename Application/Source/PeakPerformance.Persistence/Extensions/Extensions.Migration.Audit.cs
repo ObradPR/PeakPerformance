@@ -6,6 +6,7 @@ public static partial class Extensions
 
     private static readonly Func<PropertyInfo, bool> excludeAuditProperties = prop =>
         prop.Name != nameof(AuditDomain<object>.AuditId) &&
+        prop.Name != nameof(AuditDomain<object>.AuditTimeStamp) &&
         prop.Name != nameof(AuditDomain<object>.DetailsJson) &&
         prop.Name != nameof(AuditDomain<object>.ActionTypeId) &&
         prop.Name != nameof(AuditDomain<object>.ActionType) &&
