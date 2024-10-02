@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PeakPerformance.Persistence.Contexts;
 
@@ -11,9 +12,11 @@ using PeakPerformance.Persistence.Contexts;
 namespace PeakPerformance.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241001223733_PEAK-27_CREATE_SystemUser_UPDATE_User_DateOfBirth_Type_To_Date")]
+    partial class PEAK27_CREATE_SystemUser_UPDATE_User_DateOfBirth_Type_To_Date
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -66,9 +69,6 @@ namespace PeakPerformance.Persistence.Migrations
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("IsActive")
-                        .HasFilter("[IsActive] = 1");
 
                     b.HasIndex("UserId");
 
@@ -164,9 +164,6 @@ namespace PeakPerformance.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IsActive")
-                        .HasFilter("[IsActive] = 1");
-
                     b.HasIndex("MeasurementUnitId");
 
                     b.HasIndex("UserId");
@@ -248,9 +245,6 @@ namespace PeakPerformance.Persistence.Migrations
 
                     b.HasIndex("InjuryTypeId");
 
-                    b.HasIndex("IsActive")
-                        .HasFilter("[IsActive] = 1");
-
                     b.HasIndex("UserId");
 
                     b.ToTable("HealthInformation", "dbo");
@@ -297,9 +291,6 @@ namespace PeakPerformance.Persistence.Migrations
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("IsActive")
-                        .HasFilter("[IsActive] = 1");
 
                     b.HasIndex("PlatformId");
 
@@ -386,9 +377,6 @@ namespace PeakPerformance.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IsActive")
-                        .HasFilter("[IsActive] = 1");
-
                     b.ToTable("Users", "dbo");
                 });
 
@@ -458,9 +446,6 @@ namespace PeakPerformance.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IsActive")
-                        .HasFilter("[IsActive] = 1");
-
                     b.HasIndex("MeasurementUnitId");
 
                     b.HasIndex("UserId");
@@ -506,9 +491,6 @@ namespace PeakPerformance.Persistence.Migrations
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("IsActive")
-                        .HasFilter("[IsActive] = 1");
 
                     b.HasIndex("RoleId");
 
@@ -559,9 +541,6 @@ namespace PeakPerformance.Persistence.Migrations
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("IsActive")
-                        .HasFilter("[IsActive] = 1");
 
                     b.HasIndex("TrainingGoalId");
 
@@ -615,9 +594,6 @@ namespace PeakPerformance.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IsActive")
-                        .HasFilter("[IsActive] = 1");
-
                     b.HasIndex("UserId");
 
                     b.HasIndex("WeightUnitId");
@@ -668,9 +644,6 @@ namespace PeakPerformance.Persistence.Migrations
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("IsActive")
-                        .HasFilter("[IsActive] = 1");
 
                     b.HasIndex("UserId");
 

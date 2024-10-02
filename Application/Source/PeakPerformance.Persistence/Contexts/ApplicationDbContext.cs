@@ -4,15 +4,7 @@ public partial class ApplicationDbContext : DbContext
 {
     public IIdentityUser CurrentUser { get; private set; }
 
-    public ApplicationDbContext()
-    { }
-
     public ApplicationDbContext(IIdentityUser identityUser) => CurrentUser = identityUser;
-
-    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, IIdentityUser identityUser) : base(options)
-    {
-        CurrentUser = identityUser;
-    }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -29,6 +21,7 @@ public partial class ApplicationDbContext : DbContext
         modelBuilder.SetTableNames();
         modelBuilder.ApplyEntityConfigurations(typeof(BaseDomain).Assembly);
         modelBuilder.ApplyGlobalSoftDeleteFilter();
+        modelBuilder.ApplySoftDeleteIndexes();
 
         base.OnModelCreating(modelBuilder);
     }
