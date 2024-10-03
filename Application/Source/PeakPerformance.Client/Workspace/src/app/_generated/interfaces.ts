@@ -78,6 +78,12 @@ export interface IHealthInformationDto
 	startDate?: Date | null;
 	endDate?: Date | null;
 }
+export interface ILookupValueDto
+{
+	id: number;
+	name: string;
+	description: string;
+}
 export interface IProfileSetupDto
 {
 	weight: IWeightDto;

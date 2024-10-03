@@ -9,9 +9,9 @@ public static partial class Extensions
        where T : struct, Enum
         => enumList.Select(_ => _.ToString()).ToArray();
 
-    public static T[] GetValues<T>()
+    public static List<T> GetValues<T>()
         where T : struct, Enum
-        => (T[])Enum.GetValues(typeof(T));
+        => Enum.GetValues(typeof(T)).Cast<T>().ToList();
 
     public static string[] GetNames<T>()
         where T : struct, Enum
@@ -67,4 +67,10 @@ public static partial class Extensions
     public static bool In<T>(this T value, params T[] args)
         where T : struct, Enum
         => args?.Contains(value) ?? false;
+
+    public static List<T> GetEnums<T>()
+        where T : struct, Enum
+        => !typeof(T).IsEnum
+        ? throw new ArgumentException($"{typeof(T)} must be an enumerated type.")
+        : GetValues<T>();
 }
