@@ -28,7 +28,7 @@ public static partial class Extensions
         var deleteValues = GetAuditColumnsOrValues<TAudit>("d");
 
         migrationBuilder.Sql($@"
-            EXEC [dbo].[usp_CreateAuditTrigger]
+            EXEC {Settings.usp_CreateAuditTrigger}
                 @TriggerName = N'{triggerName}',
                 @TableName = N'{tableName}',
                 @AuditTableName = N'{auditTableName}',

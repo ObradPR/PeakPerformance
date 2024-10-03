@@ -13,7 +13,7 @@ public partial class ApplicationDbContext : DbContext
         if (!optionsBuilder.IsConfigured)
         {
             optionsBuilder
-                .UseSqlServer("Data Source = localhost; Initial Catalog = PeakPerformance; TrustServerCertificate = True; Integrated security = True;")
+                .UseSqlServer(Settings.ConnectionString)
                 .LogTo(
                     _ => Debug.WriteLine(_),
                     LogLevel.Information
