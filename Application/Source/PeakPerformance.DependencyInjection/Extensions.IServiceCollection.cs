@@ -12,6 +12,7 @@ using PeakPerformance.Application.Identity.Interfaces;
 using PeakPerformance.Application.Identity.Services;
 using PeakPerformance.Application.Interfaces;
 using PeakPerformance.Application.Services;
+using PeakPerformance.Common;
 using PeakPerformance.Common.Extensions;
 using PeakPerformance.Common.Interfaces;
 using PeakPerformance.Domain.Repositories;
@@ -24,11 +25,11 @@ namespace PeakPerformance.DependencyInjection;
 
 public static partial class Extensions
 {
-    public static IServiceCollection AllApplicationServices(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AllApplicationServices(this IServiceCollection services)
     {
         var secrets = CreateSecretConfiguration();
 
-        PersistenceServices(services, configuration);
+        PersistenceServices(services);
         ApplicationServices(services, secrets);
         ApplicationIdentityService(services, secrets);
         InfrastructureServices(services);
@@ -37,10 +38,10 @@ public static partial class Extensions
         return services;
     }
 
-    private static IServiceCollection PersistenceServices(IServiceCollection services, IConfiguration configuration)
+    private static IServiceCollection PersistenceServices(IServiceCollection services)
     {
         services.AddDbContext<ApplicationDbContext>(
-            opt => opt.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+            opt => opt.UseSqlServer(Settings.ConnectionString));
 
         services.AddScoped<IUnitOfWork, UnitOfWork>();
 

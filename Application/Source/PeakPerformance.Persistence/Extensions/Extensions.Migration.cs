@@ -2,9 +2,6 @@
 
 public static partial class Extensions
 {
-    // connection string
-    private static string ConnectionString => "Data Source = localhost; Initial Catalog = PeakPerformance; TrustServerCertificate = True; Integrated security = True;";
-
     // methods
 
     public static void CreateSystemUser(this MigrationBuilder migrationBuilder)
@@ -51,13 +48,13 @@ public static partial class Extensions
         foreach (var (id, name) in Common.Extensions.Extensions.GetValuesAndDescriptions<TEnum>())
             dataTable.Rows.Add(id, name);
 
-        using (var connection = new SqlConnection(ConnectionString))
+        using (var connection = new SqlConnection(Settings.ConnectionString))
         {
             connection.Open();
 
             connection.SetIdentityInsert<TEntity>();
 
-            using (var command = new SqlCommand("EXEC [dbo].[usp_SeedLookupTables] @TableName, @IdAndDescriptions", connection))
+            using (var command = new SqlCommand($"EXEC {Settings.usp_SeedLookupTables} @TableName, @IdAndDescriptions", connection))
             {
                 command.Parameters.AddWithValue("@TableName", tableName);
 
@@ -65,7 +62,7 @@ public static partial class Extensions
                 {
                     ParameterName = "@IdAndDescriptions",
                     SqlDbType = SqlDbType.Structured,
-                    TypeName = "[dbo].[IdAndDescriptionsType]",
+                    TypeName = Settings.IdAndDescriptionsType,
                     Value = dataTable
                 };
 
