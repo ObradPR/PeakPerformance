@@ -4,12 +4,11 @@ public static partial class Extensions
 {
     public static IRuleBuilderOptions<T, TProperty> WithMessageAuto<T, TProperty>(this IRuleBuilderOptions<T, TProperty> ruleBuilder, string resourceValidation, params string[] args)
     {
-        return ruleBuilder.WithMessage((ctx, value) =>
+        return ruleBuilder.WithMessage((command, value) =>
         {
-            var validationContext = ctx as ValidationContext<T>
-                ?? throw new InvalidOperationException(ResourceValidation.Not_Expected_Type.AppendArgument("Validation Context"));
+            var propertyName = ruleBuilder.GetPropertyName();
 
-            var name = GetDisplayNameFromContext(validationContext);
+            var name = GetDisplayNameFromCommand(command, propertyName);
 
             var allArgs = new string[args.Length + 1];
             allArgs[0] = name;
@@ -23,26 +22,56 @@ public static partial class Extensions
 
     // private
 
-    private static string GetDisplayNameFromContext<T>(ValidationContext<T> context)
+    private static string GetPropertyName<T, TProperty>(this IRuleBuilderOptions<T, TProperty> ruleBuilder)
     {
-        var memberName = context.PropertyName;
-        var propertyInfo = typeof(T).GetProperty(memberName);
+        var rule = ruleBuilder.GetType().GetProperty("Rule")?.GetValue(ruleBuilder);
 
-        if (propertyInfo != null)
+        if (rule != null)
         {
-            if (propertyInfo.GetCustomAttributes(typeof(DisplayAttribute), false)
-                .FirstOrDefault() is DisplayAttribute displayAttribute)
+            var member = rule.GetType().GetProperty("Member")?.GetValue(rule);
+            if (member != null)
             {
-                return displayAttribute.Name ?? propertyInfo.Name;
-            }
-
-            if (propertyInfo.GetCustomAttributes(typeof(DescriptionAttribute), false)
-                .FirstOrDefault() is DescriptionAttribute descriptionAttribute)
-            {
-                return descriptionAttribute?.Description ?? propertyInfo.Name;
+                var name = member.GetType().GetProperty("Name")?.GetValue(member) as string;
+                return name; // This is the property name (e.g., "FirstName")
             }
         }
 
-        return memberName;
+        throw new InvalidOperationException("Could not extract the property name from the rule builder.");
+    }
+
+    private static string GetDisplayNameFromCommand<T>(T command, string propertyName)
+    {
+        var data = GetDtoFromCommand(command);
+
+        if (data != null)
+        {
+            var propertyInfo = data.GetType().GetProperty(propertyName);
+
+            if (propertyInfo != null)
+            {
+                if (propertyInfo.GetCustomAttributes(typeof(DisplayAttribute), false)
+                    .FirstOrDefault() is DisplayAttribute displayAttribute)
+                {
+                    return displayAttribute.Name ?? propertyInfo.Name;
+                }
+
+                if (propertyInfo.GetCustomAttributes(typeof(DescriptionAttribute), false)
+                    .FirstOrDefault() is DescriptionAttribute descriptionAttribute)
+                {
+                    return descriptionAttribute?.Description ?? propertyInfo.Name;
+                }
+            }
+        }
+
+        return propertyName;
+    }
+
+    private static object GetDtoFromCommand<T>(T command)
+    {
+        // Assuming the DTO is a property inside the command (e.g., `command.User`)
+        var dtoProperty = command.GetType().GetProperties()
+            .FirstOrDefault(prop => prop.PropertyType.IsClass); // Finding the class-type property (the DTO)
+
+        return dtoProperty?.GetValue(command); // Return the DTO object
     }
 }
