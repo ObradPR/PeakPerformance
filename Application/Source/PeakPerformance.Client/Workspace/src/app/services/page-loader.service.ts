@@ -1,20 +1,18 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { Injectable, signal } from '@angular/core';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PageLoaderService {
-  private loaderSubject = new BehaviorSubject<boolean>(false);
-  loaderState$ = this.loaderSubject.asObservable();
+  loaderSubject = signal<boolean>(false);
 
   constructor() {}
 
   showLoader() {
-    this.loaderSubject.next(true);
+    this.loaderSubject.set(true);
   }
 
   hideLoader() {
-    this.loaderSubject.next(false);
+    this.loaderSubject.set(false);
   }
 }
