@@ -1,6 +1,7 @@
 import { Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, map } from 'rxjs';
+import { DateTime } from 'luxon';
+import { map } from 'rxjs';
 import {
   IAuthorizationDto,
   IChangePasswordDto,
@@ -10,8 +11,6 @@ import {
   IValidateUserDto,
 } from '../_generated/interfaces';
 import { AuthController } from '../_generated/services';
-import { DateTime } from 'luxon';
-import { Constants } from '../constants';
 
 // Interfaces
 interface IUserSource {
@@ -28,8 +27,7 @@ interface IUserSource {
   providedIn: 'root',
 })
 export class AuthService {
-  private currentUserSource = new BehaviorSubject<IUserSource | null>(null);
-  currentUser$ = this.currentUserSource.asObservable();
+  currentUserSource = signal<IUserSource | null>(null);
 
   constructor(private router: Router, private authController: AuthController) {}
 
@@ -53,7 +51,7 @@ export class AuthService {
 
   signout() {
     localStorage.removeItem('token');
-    this.currentUserSource.next(null);
+    this.currentUserSource.set(null);
     this.router.navigateByUrl('/');
   }
 
@@ -74,7 +72,7 @@ export class AuthService {
       : userSource.roles.push(tokenInfo.ROLES);
 
     localStorage.setItem('token', result.token);
-    this.currentUserSource.next(userSource);
+    this.currentUserSource.set(userSource);
     this.router.navigateByUrl('/');
   }
 
