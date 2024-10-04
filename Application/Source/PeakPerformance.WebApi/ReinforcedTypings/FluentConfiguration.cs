@@ -11,19 +11,27 @@ namespace PeakPerformance.WebApi.ReinforcedTypings;
 public static class FluentConfiguration
 {
     private static readonly Action<InterfaceExportBuilder> _interfaceConfiguration = config =>
-        config.WithPublicProperties()
+        config
+        .WithPublicProperties()
         .ConfigureTypeMapping()
         .ExportTo("interfaces.ts");
 
     private static readonly Action<ClassExportBuilder> _serviceConfiguration = config =>
         config
-            .AddImport("{ Injectable }", "@angular/core")
+        .AddImport("{ Injectable }", "@angular/core")
         .AddImport("{ HttpParams, HttpClient }", "@angular/common/http")
         .AddImport("{ SettingsService }", "../services/settings.service")
         .AddImport("{ Observable }", "rxjs")
         .AddImport("{ map }", "rxjs/operators")
         .ExportTo("services.ts")
         .WithCodeGenerator<AngularControllerGenerator>();
+
+    private static readonly Action<EnumExportBuilder> _enumProviderConfiguration = config =>
+        config
+        .AddImport("{ Injectable }", "@angular/core")
+        .AddImport("{ IEnumProvider }", "./interfaces")
+        .ExportTo("providers.ts")
+        .WithCodeGenerator<EnumProviderGenerator>();
 
     public static void Configure(ConfigurationBuilder builder)
     {
@@ -50,10 +58,14 @@ public static class FluentConfiguration
         var applicationAssembly = Assembly.Load($"{Constants.SOLUTION_NAME}.Application");
         var dtos = applicationAssembly
             .GetTypes()
-            .Where(t => t.IsClass && t.Namespace != null && t.Namespace.Contains($"{Constants.SOLUTION_NAME}.Application.Dtos"));
+            .Where(t => t.IsClass
+                && t.Namespace != null
+                && t.Namespace.Contains($"{Constants.SOLUTION_NAME}.Application.Dtos"));
+
+        var additionalInterfaces = new List<Type>([typeof(IEnumProvider)]);
 
         builder.ExportAsInterfaces(
-            dtos
+            dtos.Concat(additionalInterfaces)
             .OrderBy(i => i.Name)
             .ToArray(),
             _interfaceConfiguration
@@ -69,6 +81,11 @@ public static class FluentConfiguration
         //	);
 
         // Enums
+
+        builder.ExportAsEnums(
+            [typeof(Providers)],
+            _enumProviderConfiguration
+            );
 
         // Controllers
 

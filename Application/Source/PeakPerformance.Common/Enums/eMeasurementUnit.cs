@@ -4,6 +4,9 @@ namespace PeakPerformance.Common.Enums;
 
 public enum eMeasurementUnit
 {
+    [Description("")]
+    NotSet = 0,
+
     [Description("kg")]
     Kilograms = 1,
 

@@ -78,6 +78,12 @@ export interface IHealthInformationDto
 	startDate?: Date | null;
 	endDate?: Date | null;
 }
+export interface IEnumProvider
+{
+	id: number;
+	name: string;
+	description: string;
+}
 export interface ILookupValueDto
 {
 	id: number;

@@ -2,13 +2,13 @@
 
 public class SignupDto
 {
-    [Display(Name = "First Name")]
+    [Display(Name = "First name")]
     public string FirstName { get; set; }
 
-    [Display(Name = "Middle Name")]
+    [Display(Name = "Middle name")]
     public string? MiddleName { get; set; }
 
-    [Display(Name = "Last Name")]
+    [Display(Name = "Last name")]
     public string LastName { get; set; }
 
     [Display(Name = "Username")]
@@ -20,16 +20,16 @@ public class SignupDto
     [Display(Name = "Password")]
     public string Password { get; set; }
 
-    [Display(Name = "Confirm Password")]
+    [Display(Name = "Confirm password")]
     public string ConfirmPassword { get; set; }
 
-    [Display(Name = "Date of Birth")]
+    [Display(Name = "Date of birth")]
     public DateTime DateOfBirth { get; set; }
 
-    [Display(Name = "Phone Number")]
+    [Display(Name = "Phone number")]
     public string PhoneNumber { get; set; }
 
-    [Display(Name = "Verify Code")]
+    [Display(Name = "Verify code")]
     public int VerificationCode { get; set; }
 
     // methods

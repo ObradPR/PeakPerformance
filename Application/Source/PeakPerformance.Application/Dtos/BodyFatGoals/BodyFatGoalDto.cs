@@ -2,12 +2,12 @@
 
 public class BodyFatGoalDto
 {
-    [Display(Name = "Target Body Fat Percentage")]
+    [Display(Name = "Target body fat percentage")]
     public decimal TargetBodyFatPercentage { get; set; }
 
-    [Display(Name = "Start Date")]
+    [Display(Name = "Start date")]
     public DateTime StartDate { get; set; }
 
-    [Display(Name = "End Date")]
+    [Display(Name = "End date")]
     public DateTime EndDate { get; set; }
 }

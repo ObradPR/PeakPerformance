@@ -4,6 +4,9 @@ namespace PeakPerformance.Common.Enums;
 
 public enum eSocialMediaPlatform
 {
+    [Description("")]
+    NotSet = 0,
+
     [Description("Facebook")]
     Facebook = 1,
 

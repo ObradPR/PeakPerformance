@@ -4,6 +4,9 @@ namespace PeakPerformance.Common.Enums;
 
 public enum eInjuryType
 {
+    [Description("")]
+    NotSet = 0,
+
     [Description("Knee Injury")]
     KneeInjury = 1,
 

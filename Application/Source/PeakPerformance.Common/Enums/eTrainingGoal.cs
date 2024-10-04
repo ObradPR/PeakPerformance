@@ -4,6 +4,9 @@ namespace PeakPerformance.Common.Enums;
 
 public enum eTrainingGoal
 {
+    [Description("")]
+    NotSet = 0,
+
     [Description("Strength")]
     Strength = 1,
 
