@@ -17,30 +17,30 @@ public class BodyMeasurementDto
     [Display(Name = "Shoulders")]
     public decimal? Shoulders { get; set; }
 
-    [Display(Name = "Right Bicep")]
+    [Display(Name = "Right bicep")]
     public decimal? RightBicep { get; set; }
 
-    [Display(Name = "Left Bicep")]
+    [Display(Name = "Left bicep")]
     public decimal? LeftBicep { get; set; }
 
-    [Display(Name = "Right Forearm")]
+    [Display(Name = "Right forearm")]
     public decimal? RightForearm { get; set; }
 
-    [Display(Name = "Left Forearm")]
+    [Display(Name = "Left forearm")]
     public decimal? LeftForearm { get; set; }
 
-    [Display(Name = "Right Thigh")]
+    [Display(Name = "Right thigh")]
     public decimal? RightThigh { get; set; }
 
-    [Display(Name = "Left Thigh")]
+    [Display(Name = "Left thigh")]
     public decimal? LeftThigh { get; set; }
 
-    [Display(Name = "Right Calf")]
+    [Display(Name = "Right calf")]
     public decimal? RightCalf { get; set; }
 
-    [Display(Name = "Left Calf")]
+    [Display(Name = "Left calf")]
     public decimal? LeftCalf { get; set; }
 
-    [Display(Name = "Measurement Unit")]
+    [Display(Name = "Measurement unit")]
     public eMeasurementUnit MeasurementUnitId { get; set; }
 }

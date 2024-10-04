@@ -8,6 +8,7 @@ export enum eActionType {
 	Signout = 7
 }
 export enum eInjuryType {
+	NotSet = 0,
 	KneeInjury = 1,
 	ShoulderInjury = 2,
 	BackInjury = 3,
@@ -35,12 +36,14 @@ export enum eInjuryType {
 	HamstringInjury = 25
 }
 export enum eMeasurementUnit {
+	NotSet = 0,
 	Kilograms = 1,
 	Pounds = 2,
 	Centimeters = 3,
 	Inches = 4
 }
 export enum eSocialMediaPlatform {
+	NotSet = 0,
 	Facebook = 1,
 	Twitter = 2,
 	Instagram = 3,
@@ -59,6 +62,7 @@ export enum eSystemRole {
 	Guest = 3
 }
 export enum eTrainingGoal {
+	NotSet = 0,
 	Strength = 1,
 	Bulking = 2,
 	Cutting = 3,

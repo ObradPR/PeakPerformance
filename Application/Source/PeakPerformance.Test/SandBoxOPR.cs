@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using PeakPerformance.Persistence.Contexts;
+﻿using PeakPerformance.Persistence.Contexts;
 using PeakPerformance.Persistence.Extensions;
 
 namespace PeakPerformance.Test;
@@ -17,11 +16,13 @@ internal class SandBox
     [Test]
     public async Task SandBoxOPR()
     {
-        var user = await db.Users.FirstAsync();
+        var injuryTypes = await db.InjuryTypes.GetListAsync();
 
-        db.DeleteSingle(user);
+        //var user = await db.Users.FirstAsync();
 
-        await db.SaveChangesAsync();
+        //db.DeleteSingle(user);
+
+        //await db.SaveChangesAsync();
     }
 
     [TearDown]

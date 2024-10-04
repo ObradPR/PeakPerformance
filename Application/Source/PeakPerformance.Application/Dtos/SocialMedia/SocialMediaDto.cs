@@ -2,7 +2,7 @@
 
 public class SocialMediaDto
 {
-    [Display(Name = "Social Media Platform")]
+    [Display(Name = "Social media platform")]
     public eSocialMediaPlatform PlatformId { get; set; }
 
     [Display(Name = "Link")]
