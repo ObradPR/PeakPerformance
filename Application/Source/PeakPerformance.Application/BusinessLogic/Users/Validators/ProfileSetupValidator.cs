@@ -19,7 +19,7 @@ public class ProfileSetupValidator : AbstractValidator<ProfileSetupCommand>
 
         RuleFor(_ => _.Data.Weight.BodyFatPercentage)
             .GreaterThanAuto(1, _ => _.Data.Weight.BodyFatPercentage.HasValue)
-            .LessThanAuto(100, _ => _.Data.Weight.BodyFatPercentage.HasValue); // Add MIGRATION for the configuration change
+            .LessThanAuto(100, _ => _.Data.Weight.BodyFatPercentage.HasValue);
 
         #endregion Weight
 
@@ -120,7 +120,7 @@ public class ProfileSetupValidator : AbstractValidator<ProfileSetupCommand>
         RuleFor(_ => _.Data.BodyFatGoal.TargetBodyFatPercentage)
             .Required()
             .GreaterThanAuto(1)
-            .LessThanAuto(100); // Migration needed
+            .LessThanAuto(100);
 
         RuleFor(_ => _.Data.BodyFatGoal.StartDate)
             .Required()

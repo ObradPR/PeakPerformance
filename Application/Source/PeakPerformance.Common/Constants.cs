@@ -51,6 +51,48 @@ public class Constants
         ".png"
     ];
 
+    // Date
+
+    /// <summary>
+    /// Date in format: 10. Jan 2024
+    /// </summary>
+    public static readonly string DATE_FORMAT_LONG = "dd. MMM yyyy";
+
+    /// <summary>
+    /// Date in format: January 10, 2024
+    /// </summary>
+    public static readonly string DATE_FORMAT_FULL_MONTH = "MMMM dd, yyyy";
+
+    /// <summary>
+    /// Date in format: 10/01/2024 (MM/dd/yyyy)
+    /// </summary>
+    public static readonly string DATE_FORMAT_SLASH = "MM/dd/yyyy";
+
+    /// <summary>
+    /// Date in format: 10-Jan-2024
+    /// </summary>
+    public static readonly string DATE_FORMAT_SHORT_MONTH_DASH = "dd-MMM-yyyy";
+
+    /// <summary>
+    /// Date in format: 10 January 2024
+    /// </summary>
+    public static readonly string DATE_FORMAT_FULL = "dd MMMM yyyy";
+
+    /// <summary>
+    /// Date in format: 2024-01-10 (ISO format)
+    /// </summary>
+    public static readonly string DATE_FORMAT_ISO = "yyyy-MM-dd";
+
+    /// <summary>
+    /// Date in format: Wednesday, January 10, 2024
+    /// </summary>
+    public static readonly string DATE_FORMAT_DAY_FULL = "dddd, MMMM dd, yyyy";
+
+    /// <summary>
+    /// Date in format: Jan 10, 2024
+    /// </summary>
+    public static readonly string DATE_FORMAT_SHORT_MONTH_COMMA = "MMM dd, yyyy";
+
     // Validations
 
     public static readonly Regex REGEX_PASSWORD = new(@"^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[^a-zA-Z0-9]).{8,}$");
