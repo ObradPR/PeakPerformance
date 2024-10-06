@@ -29,7 +29,7 @@ public class BodyFatGoal : BaseAuditedDomain<long>, IConfigurableEntity
     {
         builder.Entity<BodyFatGoal>(_ =>
         {
-            _.Property(_ => _.TargetBodyFatPercentage).HasPrecision(5, 2).IsRequired();
+            _.Property(_ => _.TargetBodyFatPercentage).HasPrecision(4, 2).IsRequired();
         });
     }
 }

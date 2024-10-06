@@ -5,67 +5,43 @@ public class SignupValidator : AbstractValidator<SignupCommand>
     public SignupValidator()
     {
         RuleFor(_ => _.User.FirstName)
-            .NotEmpty()
-            .WithMessageAuto(ResourceValidation.Required)
-            .MaximumLength(20)
-            .WithMessageAuto(ResourceValidation.Maximum_Characters, "20")
-            .MinimumLength(2)
-            .WithMessageAuto(ResourceValidation.Minimum_Characters, "2");
+            .Required()
+            .MaximumLengthAuto(20)
+            .MinimumLengthAuto(2);
 
         RuleFor(_ => _.User.MiddleName)
-            .MaximumLength(20)
-            .When(_ => !_.User.MiddleName.IsNullOrWhiteSpace())
-            .WithMessageAuto(ResourceValidation.Maximum_Characters, "20")
-            .MinimumLength(2)
-            .When(_ => !_.User.MiddleName.IsNullOrWhiteSpace())
-            .WithMessageAuto(ResourceValidation.Minimum_Characters, "2");
+            .MaximumLengthAuto(20, _ => _.User.MiddleName.IsNotNullOrWhiteSpace())
+            .MinimumLengthAuto(2, _ => _.User.MiddleName.IsNotNullOrWhiteSpace());
 
         RuleFor(_ => _.User.LastName)
-            .NotEmpty()
-            .WithMessageAuto(ResourceValidation.Required)
-            .MaximumLength(30)
-            .WithMessageAuto(ResourceValidation.Maximum_Characters, "30")
-            .MinimumLength(2)
-            .WithMessageAuto(ResourceValidation.Minimum_Characters, "2");
+            .Required()
+            .MaximumLengthAuto(30)
+            .MinimumLengthAuto(2);
 
         RuleFor(_ => _.User.Username)
-            .NotEmpty()
-            .WithMessageAuto(ResourceValidation.Required)
-            .MaximumLength(30)
-            .WithMessageAuto(ResourceValidation.Maximum_Characters, "30")
-            .MinimumLength(2)
-            .WithMessageAuto(ResourceValidation.Minimum_Characters, "2");
+            .Required()
+            .MaximumLengthAuto(30)
+            .MinimumLengthAuto(2);
 
         RuleFor(_ => _.User.Email)
-            .NotEmpty()
-            .WithMessageAuto(ResourceValidation.Required)
-            .EmailAddress()
-            .WithMessageAuto(ResourceValidation.Wrong_Format)
-            .MaximumLength(100)
-            .WithMessageAuto(ResourceValidation.Maximum_Characters, "100");
+            .Required()
+            .EmailAddressAuto()
+            .MaximumLengthAuto(100);
 
         RuleFor(_ => _.User.Password)
-            .NotEmpty()
-            .WithMessageAuto(ResourceValidation.Required)
-            .Matches(Constants.REGEX_PASSWORD)
-            .WithMessageAuto(ResourceValidation.Password);
+            .Required()
+            .MatchesPassword();
 
         RuleFor(_ => _.User.ConfirmPassword)
-             .NotEmpty()
-             .WithMessageAuto(ResourceValidation.Required)
-             .Equal(_ => _.User.Password)
-             .WithMessageAuto(ResourceValidation.Dont_Match, "Password");
+             .Required()
+             .EqualAuto(_ => _.User.Password);
 
         RuleFor(_ => _.User.DateOfBirth)
-            .NotEmpty()
-            .WithMessageAuto(ResourceValidation.Required)
-            .Must(_ => _.BeAtLeastEighteenYearsOld())
-            .WithMessageAuto(ResourceValidation.Minimum_Age, "18");
+            .Required()
+            .InValidRangeOfDate(toDate: Functions.MINIMUM_AGE, resourceValidation: ResourceValidation.Minimum_Age);
 
         RuleFor(_ => _.User.PhoneNumber)
-            .NotEmpty()
-            .WithMessageAuto(ResourceValidation.Required)
-            .Matches(Constants.REGEX_PHONE_NUMBER)
-            .WithMessageAuto(ResourceValidation.Phone_Number);
+            .Required()
+            .MatchesPhone();
     }
 }

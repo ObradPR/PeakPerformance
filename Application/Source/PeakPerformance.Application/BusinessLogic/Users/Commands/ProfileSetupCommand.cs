@@ -2,9 +2,9 @@
 
 namespace PeakPerformance.Application.BusinessLogic.Users.Commands;
 
-public class ProfileSetupCommand(ProfileSetupDto settings) : BaseCommand
+public class ProfileSetupCommand(ProfileSetupDto data) : BaseCommand
 {
-    public ProfileSetupDto Settings { get; set; } = settings;
+    public ProfileSetupDto Data { get; set; } = data;
 
     public class ProfileSetupCommandHandler(IUnitOfWork unitOfWork, IIdentityUser identityUser)
         : BaseCommandHandler<ProfileSetupCommand>(unitOfWork, identityUser)

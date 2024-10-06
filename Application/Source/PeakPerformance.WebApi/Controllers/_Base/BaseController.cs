@@ -1,7 +1,4 @@
-﻿using MediatR;
-using Microsoft.AspNetCore.Mvc;
-
-namespace PeakPerformance.WebApi.Controllers._Base;
+﻿namespace PeakPerformance.WebApi.Controllers._Base;
 
 [Route("api/[controller]/[action]")]
 [ApiController]

@@ -42,7 +42,7 @@ public class TokenService : ITokenService
         {
             Issuer = jwtSecrets.Issuer,
             Audience = jwtSecrets.Audience,
-            Expires = DateTime.UtcNow.AddDays(Constants.TOKEN_EXPIRATION_TIME),
+            Expires = Functions.TODAY.AddDays(Constants.TOKEN_EXPIRATION_TIME),
             SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(jwtSecrets.Key), SecurityAlgorithms.HmacSha512Signature),
             Claims = claims.ToDictionary(_ => _.Type, _ => (object)_.Value)
         };

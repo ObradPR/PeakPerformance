@@ -9,6 +9,8 @@ public class SocialMedia : BaseAuditedDomain<long>, IConfigurableEntity
 
     public string Link { get; set; }
 
+    public string PhoneNumber { get; set; }
+
     //
     // Relationships
     //
@@ -31,7 +33,8 @@ public class SocialMedia : BaseAuditedDomain<long>, IConfigurableEntity
     {
         builder.Entity<SocialMedia>(_ =>
         {
-            _.Property(_ => _.Link).HasMaxLength(255).IsRequired();
+            _.Property(_ => _.Link).HasMaxLength(255);
+            _.Property(_ => _.PhoneNumber).HasMaxLength(15);
         });
     }
 }

@@ -94,18 +94,19 @@ export interface IProfileSetupDto
 {
 	weight: IWeightDto;
 	bodyMeasurement: IBodyMeasurementDto;
-	userTrainingGoal?: IUserTrainingGoalDto;
-	weightGoal?: IWeightGoalDto;
-	bodyFatGoal?: IBodyFatGoalDto;
-	profilePicture?: string;
-	description?: string;
-	socialMedia?: ISocialMediaDto[];
-	healthInformation?: IHealthInformationDto[];
+	userTrainingGoal: IUserTrainingGoalDto;
+	weightGoal: IWeightGoalDto;
+	bodyFatGoal: IBodyFatGoalDto;
+	image: any;
+	description: string;
+	socialMedia: ISocialMediaDto[];
+	healthInformation: IHealthInformationDto[];
 }
 export interface ISocialMediaDto
 {
 	platformId: eSocialMediaPlatform;
 	link: string;
+	phoneNumber: string;
 }
 export interface IUserTrainingGoalDto
 {

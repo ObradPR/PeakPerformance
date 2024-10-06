@@ -40,6 +40,17 @@ public class Constants
     public const string SORTING_ORDER_DESC = "desc";
     public const string SORTING_ORDER_ASC = "asc";
 
+    // Image
+
+    public const long IMAGE_MAX_SIZE_MB = 5 * 1024 * 1024;
+
+    public static readonly string[] IMAGE_ALLOWED_EXTENSIONS =
+    [
+        ".jpg",
+        ".jpeg",
+        ".png"
+    ];
+
     // Validations
 
     public static readonly Regex REGEX_PASSWORD = new(@"^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[^a-zA-Z0-9]).{8,}$");

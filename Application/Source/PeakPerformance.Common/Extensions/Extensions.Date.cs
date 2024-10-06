@@ -48,6 +48,9 @@ public static partial class Extensions
         return date.AddDays(diff).Date;
     }
 
-    public static bool BeAtLeastEighteenYearsOld(this DateTime dob)
-        => dob <= DateTime.Today.AddYears(-18);
+    public static bool IsLaterThan(this DateTime date, DateTime comparison) => date > comparison;
+
+    public static bool IsEarlierThan(this DateTime date, DateTime comparison) => date < comparison;
+
+    public static bool IsBetween(this DateTime date, DateTime start, DateTime end) => date >= start && date <= end;
 }

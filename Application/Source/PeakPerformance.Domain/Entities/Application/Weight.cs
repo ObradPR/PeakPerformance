@@ -33,7 +33,7 @@ public class Weight : BaseAuditedDomain<long>, IConfigurableEntity
         builder.Entity<Weight>(_ =>
         {
             _.Property(_ => _.Value).HasPrecision(5, 2).IsRequired();
-            _.Property(_ => _.BodyFatPercentage).HasPrecision(5, 2);
+            _.Property(_ => _.BodyFatPercentage).HasPrecision(4, 2);
         });
     }
 }
