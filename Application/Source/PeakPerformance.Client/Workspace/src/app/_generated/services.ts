@@ -17,9 +17,9 @@ import { IProfileSetupDto } from './interfaces';
 }
 @Injectable() export class AuthController extends BaseController
 {
-	public Signup(user: ISignupDto) : Observable<IAuthorizationDto | null>
+	public Signup(data: ISignupDto) : Observable<IAuthorizationDto | null>
 	{
-		const body = <any>user;
+		const body = <any>data;
 		return this.httpClient.post<IAuthorizationDto>(
 		this.settingsService.createApiUrl('Auth/Signup'),
 		body,
@@ -31,9 +31,9 @@ import { IProfileSetupDto } from './interfaces';
 		.pipe(map(response => response.body));
 		
 	}
-	public Signin(user: ISigninDto) : Observable<IAuthorizationDto | null>
+	public Signin(data: ISigninDto) : Observable<IAuthorizationDto | null>
 	{
-		const body = <any>user;
+		const body = <any>data;
 		return this.httpClient.post<IAuthorizationDto>(
 		this.settingsService.createApiUrl('Auth/Signin'),
 		body,
@@ -58,9 +58,9 @@ import { IProfileSetupDto } from './interfaces';
 		.pipe(map(response => response.body));
 		
 	}
-	public ValidateEmail(user: IValidateUserDto) : Observable<any>
+	public ValidateEmail(data: IValidateUserDto) : Observable<any>
 	{
-		const body = <any>user;
+		const body = <any>data;
 		return this.httpClient.post<any>(
 		this.settingsService.createApiUrl('Auth/ValidateEmail'),
 		body,
@@ -72,9 +72,9 @@ import { IProfileSetupDto } from './interfaces';
 		.pipe(map(response => response.body));
 		
 	}
-	public ValidateUser(user: IValidateUserDto) : Observable<any>
+	public ValidateUser(data: IValidateUserDto) : Observable<any>
 	{
-		const body = <any>user;
+		const body = <any>data;
 		return this.httpClient.post<any>(
 		this.settingsService.createApiUrl('Auth/ValidateUser'),
 		body,
@@ -86,9 +86,9 @@ import { IProfileSetupDto } from './interfaces';
 		.pipe(map(response => response.body));
 		
 	}
-	public ValidateCode(user: IValidateUserCodeDto) : Observable<any>
+	public ValidateCode(data: IValidateUserCodeDto) : Observable<any>
 	{
-		const body = <any>user;
+		const body = <any>data;
 		return this.httpClient.post<any>(
 		this.settingsService.createApiUrl('Auth/ValidateCode'),
 		body,
@@ -100,9 +100,9 @@ import { IProfileSetupDto } from './interfaces';
 		.pipe(map(response => response.body));
 		
 	}
-	public ChangePassword(user: IChangePasswordDto) : Observable<any>
+	public ChangePassword(data: IChangePasswordDto) : Observable<any>
 	{
-		const body = <any>user;
+		const body = <any>data;
 		return this.httpClient.post<any>(
 		this.settingsService.createApiUrl('Auth/ChangePassword'),
 		body,
@@ -128,9 +128,9 @@ import { IProfileSetupDto } from './interfaces';
 }
 @Injectable() export class UserController extends BaseController
 {
-	public ProfileSetup(settings: IProfileSetupDto) : Observable<any>
+	public ProfileSetup(data: IProfileSetupDto) : Observable<any>
 	{
-		const body = <any>settings;
+		const body = <any>data;
 		return this.httpClient.post<any>(
 		this.settingsService.createApiUrl('User/ProfileSetup'),
 		body,

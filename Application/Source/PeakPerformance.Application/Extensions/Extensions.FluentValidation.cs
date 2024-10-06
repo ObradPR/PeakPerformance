@@ -1,7 +1,439 @@
-﻿namespace PeakPerformance.Application.Extensions;
+﻿using Microsoft.AspNetCore.Http;
+using System.Linq.Expressions;
+using System.Text.RegularExpressions;
+
+namespace PeakPerformance.Application.Extensions;
 
 public static partial class Extensions
 {
+    // Image
+
+    public static IRuleBuilderOptions<T, IFormFile> IsValidImage<T>(this IRuleBuilder<T, IFormFile> ruleBuilder, Func<T, bool> condition = null)
+    {
+        var rule = ruleBuilder.Must(file =>
+        {
+            if (file is null) return false;
+
+            var extension = Path.GetExtension(file.FileName).ToLowerInvariant();
+
+            return Constants.IMAGE_ALLOWED_EXTENSIONS.Contains(extension);
+        }).WithMessageAuto(ResourceValidation.File_Allowed_Extensions, Constants.IMAGE_ALLOWED_EXTENSIONS.Join(", "));
+
+        if (condition != null)
+            rule.When((command, context) => condition(command));
+
+        return rule;
+    }
+
+    // File
+
+    public static IRuleBuilderOptions<T, IFormFile> IsReasonableSize<T>(this IRuleBuilder<T, IFormFile> ruleBuilder, long maxSizeInMB, Func<T, bool> condition = null)
+    {
+        var rule = ruleBuilder.Must(file => file != null && file.Length <= maxSizeInMB)
+            .WithMessageAuto(ResourceValidation.File_Maximum_Size, maxSizeInMB.ToString());
+
+        if (condition != null)
+            rule.When((command, context) => condition(command));
+
+        return rule;
+    }
+
+    // Date
+
+    public static IRuleBuilderOptions<T, DateTime> InValidRangeOfDate<T>(
+        this IRuleBuilderOptions<T, DateTime> ruleBuilder,
+        DateTime? fromDate = null,
+        DateTime? toDate = null,
+        Func<T, bool> condition = null,
+        string resourceValidation = null)
+    {
+        var message = ResourceValidation.Date_Invalid;
+        var args = Array.Empty<string>();
+
+        var rule = ruleBuilder.Must((command, date) =>
+        {
+            if (fromDate.HasValue && toDate.HasValue)
+            {
+                message = ResourceValidation.Date_InBetween;
+                args = [fromDate.Value.Date.ToString(), toDate.Value.Date.ToString()];
+                return date.IsBetween(fromDate.Value, toDate.Value);
+            }
+            else if (fromDate.HasValue)
+            {
+                message = ResourceValidation.Date_After;
+                args = [fromDate.Value.Date.ToString()];
+                return date.IsLaterThan(toDate.Value);
+            }
+            else if (toDate.HasValue)
+            {
+                message = ResourceValidation.Date_Before;
+                args = [toDate.Value.Date.ToString()];
+                return date.IsEarlierThan(toDate.Value);
+            }
+
+            return false;
+        }).WithMessageAuto((resourceValidation ?? message), args);
+
+        if (condition != null)
+            rule.When((command, context) => condition(command));
+
+        return rule;
+    }
+
+    public static IRuleBuilderOptions<T, DateTime> InValidRangeOfDate<T>(
+        this IRuleBuilderOptions<T, DateTime> ruleBuilder,
+        Func<T, DateTime?> fromDateFunc = null,
+        Func<T, DateTime?> toDateFunc = null,
+        Func<T, bool> condition = null,
+        string resourceValidation = null)
+    {
+        var message = ResourceValidation.Date_Invalid;
+        var args = Array.Empty<string>();
+
+        var rule = ruleBuilder.Must((command, date) =>
+        {
+            var fromDate = fromDateFunc?.Invoke(command);
+            var toDate = toDateFunc?.Invoke(command);
+
+            if (fromDate.HasValue && toDate.HasValue)
+            {
+                message = ResourceValidation.Date_InBetween;
+                args = [fromDate.Value.Date.ToString(), toDate.Value.Date.ToString()];
+                return date.IsBetween(fromDate.Value, toDate.Value);
+            }
+            else if (fromDate.HasValue)
+            {
+                message = ResourceValidation.Date_After;
+                args = [fromDate.Value.Date.ToString()];
+                return date.IsLaterThan(fromDate.Value);
+            }
+            else if (toDate.HasValue)
+            {
+                message = ResourceValidation.Date_Before;
+                args = [toDate.Value.Date.ToString()];
+                return date.IsEarlierThan(toDate.Value);
+            }
+
+            return false;
+        })
+        .WithMessageAuto((resourceValidation ?? message), args);
+
+        if (condition != null)
+            rule.When((command, context) => condition(command));
+
+        return rule;
+    }
+
+    public static IRuleBuilderOptions<T, DateTime?> InValidRangeOfDate<T>(
+        this IRuleBuilder<T, DateTime?> ruleBuilder,
+        DateTime? fromDate = null,
+        DateTime? toDate = null,
+        Func<T, bool> condition = null,
+        string resourceValidation = null)
+    {
+        var message = ResourceValidation.Date_Invalid;
+        var args = Array.Empty<string>();
+
+        var rule = ruleBuilder.Must((command, date) =>
+        {
+            if (!date.HasValue)
+                return true; // If the date is null, validation passes.
+
+            if (fromDate.HasValue && toDate.HasValue)
+            {
+                message = ResourceValidation.Date_InBetween;
+                args = [fromDate.Value.Date.ToString(), toDate.Value.Date.ToString()];
+                return date.Value.IsBetween(fromDate.Value, toDate.Value);
+            }
+            else if (fromDate.HasValue)
+            {
+                message = ResourceValidation.Date_After;
+                args = [fromDate.Value.Date.ToString()];
+                return date.Value.IsLaterThan(fromDate.Value);
+            }
+            else if (toDate.HasValue)
+            {
+                message = ResourceValidation.Date_Before;
+                args = [toDate.Value.Date.ToString()];
+                return date.Value.IsEarlierThan(toDate.Value);
+            }
+
+            return false;
+        })
+        .WithMessageAuto((resourceValidation ?? message), args);
+
+        if (condition != null)
+            rule.When((command, context) => condition(command));
+
+        return rule;
+    }
+
+    public static IRuleBuilderOptions<T, DateTime?> InValidRangeOfDate<T>(
+        this IRuleBuilder<T, DateTime?> ruleBuilder,
+        Func<T, DateTime?> fromDateFunc = null,
+        Func<T, DateTime?> toDateFunc = null,
+        Func<T, bool> condition = null,
+        string resourceValidation = null)
+    {
+        var message = ResourceValidation.Date_Invalid;
+        var args = Array.Empty<string>();
+
+        var rule = ruleBuilder.Must((command, date) =>
+        {
+            if (!date.HasValue)
+                return true; // If the date is null, validation passes.
+
+            var fromDate = fromDateFunc?.Invoke(command);
+            var toDate = toDateFunc?.Invoke(command);
+
+            if (fromDate.HasValue && toDate.HasValue)
+            {
+                message = ResourceValidation.Date_InBetween;
+                args = [fromDate.Value.Date.ToString(), toDate.Value.Date.ToString()];
+                return date.Value.IsBetween(fromDate.Value, toDate.Value);
+            }
+            else if (fromDate.HasValue)
+            {
+                message = ResourceValidation.Date_After;
+                args = [fromDate.Value.Date.ToString()];
+                return date.Value.IsLaterThan(fromDate.Value);
+            }
+            else if (toDate.HasValue)
+            {
+                message = ResourceValidation.Date_Before;
+                args = [toDate.Value.Date.ToString()];
+                return date.Value.IsEarlierThan(toDate.Value);
+            }
+
+            return false;
+        })
+        .WithMessageAuto((resourceValidation ?? message), args);
+
+        if (condition != null)
+            rule.When((command, context) => condition(command));
+
+        return rule;
+    }
+
+    // Social Media
+
+    public static IRuleBuilderOptions<T, string> ValidSocialMediaLink<T>(
+        this IRuleBuilder<T, string> ruleBuilder,
+        Func<T, eSocialMediaPlatform> platformFunc,
+        Func<T, bool> condition = null)
+    {
+        var platform = eSocialMediaPlatform.NotSet;
+
+        var rule = ruleBuilder.Must((command, link) =>
+        {
+            platform = platformFunc.Invoke(command);
+
+            var platformDescription = platform.GetDescription();
+
+            if (string.IsNullOrWhiteSpace(platformDescription))
+                return false;
+
+            return link.StartsWith("https://") && link.Contains(platformDescription, StringComparison.OrdinalIgnoreCase);
+        })
+        .WithMessageAuto(ResourceValidation.Invalid_Social_Media_Link, platform.GetDescription());
+
+        if (condition != null)
+            rule.When((command, context) => condition(command));
+
+        return rule;
+    }
+
+    public static IRuleBuilderOptions<T, TProperty> IsUrlBasedPlatform<T, TProperty>(
+       this IRuleBuilder<T, TProperty> ruleBuilder,
+       Func<T, eSocialMediaPlatform> platformFunc,
+       Func<T, bool> condition = null)
+    {
+        var platform = eSocialMediaPlatform.NotSet;
+
+        var rule = ruleBuilder.Must((command, property) =>
+        {
+            platform = platformFunc.Invoke(command);
+
+            return platform != eSocialMediaPlatform.WhatsApp && platform != eSocialMediaPlatform.Telegram;
+        })
+        .WithMessageAuto(ResourceValidation.Is_Url_Based_Platform);
+
+        if (condition != null)
+            rule.When((command, context) => condition(command));
+
+        return rule;
+    }
+
+    public static IRuleBuilderOptions<T, TProperty> IsPhoneBasedPlatform<T, TProperty>(
+        this IRuleBuilder<T, TProperty> ruleBuilder,
+        Func<T, eSocialMediaPlatform> platformFunc,
+        Func<T, bool> condition = null)
+    {
+        var platform = eSocialMediaPlatform.NotSet;
+
+        var rule = ruleBuilder.Must((command, property) =>
+        {
+            platform = platformFunc.Invoke(command);
+
+            return platform == eSocialMediaPlatform.WhatsApp || platform == eSocialMediaPlatform.Telegram;
+        })
+        .WithMessageAuto(ResourceValidation.Is_Phone_Based_Platform);
+
+        if (condition != null)
+            rule.When((command, context) => condition(command));
+
+        return rule;
+    }
+
+    //
+    // Base
+    //
+
+    public static IRuleBuilderOptions<T, TProperty> Required<T, TProperty>(this IRuleBuilder<T, TProperty> ruleBuilder)
+        => ruleBuilder.NotEmpty().WithMessageAuto(ResourceValidation.Required);
+
+    public static IRuleBuilderOptions<T, string> MaximumLengthAuto<T>(this IRuleBuilder<T, string> ruleBuilder, int value, Func<T, bool> condition = null)
+    {
+        var rule = ruleBuilder
+            .MaximumLength(value)
+            .WithMessageAuto(ResourceValidation.Maximum_Characters, value.ToString());
+
+        if (condition != null)
+            rule.When((command, context) => condition(command));
+
+        return rule;
+    }
+
+    public static IRuleBuilderOptions<T, string> MinimumLengthAuto<T>(this IRuleBuilder<T, string> ruleBuilder, int value, Func<T, bool> condition = null)
+    {
+        var rule = ruleBuilder
+            .MinimumLength(value)
+            .WithMessageAuto(ResourceValidation.Minimum_Characters, value.ToString());
+
+        if (condition != null)
+            rule.When((command, context) => condition(command));
+
+        return rule;
+    }
+
+    public static IRuleBuilderOptions<T, TValue> GreaterThanAuto<T, TValue>(this IRuleBuilder<T, TValue> ruleBuilder, TValue value, Func<T, bool> condition = null)
+        where TValue : struct, IComparable<TValue>
+    {
+        if (!Common.Extensions.Extensions.IsNumericType(typeof(TValue)))
+        {
+            throw new InvalidOperationException(ResourceValidation.Not_Numeric_Type.AppendArgument(typeof(TValue).Name));
+        }
+
+        var rule = ruleBuilder
+            .Must((command, val) => val.CompareTo(value) > 0)
+            .WithMessageAuto(ResourceValidation.Greater_Than, value.ToString());
+
+        if (condition != null)
+            rule.When((command, context) => condition(command));
+
+        return rule;
+    }
+
+    public static IRuleBuilderOptions<T, TValue?> GreaterThanAuto<T, TValue>(this IRuleBuilder<T, TValue?> ruleBuilder, TValue value, Func<T, bool> condition = null)
+        where TValue : struct, IComparable<TValue>
+    {
+        if (!Common.Extensions.Extensions.IsNumericType(typeof(TValue)))
+            throw new InvalidOperationException(ResourceValidation.Not_Numeric_Type.AppendArgument(typeof(TValue).Name));
+
+        var rule = ruleBuilder
+            .Must((command, val) => val.HasValue && val.Value.CompareTo(value) > 0)
+            .WithMessageAuto(ResourceValidation.Greater_Than, value.ToString());
+
+        if (condition != null)
+            rule.When((command, context) => condition(command));
+
+        return rule;
+    }
+
+    public static IRuleBuilderOptions<T, TValue> LessThanAuto<T, TValue>(this IRuleBuilder<T, TValue> ruleBuilder, TValue value, Func<T, bool> condition = null)
+        where TValue : struct, IComparable<TValue>
+    {
+        if (!Common.Extensions.Extensions.IsNumericType(typeof(TValue)))
+        {
+            throw new InvalidOperationException(ResourceValidation.Not_Numeric_Type.AppendArgument(typeof(TValue).Name));
+        }
+
+        var rule = ruleBuilder
+            .Must((command, val) => val.CompareTo(value) < 0)
+            .WithMessageAuto(ResourceValidation.Less_Than, value.ToString());
+
+        if (condition != null)
+            rule.When((command, context) => condition(command));
+
+        return rule;
+    }
+
+    public static IRuleBuilderOptions<T, TValue?> LessThanAuto<T, TValue>(this IRuleBuilder<T, TValue?> ruleBuilder, TValue value, Func<T, bool> condition = null)
+        where TValue : struct, IComparable<TValue>
+    {
+        if (!Common.Extensions.Extensions.IsNumericType(typeof(TValue)))
+            throw new InvalidOperationException(ResourceValidation.Not_Numeric_Type.AppendArgument(typeof(TValue).Name));
+
+        var rule = ruleBuilder
+            .Must((command, val) => val.HasValue && val.Value.CompareTo(value) < 0)
+            .WithMessageAuto(ResourceValidation.Less_Than, value.ToString());
+
+        if (condition != null)
+            rule.When((command, context) => condition(command));
+
+        return rule;
+    }
+
+    public static IRuleBuilderOptions<T, TProperty> IsInEnumAuto<T, TProperty>(this IRuleBuilder<T, TProperty> ruleBuilder, Func<T, bool> condition = null)
+        where TProperty : struct, Enum
+    {
+        var rule = ruleBuilder.Must((command, value) =>
+        {
+            var type = typeof(TProperty);
+
+            return !type.IsEnum
+                ? throw new InvalidOperationException(ResourceValidation.Not_Expected_Enum_Type.AppendArgument(type.Name))
+                : value.IsDefined();
+        })
+        .WithMessageAuto(ResourceValidation.Not_Expected_Enum_Type, typeof(TProperty).Name);
+
+        if (condition != null)
+            rule.When((command, context) => condition(command));
+
+        return rule;
+    }
+
+    // Matchings
+
+    public static IRuleBuilderOptions<T, string> MatchesPassword<T>(this IRuleBuilderOptions<T, string> ruleBuilder)
+        => ruleBuilder.MatchesAuto(Constants.REGEX_PASSWORD, ResourceValidation.Password);
+
+    public static IRuleBuilderOptions<T, string> MatchesPhone<T>(this IRuleBuilder<T, string> ruleBuilder, Func<T, bool> condition = null)
+    {
+        var rule = ruleBuilder.MatchesAuto(Constants.REGEX_PHONE_NUMBER, ResourceValidation.Phone_Number);
+
+        if (condition != null)
+            rule.When((command, context) => condition(command));
+
+        return rule;
+    }
+
+    public static IRuleBuilderOptions<T, string> MatchesAuto<T>(this IRuleBuilder<T, string> ruleBuilder, Regex pattern, string resourceValidation)
+        => ruleBuilder.Matches(pattern).WithMessageAuto(resourceValidation);
+
+    // Equal
+
+    public static IRuleBuilderOptions<T, TProperty> EqualAuto<T, TProperty>(this IRuleBuilderOptions<T, TProperty> ruleBuilder, Expression<Func<T, TProperty>> propertySelector)
+    {
+        var propertyName = propertySelector.GetDisplayName();
+
+        return ruleBuilder
+            .Equal(propertySelector)
+            .WithMessageAuto(ResourceValidation.Dont_Match, propertyName);
+    }
+
+    // Message
+
     public static IRuleBuilderOptions<T, TProperty> WithMessageAuto<T, TProperty>(this IRuleBuilderOptions<T, TProperty> ruleBuilder, string resourceValidation, params string[] args)
     {
         return ruleBuilder.WithMessage((command, value) =>
@@ -19,6 +451,11 @@ public static partial class Extensions
             return resourceValidation.AppendArgument(allArgs);
         });
     }
+
+    // Email
+
+    public static IRuleBuilderOptions<T, string> EmailAddressAuto<T>(this IRuleBuilder<T, string> ruleBuilder)
+        => ruleBuilder.EmailAddress().WithMessageAuto(ResourceValidation.Wrong_Format);
 
     // private
 

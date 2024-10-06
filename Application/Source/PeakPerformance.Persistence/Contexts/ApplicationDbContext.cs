@@ -122,8 +122,12 @@ public partial class ApplicationDbContext : DbContext
         {
             var entity = entityEntry.Entity;
 
+            var modifiedByProperty = entityEntry.Property(_ => _.ModifiedBy);
+
+            if (!modifiedByProperty.IsModified)
+                entity.ModifiedBy = userId;
+
             entity.ModifiedOn = now;
-            entity.ModifiedBy = userId;
 
             if (entityEntry.State == EntityState.Added)
             {
@@ -136,7 +140,7 @@ public partial class ApplicationDbContext : DbContext
 
     private (DateTime now, long userId) GetAuditInfo()
     {
-        var now = DateTime.UtcNow;
+        var now = Functions.TODAY;
 
         var userId = CurrentUser?.Id != null
             ? CurrentUser.Id

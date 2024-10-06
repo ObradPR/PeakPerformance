@@ -7,4 +7,7 @@ public class SocialMediaDto
 
     [Display(Name = "Link")]
     public string Link { get; set; }
+
+    [Display(Name = "Phone number")]
+    public string PhoneNumber { get; set; }
 }

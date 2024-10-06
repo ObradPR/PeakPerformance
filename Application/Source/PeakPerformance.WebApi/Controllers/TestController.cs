@@ -1,11 +1,4 @@
-﻿using MediatR;
-using Microsoft.AspNetCore.Mvc;
-using PeakPerformance.Common.Enums;
-using PeakPerformance.Common.Exceptions;
-using PeakPerformance.WebApi.Attributes;
-using PeakPerformance.WebApi.Controllers._Base;
-
-namespace PeakPerformance.WebApi.Controllers;
+﻿namespace PeakPerformance.WebApi.Controllers;
 
 [Authorization(eSystemRole.Admin)]
 public class TestController(IMediator mediator) : BaseController(mediator)

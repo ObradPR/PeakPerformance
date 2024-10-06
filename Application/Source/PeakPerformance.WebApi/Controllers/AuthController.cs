@@ -1,13 +1,5 @@
-﻿using MediatR;
-using Microsoft.AspNetCore.Mvc;
-using PeakPerformance.Application.BusinessLogic.Users.Commands;
+﻿using PeakPerformance.Application.BusinessLogic.Users.Commands;
 using PeakPerformance.Application.Dtos.Users.Auth;
-using PeakPerformance.Application.Interfaces;
-using PeakPerformance.Common.Enums;
-using PeakPerformance.Common.Exceptions;
-using PeakPerformance.WebApi.Attributes;
-using PeakPerformance.WebApi.Controllers._Base;
-using PeakPerformance.WebApi.ReinforcedTypings.Generator;
 
 namespace PeakPerformance.WebApi.Controllers;
 
@@ -18,17 +10,17 @@ public class AuthController(IMediator mediator, IVerificationCodeService verific
 
     [HttpPost]
     [AngularMethod(typeof(AuthorizationDto))]
-    public async Task<IActionResult> Signup([FromBody] SignupDto user)
+    public async Task<IActionResult> Signup([FromBody] SignupDto data)
     {
-        if (!_verificationCodeService.ValidateCode(user.Email, user.VerificationCode))
+        if (!_verificationCodeService.ValidateCode(data.Email, data.VerificationCode))
             throw new ValidationException();
 
-        return Ok(await Mediator.Send(new SignupCommand(user)));
+        return Ok(await Mediator.Send(new SignupCommand(data)));
     }
 
     [HttpPost]
     [AngularMethod(typeof(AuthorizationDto))]
-    public async Task<IActionResult> Signin(SigninDto user) => Ok(await Mediator.Send(new SigninCommand(user)));
+    public async Task<IActionResult> Signin(SigninDto data) => Ok(await Mediator.Send(new SigninCommand(data)));
 
     [Authorization(eSystemRole.User, eSystemRole.Admin)]
     [HttpPost]
@@ -42,27 +34,27 @@ public class AuthController(IMediator mediator, IVerificationCodeService verific
 
     [HttpPost]
     [AngularMethod(typeof(void))]
-    public async Task<IActionResult> ValidateEmail(ValidateUserDto user)
+    public async Task<IActionResult> ValidateEmail(ValidateUserDto data)
     {
-        await Mediator.Send(new ValidateEmailCommand(user));
+        await Mediator.Send(new ValidateEmailCommand(data));
 
         return NoContent();
     }
 
     [HttpPost]
     [AngularMethod(typeof(void))]
-    public async Task<IActionResult> ValidateUser(ValidateUserDto user)
+    public async Task<IActionResult> ValidateUser(ValidateUserDto data)
     {
-        await Mediator.Send(new ValidateUserCommand(user));
+        await Mediator.Send(new ValidateUserCommand(data));
 
         return NoContent();
     }
 
     [HttpPost]
     [AngularMethod(typeof(void))]
-    public async Task<IActionResult> ValidateCode(ValidateUserCodeDto user)
+    public async Task<IActionResult> ValidateCode(ValidateUserCodeDto data)
     {
-        if (!_verificationCodeService.ValidateCode(user.Email, user.VerifyCode))
+        if (!_verificationCodeService.ValidateCode(data.Email, data.VerifyCode))
             throw new ValidationException();
 
         return NoContent();
@@ -70,9 +62,9 @@ public class AuthController(IMediator mediator, IVerificationCodeService verific
 
     [HttpPost]
     [AngularMethod(typeof(void))]
-    public async Task<IActionResult> ChangePassword(ChangePasswordDto user)
+    public async Task<IActionResult> ChangePassword(ChangePasswordDto data)
     {
-        await Mediator.Send(new ChangePasswordCommand(user));
+        await Mediator.Send(new ChangePasswordCommand(data));
 
         return NoContent();
     }

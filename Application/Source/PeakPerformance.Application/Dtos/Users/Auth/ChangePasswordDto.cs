@@ -16,6 +16,5 @@ public class ChangePasswordDto
     {
         user.Password = userManager.HashPassword(Password);
         user.ModifiedBy = user.Id;
-        user.ModifiedOn = DateTime.UtcNow;
     }
 }
