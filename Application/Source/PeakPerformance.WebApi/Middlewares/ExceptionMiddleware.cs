@@ -1,7 +1,4 @@
 ﻿using PeakPerformance.Application.Exceptions;
-using PeakPerformance.Common.Exceptions;
-using PeakPerformance.Common.Extensions;
-using PeakPerformance.Common.Interfaces;
 using PeakPerformance.WebApi.Objects;
 using System.Net;
 

@@ -2,16 +2,18 @@
 
 namespace PeakPerformance.Application.BusinessLogic.Users.Commands;
 
-public class ProfileSetupCommand(ProfileSetupDto data) : BaseCommand
+public class ProfileSetupCommand(ProfileSetupDto data) : BaseCommand<Unit>
 {
     public ProfileSetupDto Data { get; set; } = data;
 
     public class ProfileSetupCommandHandler(IUnitOfWork unitOfWork, IIdentityUser identityUser)
-        : BaseCommandHandler<ProfileSetupCommand>(unitOfWork, identityUser)
+        : BaseCommandHandler<ProfileSetupCommand, Unit>(unitOfWork, identityUser)
     {
-        public override Task Handle(ProfileSetupCommand request, CancellationToken cancellationToken)
+        public override async Task<Unit> Handle(ProfileSetupCommand request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            Console.WriteLine(request.Data.Weight.Weight.ToString());
+
+            return Unit.Value;
         }
     }
 }

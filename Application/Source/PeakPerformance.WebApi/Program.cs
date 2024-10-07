@@ -1,4 +1,3 @@
-using PeakPerformance.Common.Interfaces;
 using PeakPerformance.DependencyInjection;
 using PeakPerformance.WebApi.Middlewares;
 using PeakPerformance.WebApi.Objects;

@@ -3,14 +3,14 @@ using ValidationException = PeakPerformance.Common.Exceptions.ValidationExceptio
 
 namespace PeakPerformance.Application.BusinessLogic.Users.Commands;
 
-public class ChangePasswordCommand(ChangePasswordDto user) : BaseCommand
+public class ChangePasswordCommand(ChangePasswordDto user) : BaseCommand<Unit>
 {
     public ChangePasswordDto User { get; set; } = user;
 
     public class ChangePasswordCommandHandler(IUnitOfWork unitOfWork, IUserManager userManager)
-        : BaseCommandHandler<ChangePasswordCommand>(unitOfWork)
+        : BaseCommandHandler<ChangePasswordCommand, Unit>(unitOfWork)
     {
-        public override async Task Handle(ChangePasswordCommand request, CancellationToken cancellationToken)
+        public override async Task<Unit> Handle(ChangePasswordCommand request, CancellationToken cancellationToken)
         {
             var user = await _unitOfWork.UserRepository.GetExistingUserAsync(request.User.Email, request.User.Username, strict: true)
                 ?? throw new ValidationException();
@@ -19,6 +19,8 @@ public class ChangePasswordCommand(ChangePasswordDto user) : BaseCommand
 
             if (!await _unitOfWork.SaveAsync())
                 throw new ServerErrorException();
+
+            return Unit.Value;
         }
     }
 }
