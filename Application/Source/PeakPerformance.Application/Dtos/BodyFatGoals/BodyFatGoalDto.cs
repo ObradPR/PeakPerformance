@@ -10,4 +10,14 @@ public class BodyFatGoalDto
 
     [Display(Name = "End date")]
     public DateTime EndDate { get; set; }
+
+    // methods
+
+    public void ToModel(BodyFatGoal model, long userId)
+    {
+        model.UserId = userId;
+        model.TargetBodyFatPercentage = TargetBodyFatPercentage;
+        model.StartDate = StartDate;
+        model.EndDate = EndDate;
+    }
 }

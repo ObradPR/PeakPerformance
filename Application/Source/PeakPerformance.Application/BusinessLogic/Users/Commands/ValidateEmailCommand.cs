@@ -14,7 +14,7 @@ public class ValidateEmailCommand(ValidateUserDto user) : BaseCommand
     {
         public override async Task Handle(ValidateEmailCommand request, CancellationToken cancellationToken)
         {
-            if (await _unitOfWork.UserRepository.GetExistingUserAsync(request.User.Email, request.User.Username, strict: false) != null)
+            if (await _unitOfWork.UserRepository.GetExistingAsync(request.User.Email, request.User.Username, strict: false) != null)
                 throw new AccountExistsException();
 
             if (!await emailValidation.ValidateEmailAsync(request.User.Email))

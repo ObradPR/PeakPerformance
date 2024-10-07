@@ -8,7 +8,7 @@ public class SignoutCommand : BaseCommand
         {
             var userId = _identityUser.Id;
 
-            UserActivityLog userActivityLog = new()
+            var userActivityLog = new UserActivityLog()
             {
                 UserId = userId,
                 ActionTypeId = eActionType.Signout
@@ -16,8 +16,7 @@ public class SignoutCommand : BaseCommand
 
             await _unitOfWork.UserActivityLogRepository.AddAsync(userActivityLog);
 
-            if (!await _unitOfWork.SaveAsync())
-                throw new ServerErrorException();
+            await _unitOfWork.SaveAsync();
         }
     }
 }

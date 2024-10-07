@@ -12,13 +12,12 @@ public class ChangePasswordCommand(ChangePasswordDto user) : BaseCommand<Unit>
     {
         public override async Task<Unit> Handle(ChangePasswordCommand request, CancellationToken cancellationToken)
         {
-            var user = await _unitOfWork.UserRepository.GetExistingUserAsync(request.User.Email, request.User.Username, strict: true)
+            var user = await _unitOfWork.UserRepository.GetExistingAsync(request.User.Email, request.User.Username, strict: true)
                 ?? throw new ValidationException();
 
             request.User.ChangePassword(user, userManager);
 
-            if (!await _unitOfWork.SaveAsync())
-                throw new ServerErrorException();
+            await _unitOfWork.SaveAsync();
 
             return Unit.Value;
         }

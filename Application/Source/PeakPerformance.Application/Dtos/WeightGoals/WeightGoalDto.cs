@@ -10,4 +10,14 @@ public class WeightGoalDto
 
     [Display(Name = "End date")]
     public DateTime EndDate { get; set; }
+
+    // methods
+
+    public void ToModel(WeightGoal model, long userId)
+    {
+        model.UserId = userId;
+        model.TargetWeight = TargetWeight;
+        model.StartDate = StartDate;
+        model.EndDate = EndDate;
+    }
 }

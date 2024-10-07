@@ -1,10 +1,10 @@
 ﻿namespace PeakPerformance.Domain.Repositories.Application;
 
-public interface IErrorLogRepository
+public interface ISocialMediaRepository
 {
     // Get
 
     // Add / Remove / Edit
 
-    Task AddAsync(ErrorLog model);
+    Task AddRangeAsync(IEnumerable<SocialMedia> models);
 }

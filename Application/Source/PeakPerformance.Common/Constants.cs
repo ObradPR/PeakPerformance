@@ -99,6 +99,10 @@ public class Constants
     public static readonly Regex REGEX_ZIPCODE = new(@"^\d{5}(-\d{4})?$");
     public static readonly Regex REGEX_PHONE_NUMBER = new(@"^\d{3}-\d{3}-\d{4}$");
 
+    // Weight
+
+    public const decimal WEIGHT_DEFAULT = 50m;
+
     // DB Types
 
     public const string DB_TYPE_DATE = "date";

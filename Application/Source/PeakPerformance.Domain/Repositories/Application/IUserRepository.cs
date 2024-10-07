@@ -4,9 +4,11 @@ public interface IUserRepository
 {
     // Get
 
-    Task<User> GetExistingUserAsync(string email, string username, bool strict);
+    Task<User> GetExistingAsync(string email, string username, bool strict);
 
-    Task<User> GetUserByUsernameAsync(string username);
+    Task<User> GetByUsernameAsync(string username);
+
+    Task<User> GetByIdAsync(long id);
 
     // Add / Remove / Edit
 

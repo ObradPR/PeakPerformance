@@ -4,17 +4,19 @@ public class UserRepository(ApplicationDbContext context) : BaseRepository(conte
 {
     // Get
 
-    public async Task<User> GetExistingUserAsync(string email, string username, bool strict)
+    public async Task<User> GetExistingAsync(string email, string username, bool strict)
         => await db.Users.GetSingleAsync(_ => strict
             ? _.Email == email && _.Username == username
             : _.Email == email || _.Username == username);
 
-    public async Task<User> GetUserByUsernameAsync(string username)
+    public async Task<User> GetByUsernameAsync(string username)
         => await db.Users.GetSingleAsync(_ => _.Username == username,
             includeProperties: [
                 _ => _.UserRoles,
                 _ => _.UserRoles.Select(_ => _.Role)
             ]);
+
+    public async Task<User> GetByIdAsync(long id) => await db.Users.GetSingleAsync(id);
 
     // Add / Remove / Edit
 

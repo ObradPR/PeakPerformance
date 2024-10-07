@@ -14,7 +14,7 @@ public class ValidateUserCommand(ValidateUserDto user) : BaseCommand
     {
         public override async Task Handle(ValidateUserCommand request, CancellationToken cancellationToken)
         {
-            if (await _unitOfWork.UserRepository.GetExistingUserAsync(request.User.Email, request.User.Username, strict: true) is null)
+            if (await _unitOfWork.UserRepository.GetExistingAsync(request.User.Email, request.User.Username, strict: true) is null)
                 throw new ValidationException();
 
             var code = verificationCodeService.GenerateAndStoreCode(request.User.Email);

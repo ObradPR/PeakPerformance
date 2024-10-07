@@ -11,7 +11,7 @@ public class SignupCommand(SignupDto user) : BaseCommand<AuthorizationDto>
     {
         public override async Task<AuthorizationDto> Handle(SignupCommand request, CancellationToken cancellationToken)
         {
-            var existingUser = await _unitOfWork.UserRepository.GetExistingUserAsync(request.User.Email, request.User.Username, strict: false);
+            var existingUser = await _unitOfWork.UserRepository.GetExistingAsync(request.User.Email, request.User.Username, strict: false);
 
             if (existingUser != null)
             {
@@ -31,17 +31,17 @@ public class SignupCommand(SignupDto user) : BaseCommand<AuthorizationDto>
 
             await _unitOfWork.UserRepository.AddAsync(user);
 
-            return await _unitOfWork.SaveAsync()
-                ? new AuthorizationDto
-                {
-                    Token = tokenService.GenerateJwtToken(
-                    user.Id,
-                    (new[] { eSystemRole.User }).GetNames(),
-                    user.FullName,
-                    user.Email,
-                    user.Username)
-                }
-                : throw new ServerErrorException();
+            await _unitOfWork.SaveAsync();
+
+            return new AuthorizationDto
+            {
+                Token = tokenService.GenerateJwtToken(
+                user.Id,
+                (new[] { eSystemRole.User }).GetNames(),
+                user.FullName,
+                user.Email,
+                user.Username)
+            };
         }
     }
 }

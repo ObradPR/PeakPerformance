@@ -43,4 +43,35 @@ public class BodyMeasurementDto
 
     [Display(Name = "Measurement unit")]
     public eMeasurementUnit MeasurementUnitId { get; set; }
+
+    // methods
+
+    public void ToModel(BodyMeasurement model, long userId)
+    {
+        model.UserId = userId;
+        model.Waist = Waist;
+        model.Hips = Hips;
+        model.Neck = Neck;
+        model.Chest = Chest;
+        model.Shoulders = Shoulders;
+        model.RightBicep = RightBicep;
+        model.LeftBicep = LeftBicep;
+        model.RightForearm = RightForearm;
+        model.LeftForearm = LeftForearm;
+        model.RightThigh = RightThigh;
+        model.LeftThigh = LeftThigh;
+        model.RightCalf = RightCalf;
+        model.LeftCalf = LeftCalf;
+        model.MeasurementUnitId = MeasurementUnitId;
+    }
+
+    public bool HasAnyValue()
+    {
+        var properties = this.GetType()
+            .GetProperties()
+            .Where(_ => _.PropertyType == typeof(decimal?))
+            .ToList();
+
+        return properties.Exists(_ => _.GetValue(this) != null);
+    }
 }

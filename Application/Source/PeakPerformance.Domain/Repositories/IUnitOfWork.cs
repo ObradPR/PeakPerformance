@@ -12,7 +12,23 @@ public interface IUnitOfWork
 
     IUserActivityLogRepository UserActivityLogRepository { get; }
 
+    IUserMeasurementPreferenceRepository UserMeasurementPreferenceRepository { get; }
+
+    IWeightRepository WeightRepository { get; }
+
+    IBodyMeasurementRepository BodyMeasurementRepository { get; }
+
+    IUserTrainingGoalRepository UserTrainingGoalRepository { get; }
+
+    IWeightGoalRepository WeightGoalRepository { get; }
+
+    IBodyFatGoalRepository BodyFatGoalRepository { get; }
+
+    ISocialMediaRepository SocialMediaRepository { get; }
+
+    IHealthInformationRepository HealthInformationRepository { get; }
+
     // Methods
 
-    Task<bool> SaveAsync();
+    Task SaveAsync();
 }
