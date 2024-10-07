@@ -11,7 +11,7 @@ public class SigninCommand(SigninDto user) : BaseCommand<AuthorizationDto>
     {
         public override async Task<AuthorizationDto> Handle(SigninCommand request, CancellationToken cancellationToken)
         {
-            var existingUser = await _unitOfWork.UserRepository.GetUserByUsernameAsync(request.User.Username)
+            var existingUser = await _unitOfWork.UserRepository.GetByUsernameAsync(request.User.Username)
                 ?? throw new FluentValidationException(nameof(request.User), ResourceValidation.Wrong_Credentials);
 
             bool passwordMatch = userManager.VerifyPassword(request.User.Password, existingUser.Password);
@@ -27,17 +27,16 @@ public class SigninCommand(SigninDto user) : BaseCommand<AuthorizationDto>
 
             await _unitOfWork.UserActivityLogRepository.AddAsync(userActivityLog);
 
-            return await _unitOfWork.SaveAsync()
-                ? new AuthorizationDto
-                {
-                    Token = tokenService.GenerateJwtToken(
-                    existingUser.Id,
-                    existingUser.UserRoles.Select(_ => _.Role.Name).ToArray(),
-                    Common.Extensions.Extensions.GetUserFullName(existingUser.FirstName, existingUser.LastName, existingUser.MiddleName),
-                    existingUser.Email,
-                    existingUser.Username)
-                }
-                : throw new ServerErrorException();
+            await _unitOfWork.SaveAsync();
+            return new AuthorizationDto
+            {
+                Token = tokenService.GenerateJwtToken(
+                existingUser.Id,
+                existingUser.UserRoles.Select(_ => _.Role.Name).ToArray(),
+                Common.Extensions.Extensions.GetUserFullName(existingUser.FirstName, existingUser.LastName, existingUser.MiddleName),
+                existingUser.Email,
+                existingUser.Username)
+            };
         }
     }
 }

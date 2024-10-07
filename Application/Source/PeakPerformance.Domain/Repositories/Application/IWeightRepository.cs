@@ -1,10 +1,10 @@
 ﻿namespace PeakPerformance.Domain.Repositories.Application;
 
-public interface IErrorLogRepository
+public interface IWeightRepository
 {
     // Get
 
     // Add / Remove / Edit
 
-    Task AddAsync(ErrorLog model);
+    Task AddAsync(Weight model);
 }

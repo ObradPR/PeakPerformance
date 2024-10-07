@@ -1,4 +1,6 @@
-﻿namespace PeakPerformance.Application.Dtos.HealthInformation;
+﻿using HealthInformation_ = PeakPerformance.Domain.Entities.Application.HealthInformation;
+
+namespace PeakPerformance.Application.Dtos.HealthInformation;
 
 public class HealthInformationDto
 {
@@ -13,4 +15,15 @@ public class HealthInformationDto
 
     [Display(Name = "End date")]
     public DateTime? EndDate { get; set; }
+
+    // methods
+
+    public void ToModel(HealthInformation_ model, long userId)
+    {
+        model.UserId = userId;
+        model.InjuryTypeId = InjuryTypeId;
+        model.Description = Description;
+        model.StartDate = StartDate;
+        model.EndDate = EndDate;
+    }
 }

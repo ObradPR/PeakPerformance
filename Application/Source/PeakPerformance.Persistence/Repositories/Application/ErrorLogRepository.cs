@@ -7,5 +7,5 @@ public class ErrorLogRepository(ApplicationDbContext context)
 
     // Add / Remove / Edit
 
-    public async Task AddAsync(ErrorLog error) => await db.CreateAsync(error);
+    public async Task AddAsync(ErrorLog model) => await db.CreateAsync(model);
 }

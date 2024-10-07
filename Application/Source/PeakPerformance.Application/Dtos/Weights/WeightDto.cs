@@ -10,4 +10,14 @@ public class WeightDto
 
     [Display(Name = "Body fat percentage")]
     public decimal? BodyFatPercentage { get; set; }
+
+    // methods
+
+    public void ToModel(Weight model, long userId)
+    {
+        model.Value = Weight ?? Constants.WEIGHT_DEFAULT;
+        model.WeightUnitId = WeightUnitId;
+        model.BodyFatPercentage = BodyFatPercentage;
+        model.UserId = userId;
+    }
 }

@@ -3,6 +3,26 @@ import { eInjuryType } from './enums';
 import { eSocialMediaPlatform } from './enums';
 import { eTrainingGoal } from './enums';
 
+export interface I<>c
+{
+}
+export interface IBodyMeasurementDto
+{
+	waist?: number;
+	hips?: number;
+	neck?: number;
+	chest?: number;
+	shoulders?: number;
+	rightBicep?: number;
+	leftBicep?: number;
+	rightForearm?: number;
+	leftForearm?: number;
+	rightThigh?: number;
+	leftThigh?: number;
+	rightCalf?: number;
+	leftCalf?: number;
+	measurementUnitId: eMeasurementUnit;
+}
 export interface IAuthorizationDto
 {
 	token: string;
@@ -47,23 +67,6 @@ export interface IBodyFatGoalDto
 	targetBodyFatPercentage: number;
 	startDate: Date;
 	endDate: Date;
-}
-export interface IBodyMeasurementDto
-{
-	waist?: number;
-	hips?: number;
-	neck?: number;
-	chest?: number;
-	shoulders?: number;
-	rightBicep?: number;
-	leftBicep?: number;
-	rightForearm?: number;
-	leftForearm?: number;
-	rightThigh?: number;
-	leftThigh?: number;
-	rightCalf?: number;
-	leftCalf?: number;
-	measurementUnitId: eMeasurementUnit;
 }
 export interface IEmailDto
 {

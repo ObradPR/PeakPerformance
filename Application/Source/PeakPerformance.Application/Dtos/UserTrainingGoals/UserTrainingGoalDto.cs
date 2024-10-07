@@ -10,4 +10,14 @@ public class UserTrainingGoalDto
 
     [Display(Name = "End date")]
     public DateTime? EndDate { get; set; }
+
+    // methods
+
+    public void ToModel(UserTrainingGoal model, long userId)
+    {
+        model.UserId = userId;
+        model.TrainingGoalId = TrainingGoalId;
+        model.StartDate = StartDate;
+        model.EndDate = EndDate;
+    }
 }
