@@ -1,8 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc.Filters;
-using PeakPerformance.Common.Enums;
-using PeakPerformance.Common.Exceptions;
-using PeakPerformance.Common.Extensions;
-using PeakPerformance.Common.Interfaces;
 
 namespace PeakPerformance.WebApi.Attributes;
 

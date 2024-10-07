@@ -42,7 +42,7 @@ public class Constants
 
     // Image
 
-    public const long IMAGE_MAX_SIZE_MB = 5 * 1024 * 1024;
+    public const long IMAGE_MAX_SIZE_MB = 5; // 5 * 1024 * 1024
 
     public static readonly string[] IMAGE_ALLOWED_EXTENSIONS =
     [

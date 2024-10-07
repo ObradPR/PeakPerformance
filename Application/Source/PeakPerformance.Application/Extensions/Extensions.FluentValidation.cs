@@ -10,23 +10,16 @@ public static partial class Extensions
 
     public static IRuleBuilderOptions<T, IFormFile> IsValidImage<T>(this IRuleBuilder<T, IFormFile> ruleBuilder, Func<T, bool> condition = null)
     {
-        return ruleBuilder.Must(file =>
-        {
-            if (file is null) return false;
-
-            var extension = Path.GetExtension(file.FileName).ToLowerInvariant();
-
-            return Constants.IMAGE_ALLOWED_EXTENSIONS.Contains(extension);
-        })
-        .WithMessageAuto(ResourceValidation.File_Allowed_Extensions, Constants.IMAGE_ALLOWED_EXTENSIONS.Join(", "))
-        .When(_ => condition?.Invoke(_) ?? true);
+        return ruleBuilder.Must(file => file != null && file.HasValidExtension(Constants.IMAGE_ALLOWED_EXTENSIONS))
+            .WithMessageAuto(ResourceValidation.File_Allowed_Extensions, Constants.IMAGE_ALLOWED_EXTENSIONS.Join(", "))
+            .When(_ => condition?.Invoke(_) ?? true);
     }
 
     // File
 
     public static IRuleBuilderOptions<T, IFormFile> IsReasonableSize<T>(this IRuleBuilder<T, IFormFile> ruleBuilder, long maxSizeInMB, Func<T, bool> condition = null)
     {
-        return ruleBuilder.Must(file => file != null && file.Length <= maxSizeInMB)
+        return ruleBuilder.Must(file => file != null && file.IsSizeWithinLimit(maxSizeInMB))
             .WithMessageAuto(ResourceValidation.File_Maximum_Size, maxSizeInMB.ToString())
             .When(_ => condition?.Invoke(_) ?? true);
     }
@@ -92,51 +85,51 @@ public static partial class Extensions
         var message = ResourceValidation.Date_Invalid;
         var args = Array.Empty<string>();
 
-        T command = default;
-
-        ruleBuilder.When(cmd =>
+        return ruleBuilder.Must((command, date) => true)
+        .DependentRules(() =>
         {
-            command = cmd;
-            return true;
-        });
-
-        var fromDate = fromDateFunc?.Invoke(command);
-        var toDate = toDateFunc?.Invoke(command);
-
-        if (fromDate.HasValue && toDate.HasValue)
-        {
-            message = ResourceValidation.Date_InBetween;
-            args = [fromDate.Value.ToString(Constants.DATE_FORMAT_LONG), toDate.Value.ToString(Constants.DATE_FORMAT_LONG)];
-        }
-        else if (fromDate.HasValue)
-        {
-            message = ResourceValidation.Date_After;
-            args = [fromDate.Value.ToString(Constants.DATE_FORMAT_LONG)];
-        }
-        else if (toDate.HasValue)
-        {
-            message = ResourceValidation.Date_Before;
-            args = [toDate.Value.ToString(Constants.DATE_FORMAT_LONG)];
-        }
-
-        return ruleBuilder.Must((command, date) =>
-        {
-            if (fromDate.HasValue && toDate.HasValue)
+            ruleBuilder.Custom((date, context) =>
             {
-                return date.IsBetween(fromDate.Value, toDate.Value);
-            }
-            else if (fromDate.HasValue)
-            {
-                return date.IsLaterThan(fromDate.Value);
-            }
-            else if (toDate.HasValue)
-            {
-                return date.IsEarlierThan(toDate.Value);
-            }
+                var command = (T)context.InstanceToValidate;
+                var fromDate = fromDateFunc?.Invoke(command);
+                var toDate = toDateFunc?.Invoke(command);
 
-            return false;
+                // Calculate the message and arguments based on the fromDate and toDate values
+                if (fromDate.HasValue && toDate.HasValue)
+                {
+                    message = ResourceValidation.Date_InBetween;
+                    args = [fromDate.Value.ToString(Constants.DATE_FORMAT_LONG), toDate.Value.ToString(Constants.DATE_FORMAT_LONG)];
+                }
+                else if (fromDate.HasValue)
+                {
+                    message = ResourceValidation.Date_After;
+                    args = [fromDate.Value.ToString(Constants.DATE_FORMAT_LONG)];
+                }
+                else if (toDate.HasValue)
+                {
+                    message = ResourceValidation.Date_Before;
+                    args = [toDate.Value.ToString(Constants.DATE_FORMAT_LONG)];
+                }
+
+                // Perform the actual date validation
+                bool isValid = true;
+                if (fromDate.HasValue && toDate.HasValue && !date.IsBetween(fromDate.Value, toDate.Value))
+                {
+                    isValid = false;
+                }
+                else if (fromDate.HasValue && !date.IsLaterThan(fromDate.Value))
+                {
+                    isValid = false;
+                }
+                else if (toDate.HasValue && !date.IsEarlierThan(toDate.Value))
+                {
+                    isValid = false;
+                }
+
+                if (!isValid)
+                    context.AddFailure(context.PropertyName, (resourceValidation ?? message).FormatMessageAuto([ruleBuilder.GetPropertyName(), .. args]));
+            });
         })
-        .WithMessageAuto((resourceValidation ?? message), args)
         .When(_ => condition?.Invoke(_) ?? true);
     }
 
@@ -201,54 +194,54 @@ public static partial class Extensions
         var message = ResourceValidation.Date_Invalid;
         var args = Array.Empty<string>();
 
-        T command = default;
-
-        ruleBuilder.Must(_ => true).When(cmd =>
+        return ruleBuilder.Must((command, date) => true)
+        .DependentRules(() =>
         {
-            command = cmd;
-            return true;
-        });
-
-        var fromDate = fromDateFunc?.Invoke(command);
-        var toDate = toDateFunc?.Invoke(command);
-
-        if (fromDate.HasValue && toDate.HasValue)
-        {
-            message = ResourceValidation.Date_InBetween;
-            args = [fromDate.Value.ToString(Constants.DATE_FORMAT_LONG), toDate.Value.ToString(Constants.DATE_FORMAT_LONG)];
-        }
-        else if (fromDate.HasValue)
-        {
-            message = ResourceValidation.Date_After;
-            args = [fromDate.Value.ToString(Constants.DATE_FORMAT_LONG)];
-        }
-        else if (toDate.HasValue)
-        {
-            message = ResourceValidation.Date_Before;
-            args = [toDate.Value.ToString(Constants.DATE_FORMAT_LONG)];
-        }
-
-        return ruleBuilder.Must((command, date) =>
-        {
-            if (!date.HasValue)
-                return true; // If the date is null, validation passes.
-
-            if (fromDate.HasValue && toDate.HasValue)
+            ruleBuilder.Custom((date, context) =>
             {
-                return date.Value.IsBetween(fromDate.Value, toDate.Value);
-            }
-            else if (fromDate.HasValue)
-            {
-                return date.Value.IsLaterThan(fromDate.Value);
-            }
-            else if (toDate.HasValue)
-            {
-                return date.Value.IsEarlierThan(toDate.Value);
-            }
+                var command = (T)context.InstanceToValidate;
+                var fromDate = fromDateFunc?.Invoke(command);
+                var toDate = toDateFunc?.Invoke(command);
 
-            return false;
+                // Calculate the message and arguments based on the fromDate and toDate values
+                if (fromDate.HasValue && toDate.HasValue)
+                {
+                    message = ResourceValidation.Date_InBetween;
+                    args = [fromDate.Value.ToString(Constants.DATE_FORMAT_LONG), toDate.Value.ToString(Constants.DATE_FORMAT_LONG)];
+                }
+                else if (fromDate.HasValue)
+                {
+                    message = ResourceValidation.Date_After;
+                    args = [fromDate.Value.ToString(Constants.DATE_FORMAT_LONG)];
+                }
+                else if (toDate.HasValue)
+                {
+                    message = ResourceValidation.Date_Before;
+                    args = [toDate.Value.ToString(Constants.DATE_FORMAT_LONG)];
+                }
+
+                // Perform the actual date validation
+                if (date.HasValue)
+                {
+                    bool isValid = true;
+                    if (fromDate.HasValue && toDate.HasValue && !date.Value.IsBetween(fromDate.Value, toDate.Value))
+                    {
+                        isValid = false;
+                    }
+                    else if (fromDate.HasValue && !date.Value.IsLaterThan(fromDate.Value))
+                    {
+                        isValid = false;
+                    }
+                    else if (toDate.HasValue && !date.Value.IsEarlierThan(toDate.Value))
+                    {
+                        isValid = false;
+                    }
+
+                    if (!isValid)
+                        context.AddFailure(context.PropertyName, (resourceValidation ?? message).FormatMessageAuto([ruleBuilder.GetPropertyName(), .. args]));
+                }
+            });
         })
-        .WithMessageAuto((resourceValidation ?? message), args)
         .When(_ => condition?.Invoke(_) ?? true);
     }
 
@@ -452,7 +445,7 @@ public static partial class Extensions
 
     // private
 
-    private static string GetPropertyName<T, TProperty>(this IRuleBuilderOptions<T, TProperty> ruleBuilder)
+    private static string GetPropertyName<T, TProperty>(this IRuleBuilder<T, TProperty> ruleBuilder)
     {
         var rule = ruleBuilder.GetType().GetProperty("Rule")?.GetValue(ruleBuilder);
 
@@ -503,5 +496,16 @@ public static partial class Extensions
             .FirstOrDefault(prop => prop.PropertyType.IsClass); // Finding the class-type property (the DTO)
 
         return dtoProperty?.GetValue(command); // Return the DTO object
+    }
+
+    private static string FormatMessageAuto(this string messageTemplate, string[] args)
+    {
+        if (args == null || args.Length == 0)
+            return messageTemplate;
+
+        for (int i = 0; i < args.Length; i++)
+            messageTemplate = messageTemplate.Replace($"{{{i}}}", args[i]);
+
+        return messageTemplate;
     }
 }
