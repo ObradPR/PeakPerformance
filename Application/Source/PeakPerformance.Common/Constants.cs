@@ -106,4 +106,8 @@ public class Constants
     // DB Types
 
     public const string DB_TYPE_DATE = "date";
+
+    // Cloudinary
+
+    public const string CLOUDINARY_STORAGE_NAME = "peak-performance-app";
 }
