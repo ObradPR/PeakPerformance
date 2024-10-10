@@ -1,6 +1,6 @@
 ﻿namespace PeakPerformance.AbstractAPI._Base;
 
-public abstract class BaseClient
+public abstract class BaseClient : IDisposable
 {
     private readonly HttpClient _httpClient;
     protected string _apiKey = string.Empty;
@@ -29,8 +29,14 @@ public abstract class BaseClient
 
     protected async Task<string> GetStringAsync(string endpoint)
     {
-        var response = await _httpClient.GetAsync($"?api_key={_apiKey}{endpoint}");
+        var response = await GetAsync(endpoint);
         response.EnsureSuccessStatusCode();
         return await response.Content.ReadAsStringAsync();
+    }
+
+    public void Dispose()
+    {
+        _httpClient?.Dispose();
+        GC.SuppressFinalize(this);
     }
 }
