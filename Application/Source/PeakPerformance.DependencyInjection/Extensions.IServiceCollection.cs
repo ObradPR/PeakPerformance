@@ -17,6 +17,8 @@ using PeakPerformance.Common.Extensions;
 using PeakPerformance.Common.Interfaces;
 using PeakPerformance.Domain.Repositories;
 using PeakPerformance.Infrastructure.Logger;
+using PeakPerformance.Infrastructure.Storage.Interfaces;
+using PeakPerformance.Infrastructure.Storage.Services;
 using PeakPerformance.Persistence.Contexts;
 using PeakPerformance.Persistence.Repositories;
 using System.Text;
@@ -32,7 +34,7 @@ public static partial class Extensions
         PersistenceServices(services);
         ApplicationServices(services, secrets);
         ApplicationIdentityService(services, secrets);
-        InfrastructureServices(services);
+        InfrastructureServices(services, secrets);
         IntegrationServices(services, secrets);
 
         return services;
@@ -97,9 +99,11 @@ public static partial class Extensions
         return services;
     }
 
-    private static IServiceCollection InfrastructureServices(IServiceCollection services)
+    private static IServiceCollection InfrastructureServices(IServiceCollection services, IConfiguration secrets)
     {
         services.AddTransient<IExceptionLogger, DbExceptionLogger>();
+
+        services.AddSingleton<ICloudinaryService>(new CloudinaryService(secrets["Cloudinary:ApiCredentials"]!));
 
         return services;
     }

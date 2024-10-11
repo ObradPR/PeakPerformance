@@ -1,4 +1,5 @@
 ﻿using PeakPerformance.Application.Dtos.Users;
+using PeakPerformance.Infrastructure.Storage.Interfaces;
 using HealthInformation_ = PeakPerformance.Domain.Entities.Application.HealthInformation;
 using SocialMedia_ = PeakPerformance.Domain.Entities.Application.SocialMedia;
 
@@ -8,7 +9,7 @@ public class ProfileSetupCommand(ProfileSetupDto data) : BaseCommand<Unit>
 {
     public ProfileSetupDto Data { get; set; } = data;
 
-    public class ProfileSetupCommandHandler(IUnitOfWork unitOfWork, IIdentityUser identityUser)
+    public class ProfileSetupCommandHandler(IUnitOfWork unitOfWork, IIdentityUser identityUser, ICloudinaryService cloudinaryService)
         : BaseCommandHandler<ProfileSetupCommand, Unit>(unitOfWork, identityUser)
     {
         public override async Task<Unit> Handle(ProfileSetupCommand request, CancellationToken cancellationToken)
@@ -62,8 +63,6 @@ public class ProfileSetupCommand(ProfileSetupDto data) : BaseCommand<Unit>
             data.BodyFatGoal.ToModel(bodyFatGoal, userId);
             await _unitOfWork.BodyFatGoalRepository.AddAsync(bodyFatGoal);
 
-            // IMAGE LOGIC UPLOADING TO CLOUDINARY
-
             // User Data
 
             var user = await _unitOfWork.UserRepository.GetByIdAsync(userId);
@@ -92,6 +91,18 @@ public class ProfileSetupCommand(ProfileSetupDto data) : BaseCommand<Unit>
                 })
                 .ToList();
             await _unitOfWork.HealthInformationRepository.AddRangeAsync(healthInformation);
+
+            // Profile Picture
+
+            var imageUploadResult = await cloudinaryService.UploadPhotoAsync(data.Image);
+
+            if (imageUploadResult.Error != null)
+                throw new UploadFileException(imageUploadResult.Error.Message);
+
+            user.ProfilePictureUrl = imageUploadResult.SecureUrl.ToString();
+            user.PublicId = imageUploadResult.PublicId;
+
+            // Save
 
             await _unitOfWork.SaveAsync();
 

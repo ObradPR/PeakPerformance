@@ -23,11 +23,14 @@ public class User : BaseIndexAuditedDomain<User, long>, IConfigurableEntity
 
     public string PhoneNumber { get; set; }
 
+    public string Description { get; set; }
+
     public bool ReceiveAppNews { get; set; } = false;
 
-    public string ProfilePicture { get; set; }
+    // Image
+    public string ProfilePictureUrl { get; set; }
 
-    public string Description { get; set; }
+    public string PublicId { get; set; }
 
     //
     // Relationships
@@ -108,7 +111,6 @@ public class User : BaseIndexAuditedDomain<User, long>, IConfigurableEntity
             _.Property(_ => _.Password).IsRequired();
             _.Property(_ => _.DateOfBirth).IsRequired();
             _.Property(_ => _.PhoneNumber).HasMaxLength(15).IsRequired();
-            _.Property(_ => _.ProfilePicture).HasMaxLength(255);
             _.Property(_ => _.Description).HasMaxLength(500);
         });
     }

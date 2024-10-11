@@ -37,7 +37,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Integrations", "Integration
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PeakPerformance.AbstractAPI", "PeakPerformance.AbstractAPI\PeakPerformance.AbstractAPI.csproj", "{44C46286-B6DE-40D7-A360-AC279B5E1BDC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PeakPerformance.Test", "PeakPerformance.Test\PeakPerformance.Test.csproj", "{A08FC345-45D6-43B6-886D-E2C3F93857C9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PeakPerformance.Test", "PeakPerformance.Test\PeakPerformance.Test.csproj", "{A08FC345-45D6-43B6-886D-E2C3F93857C9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B2394176-60B8-47C5-9456-A032E39749B0}"
 	ProjectSection(SolutionItems) = preProject
