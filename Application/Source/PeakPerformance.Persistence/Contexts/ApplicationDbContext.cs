@@ -142,7 +142,7 @@ public partial class ApplicationDbContext : DbContext
     {
         var now = Functions.TODAY;
 
-        var userId = CurrentUser?.Id != null
+        var userId = CurrentUser?.Id > 0
             ? CurrentUser.Id
             : Constants.SYSTEM_USER_ID;
 
