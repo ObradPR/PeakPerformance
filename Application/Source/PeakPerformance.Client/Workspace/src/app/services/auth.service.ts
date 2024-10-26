@@ -11,6 +11,8 @@ import {
   IValidateUserDto,
 } from '../_generated/interfaces';
 import { AuthController } from '../_generated/services';
+import { Constants, RouteConstants } from '../constants';
+import { StorageService } from './storage.service';
 
 // Interfaces
 interface IUserSource {
@@ -29,12 +31,16 @@ interface IUserSource {
 export class AuthService {
   currentUserSource = signal<IUserSource | null>(null);
 
-  constructor(private router: Router, private authController: AuthController) {}
+  constructor(
+    private router: Router,
+    private authController: AuthController,
+    private storageService: StorageService
+  ) {}
 
   signin(user: ISigninDto) {
     return this.authController.Signin(user).pipe(
       map((result) => {
-        if (result) this.setCurrentUser(result);
+        if (result) this.setCurrentUser(result, RouteConstants.ROUTE_SIGN_IN);
         return result;
       })
     );
@@ -43,19 +49,19 @@ export class AuthService {
   signup(user: ISignupDto) {
     return this.authController.Signup(user).pipe(
       map((result) => {
-        if (result) this.setCurrentUser(result);
+        if (result) this.setCurrentUser(result, RouteConstants.ROUTE_SIGN_UP);
         return result;
       })
     );
   }
 
   signout() {
-    localStorage.removeItem('token');
+    this.storageService.remove(Constants.AUTH_TOKEN);
     this.currentUserSource.set(null);
-    this.router.navigateByUrl('/');
+    this.router.navigateByUrl(RouteConstants.ROUTE_HOME);
   }
 
-  setCurrentUser(result: IAuthorizationDto) {
+  setCurrentUser(result: IAuthorizationDto, action: string) {
     const tokenInfo = this.getDecodedToken(result.token);
 
     const userSource: IUserSource = {
@@ -71,9 +77,9 @@ export class AuthService {
       ? (userSource.roles = tokenInfo.ROLES)
       : userSource.roles.push(tokenInfo.ROLES);
 
-    localStorage.setItem('token', result.token);
+    this.storageService.set(Constants.AUTH_TOKEN, result.token);
     this.currentUserSource.set(userSource);
-    this.router.navigateByUrl('/');
+    this.router.navigateByUrl(RouteConstants.ROUTE_HUB_HOME);
   }
 
   getDecodedToken(token: string) {
@@ -81,7 +87,7 @@ export class AuthService {
   }
 
   getToken() {
-    return localStorage.getItem('token');
+    return this.storageService.get(Constants.AUTH_TOKEN);
   }
 
   validateEmail(validateUser: IValidateUserDto) {

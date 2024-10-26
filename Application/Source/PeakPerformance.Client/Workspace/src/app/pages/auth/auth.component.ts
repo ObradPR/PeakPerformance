@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
 import { take } from 'rxjs';
 import { formAnimation } from '../../animations/form-animation';
-import { Constants } from '../../constants';
+import { Constants, RouteConstants } from '../../constants';
 import { CodeVerificationComponent } from './code-verification/code-verification.component';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
@@ -58,10 +58,14 @@ export class AuthComponent implements OnInit {
   }
 
   toggleForms(type: TUrlSegment, isSignin: boolean) {
-    if (type === Constants.ROUTE_SIGN_UP) {
-      this.router.navigateByUrl('/auth/' + Constants.ROUTE_SIGN_UP);
-    } else if (type === Constants.ROUTE_SIGN_IN) {
-      this.router.navigateByUrl('auth/' + Constants.ROUTE_SIGN_IN);
+    if (type === RouteConstants.ROUTE_SIGN_UP) {
+      this.router.navigateByUrl(
+        RouteConstants.ROUTE_AUTH + '/' + RouteConstants.ROUTE_SIGN_UP
+      );
+    } else if (type === RouteConstants.ROUTE_SIGN_IN) {
+      this.router.navigateByUrl(
+        RouteConstants.ROUTE_AUTH + '/' + RouteConstants.ROUTE_SIGN_IN
+      );
     }
 
     if (isSignin) {
@@ -139,14 +143,14 @@ export class AuthComponent implements OnInit {
       this.formType = params.get('type');
 
       if (
-        this.formType !== Constants.ROUTE_SIGN_IN &&
-        this.formType !== Constants.ROUTE_SIGN_UP
+        this.formType !== RouteConstants.ROUTE_SIGN_IN &&
+        this.formType !== RouteConstants.ROUTE_SIGN_UP
       ) {
-        this.toggleForms(Constants.ROUTE_SIGN_IN, true);
+        this.toggleForms(RouteConstants.ROUTE_SIGN_IN, true);
       } else {
         this.toggleForms(
           this.formType,
-          this.formType === Constants.ROUTE_SIGN_IN ? true : false
+          this.formType === RouteConstants.ROUTE_SIGN_IN ? true : false
         );
       }
     });

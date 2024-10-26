@@ -10,7 +10,7 @@ import {
 import { PasswordModule } from 'primeng/password';
 import { TooltipModule } from 'primeng/tooltip';
 import { ISigninDto } from '../../../_generated/interfaces';
-import { Constants } from '../../../constants';
+import { Constants, RouteConstants } from '../../../constants';
 import { AuthService } from '../../../services/auth.service';
 import { ToastService } from '../../../services/toast.service';
 
@@ -53,7 +53,7 @@ export class SignInComponent implements OnInit {
   }
 
   onShowSignup() {
-    this.showSignupFormEvent.emit(Constants.ROUTE_SIGN_UP);
+    this.showSignupFormEvent.emit(RouteConstants.ROUTE_SIGN_UP);
   }
 
   onShowPasswordRecovery() {

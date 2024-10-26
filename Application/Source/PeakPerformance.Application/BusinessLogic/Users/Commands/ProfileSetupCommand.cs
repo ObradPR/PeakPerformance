@@ -67,6 +67,7 @@ public class ProfileSetupCommand(ProfileSetupDto data) : BaseCommand<Unit>
 
             var user = await _unitOfWork.UserRepository.GetByIdAsync(userId);
             user.Description = data.Description;
+            user.ReceiveAppNews = data.ReceiveNews;
 
             // Social Media
 

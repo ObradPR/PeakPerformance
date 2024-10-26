@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { MessageService } from 'primeng/api';
+import { Constants } from '../constants';
 
 @Injectable({
   providedIn: 'root',
@@ -42,9 +43,8 @@ export class ToastService {
   showGeneralError() {
     this.messageService.add({
       severity: 'error',
-      summary: 'Server Error',
-      detail:
-        'Something unexpected went wrong. Please contact administrator for more information.',
+      summary: Constants.ERROR_SERVER,
+      detail: Constants.ERROR_SERVER_MESSAGE,
     });
   }
 }

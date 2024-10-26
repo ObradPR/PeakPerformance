@@ -1,39 +1,56 @@
 import { Routes } from '@angular/router';
-import { Constants } from './constants';
+import { RouteConstants } from './constants';
+import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
+  ///
+  /// AUTH
+  ///
   {
-    path: Constants.ROUTE_AUTH,
+    path: RouteConstants.ROUTE_AUTH,
     loadComponent: () =>
-      import('./pages/auth/auth.component').then((m) => m.AuthComponent),
+      import('./pages/auth/auth.component').then((_) => _.AuthComponent),
     children: [
       {
         path: ':type',
-        title: 'Auth | ' + Constants.TITLE,
+        title: RouteConstants.TITLE_AUTH,
         loadComponent: () =>
-          import('./pages/auth/auth.component').then((m) => m.AuthComponent),
+          import('./pages/auth/auth.component').then((_) => _.AuthComponent),
       },
     ],
   },
+  ///
+  /// HUB
+  ///
   {
-    path: Constants.ROUTE_NOT_FOUND,
-    title: 'Not Found | ' + Constants.TITLE,
+    path: RouteConstants.ROUTE_HUB_HOME,
+    title: RouteConstants.TITLE_HUB_HOME,
+    loadComponent: () =>
+      import('./pages/hub/hub.component').then((_) => _.HUBComponent),
+    canActivate: [authGuard],
+  },
+  ///
+  /// Error Pages
+  ///
+  {
+    path: RouteConstants.ROUTE_NOT_FOUND,
+    title: RouteConstants.TITLE_NOT_FOUND,
     loadComponent: () =>
       import('./pages/errors/not-found/not-found.component').then(
-        (m) => m.NotFoundComponent
+        (_) => _.NotFoundComponent
       ),
   },
   {
-    path: Constants.ROUTE_UNAUTHORIZED,
-    title: 'Unauthorized | ' + Constants.TITLE,
+    path: RouteConstants.ROUTE_UNAUTHORIZED,
+    title: RouteConstants.TITLE_UNAUTHORIZED,
     loadComponent: () =>
       import('./pages/errors/unauthorized/unauthorized.component').then(
-        (m) => m.UnauthorizedComponent
+        (_) => _.UnauthorizedComponent
       ),
   },
   {
     path: '**',
-    redirectTo: Constants.ROUTE_NOT_FOUND,
+    redirectTo: RouteConstants.ROUTE_NOT_FOUND,
     pathMatch: 'full',
   },
 ];

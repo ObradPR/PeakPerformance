@@ -13,7 +13,7 @@ import { InputMaskModule } from 'primeng/inputmask';
 import { PasswordModule } from 'primeng/password';
 import { TooltipModule } from 'primeng/tooltip';
 import { ISignupDto, IValidateUserDto } from '../../../_generated/interfaces';
-import { Constants } from '../../../constants';
+import { Constants, RouteConstants } from '../../../constants';
 import { AuthService } from '../../../services/auth.service';
 import { ToastService } from '../../../services/toast.service';
 import * as validators from '../../../validators';
@@ -96,7 +96,7 @@ export class SignUpComponent implements OnInit {
   }
 
   onShowSignin() {
-    this.showSigninFormEvent.emit(Constants.ROUTE_SIGN_IN);
+    this.showSigninFormEvent.emit(RouteConstants.ROUTE_SIGN_IN);
   }
 
   async onSignup() {

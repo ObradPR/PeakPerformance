@@ -3,9 +3,6 @@ import { eInjuryType } from './enums';
 import { eSocialMediaPlatform } from './enums';
 import { eTrainingGoal } from './enums';
 
-export interface I<>c
-{
-}
 export interface IBodyMeasurementDto
 {
 	waist?: number;
@@ -102,6 +99,7 @@ export interface IProfileSetupDto
 	bodyFatGoal: IBodyFatGoalDto;
 	image: any;
 	description: string;
+	receiveNews: boolean;
 	socialMedia: ISocialMediaDto[];
 	healthInformation: IHealthInformationDto[];
 }

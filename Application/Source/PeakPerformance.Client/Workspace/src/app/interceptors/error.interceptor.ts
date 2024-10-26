@@ -3,6 +3,7 @@ import { inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastService } from '../services/toast.service';
 import { catchError } from 'rxjs';
+import { Constants, RouteConstants } from '../constants';
 
 export const errorInterceptor: HttpInterceptorFn = (req, next) => {
   const toast = inject(ToastService);
@@ -13,22 +14,22 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
       if (error) {
         switch (error.status) {
           case 400:
-            toast.showError('Bad request', error.error.Message);
+            toast.showError(Constants.ERROR_BAD_REQUEST, error.error.Message);
             break;
           case 401:
-            toast.showError('Unauthorized', error.error.Message);
-            router.navigateByUrl('/unauthorized');
+            toast.showError(Constants.ERROR_UNAUTHORIZED, error.error.Message);
+            router.navigateByUrl(RouteConstants.ROUTE_UNAUTHORIZED);
             break;
           case 403:
-            toast.showError('Forbidden', error.error.Message);
-            router.navigateByUrl('/');
+            toast.showError(Constants.ERROR_FORBIDDEN, error.error.Message);
+            router.navigateByUrl(RouteConstants.ROUTE_HOME);
             break;
           case 404:
-            toast.showError('Not found', error.error.Message);
-            router.navigateByUrl('/not-found');
+            toast.showError(Constants.ERROR_NOT_FOUND, error.error.Message);
+            router.navigateByUrl(RouteConstants.ROUTE_NOT_FOUND);
             break;
           case 422:
-            toast.showError('Validation error', error.error.Message);
+            toast.showError(Constants.ERROR_VALIDATION, error.error.Message);
             break;
           default:
             toast.showGeneralError();
