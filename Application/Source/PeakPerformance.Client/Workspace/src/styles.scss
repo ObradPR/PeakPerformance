@@ -34,14 +34,25 @@ span.highlight-text-yellow {
   color: $yellow-hex;
 }
 
-a {
+a,
+a:not([href]):not([class]) {
   color: $blue-hex;
   cursor: pointer;
   text-decoration: underline;
+
+  &:hover {
+    color: $light-blue-hex;
+  }
 }
 
-a:hover {
-  color: $light-blue-hex;
+p {
+  margin: 0;
+}
+
+ul,
+ol {
+  padding-left: 0;
+  margin-bottom: 0;
 }
 
 // Form
@@ -50,20 +61,23 @@ a:hover {
 [type="submit"],
 [type="email"],
 [type="tel"],
-[type="date"] {
-  padding: 0.7rem 1rem;
+[type="date"],
+[type="number"] {
+  padding: 0.4rem 0.7rem;
   border-radius: $border-radius;
   border: none;
   font-size: 1em;
   transition: $transition;
   width: 100%;
+  margin-bottom: 1.5rem;
 }
 
 [type="text"]:focus,
 [type="password"]:focus,
 [type="email"]:focus,
 [type="tel"]:focus,
-[type="date"]:focus {
+[type="date"]:focus,
+[type="number"]:focus {
   outline: none;
   box-shadow: $input-box-shadow;
 }
@@ -71,9 +85,19 @@ a:hover {
 [type="submit"] {
   cursor: pointer;
   background-color: $yellow-hex;
+
+  &:hover {
+    background-color: $light-yellow-hex;
+  }
 }
 
 .is-invalid {
   box-shadow: $is-invalid-box-shadow;
   border-radius: $border-radius;
+}
+
+fieldset legend {
+  font-size: 1.3em;
+  border-bottom: 1px solid $dark-grey-hex;
+  margin-bottom: 1.5rem;
 }

@@ -12,6 +12,7 @@ import {
 } from '../_generated/interfaces';
 import { AuthController } from '../_generated/services';
 import { Constants, RouteConstants } from '../constants';
+import { SharedService } from './shared.service';
 import { StorageService } from './storage.service';
 
 // Interfaces
@@ -34,7 +35,8 @@ export class AuthService {
   constructor(
     private router: Router,
     private authController: AuthController,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private sharedService: SharedService
   ) {}
 
   signin(user: ISigninDto) {
@@ -79,6 +81,10 @@ export class AuthService {
 
     this.storageService.set(Constants.AUTH_TOKEN, result.token);
     this.currentUserSource.set(userSource);
+
+    if (action === RouteConstants.ROUTE_SIGN_UP) {
+      this.sharedService.fromSignupSignal.set(true);
+    }
     this.router.navigateByUrl(RouteConstants.ROUTE_HUB_HOME);
   }
 

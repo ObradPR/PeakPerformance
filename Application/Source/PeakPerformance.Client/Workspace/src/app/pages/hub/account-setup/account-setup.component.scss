@@ -1,0 +1,57 @@
+@import "../../../../styles.scss";
+
+#account-setup {
+  position: fixed;
+  width: 100dvw;
+  height: 100dvh;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(2px);
+  align-content: center;
+
+  .stepper-wrapper {
+    @include size(60dvw, 50dvh);
+    margin: 0 auto;
+    background-color: $white-hex;
+    padding: 3rem 2rem;
+    border-radius: $border-radius;
+
+    input {
+      border: 1px solid $grey-hex;
+    }
+
+    .content-1 {
+      width: 100%;
+      height: 30dvh;
+      @include flex(row, space-between, nowrap, start);
+
+      .content-1-left {
+        @include flex(column, space-between, nowrap, start);
+        width: 35%;
+
+        .content-1-left-top,
+        .content-1-left-bottom {
+          width: 100%;
+        }
+      }
+
+      .content-1-right {
+        width: 60%;
+
+        .content-1-right-cols {
+          @include flex(row, space-between, nowrap, start);
+          width: 100%;
+
+          .content-1-right-col {
+            width: 32%;
+          }
+        }
+      }
+    }
+  }
+}
+
+::ng-deep {
+  .p-dropdown {
+    border: 1px solid $grey-hex;
+  }
+}

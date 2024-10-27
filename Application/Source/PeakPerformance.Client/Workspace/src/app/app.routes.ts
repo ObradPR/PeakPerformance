@@ -50,7 +50,8 @@ export const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: RouteConstants.ROUTE_NOT_FOUND,
+    // redirectTo: RouteConstants.ROUTE_NOT_FOUND,
+    redirectTo: RouteConstants.ROUTE_HUB_HOME,
     pathMatch: 'full',
   },
 ];
