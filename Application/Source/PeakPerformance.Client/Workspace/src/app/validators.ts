@@ -1,4 +1,4 @@
-import { AbstractControl, ValidatorFn } from '@angular/forms';
+import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { DateTime } from 'luxon';
 
 export function matchValues(matchTo: string, fieldName: string): ValidatorFn {
@@ -32,5 +32,47 @@ export function minimumAgeValidator(minAge: number): ValidatorFn {
     } else {
       return { minimumAge: minAge };
     }
+  };
+}
+
+export function goalStartDateValidator(): ValidatorFn {
+  return (control: AbstractControl) => {
+    if (!control.value) {
+      return null;
+    }
+
+    const startDate = new Date(control.value);
+    const today = new Date();
+
+    const sixMonthsAgo = new Date(today);
+    sixMonthsAgo.setMonth(today.getMonth() - 6);
+
+    const sixMonthsFromNow = new Date(today);
+    sixMonthsFromNow.setMonth(today.getMonth() + 6);
+
+    if (startDate < sixMonthsAgo || startDate > sixMonthsFromNow) {
+      return { dateOutOfRange: true };
+    }
+
+    return null;
+  };
+}
+
+export function endDateAfterStartDate(
+  startDateKey: string,
+  endDateKey: string
+): ValidatorFn {
+  return (group: AbstractControl): ValidationErrors | null => {
+    const startDate = group.get(startDateKey)?.value;
+    const endDate = group.get(endDateKey)?.value;
+
+    if (!startDate || !endDate) {
+      return null;
+    }
+
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+
+    return end > start ? null : { endDateBeforeStartDate: true };
   };
 }

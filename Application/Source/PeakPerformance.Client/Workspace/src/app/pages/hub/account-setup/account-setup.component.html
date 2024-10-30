@@ -8,29 +8,27 @@
           let-index="index"
         >
           <div class="d-flex flex-column h-12rem">
-            <div class="content-1">
+            <div class="content-1" [formGroup]="form">
               <div class="content-1-left">
                 <fieldset class="content-1-left-top">
                   <legend>Measurement preferences</legend>
-                  <span class="p-float-label">
+                  <span class="p-float-label" formGroupName="weight">
                     <p-dropdown
                       inputId="weight-preference"
                       [options]="cities"
-                      [(ngModel)]="selectedCity"
                       optionLabel="name"
-                      placeholder=""
+                      formControlName="weightUnitId"
                     />
                     <label for="weight-preference"
                       >Weight Preference<app-required-mark
                     /></label>
                   </span>
-                  <span class="p-float-label">
+                  <span class="p-float-label" formGroupName="bodyMeasurement">
                     <p-dropdown
                       inputId="measurement-preference"
                       [options]="cities"
-                      [(ngModel)]="selectedCity"
                       optionLabel="name"
-                      placeholder=""
+                      formControlName="measurementUnitId"
                     />
                     <label for="measurement-preference"
                       >Measurement Preference<app-required-mark
@@ -38,80 +36,155 @@
                   </span>
                 </fieldset>
 
-                <fieldset class="content-1-left-bottom">
+                <fieldset class="content-1-left-bottom" formGroupName="weight">
                   <legend>Base body measurements</legend>
                   <span class="p-float-label">
-                    <input type="number" id="weight" pInputText />
+                    <input
+                      type="number"
+                      id="weight"
+                      pInputText
+                      formControlName="weight"
+                    />
                     <label for="weight">Weight</label>
                   </span>
                   <span class="p-float-label">
-                    <input type="number" id="bodyfat" pInputText />
+                    <input
+                      type="number"
+                      id="bodyfat"
+                      pInputText
+                      formControlName="bodyFatPercentage"
+                    />
                     <label for="bodyfat">BodyFat Percentage</label>
                   </span>
                 </fieldset>
               </div>
 
               <div class="content-1-right">
-                <fieldset>
+                <fieldset formGroupName="bodyMeasurement">
                   <legend>Measurements</legend>
                   <div class="content-1-right-cols">
                     <div class="content-1-right-col content-1-right-col-1">
                       <span class="p-float-label">
-                        <input type="number" id="waist" pInputText />
+                        <input
+                          type="number"
+                          id="waist"
+                          pInputText
+                          formControlName="waist"
+                        />
                         <label for="waist">Waist</label>
                       </span>
                       <span class="p-float-label">
-                        <input type="number" id="hips" pInputText />
+                        <input
+                          type="number"
+                          id="hips"
+                          pInputText
+                          formControlName="hips"
+                        />
                         <label for="hips">Hips</label>
                       </span>
                       <span class="p-float-label">
-                        <input type="number" id="neck" pInputText />
+                        <input
+                          type="number"
+                          id="neck"
+                          pInputText
+                          formControlName="neck"
+                        />
                         <label for="neck">Neck</label>
                       </span>
                       <span class="p-float-label">
-                        <input type="number" id="chest" pInputText />
+                        <input
+                          type="number"
+                          id="chest"
+                          pInputText
+                          formControlName="chest"
+                        />
                         <label for="chest">Chest</label>
                       </span>
                       <span class="p-float-label">
-                        <input type="number" id="shoulders" pInputText />
+                        <input
+                          type="number"
+                          id="shoulders"
+                          pInputText
+                          formControlName="shoulders"
+                        />
                         <label for="shoulders">Shoulders</label>
                       </span>
                     </div>
 
                     <div class="content-1-right-col content-1-right-col-2">
                       <span class="p-float-label">
-                        <input type="number" id="rBicep" pInputText />
+                        <input
+                          type="number"
+                          id="rBicep"
+                          pInputText
+                          formControlName="rightBicep"
+                        />
                         <label for="rBicep">Right Bicep</label>
                       </span>
                       <span class="p-float-label">
-                        <input type="number" id="lBicep" pInputText />
+                        <input
+                          type="number"
+                          id="lBicep"
+                          pInputText
+                          formControlName="leftBicep"
+                        />
                         <label for="lBicep">Left Bicep</label>
                       </span>
                       <span class="p-float-label">
-                        <input type="number" id="rForearm" pInputText />
+                        <input
+                          type="number"
+                          id="rForearm"
+                          pInputText
+                          formControlName="rightForearm"
+                        />
                         <label for="rForearm">Right Forearm</label>
                       </span>
                       <span class="p-float-label">
-                        <input type="number" id="lForearm" pInputText />
+                        <input
+                          type="number"
+                          id="lForearm"
+                          pInputText
+                          formControlName="leftForearm"
+                        />
                         <label for="lForearm">Left Forearm</label>
                       </span>
                     </div>
 
                     <div class="content-1-right-col content-1-right-col-3">
                       <span class="p-float-label">
-                        <input type="number" id="rThigh" pInputText />
+                        <input
+                          type="number"
+                          id="rThigh"
+                          pInputText
+                          formControlName="rightThigh"
+                        />
                         <label for="rThigh">Right Thigh</label>
                       </span>
                       <span class="p-float-label">
-                        <input type="number" id="lThigh" pInputText />
+                        <input
+                          type="number"
+                          id="lThigh"
+                          pInputText
+                          formControlName="leftThigh"
+                        />
                         <label for="lThigh">Left Thigh</label>
                       </span>
                       <span class="p-float-label">
-                        <input type="number" id="rCalf" pInputText />
+                        <input
+                          type="number"
+                          id="rCalf"
+                          pInputText
+                          formControlName="rightCalf"
+                        />
                         <label for="rCalf">Right Calf</label>
                       </span>
                       <span class="p-float-label">
-                        <input type="number" id="lCalf" pInputText />
+                        <input
+                          type="number"
+                          id="lCalf"
+                          pInputText
+                          formControlName="leftCalf"
+                        />
                         <label for="lCalf">Left Calf</label>
                       </span>
                     </div>
@@ -138,13 +211,113 @@
           let-index="index"
         >
           <div class="d-flex flex-column h-12rem">
-            <div
-              class="border-2 border-dashed surface-border border-round surface-ground flex-auto flex justify-content-center align-items-center font-medium"
-            >
-              Content II
+            <div class="content-2" [formGroup]="form">
+              <fieldset
+                class="content-2-block"
+                formGroupName="userTrainingGoal"
+              >
+                <legend>Training goal</legend>
+                <span class="p-float-label">
+                  <p-dropdown
+                    inputId="training-goal"
+                    [options]="cities"
+                    optionLabel="name"
+                    formControlName="trainingGoalId"
+                  />
+                  <label for="training-goal"
+                    >Training Goal<app-required-mark
+                  /></label>
+                </span>
+                <div class="d-flex justify-content-between">
+                  <span class="p-float-label" style="width: 47%">
+                    <p-calendar
+                      inputId="training-goal-start"
+                      formControlName="startDate"
+                    ></p-calendar>
+                    <label for="training-goal-start"
+                      >Start<app-required-mark
+                    /></label>
+                  </span>
+                  <span class="p-float-label" style="width: 47%">
+                    <p-calendar
+                      inputId="training-goal-end"
+                      formControlName="endDate"
+                    ></p-calendar>
+                    <label for="training-goal-end">End</label>
+                  </span>
+                </div>
+              </fieldset>
+
+              <fieldset class="content-2-block" formGroupName="weightGoal">
+                <legend>Weight goal</legend>
+                <span class="p-float-label">
+                  <input
+                    type="number"
+                    id="target-weight"
+                    pInputText
+                    formControlName="targetWeight"
+                  />
+                  <label for="target-weight">Weight<app-required-mark /></label>
+                </span>
+                <div class="d-flex justify-content-between">
+                  <span class="p-float-label" style="width: 47%">
+                    <p-calendar
+                      inputId="weight-goal-start"
+                      formControlName="startDate"
+                    ></p-calendar>
+                    <label for="weight-goal-start"
+                      >Start<app-required-mark
+                    /></label>
+                  </span>
+                  <span class="p-float-label" style="width: 47%">
+                    <p-calendar
+                      inputId="weight-goal-end"
+                      formControlName="endDate"
+                    ></p-calendar>
+                    <label for="weight-goal-end"
+                      >End<app-required-mark
+                    /></label>
+                  </span>
+                </div>
+              </fieldset>
+
+              <fieldset class="content-2-block" formGroupName="bodyFatGoal">
+                <legend>BodyFat goal</legend>
+                <span class="p-float-label">
+                  <input
+                    type="number"
+                    id="target-bodyfat"
+                    pInputText
+                    formControlName="targetBodyFatPercentage"
+                  />
+                  <label for="target-bodyfat"
+                    >Target BodyFat Percentage<app-required-mark
+                  /></label>
+                </span>
+                <div class="d-flex justify-content-between">
+                  <span class="p-float-label" style="width: 47%">
+                    <p-calendar
+                      inputId="bodyfat-goal-start"
+                      formControlName="startDate"
+                    ></p-calendar>
+                    <label for="bodyfat-goal-start"
+                      >Start<app-required-mark
+                    /></label>
+                  </span>
+                  <span class="p-float-label" style="width: 47%">
+                    <p-calendar
+                      inputId="bodyfat-goal-end"
+                      formControlName="endDate"
+                    ></p-calendar>
+                    <label for="bodyfat-goal-end"
+                      >End<app-required-mark
+                    /></label>
+                  </span>
+                </div>
+              </fieldset>
             </div>
           </div>
-          <div class="d-flex pt-4 justify-content-between">
+          <div class="d-flex pt-5 justify-content-between">
             <p-button
               label="Back"
               icon="pi pi-arrow-left"
@@ -185,7 +358,7 @@
               icon="pi pi-check"
               iconPos="right"
               class="btn-success"
-              (onClick)="prevCallback.emit()"
+              (onClick)="onSubmit()"
             />
           </div>
         </ng-template>

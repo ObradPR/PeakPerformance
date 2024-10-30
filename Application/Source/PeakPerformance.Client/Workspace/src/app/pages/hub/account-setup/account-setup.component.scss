@@ -20,8 +20,7 @@
     }
 
     .content-1 {
-      width: 100%;
-      height: 30dvh;
+      @include size(100%, 30dvh);
       @include flex(row, space-between, nowrap, start);
 
       .content-1-left {
@@ -47,11 +46,21 @@
         }
       }
     }
+
+    .content-2 {
+      @include size(100%, 30dvh);
+      @include flex(row, space-between, nowrap, start);
+
+      .content-2-block {
+        width: 30%;
+      }
+    }
   }
 }
 
 ::ng-deep {
-  .p-dropdown {
+  .p-dropdown,
+  .p-inputtext:not(.p-dropdown-label) {
     border: 1px solid $grey-hex;
   }
 }
