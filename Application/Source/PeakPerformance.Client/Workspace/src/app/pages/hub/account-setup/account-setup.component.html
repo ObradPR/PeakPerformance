@@ -44,6 +44,21 @@
                       id="weight"
                       pInputText
                       formControlName="weight"
+                      pTooltip="Weight must be in range from 20 to 1000"
+                      tooltipPosition="top"
+                      tooltipEvent="focus"
+                      [tooltipDisabled]="
+                        !(
+                          form.get('weight.weight')?.touched &&
+                          form.get('weight.weight')?.invalid
+                        )
+                      "
+                      [ngClass]="{
+                        'is-invalid':
+                          form.get('weight.weight')?.invalid &&
+                          (form.get('weight.weight')?.touched ||
+                            form.get('weight.weight')?.dirty)
+                      }"
                     />
                     <label for="weight">Weight</label>
                   </span>
@@ -53,6 +68,21 @@
                       id="bodyfat"
                       pInputText
                       formControlName="bodyFatPercentage"
+                      pTooltip="BodyFat must be in range from 1 to 100"
+                      tooltipPosition="top"
+                      tooltipEvent="focus"
+                      [tooltipDisabled]="
+                        !(
+                          form.get('weight.bodyFatPercentage')?.touched &&
+                          form.get('weight.bodyFatPercentage')?.invalid
+                        )
+                      "
+                      [ngClass]="{
+                        'is-invalid':
+                          form.get('weight.bodyFatPercentage')?.invalid &&
+                          (form.get('weight.bodyFatPercentage')?.touched ||
+                            form.get('weight.bodyFatPercentage')?.dirty)
+                      }"
                     />
                     <label for="bodyfat">BodyFat Percentage</label>
                   </span>
@@ -70,6 +100,21 @@
                           id="waist"
                           pInputText
                           formControlName="waist"
+                          pTooltip="Value must be in range from 20 to 1000"
+                          tooltipPosition="top"
+                          tooltipEvent="focus"
+                          [tooltipDisabled]="
+                            !(
+                              form.get('bodyMeasurement.waist')?.touched &&
+                              form.get('bodyMeasurement.waist')?.invalid
+                            )
+                          "
+                          [ngClass]="{
+                            'is-invalid':
+                              form.get('bodyMeasurement.waist')?.invalid &&
+                              (form.get('bodyMeasurement.waist')?.touched ||
+                                form.get('bodyMeasurement.waist')?.dirty)
+                          }"
                         />
                         <label for="waist">Waist</label>
                       </span>
@@ -79,6 +124,21 @@
                           id="hips"
                           pInputText
                           formControlName="hips"
+                          pTooltip="Value must be in range from 20 to 1000"
+                          tooltipPosition="top"
+                          tooltipEvent="focus"
+                          [tooltipDisabled]="
+                            !(
+                              form.get('bodyMeasurement.hips')?.touched &&
+                              form.get('bodyMeasurement.hips')?.invalid
+                            )
+                          "
+                          [ngClass]="{
+                            'is-invalid':
+                              form.get('bodyMeasurement.hips')?.invalid &&
+                              (form.get('bodyMeasurement.hips')?.touched ||
+                                form.get('bodyMeasurement.hips')?.dirty)
+                          }"
                         />
                         <label for="hips">Hips</label>
                       </span>
@@ -88,6 +148,21 @@
                           id="neck"
                           pInputText
                           formControlName="neck"
+                          pTooltip="Value must be in range from 20 to 1000"
+                          tooltipPosition="top"
+                          tooltipEvent="focus"
+                          [tooltipDisabled]="
+                            !(
+                              form.get('bodyMeasurement.neck')?.touched &&
+                              form.get('bodyMeasurement.neck')?.invalid
+                            )
+                          "
+                          [ngClass]="{
+                            'is-invalid':
+                              form.get('bodyMeasurement.neck')?.invalid &&
+                              (form.get('bodyMeasurement.neck')?.touched ||
+                                form.get('bodyMeasurement.neck')?.dirty)
+                          }"
                         />
                         <label for="neck">Neck</label>
                       </span>
@@ -97,6 +172,21 @@
                           id="chest"
                           pInputText
                           formControlName="chest"
+                          pTooltip="Value must be in range from 20 to 1000"
+                          tooltipPosition="top"
+                          tooltipEvent="focus"
+                          [tooltipDisabled]="
+                            !(
+                              form.get('bodyMeasurement.chest')?.touched &&
+                              form.get('bodyMeasurement.chest')?.invalid
+                            )
+                          "
+                          [ngClass]="{
+                            'is-invalid':
+                              form.get('bodyMeasurement.chest')?.invalid &&
+                              (form.get('bodyMeasurement.chest')?.touched ||
+                                form.get('bodyMeasurement.chest')?.dirty)
+                          }"
                         />
                         <label for="chest">Chest</label>
                       </span>
@@ -106,6 +196,21 @@
                           id="shoulders"
                           pInputText
                           formControlName="shoulders"
+                          pTooltip="Value must be in range from 20 to 1000"
+                          tooltipPosition="top"
+                          tooltipEvent="focus"
+                          [tooltipDisabled]="
+                            !(
+                              form.get('bodyMeasurement.shoulders')?.touched &&
+                              form.get('bodyMeasurement.shoulders')?.invalid
+                            )
+                          "
+                          [ngClass]="{
+                            'is-invalid':
+                              form.get('bodyMeasurement.shoulders')?.invalid &&
+                              (form.get('bodyMeasurement.shoulders')?.touched ||
+                                form.get('bodyMeasurement.shoulders')?.dirty)
+                          }"
                         />
                         <label for="shoulders">Shoulders</label>
                       </span>
@@ -118,6 +223,22 @@
                           id="rBicep"
                           pInputText
                           formControlName="rightBicep"
+                          pTooltip="Value must be in range from 20 to 1000"
+                          tooltipPosition="top"
+                          tooltipEvent="focus"
+                          [tooltipDisabled]="
+                            !(
+                              form.get('bodyMeasurement.rightBicep')?.touched &&
+                              form.get('bodyMeasurement.rightBicep')?.invalid
+                            )
+                          "
+                          [ngClass]="{
+                            'is-invalid':
+                              form.get('bodyMeasurement.rightBicep')?.invalid &&
+                              (form.get('bodyMeasurement.rightBicep')
+                                ?.touched ||
+                                form.get('bodyMeasurement.rightBicep')?.dirty)
+                          }"
                         />
                         <label for="rBicep">Right Bicep</label>
                       </span>
@@ -127,6 +248,21 @@
                           id="lBicep"
                           pInputText
                           formControlName="leftBicep"
+                          pTooltip="Value must be in range from 20 to 1000"
+                          tooltipPosition="top"
+                          tooltipEvent="focus"
+                          [tooltipDisabled]="
+                            !(
+                              form.get('bodyMeasurement.leftBicep')?.touched &&
+                              form.get('bodyMeasurement.leftBicep')?.invalid
+                            )
+                          "
+                          [ngClass]="{
+                            'is-invalid':
+                              form.get('bodyMeasurement.leftBicep')?.invalid &&
+                              (form.get('bodyMeasurement.leftBicep')?.touched ||
+                                form.get('bodyMeasurement.leftBicep')?.dirty)
+                          }"
                         />
                         <label for="lBicep">Left Bicep</label>
                       </span>
@@ -136,6 +272,24 @@
                           id="rForearm"
                           pInputText
                           formControlName="rightForearm"
+                          pTooltip="Value must be in range from 20 to 1000"
+                          tooltipPosition="top"
+                          tooltipEvent="focus"
+                          [tooltipDisabled]="
+                            !(
+                              form.get('bodyMeasurement.rightForearm')
+                                ?.touched &&
+                              form.get('bodyMeasurement.rightForearm')?.invalid
+                            )
+                          "
+                          [ngClass]="{
+                            'is-invalid':
+                              form.get('bodyMeasurement.rightForearm')
+                                ?.invalid &&
+                              (form.get('bodyMeasurement.rightForearm')
+                                ?.touched ||
+                                form.get('bodyMeasurement.rightForearm')?.dirty)
+                          }"
                         />
                         <label for="rForearm">Right Forearm</label>
                       </span>
@@ -145,6 +299,24 @@
                           id="lForearm"
                           pInputText
                           formControlName="leftForearm"
+                          pTooltip="Value must be in range from 20 to 1000"
+                          tooltipPosition="top"
+                          tooltipEvent="focus"
+                          [tooltipDisabled]="
+                            !(
+                              form.get('bodyMeasurement.leftForearm')
+                                ?.touched &&
+                              form.get('bodyMeasurement.leftForearm')?.invalid
+                            )
+                          "
+                          [ngClass]="{
+                            'is-invalid':
+                              form.get('bodyMeasurement.leftForearm')
+                                ?.invalid &&
+                              (form.get('bodyMeasurement.leftForearm')
+                                ?.touched ||
+                                form.get('bodyMeasurement.leftForearm')?.dirty)
+                          }"
                         />
                         <label for="lForearm">Left Forearm</label>
                       </span>
@@ -157,6 +329,22 @@
                           id="rThigh"
                           pInputText
                           formControlName="rightThigh"
+                          pTooltip="Value must be in range from 20 to 1000"
+                          tooltipPosition="top"
+                          tooltipEvent="focus"
+                          [tooltipDisabled]="
+                            !(
+                              form.get('bodyMeasurement.rightThigh')?.touched &&
+                              form.get('bodyMeasurement.rightThigh')?.invalid
+                            )
+                          "
+                          [ngClass]="{
+                            'is-invalid':
+                              form.get('bodyMeasurement.rightThigh')?.invalid &&
+                              (form.get('bodyMeasurement.rightThigh')
+                                ?.touched ||
+                                form.get('bodyMeasurement.rightThigh')?.dirty)
+                          }"
                         />
                         <label for="rThigh">Right Thigh</label>
                       </span>
@@ -166,6 +354,21 @@
                           id="lThigh"
                           pInputText
                           formControlName="leftThigh"
+                          pTooltip="Value must be in range from 20 to 1000"
+                          tooltipPosition="top"
+                          tooltipEvent="focus"
+                          [tooltipDisabled]="
+                            !(
+                              form.get('bodyMeasurement.leftThigh')?.touched &&
+                              form.get('bodyMeasurement.leftThigh')?.invalid
+                            )
+                          "
+                          [ngClass]="{
+                            'is-invalid':
+                              form.get('bodyMeasurement.leftThigh')?.invalid &&
+                              (form.get('bodyMeasurement.leftThigh')?.touched ||
+                                form.get('bodyMeasurement.leftThigh')?.dirty)
+                          }"
                         />
                         <label for="lThigh">Left Thigh</label>
                       </span>
@@ -175,6 +378,21 @@
                           id="rCalf"
                           pInputText
                           formControlName="rightCalf"
+                          pTooltip="Value must be in range from 20 to 1000"
+                          tooltipPosition="top"
+                          tooltipEvent="focus"
+                          [tooltipDisabled]="
+                            !(
+                              form.get('bodyMeasurement.rightCalf')?.touched &&
+                              form.get('bodyMeasurement.rightCalf')?.invalid
+                            )
+                          "
+                          [ngClass]="{
+                            'is-invalid':
+                              form.get('bodyMeasurement.rightCalf')?.invalid &&
+                              (form.get('bodyMeasurement.rightCalf')?.touched ||
+                                form.get('bodyMeasurement.rightCalf')?.dirty)
+                          }"
                         />
                         <label for="rCalf">Right Calf</label>
                       </span>
@@ -184,6 +402,21 @@
                           id="lCalf"
                           pInputText
                           formControlName="leftCalf"
+                          pTooltip="Value must be in range from 20 to 1000"
+                          tooltipPosition="top"
+                          tooltipEvent="focus"
+                          [tooltipDisabled]="
+                            !(
+                              form.get('bodyMeasurement.leftCalf')?.touched &&
+                              form.get('bodyMeasurement.leftCalf')?.invalid
+                            )
+                          "
+                          [ngClass]="{
+                            'is-invalid':
+                              form.get('bodyMeasurement.leftCalf')?.invalid &&
+                              (form.get('bodyMeasurement.leftCalf')?.touched ||
+                                form.get('bodyMeasurement.leftCalf')?.dirty)
+                          }"
                         />
                         <label for="lCalf">Left Calf</label>
                       </span>
@@ -256,6 +489,21 @@
                     id="target-weight"
                     pInputText
                     formControlName="targetWeight"
+                    pTooltip="Value must be in range from 20 to 1000"
+                    tooltipPosition="top"
+                    tooltipEvent="focus"
+                    [tooltipDisabled]="
+                      !(
+                        form.get('weightGoal.targetWeight')?.touched &&
+                        form.get('weightGoal.targetWeight')?.invalid
+                      )
+                    "
+                    [ngClass]="{
+                      'is-invalid':
+                        form.get('weightGoal.targetWeight')?.invalid &&
+                        (form.get('weightGoal.targetWeight')?.touched ||
+                          form.get('weightGoal.targetWeight')?.dirty)
+                    }"
                   />
                   <label for="target-weight">Weight<app-required-mark /></label>
                 </span>
@@ -289,6 +537,25 @@
                     id="target-bodyfat"
                     pInputText
                     formControlName="targetBodyFatPercentage"
+                    pTooltip="Value must be in range from 1 to 100"
+                    tooltipPosition="top"
+                    tooltipEvent="focus"
+                    [tooltipDisabled]="
+                      !(
+                        form.get('bodyFatGoal.targetBodyFatPercentage')
+                          ?.touched &&
+                        form.get('bodyFatGoal.targetBodyFatPercentage')?.invalid
+                      )
+                    "
+                    [ngClass]="{
+                      'is-invalid':
+                        form.get('bodyFatGoal.targetBodyFatPercentage')
+                          ?.invalid &&
+                        (form.get('bodyFatGoal.targetBodyFatPercentage')
+                          ?.touched ||
+                          form.get('bodyFatGoal.targetBodyFatPercentage')
+                            ?.dirty)
+                    }"
                   />
                   <label for="target-bodyfat"
                     >Target BodyFat Percentage<app-required-mark
@@ -339,14 +606,70 @@
           let-prevCallback="prevCallback"
           let-index="index"
         >
-          <div class="flex flex-column h-12rem">
-            <div
-              class="border-2 border-dashed surface-border border-round surface-ground flex-auto flex justify-content-center align-items-center font-medium"
-            >
-              Content III
+          <div class="d-flex flex-column h-12rem">
+            <div class="content-3" [formGroup]="form">
+              <fieldset class="content-3-block">
+                <legend>Profile details</legend>
+                <p-fileUpload
+                  mode="basic"
+                  name="profile-picture"
+                  chooseIcon="pi pi-upload"
+                  accept="image/*"
+                  [maxFileSize]="maxProfilePictureSize"
+                  (onSelect)="onProfilePictureSelect($event)"
+                  chooseLabel="Upload Profile Picture"
+                  [customUpload]="true"
+                />
+
+                <span class="p-float-label">
+                  <textarea
+                    id="description"
+                    rows="5"
+                    cols="30"
+                    pInputTextarea
+                    formControlName="description"
+                    pTooltip="Maxiumum length is 500"
+                    tooltipPosition="top"
+                    tooltipEvent="focus"
+                    [tooltipDisabled]="
+                      !(
+                        form.get('description')?.touched &&
+                        form.get('description')?.invalid
+                      )
+                    "
+                    [ngClass]="{
+                      'is-invalid':
+                        form.get('description')?.invalid &&
+                        (form.get('description')?.touched ||
+                          form.get('description')?.dirty)
+                    }"
+                  ></textarea>
+                  <label for="description">Description</label>
+                </span>
+
+                <div class="d-flex">
+                  <input
+                    type="checkbox"
+                    id="news"
+                    name="news"
+                    formControlName="receiveNews"
+                  />
+                  <label for="news"
+                    >If you want to receive a news about the updates.</label
+                  >
+                </div>
+              </fieldset>
+
+              <fieldset class="content-3-block" formGroupName="weightGoal">
+                <legend>Social connections</legend>
+              </fieldset>
+
+              <fieldset class="content-3-block" formGroupName="weightGoal">
+                <legend>Health information</legend>
+              </fieldset>
             </div>
           </div>
-          <div class="d-flex pt-4 justify-content-between">
+          <div class="d-flex pt-5 justify-content-between">
             <p-button
               label="Back"
               icon="pi pi-arrow-left"

@@ -62,7 +62,8 @@ ol {
 [type="email"],
 [type="tel"],
 [type="date"],
-[type="number"] {
+[type="number"],
+textarea {
   padding: 0.4rem 0.7rem;
   border-radius: $border-radius;
   border: none;
@@ -72,12 +73,25 @@ ol {
   margin-bottom: 1.5rem;
 }
 
+[type="checkbox"] {
+  border-radius: $border-radius;
+  border: none;
+  transition: $transition;
+  margin-bottom: 1.5rem;
+  margin-top: 0.2rem;
+
+  & + label {
+    margin-left: 0.5rem;
+  }
+}
+
 [type="text"]:focus,
 [type="password"]:focus,
 [type="email"]:focus,
 [type="tel"]:focus,
 [type="date"]:focus,
-[type="number"]:focus {
+[type="number"]:focus,
+textarea:focus {
   outline: none;
   box-shadow: $input-box-shadow;
 }

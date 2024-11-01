@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, OnInit, Renderer2 } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -7,11 +8,15 @@ import {
   Validators,
 } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
-import { DropdownModule } from 'primeng/dropdown';
-import { StepperModule } from 'primeng/stepper';
-import { RequiredMarkComponent } from '../../../components/required-mark/required-mark.component';
-import { InputTextModule } from 'primeng/inputtext';
 import { CalendarModule } from 'primeng/calendar';
+import { DropdownModule } from 'primeng/dropdown';
+import { FileSelectEvent, FileUploadModule } from 'primeng/fileupload';
+import { InputTextModule } from 'primeng/inputtext';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { StepperModule } from 'primeng/stepper';
+import { TooltipModule } from 'primeng/tooltip';
+import { RequiredMarkComponent } from '../../../components/required-mark/required-mark.component';
+import { Constants } from '../../../constants';
 import * as validators from '../../../validators';
 
 @Component({
@@ -26,14 +31,20 @@ import * as validators from '../../../validators';
     InputTextModule,
     ReactiveFormsModule,
     CalendarModule,
+    TooltipModule,
+    CommonModule,
+    FileUploadModule,
+    InputTextareaModule,
   ],
   templateUrl: './account-setup.component.html',
   styleUrl: './account-setup.component.scss',
 })
 export class AccountSetupComponent implements OnInit {
   form: FormGroup = this.fb.group({});
+  maxProfilePictureSize = Constants.IMAGE_MAX_SIZE_BYTE;
+  uploadedPicture: any = null;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private renderer: Renderer2) {}
 
   // =============
   cities: any;
@@ -57,24 +68,24 @@ export class AccountSetupComponent implements OnInit {
   private formInit() {
     this.form = this.fb.group({
       weight: this.fb.group({
-        weight: [null, [Validators.min(21), Validators.max(999)]],
+        weight: [null, [Validators.min(20.1), Validators.max(999.9)]],
         weightUnitId: [null, [Validators.required]],
-        bodyFatPercentage: [null, [Validators.min(2), Validators.max(99)]],
+        bodyFatPercentage: [null, [Validators.min(1.1), Validators.max(99.9)]],
       }),
       bodyMeasurement: this.fb.group({
-        waist: [null, [Validators.min(21), Validators.max(999)]],
-        hips: [null, [Validators.min(21), Validators.max(999)]],
-        neck: [null, [Validators.min(21), Validators.max(999)]],
-        chest: [null, [Validators.min(21), Validators.max(999)]],
-        shoulders: [null, [Validators.min(21), Validators.max(999)]],
-        rightBicep: [null, [Validators.min(21), Validators.max(999)]],
-        leftBicep: [null, [Validators.min(21), Validators.max(999)]],
-        rightForearm: [null, [Validators.min(21), Validators.max(999)]],
-        leftForearm: [null, [Validators.min(21), Validators.max(999)]],
-        rightThigh: [null, [Validators.min(21), Validators.max(999)]],
-        leftThigh: [null, [Validators.min(21), Validators.max(999)]],
-        rightCalf: [null, [Validators.min(21), Validators.max(999)]],
-        leftCalf: [null, [Validators.min(21), Validators.max(999)]],
+        waist: [null, [Validators.min(20.1), Validators.max(999.9)]],
+        hips: [null, [Validators.min(20.1), Validators.max(999.9)]],
+        neck: [null, [Validators.min(20.1), Validators.max(999.9)]],
+        chest: [null, [Validators.min(20.1), Validators.max(999.9)]],
+        shoulders: [null, [Validators.min(20.1), Validators.max(999.9)]],
+        rightBicep: [null, [Validators.min(20.1), Validators.max(999.9)]],
+        leftBicep: [null, [Validators.min(20.1), Validators.max(999.9)]],
+        rightForearm: [null, [Validators.min(20.1), Validators.max(999.9)]],
+        leftForearm: [null, [Validators.min(20.1), Validators.max(999.9)]],
+        rightThigh: [null, [Validators.min(20.1), Validators.max(999.9)]],
+        leftThigh: [null, [Validators.min(20.1), Validators.max(999.9)]],
+        rightCalf: [null, [Validators.min(20.1), Validators.max(999.9)]],
+        leftCalf: [null, [Validators.min(20.1), Validators.max(999.9)]],
         measurementUnitId: [null, [Validators.required]],
       }),
       userTrainingGoal: this.fb.group(
@@ -92,7 +103,7 @@ export class AccountSetupComponent implements OnInit {
         {
           targetWeight: [
             null,
-            [Validators.required, Validators.min(21), Validators.max(999)],
+            [Validators.required, Validators.min(20.1), Validators.max(999.9)],
           ],
           startDate: [
             null,
@@ -106,7 +117,7 @@ export class AccountSetupComponent implements OnInit {
         {
           targetBodyFatPercentage: [
             null,
-            [Validators.required, Validators.min(2), Validators.max(99)],
+            [Validators.required, Validators.min(1.1), Validators.max(99.9)],
           ],
           startDate: [
             null,
@@ -116,7 +127,16 @@ export class AccountSetupComponent implements OnInit {
         },
         { validators: validators.endDateAfterStartDate('startDate', 'endDate') }
       ),
+      image: [null],
+      description: [null, [Validators.maxLength(500)]],
+      receiveNews: [false],
     });
+  }
+
+  onProfilePictureSelect(event: FileSelectEvent) {
+    console.log(event);
+    const file = event.currentFiles[0];
+    this.form.patchValue({ image: file });
   }
 
   onSubmit() {

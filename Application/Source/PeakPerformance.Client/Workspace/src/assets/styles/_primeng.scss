@@ -107,6 +107,10 @@ p-dropdown {
   top: 33%;
 }
 
+.p-float-label textarea ~ label {
+  top: 10%;
+}
+
 .p-float-label input:focus ~ label,
 .p-float-label input.p-filled ~ label,
 .p-float-label textarea:focus ~ label,
@@ -114,4 +118,9 @@ p-dropdown {
 .p-float-label .p-inputwrapper-focus ~ label,
 .p-float-label .p-inputwrapper-filled ~ label {
   top: -0.6rem;
+}
+
+.p-fileupload-choose {
+  margin-bottom: 1.5rem;
+  width: 100%;
 }

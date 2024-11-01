@@ -47,11 +47,13 @@
       }
     }
 
-    .content-2 {
+    .content-2,
+    .content-3 {
       @include size(100%, 30dvh);
       @include flex(row, space-between, nowrap, start);
 
-      .content-2-block {
+      .content-2-block,
+      .content-3-block {
         width: 30%;
       }
     }

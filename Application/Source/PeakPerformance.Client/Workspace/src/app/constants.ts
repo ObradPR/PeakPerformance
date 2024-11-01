@@ -19,6 +19,10 @@ export class Constants {
   static ERROR_SERVER = 'Server error';
   static ERROR_SERVER_MESSAGE =
     'Something unexpected went wrong. Please contact administrator for more information.';
+
+  // Image
+  static IMAGE_MAX_SIZE_MB = 5;
+  static IMAGE_MAX_SIZE_BYTE = 5 * 1024 * 1024;
 }
 
 export class RouteConstants {
