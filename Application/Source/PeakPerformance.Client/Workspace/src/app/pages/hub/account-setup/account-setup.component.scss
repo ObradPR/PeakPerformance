@@ -9,18 +9,20 @@
   align-content: center;
 
   .stepper-wrapper {
-    @include size(60dvw, 50dvh);
+    @include size(70dvw, 50dvh);
     margin: 0 auto;
     background-color: $white-hex;
     padding: 3rem 2rem;
     border-radius: $border-radius;
+    overflow-y: auto;
 
-    input {
-      border: 1px solid $grey-hex;
+    input{
+      border: 1px solid $grey-hex;  
+      margin-bottom: 1.5rem  
     }
 
     .content-1 {
-      @include size(100%, 30dvh);
+      @include size(100%, 28dvh);
       @include flex(row, space-between, nowrap, start);
 
       .content-1-left {
@@ -49,12 +51,31 @@
 
     .content-2,
     .content-3 {
-      @include size(100%, 30dvh);
+      @include size(100%, 28dvh);
       @include flex(row, space-between, nowrap, start);
 
       .content-2-block,
       .content-3-block {
-        width: 30%;
+        width: 31.5%;
+      }
+    }
+
+    .content-3 {
+      fieldset {
+        max-height: 30dvh;
+        height: 30dvh;
+        overflow-y: auto;
+        padding: 0 16px; // cause of the scroller
+
+        .add-array-item-btn {
+          z-index: 2;
+        }
+
+        hr{
+          margin: -0.8rem 0 1.5rem;
+          height: 2px;
+          background-color: $grey-hex;
+        }
       }
     }
   }
@@ -64,5 +85,24 @@
   .p-dropdown,
   .p-inputtext:not(.p-dropdown-label) {
     border: 1px solid $grey-hex;
+  }
+}
+
+::ng-deep {
+  p-dropdown.p-platforms-ddl .p-dropdown {
+    margin-bottom: 0.5rem;
+  }
+}
+
+::ng-deep {
+  .p-calendar {
+    margin-bottom: 1.5rem;
+  }
+}
+
+
+::ng-deep {
+  .p-inputtextarea, p-inputmask {
+    margin-bottom: 1.5rem;
   }
 }

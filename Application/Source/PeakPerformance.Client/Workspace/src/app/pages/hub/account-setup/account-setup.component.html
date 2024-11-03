@@ -660,8 +660,79 @@
                 </div>
               </fieldset>
 
-              <fieldset class="content-3-block" formGroupName="weightGoal">
+              <fieldset class="content-3-block" formArrayName="socialMedia">
                 <legend>Social connections</legend>
+                <div
+                  *ngFor="let item of socialMedia.controls; let i = index"
+                  [formGroupName]="i"
+                  class="d-flex flex-column align-center justify-content-center position-relative"
+                >
+                  <span>
+                    <i class="pi pi-times float-end" (click)="removeSocialMediaItem(i)"></i>
+                  </span>
+
+                  <span class="p-float-label">
+                    <p-dropdown
+                      [inputId]="'platform-' + i"
+                      [options]="platforms"
+                      optionLabel="name"
+                      formControlName="platformId"
+                    />
+                    <label [for]="'platform-' + i">Platform<app-required-mark/></label>
+                  </span>
+
+                  @if(socialMedia.at(i).get('platformId')?.value?.type === 'link'){
+                    <input
+                      type="text"
+                      [id]="'link-' + i"
+                      placeholder="Url"
+                      pInputText
+                      formControlName="link"
+                      pTooltip="Maxiumum length is 255"
+                      tooltipPosition="top"
+                      tooltipEvent="focus"
+                      [tooltipDisabled]="
+                        !(
+                          socialMedia.at(i).get('link')?.touched &&
+                          socialMedia.at(i).get('link')?.invalid
+                        )
+                      "
+                      [ngClass]="{
+                        'is-invalid':
+                          socialMedia.at(i).get('link')?.invalid &&
+                          (socialMedia.at(i).get('link')?.touched ||
+                            socialMedia.at(i).get('link')?.dirty)
+                      }"
+                    />
+                  }
+                  @else if(socialMedia.at(i).get('platformId')?.value?.type === 'phone'){
+                    <p-inputMask
+                      mask="999-999-9999"
+                      placeholder="Phone Number"
+                      formControlName="phoneNumber"
+                      pTooltip="Phone is required."
+                      tooltipPosition="top"
+                      tooltipEvent="focus"
+                      [tooltipDisabled]="
+                        !(
+                          socialMedia.at(i).get('phoneNumber')?.touched &&
+                          socialMedia.at(i).get('phoneNumber')?.invalid
+                        )
+                      "
+                      [ngClass]="{
+                        'is-invalid':
+                          socialMedia.at(i).get('phoneNumber')?.invalid &&
+                          (socialMedia.at(i).get('phoneNumber')?.touched ||
+                            socialMedia.at(i).get('phoneNumber')?.dirty)
+                      }"
+                    />
+                  }
+                  <hr/>        
+                </div>
+
+                <div class="d-flex justify-content-center align-items-center">
+                  <i class="add-array-item-btn pi pi-plus-circle" (click)="addSocialMediaItem()"></i>
+                </div>
               </fieldset>
 
               <fieldset class="content-3-block" formGroupName="weightGoal">
