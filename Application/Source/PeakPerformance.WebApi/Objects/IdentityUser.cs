@@ -1,7 +1,4 @@
-﻿using PeakPerformance.Common.Enums;
-using PeakPerformance.Common.Extensions;
-using PeakPerformance.Common.Interfaces;
-using PeakPerformance.WebApi.Extensions;
+﻿using PeakPerformance.WebApi.Extensions;
 
 namespace PeakPerformance.WebApi.Objects;
 

@@ -5,11 +5,11 @@ import { take } from 'rxjs';
 
 export const jwtInterceptor: HttpInterceptorFn = (req, next) => {
   const authService = inject(AuthService);
-  const user = authService.currentUserSource();
+  const token = authService.getToken();
 
-  if (user) {
+  if (token) {
     req = req.clone({
-      headers: req.headers.set('Authorization', `Bearer ${user.token}`),
+      headers: req.headers.set('Authorization', `Bearer ${token}`),
     });
   }
 
