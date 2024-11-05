@@ -1,4 +1,5 @@
 ﻿global using Microsoft.EntityFrameworkCore;
+global using PeakPerformance.Common;
 global using PeakPerformance.Common.Enums;
 global using PeakPerformance.Common.Extensions;
 global using PeakPerformance.Domain.Attributes;

@@ -6,8 +6,10 @@ public class WeightGoal : BaseAuditedDomain<long>, IConfigurableEntity
 
     public decimal TargetWeight { get; set; }
 
+    [Column(TypeName = Constants.DB_TYPE_DATE)]
     public DateTime StartDate { get; set; }
 
+    [Column(TypeName = Constants.DB_TYPE_DATE)]
     public DateTime EndDate { get; set; }
 
     //
