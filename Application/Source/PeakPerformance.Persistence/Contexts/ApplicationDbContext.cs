@@ -136,6 +136,10 @@ public partial class ApplicationDbContext : DbContext
                 entity.CreatedBy = userId;
             }
         }
+
+        ChangeTracker.Entries<ILoggerEntity>()
+            .Where(_ => _.State == EntityState.Added)
+            .ForEach(_ => _.Entity.RecordDate = now);
     }
 
     private (DateTime now, long userId) GetAuditInfo()

@@ -1,6 +1,6 @@
 ﻿namespace PeakPerformance.Domain.Entities.Application;
 
-public class UserActivityLog : BaseDomain<long>
+public class UserActivityLog : BaseDomain<long>, ILoggerEntity
 {
     public long UserId { get; set; }
 

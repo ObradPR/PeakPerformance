@@ -1,6 +1,6 @@
 ﻿namespace PeakPerformance.Domain.Entities.Application;
 
-public class ErrorLog : BaseDomain<long>, IConfigurableEntity
+public class ErrorLog : BaseDomain<long>, ILoggerEntity, IConfigurableEntity
 {
     public string Message { get; set; }
 
