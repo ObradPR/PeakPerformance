@@ -42,7 +42,9 @@ export class AuthService {
   signin(user: ISigninDto) {
     return this.authController.Signin(user).pipe(
       map((result) => {
-        if (result) this.setCurrentUser(result);
+        if (result)
+          this.setCurrentUser(result);
+
         return result;
       })
     );
@@ -67,9 +69,6 @@ export class AuthService {
   }
 
   setCurrentUser(result: IAuthorizationDto) {
-    // ==============
-    this.sharedService.fromSignupSignal.set(true);
-    // ==============
     const tokenInfo = this.getDecodedToken(result.token);
 
     const userSource: IUserSource = {
