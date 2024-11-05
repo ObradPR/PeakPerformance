@@ -3,7 +3,6 @@ import { eInjuryType } from './enums';
 import { eSocialMediaPlatform } from './enums';
 import { eTrainingGoal } from './enums';
 
-
 export interface IBodyMeasurementDto {
 	waist?: number;
 	hips?: number;

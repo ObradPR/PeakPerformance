@@ -71,10 +71,10 @@ export function injuryStartDateValidator(): ValidatorFn {
     const today = new Date();
 
     const yearAgo = new Date(today);
-    yearAgo.setMonth(today.getFullYear() - 1);
+    yearAgo.setFullYear(today.getFullYear() - 1);
 
     const yearFromNow = new Date(today);
-    yearFromNow.setMonth(today.getMonth() + 1);
+    yearFromNow.setFullYear(today.getFullYear() + 1);
 
     if (startDate < yearAgo || startDate > yearFromNow) {
       return { dateOutOfRange: true }

@@ -86,9 +86,9 @@ export class AccountSetupComponent implements OnInit {
   private formInit() {
     this.form = this.fb.group({
       weight: this.fb.group({
-        weight: [103.8, [Validators.min(20.1), Validators.max(999.9)]],
-        weightUnitId: [1, [Validators.required]],
-        bodyFatPercentage: [15, [Validators.min(1.1), Validators.max(99.9)]],
+        weight: [null, [Validators.min(20.1), Validators.max(999.9)]],
+        weightUnitId: [null, [Validators.required]],
+        bodyFatPercentage: [null, [Validators.min(1.1), Validators.max(99.9)]],
       }),
       bodyMeasurement: this.fb.group({
         waist: [null, [Validators.min(20.1), Validators.max(999.9)]],
@@ -104,49 +104,49 @@ export class AccountSetupComponent implements OnInit {
         leftThigh: [null, [Validators.min(20.1), Validators.max(999.9)]],
         rightCalf: [null, [Validators.min(20.1), Validators.max(999.9)]],
         leftCalf: [null, [Validators.min(20.1), Validators.max(999.9)]],
-        measurementUnitId: [4, [Validators.required]],
+        measurementUnitId: [null, [Validators.required]],
       }),
       userTrainingGoal: this.fb.group(
         {
-          trainingGoalId: [1, [Validators.required]],
+          trainingGoalId: [null, [Validators.required]],
           startDate: [
-            new Date("2024-10-10"),
+            null,
             [Validators.required, validators.goalStartDateValidator()],
           ],
-          endDate: [new Date("2024-11-10")],
+          endDate: [null],
         },
         { validators: validators.endDateAfterStartDate('startDate', 'endDate') }
       ),
       weightGoal: this.fb.group(
         {
           targetWeight: [
-            203,
+            null,
             [Validators.required, Validators.min(20.1), Validators.max(999.9)],
           ],
           startDate: [
-            new Date("2024-10-10"),
+            null,
             [Validators.required, validators.goalStartDateValidator()],
           ],
-          endDate: [new Date("2024-11-10"), [Validators.required]],
+          endDate: [null, [Validators.required]],
         },
         { validators: validators.endDateAfterStartDate('startDate', 'endDate') }
       ),
       bodyFatGoal: this.fb.group(
         {
           targetBodyFatPercentage: [
-            10,
+            null,
             [Validators.required, Validators.min(1.1), Validators.max(99.9)],
           ],
           startDate: [
-            new Date("2024-10-10"),
+            null,
             [Validators.required, validators.goalStartDateValidator()],
           ],
-          endDate: [new Date("2024-11-10"), [Validators.required]],
+          endDate: [null, [Validators.required]],
         },
         { validators: validators.endDateAfterStartDate('startDate', 'endDate') }
       ),
       image: [null],
-      description: ["moj desc", [Validators.maxLength(500)]],
+      description: [null, [Validators.maxLength(500)]],
       receiveNews: [false],
       socialMedia: this.fb.array([]),
       healthInformation: this.fb.array([]),
