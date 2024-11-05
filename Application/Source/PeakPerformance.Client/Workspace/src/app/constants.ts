@@ -8,7 +8,11 @@ export class Constants {
   static FORM_ANIMATION_PERIOD = 150;
 
   // Local Storage
-  static AUTH_TOKEN = 'auth-token';
+  static AUTH_TOKEN = 'token';
+
+  // Messages
+  static SUCCESS = 'Success';
+  static SUCCESS_MESSAGE = 'Successfully done.';
 
   // Errors
   static ERROR_BAD_REQUEST = 'Bad request';

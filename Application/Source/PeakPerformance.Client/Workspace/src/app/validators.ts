@@ -54,7 +54,30 @@ export function goalStartDateValidator(): ValidatorFn {
     sixMonthsFromNow.setMonth(today.getMonth() + 6);
 
     if (startDate < sixMonthsAgo || startDate > sixMonthsFromNow) {
-      return { dateOutOfRange: true };
+      return { dateOutOfRange: true }
+    }
+
+    return null;
+  };
+}
+
+export function injuryStartDateValidator(): ValidatorFn {
+  return (control: AbstractControl) => {
+    if (!control.value) {
+      return null;
+    }
+
+    const startDate = new Date(control.value);
+    const today = new Date();
+
+    const yearAgo = new Date(today);
+    yearAgo.setMonth(today.getFullYear() - 1);
+
+    const yearFromNow = new Date(today);
+    yearFromNow.setMonth(today.getMonth() + 1);
+
+    if (startDate < yearAgo || startDate > yearFromNow) {
+      return { dateOutOfRange: true }
     }
 
     return null;
@@ -98,7 +121,12 @@ export function socialMediaValidator(platformIdKey: string, linkKey: string, pho
   };
 }
 
-export function platformLinkValidator(platformIdKey: string, linkKey: string, phoneKey: string, referenceService: Providers): ValidatorFn {
+export function platformLinkValidator(
+  platformIdKey: string,
+  linkKey: string,
+  phoneKey: string,
+  referenceService: Providers
+): ValidatorFn {
   return (formGroup: AbstractControl): ValidationErrors | null => {
     const platform = formGroup.get(platformIdKey)?.value;
     const linkValue = formGroup.get(linkKey)?.value;
@@ -112,6 +140,7 @@ export function platformLinkValidator(platformIdKey: string, linkKey: string, ph
         .find(_ => _.id === +platform.id)?.name.toLowerCase();
 
       const isValidLink = linkValue.startsWith('https://') && linkValue.includes(platformName);
+
 
       if (!isValidLink) {
         link?.setErrors({ invalidPlatformLink: true });

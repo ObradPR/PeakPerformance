@@ -1,4 +1,4 @@
-import { Component, effect, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { SharedService } from '../../services/shared.service';
 import { AccountSetupComponent } from './account-setup/account-setup.component';
 
@@ -10,13 +10,9 @@ import { AccountSetupComponent } from './account-setup/account-setup.component';
   styleUrl: './hub.component.scss',
 })
 export class HUBComponent implements OnInit {
-  showAccountSetup: boolean = false;
+  showAccountSetup = this.sharedService.fromSignupSignal;
 
-  constructor(private sharedService: SharedService) {
-    effect(() => {
-      if (this.sharedService.fromSignupSignal()) this.showAccountSetup = true;
-    });
-  }
+  constructor(private sharedService: SharedService) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 }

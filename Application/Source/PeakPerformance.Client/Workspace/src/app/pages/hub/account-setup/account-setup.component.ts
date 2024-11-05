@@ -21,6 +21,12 @@ import { Providers } from '../../../_generated/providers';
 import { RequiredMarkComponent } from '../../../components/required-mark/required-mark.component';
 import { Constants } from '../../../constants';
 import * as validators from '../../../validators';
+import { UserService } from '../../../services/user.service';
+import { ToastService } from '../../../services/toast.service';
+import { IEnumProvider } from '../../../_generated/interfaces';
+import { DropdownResetDirective } from '../../../directives/dropdown-reset.directive';
+import { eMeasurementUnit, eSocialMediaPlatform } from '../../../_generated/enums';
+import { SharedService } from '../../../services/shared.service';
 
 @Component({
   selector: 'app-account-setup',
@@ -39,6 +45,7 @@ import * as validators from '../../../validators';
     FileUploadModule,
     InputTextareaModule,
     InputMaskModule,
+    DropdownResetDirective
   ],
   templateUrl: './account-setup.component.html',
   styleUrl: './account-setup.component.scss',
@@ -47,39 +54,41 @@ export class AccountSetupComponent implements OnInit {
   form: FormGroup = this.fb.group({});
   maxProfilePictureSize = Constants.IMAGE_MAX_SIZE_BYTE;
   uploadedPicture: any = null;
+  eSocialMediaPlatform = eSocialMediaPlatform;
 
-  constructor(private fb: FormBuilder, private renderer: Renderer2, private referenceService: Providers) { }
+  constructor(
+    private fb: FormBuilder,
+    private referenceService: Providers,
+    private userService: UserService,
+    private toastService: ToastService,
+    private sharedService: SharedService
+  ) { }
 
-  // =============
-  cities: any = [
-    { name: 'New York', code: 'NY' },
-    { name: 'Rome', code: 'RM' },
-    { name: 'London', code: 'LDN' },
-    { name: 'Istanbul', code: 'IST' },
-    { name: 'Paris', code: 'PRS' },
-  ];
-  platforms: any = [
-    { id: 1, name: 'WhatsApp', type: 'phone', url: null },
-    { id: 3, name: 'Instagram', type: 'link', url: "https://instagram.com/" },
-    // Add other platforms as needed
-  ];
-
-  selectedCity: any;
+  weightPreferenceUnits: IEnumProvider[] = [];
+  measurementPreferenceUnits: IEnumProvider[] = [];
+  trainingGoals: IEnumProvider[] = [];
+  platforms: IEnumProvider[] = [];
+  injuries: IEnumProvider[] = [];
 
   ngOnInit() {
     this.formInit();
+    this.formDataInit();
   }
 
   get socialMedia(): FormArray {
     return this.form.get('socialMedia') as FormArray;
   }
 
+  get healthInformation(): FormArray {
+    return this.form.get('healthInformation') as FormArray;
+  }
+
   private formInit() {
     this.form = this.fb.group({
       weight: this.fb.group({
-        weight: [null, [Validators.min(20.1), Validators.max(999.9)]],
-        weightUnitId: [null, [Validators.required]],
-        bodyFatPercentage: [null, [Validators.min(1.1), Validators.max(99.9)]],
+        weight: [103.8, [Validators.min(20.1), Validators.max(999.9)]],
+        weightUnitId: [1, [Validators.required]],
+        bodyFatPercentage: [15, [Validators.min(1.1), Validators.max(99.9)]],
       }),
       bodyMeasurement: this.fb.group({
         waist: [null, [Validators.min(20.1), Validators.max(999.9)]],
@@ -95,51 +104,52 @@ export class AccountSetupComponent implements OnInit {
         leftThigh: [null, [Validators.min(20.1), Validators.max(999.9)]],
         rightCalf: [null, [Validators.min(20.1), Validators.max(999.9)]],
         leftCalf: [null, [Validators.min(20.1), Validators.max(999.9)]],
-        measurementUnitId: [null, [Validators.required]],
+        measurementUnitId: [4, [Validators.required]],
       }),
       userTrainingGoal: this.fb.group(
         {
-          trainingGoalId: [null, [Validators.required]],
+          trainingGoalId: [1, [Validators.required]],
           startDate: [
-            null,
+            new Date("2024-10-10"),
             [Validators.required, validators.goalStartDateValidator()],
           ],
-          endDate: [null],
+          endDate: [new Date("2024-11-10")],
         },
         { validators: validators.endDateAfterStartDate('startDate', 'endDate') }
       ),
       weightGoal: this.fb.group(
         {
           targetWeight: [
-            null,
+            203,
             [Validators.required, Validators.min(20.1), Validators.max(999.9)],
           ],
           startDate: [
-            null,
+            new Date("2024-10-10"),
             [Validators.required, validators.goalStartDateValidator()],
           ],
-          endDate: [null, [Validators.required]],
+          endDate: [new Date("2024-11-10"), [Validators.required]],
         },
         { validators: validators.endDateAfterStartDate('startDate', 'endDate') }
       ),
       bodyFatGoal: this.fb.group(
         {
           targetBodyFatPercentage: [
-            null,
+            10,
             [Validators.required, Validators.min(1.1), Validators.max(99.9)],
           ],
           startDate: [
-            null,
+            new Date("2024-10-10"),
             [Validators.required, validators.goalStartDateValidator()],
           ],
-          endDate: [null, [Validators.required]],
+          endDate: [new Date("2024-11-10"), [Validators.required]],
         },
         { validators: validators.endDateAfterStartDate('startDate', 'endDate') }
       ),
       image: [null],
-      description: [null, [Validators.maxLength(500)]],
+      description: ["moj desc", [Validators.maxLength(500)]],
       receiveNews: [false],
       socialMedia: this.fb.array([]),
+      healthInformation: this.fb.array([]),
     });
   }
 
@@ -161,22 +171,100 @@ export class AccountSetupComponent implements OnInit {
 
   addSocialMediaItem() {
     this.socialMedia.push(this.createSocialMediaItem());
-    console.log(this.form.value);
   }
 
   removeSocialMediaItem(index: number) {
     this.socialMedia.removeAt(index);
   }
 
+  createHealthInformationItem(): FormGroup {
+    return this.fb.group(
+      {
+        injuryTypeId: [null, [Validators.required]],
+        description: [null, [Validators.required]],
+        startDate: [null, [validators.injuryStartDateValidator()]],
+        endDate: [null]
+      },
+      { validators: validators.endDateAfterStartDate('startDate', 'endDate') }
+    );
+  }
+
+  addHealthInformationItem() {
+    this.healthInformation.push(this.createHealthInformationItem());
+  }
+
+  removeHealthInformationItem(index: number) {
+    this.healthInformation.removeAt(index);
+  }
+
   onProfilePictureSelect(event: FileSelectEvent) {
-    console.log(event);
     const file = event.currentFiles[0];
     this.form.patchValue({ image: file });
   }
 
-  onSubmit() {
-    console.log(this.form.invalid ? 'nevalja' : 'valja');
-    console.log(this.form.value);
-    console.log(this.form)
+  async onSubmit() {
+    if (this.form.invalid) {
+      this.toastService.showError('Failed', 'Check your data!');
+      return;
+    }
+
+    try {
+      const formData = this.createFormData(this.form.value);
+      await this.userService.profileSetup(formData).toResult();
+    } catch (ex) {
+      throw ex;
+    } finally {
+      this.toastService.showGeneralSuccess();
+      this.sharedService.fromSignupSignal.set(false);
+    }
+  }
+
+  private createFormData(formValue: any): FormData {
+    const formData = new FormData();
+
+    this.appendFormFields(formData, formValue);
+    return formData;
+  }
+
+  private appendFormFields(formData: FormData, formValues: any, parentKey: string = '') {
+    for (const key in formValues) {
+      if (formValues[key] !== null && formValues[key] !== undefined) {
+        const formKey = parentKey ? `${parentKey}.${key}` : key;
+
+        if (formValues[key] instanceof File) {
+          formData.append(formKey, formValues[key]);
+        } else if (Array.isArray(formValues[key])) {
+          formValues[key].forEach((value: any, index: any) => {
+            this.appendFormFields(formData, value, `${formKey}[${index}]`);
+          });
+        } else if (formValues[key] instanceof Date) {
+          formData.append(formKey, formValues[key].toISOString());
+        } else if (typeof formValues[key] === 'object') {
+          this.appendFormFields(formData, formValues[key], formKey);
+        } else {
+          formData.append(formKey, formValues[key]);
+        }
+      }
+    }
+  }
+
+  private formDataInit() {
+    this.trainingGoals = this.referenceService.getTrainingGoals();
+    this.platforms = this.referenceService.getSocialMediaPlatforms();
+    this.injuries = this.referenceService.getInjuryTypes();
+
+    this.referenceService.getMeasurementUnits()
+      .map(_ => {
+        if (_.id === eMeasurementUnit.NotSet) {
+          this.measurementPreferenceUnits.push(_);
+          this.weightPreferenceUnits.push(_);
+        }
+        else if (_.id === eMeasurementUnit.Kilograms || _.id === eMeasurementUnit.Pounds) {
+          this.weightPreferenceUnits.push(_);
+        }
+        else {
+          this.measurementPreferenceUnits.push(_);
+        }
+      });
   }
 }

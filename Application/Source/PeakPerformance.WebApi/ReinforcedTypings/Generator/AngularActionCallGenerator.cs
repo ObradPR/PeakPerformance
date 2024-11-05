@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.OData.Query;
 using Reinforced.Typings;
@@ -20,6 +19,19 @@ public class AngularActionCallGenerator : MethodCodeGenerator
         if (result is null)
         {
             return null;
+        }
+
+        // Check parameters for [FromForm] attribute
+        var Parameters = element.GetParameters();
+        for (int i = 0; i < Parameters.Length; i++)
+        {
+            var parameter = Parameters[i];
+            var fromFormAttribute = parameter.GetCustomAttribute<FromFormAttribute>();
+            if (fromFormAttribute != null)
+            {
+                // If [FromForm] is present, set the parameter type to FormData
+                result.Arguments[i].Type = new RtSimpleTypeName("FormData");
+            }
         }
 
         var returnType = result.ReturnType;

@@ -6,13 +6,21 @@ import { Constants } from '../constants';
   providedIn: 'root',
 })
 export class ToastService {
-  constructor(private messageService: MessageService) {}
+  constructor(private messageService: MessageService) { }
 
   showSuccess(title: string, message: string) {
     this.messageService.add({
       severity: 'success',
       summary: title,
       detail: message,
+    });
+  }
+
+  showGeneralSuccess() {
+    this.messageService.add({
+      severity: 'success',
+      summary: Constants.SUCCESS,
+      detail: Constants.SUCCESS_MESSAGE,
     });
   }
 

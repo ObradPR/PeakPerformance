@@ -37,12 +37,12 @@ export class AuthService {
     private authController: AuthController,
     private storageService: StorageService,
     private sharedService: SharedService
-  ) {}
+  ) { }
 
   signin(user: ISigninDto) {
     return this.authController.Signin(user).pipe(
       map((result) => {
-        if (result) this.setCurrentUser(result, RouteConstants.ROUTE_SIGN_IN);
+        if (result) this.setCurrentUser(result);
         return result;
       })
     );
@@ -51,7 +51,10 @@ export class AuthService {
   signup(user: ISignupDto) {
     return this.authController.Signup(user).pipe(
       map((result) => {
-        if (result) this.setCurrentUser(result, RouteConstants.ROUTE_SIGN_UP);
+        if (result) {
+          this.sharedService.fromSignupSignal.set(true);
+          this.setCurrentUser(result);
+        }
         return result;
       })
     );
@@ -63,7 +66,10 @@ export class AuthService {
     this.router.navigateByUrl(RouteConstants.ROUTE_HOME);
   }
 
-  setCurrentUser(result: IAuthorizationDto, action: string) {
+  setCurrentUser(result: IAuthorizationDto) {
+    // ==============
+    this.sharedService.fromSignupSignal.set(true);
+    // ==============
     const tokenInfo = this.getDecodedToken(result.token);
 
     const userSource: IUserSource = {
@@ -82,9 +88,6 @@ export class AuthService {
     this.storageService.set(Constants.AUTH_TOKEN, result.token);
     this.currentUserSource.set(userSource);
 
-    if (action === RouteConstants.ROUTE_SIGN_UP) {
-      this.sharedService.fromSignupSignal.set(true);
-    }
     this.router.navigateByUrl(RouteConstants.ROUTE_HUB_HOME);
   }
 

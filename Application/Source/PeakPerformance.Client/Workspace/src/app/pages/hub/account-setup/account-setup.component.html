@@ -15,9 +15,11 @@
                   <span class="p-float-label" formGroupName="weight">
                     <p-dropdown
                       inputId="weight-preference"
-                      [options]="cities"
-                      optionLabel="name"
+                      [options]="weightPreferenceUnits"
+                      optionLabel="description"
+                      optionValue="id"
                       formControlName="weightUnitId"
+                      [appDropdownReset]="0"
                     />
                     <label for="weight-preference"
                       >Weight Preference<app-required-mark
@@ -26,9 +28,11 @@
                   <span class="p-float-label" formGroupName="bodyMeasurement">
                     <p-dropdown
                       inputId="measurement-preference"
-                      [options]="cities"
-                      optionLabel="name"
+                      [options]="measurementPreferenceUnits"
+                      optionLabel="description"
+                      optionValue="id"
                       formControlName="measurementUnitId"
+                      [appDropdownReset]="0"
                     />
                     <label for="measurement-preference"
                       >Measurement Preference<app-required-mark
@@ -453,9 +457,11 @@
                 <span class="p-float-label">
                   <p-dropdown
                     inputId="training-goal"
-                    [options]="cities"
-                    optionLabel="name"
+                    [options]="trainingGoals"
+                    optionLabel="description"
+                    optionValue="id"
                     formControlName="trainingGoalId"
+                    [appDropdownReset]="0"
                   />
                   <label for="training-goal"
                     >Training Goal<app-required-mark
@@ -466,6 +472,8 @@
                     <p-calendar
                       inputId="training-goal-start"
                       formControlName="startDate"
+                      dateFormat="dd.mm.yy"
+                      appendTo="body"       
                     ></p-calendar>
                     <label for="training-goal-start"
                       >Start<app-required-mark
@@ -475,6 +483,8 @@
                     <p-calendar
                       inputId="training-goal-end"
                       formControlName="endDate"
+                      dateFormat="dd.mm.yy"
+                      appendTo="body"  
                     ></p-calendar>
                     <label for="training-goal-end">End</label>
                   </span>
@@ -512,6 +522,8 @@
                     <p-calendar
                       inputId="weight-goal-start"
                       formControlName="startDate"
+                      dateFormat="dd.mm.yy"
+                      appendTo="body"  
                     ></p-calendar>
                     <label for="weight-goal-start"
                       >Start<app-required-mark
@@ -521,6 +533,8 @@
                     <p-calendar
                       inputId="weight-goal-end"
                       formControlName="endDate"
+                      dateFormat="dd.mm.yy"
+                      appendTo="body"  
                     ></p-calendar>
                     <label for="weight-goal-end"
                       >End<app-required-mark
@@ -566,6 +580,8 @@
                     <p-calendar
                       inputId="bodyfat-goal-start"
                       formControlName="startDate"
+                      dateFormat="dd.mm.yy"
+                      appendTo="body"  
                     ></p-calendar>
                     <label for="bodyfat-goal-start"
                       >Start<app-required-mark
@@ -575,6 +591,8 @@
                     <p-calendar
                       inputId="bodyfat-goal-end"
                       formControlName="endDate"
+                      dateFormat="dd.mm.yy"
+                      appendTo="body"  
                     ></p-calendar>
                     <label for="bodyfat-goal-end"
                       >End<app-required-mark
@@ -675,13 +693,37 @@
                     <p-dropdown
                       [inputId]="'platform-' + i"
                       [options]="platforms"
-                      optionLabel="name"
+                      optionLabel="description"
+                      optionValue="id"
                       formControlName="platformId"
+                      [appDropdownReset]="0"
                     />
                     <label [for]="'platform-' + i">Platform<app-required-mark/></label>
                   </span>
 
-                  @if(socialMedia.at(i).get('platformId')?.value?.type === 'link'){
+                  @if([eSocialMediaPlatform.WhatsApp, eSocialMediaPlatform.Telegram].includes(socialMedia.at(i).get('platformId')?.value)){      
+                    <p-inputMask
+                      mask="999-999-9999"
+                      placeholder="Phone Number"
+                      formControlName="phoneNumber"
+                      pTooltip="Phone is required."
+                      tooltipPosition="top"
+                      tooltipEvent="focus"
+                      [tooltipDisabled]="
+                        !(
+                          socialMedia.at(i).get('phoneNumber')?.touched &&
+                          socialMedia.at(i).get('phoneNumber')?.invalid
+                        )
+                      "
+                      [ngClass]="{
+                        'is-invalid':
+                          socialMedia.at(i).get('phoneNumber')?.invalid &&
+                          (socialMedia.at(i).get('phoneNumber')?.touched ||
+                            socialMedia.at(i).get('phoneNumber')?.dirty)
+                      }"
+                    />
+                  }
+                  @else {
                     <input
                       type="text"
                       [id]="'link-' + i"
@@ -705,28 +747,6 @@
                       }"
                     />
                   }
-                  @else if(socialMedia.at(i).get('platformId')?.value?.type === 'phone'){
-                    <p-inputMask
-                      mask="999-999-9999"
-                      placeholder="Phone Number"
-                      formControlName="phoneNumber"
-                      pTooltip="Phone is required."
-                      tooltipPosition="top"
-                      tooltipEvent="focus"
-                      [tooltipDisabled]="
-                        !(
-                          socialMedia.at(i).get('phoneNumber')?.touched &&
-                          socialMedia.at(i).get('phoneNumber')?.invalid
-                        )
-                      "
-                      [ngClass]="{
-                        'is-invalid':
-                          socialMedia.at(i).get('phoneNumber')?.invalid &&
-                          (socialMedia.at(i).get('phoneNumber')?.touched ||
-                            socialMedia.at(i).get('phoneNumber')?.dirty)
-                      }"
-                    />
-                  }
                   <hr/>        
                 </div>
 
@@ -735,8 +755,81 @@
                 </div>
               </fieldset>
 
-              <fieldset class="content-3-block" formGroupName="weightGoal">
+              <fieldset class="content-3-block" formArrayName="healthInformation">
                 <legend>Health information</legend>
+                <div
+                *ngFor="let item of healthInformation.controls; let i = index"
+                [formGroupName]="i"
+                class="d-flex flex-column align-center justify-content-center position-relative"
+              >
+                <span>
+                  <i class="pi pi-times float-end" (click)="removeHealthInformationItem(i)"></i>
+                </span>
+
+                <span class="p-float-label">
+                  <p-dropdown
+                    [inputId]="'injury-' + i"
+                    [options]="injuries"
+                    optionLabel="description"
+                    optionValue="id"
+                    formControlName="injuryTypeId"
+                    [appDropdownReset]="0"
+                  />
+                  <label [for]="'injury-' + i">Injuries<app-required-mark/></label>
+                </span>
+
+                <span class="p-float-label">
+                  <textarea
+                    [id]="'health-description-' + i"
+                    rows="5"
+                    cols="30"
+                    pInputTextarea
+                    formControlName="description"
+                    pTooltip="Description is required."
+                    tooltipPosition="top"
+                    tooltipEvent="focus"
+                    [tooltipDisabled]="
+                      !(
+                        healthInformation.at(i).get('description')?.touched &&
+                        healthInformation.at(i).get('description')?.invalid
+                      )
+                    "
+                    [ngClass]="{
+                      'is-invalid':
+                        healthInformation.at(i).get('description')?.invalid &&
+                        (healthInformation.at(i).get('description')?.touched ||
+                          healthInformation.at(i).get('description')?.dirty)
+                    }"
+                  ></textarea>
+                  <label [for]="'health-description-' + i">Description</label>
+                </span>
+
+                <div class="d-flex justify-content-between">
+                  <span class="p-float-label" style="width: 47%">
+                    <p-calendar
+                      [inputId]="'injury-start-' + i"
+                      formControlName="startDate"
+                      dateFormat="dd.mm.yy"
+                      appendTo="body"  
+                    ></p-calendar>
+                    <label [for]="'injury-start-' + i">Start</label>
+                  </span>
+                  <span class="p-float-label" style="width: 47%">
+                    <p-calendar
+                      [inputId]="'injury-end-' + i"
+                      formControlName="endDate"
+                      dateFormat="dd.mm.yy"
+                      appendTo="body"  
+                    ></p-calendar>
+                    <label [for]="'injury-end-' + i">End</label>
+                  </span>
+                </div>
+                <hr/>        
+              </div>
+
+              <div class="d-flex justify-content-center align-items-center">
+                <i class="add-array-item-btn pi pi-plus-circle" (click)="addHealthInformationItem()"></i>
+              </div>
               </fieldset>
             </div>
           </div>

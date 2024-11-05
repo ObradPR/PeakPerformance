@@ -1,20 +1,16 @@
 import { Component, input, OnInit, output } from '@angular/core';
 import {
-  FormBuilder,
-  FormGroup,
   FormsModule,
-  ReactiveFormsModule,
-  Validators,
+  ReactiveFormsModule
 } from '@angular/forms';
 import { InputOtpModule } from 'primeng/inputotp';
-import { AuthService } from '../../../services/auth.service';
-import { ToastService } from '../../../services/toast.service';
 import {
   ISignupDto,
   IValidateUserCodeDto,
   IValidateUserDto,
 } from '../../../_generated/interfaces';
-import { emit } from 'process';
+import { AuthService } from '../../../services/auth.service';
+import { ToastService } from '../../../services/toast.service';
 
 @Component({
   selector: 'app-code-verification',
@@ -32,9 +28,9 @@ export class CodeVerificationComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private toastService: ToastService
-  ) {}
+  ) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   async onCodeVerify() {
     if (this.signupUser()) {
