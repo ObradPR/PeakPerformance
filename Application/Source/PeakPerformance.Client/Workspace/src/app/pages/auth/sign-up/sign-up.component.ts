@@ -43,7 +43,7 @@ export class SignUpComponent implements OnInit {
     private fb: FormBuilder,
     private authService: AuthService,
     private toastService: ToastService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.initializeForm();
@@ -100,7 +100,10 @@ export class SignUpComponent implements OnInit {
   }
 
   async onSignup() {
-    if (this.signupForm.invalid) return;
+    if (this.signupForm.invalid) {
+      this.toastService.showFormError();
+      return;
+    }
 
     const signupUser: ISignupDto = this.signupForm.value;
 

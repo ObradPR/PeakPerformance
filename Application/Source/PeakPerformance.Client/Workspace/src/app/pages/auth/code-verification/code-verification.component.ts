@@ -37,7 +37,7 @@ export class CodeVerificationComponent implements OnInit {
       try {
         this.signupUser()!.verificationCode = +this.codeValue;
         await this.authService.signup(this.signupUser()!).toResult();
-        this.toastService.showSuccess('Success', 'Successfully signed up.');
+        this.toastService.showGeneralSuccess();
       } catch (ex) {
         throw ex;
       } finally {

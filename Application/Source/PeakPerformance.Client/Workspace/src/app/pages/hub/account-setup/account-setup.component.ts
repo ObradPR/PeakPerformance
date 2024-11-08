@@ -204,7 +204,7 @@ export class AccountSetupComponent implements OnInit {
 
   async onSubmit() {
     if (this.form.invalid) {
-      this.toastService.showError('Failed', 'Check your data!');
+      this.toastService.showFormError();
       return;
     }
 

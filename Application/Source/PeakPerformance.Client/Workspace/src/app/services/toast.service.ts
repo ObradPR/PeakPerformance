@@ -55,4 +55,12 @@ export class ToastService {
       detail: Constants.ERROR_SERVER_MESSAGE,
     });
   }
+
+  showFormError() {
+    this.messageService.add({
+      severity: 'error',
+      summary: Constants.FAILED,
+      detail: Constants.FAILED_DATA_MESSAGE,
+    });
+  }
 }

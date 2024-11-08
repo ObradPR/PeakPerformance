@@ -13,6 +13,8 @@ export class Constants {
   // Messages
   static SUCCESS = 'Success';
   static SUCCESS_MESSAGE = 'Successfully done.';
+  static FAILED = 'Failed';
+  static FAILED_DATA_MESSAGE = 'Check your data!';
 
   // Errors
   static ERROR_BAD_REQUEST = 'Bad request';

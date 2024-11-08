@@ -47,7 +47,7 @@ export class PasswordRecoveryComponent implements OnInit {
     private fb: FormBuilder,
     private authService: AuthService,
     private toastService: ToastService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.initializeForm();
@@ -97,7 +97,10 @@ export class PasswordRecoveryComponent implements OnInit {
   }
 
   async onPasswordChange() {
-    if (this.passwordChangeForm.invalid) return;
+    if (this.passwordChangeForm.invalid) {
+      this.toastService.showFormError();
+      return;
+    }
 
     const user: IChangePasswordDto = {
       username: this.passwordRecoveryUser()?.username!,
@@ -108,11 +111,7 @@ export class PasswordRecoveryComponent implements OnInit {
 
     try {
       await this.authService.changePassword(user).toResult();
-      this.toastService.showSuccess(
-        'Success',
-        'Successfully changed password.'
-      );
-
+      this.toastService.showGeneralSuccess();
       this.onBackToSignin();
     } catch (ex) {
       throw ex;
