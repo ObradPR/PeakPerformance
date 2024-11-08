@@ -1,4 +1,6 @@
-﻿using PeakPerformance.Application.Dtos.Users;
+﻿using PeakPerformance.Application.Dtos.Emails;
+using PeakPerformance.Application.Dtos.Users;
+using PeakPerformance.Application.Interfaces;
 using PeakPerformance.Infrastructure.Storage.Interfaces;
 using HealthInformation_ = PeakPerformance.Domain.Entities.Application.HealthInformation;
 using SocialMedia_ = PeakPerformance.Domain.Entities.Application.SocialMedia;
@@ -9,7 +11,7 @@ public class ProfileSetupCommand(ProfileSetupDto data) : BaseCommand<Unit>
 {
     public ProfileSetupDto Data { get; set; } = data;
 
-    public class ProfileSetupCommandHandler(IUnitOfWork unitOfWork, IIdentityUser identityUser, ICloudinaryService cloudinaryService)
+    public class ProfileSetupCommandHandler(IUnitOfWork unitOfWork, IIdentityUser identityUser, ICloudinaryService cloudinaryService, IEmailService emailService)
         : BaseCommandHandler<ProfileSetupCommand, Unit>(unitOfWork, identityUser)
     {
         public override async Task<Unit> Handle(ProfileSetupCommand request, CancellationToken cancellationToken)
@@ -68,6 +70,31 @@ public class ProfileSetupCommand(ProfileSetupDto data) : BaseCommand<Unit>
             var user = await _unitOfWork.UserRepository.GetByIdAsync(userId);
             user.Description = data.Description;
             user.ReceiveAppNews = data.ReceiveNews;
+
+            if (data.ReceiveNews)
+            {
+                await emailService.SendEmailAsync(new EmailDto
+                {
+                    ToEmail = user.Email,
+                    Subject = "News Subscription",
+                    Body = $@"
+                        <h2>Successfully Subscribed to PeakPerformance Updates!</h2>
+                        <p>Hi {user.FullName},</p>
+                        <p>Thank you for subscribing to our news updates! We’re excited to keep you in the loop with the latest on fitness, health tips, app updates, and exclusive content crafted just for our community.</p>
+
+                        <p>Here’s what you can expect:</p>
+                        <ul>
+                            <li><strong>Fitness Tips:</strong> Professional advice to help you reach your goals.</li>
+                            <li><strong>App Updates:</strong> Be the first to know about new features and improvements.</li>
+                            <li><strong>Latest Blogs:</strong> Dive into articles on fitness, nutrition, and wellness.</li>
+                        </ul>
+
+                        <p>We’re here to support your fitness journey every step of the way!</p>
+
+                        <p>Best regards,<br>The PeakPerformance Team</p>
+                        <p><small>If you wish to unsubscribe at any time, you can do so from your profile settings.</small></p>"
+                });
+            }
 
             // Social Media
 
