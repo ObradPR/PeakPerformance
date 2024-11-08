@@ -18,7 +18,7 @@
 
 .p-tooltip {
   padding-bottom: 8px;
-  max-width: 300px;
+  max-width: 350px;
   width: auto;
   overflow: hidden;
   white-space: normal;
@@ -27,8 +27,9 @@
 .p-tooltip-text {
   padding: 0.5rem;
   width: auto;
-  max-width: 300px;
+  max-width: 350px;
   white-space: normal;
+  text-align:  center;
 }
 
 .p-tooltip-arrow {
