@@ -4,5 +4,11 @@ import { Injectable, signal } from '@angular/core';
   providedIn: 'root',
 })
 export class SharedService {
-  fromSignupSignal = signal<boolean>(false);
+  private fromSignup = signal<boolean>(false);
+
+  readonly fromSignupSignal = this.fromSignup.asReadonly();
+
+  setFromSignupSignal(value: boolean) {
+    this.fromSignup.set(value);
+  }
 }

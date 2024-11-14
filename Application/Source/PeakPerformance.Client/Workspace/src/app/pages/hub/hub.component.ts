@@ -10,9 +10,8 @@ import { AccountSetupComponent } from './account-setup/account-setup.component';
   styleUrl: './hub.component.scss',
 })
 export class HUBComponent implements OnInit {
-  showAccountSetup = this.sharedService.fromSignupSignal;
 
-  constructor(private sharedService: SharedService) { }
+  constructor(public sharedService: SharedService) { }
 
   ngOnInit(): void { }
 }

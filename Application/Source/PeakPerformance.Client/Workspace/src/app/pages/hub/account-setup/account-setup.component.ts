@@ -215,7 +215,7 @@ export class AccountSetupComponent implements OnInit {
       throw ex;
     } finally {
       this.toastService.showGeneralSuccess();
-      this.sharedService.fromSignupSignal.set(false);
+      this.sharedService.setFromSignupSignal(false);
     }
   }
 

@@ -43,14 +43,11 @@ export function goalStartDateValidator(): ValidatorFn {
       return null;
     }
 
-    const startDate = new Date(control.value);
-    const today = new Date();
+    const startDate = DateTime.fromJSDate(new Date(control.value));
+    const today = DateTime.now();
 
-    const sixMonthsAgo = new Date(today);
-    sixMonthsAgo.setMonth(today.getMonth() - 6);
-
-    const sixMonthsFromNow = new Date(today);
-    sixMonthsFromNow.setMonth(today.getMonth() + 6);
+    const sixMonthsAgo = today.minus({ months: 6 });
+    const sixMonthsFromNow = today.plus({ months: 6 });
 
     if (startDate < sixMonthsAgo || startDate > sixMonthsFromNow) {
       return { dateOutOfRange: true }
@@ -66,14 +63,11 @@ export function injuryStartDateValidator(): ValidatorFn {
       return null;
     }
 
-    const startDate = new Date(control.value);
-    const today = new Date();
+    const startDate = DateTime.fromJSDate(new Date(control.value));
+    const today = DateTime.now();
 
-    const yearAgo = new Date(today);
-    yearAgo.setFullYear(today.getFullYear() - 1);
-
-    const yearFromNow = new Date(today);
-    yearFromNow.setFullYear(today.getFullYear() + 1);
+    const yearAgo = today.minus({ years: 1 });
+    const yearFromNow = today.plus({ years: 1 });
 
     if (startDate < yearAgo || startDate > yearFromNow) {
       return { dateOutOfRange: true }

@@ -54,7 +54,7 @@ export class AuthService {
     return this.authController.Signup(user).pipe(
       map((result) => {
         if (result) {
-          this.sharedService.fromSignupSignal.set(true);
+          this.sharedService.setFromSignupSignal(true);
           this.setCurrentUser(result);
         }
         return result;
