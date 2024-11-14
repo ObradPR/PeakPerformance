@@ -1,6 +1,7 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
+import { RouteConstants } from '../constants';
 
 export const guestGuard: CanActivateFn = (route, state) => {
   const authService = inject(AuthService);
@@ -11,7 +12,7 @@ export const guestGuard: CanActivateFn = (route, state) => {
   if (!token) {
     return true;
   } else {
-    router.navigateByUrl('/hub');
+    router.navigateByUrl(RouteConstants.ROUTE_HUB_DASHBOARD);
     return false;
   }
 };

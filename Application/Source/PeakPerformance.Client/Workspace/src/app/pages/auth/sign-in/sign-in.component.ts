@@ -13,6 +13,8 @@ import { ISigninDto } from '../../../_generated/interfaces';
 import { Constants, RouteConstants } from '../../../constants';
 import { AuthService } from '../../../services/auth.service';
 import { ToastService } from '../../../services/toast.service';
+import { LoaderService } from '../../../services/loader.service';
+import { SectionLoaderComponent } from '../../../components/section-loader/section-loader.component';
 
 @Component({
   selector: 'app-sign-in',
@@ -23,6 +25,7 @@ import { ToastService } from '../../../services/toast.service';
     ReactiveFormsModule,
     PasswordModule,
     TooltipModule,
+    SectionLoaderComponent
   ],
   templateUrl: './sign-in.component.html',
   styleUrl: './sign-in.component.scss',
@@ -35,11 +38,13 @@ export class SignInComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    public loaderService: LoaderService
   ) { }
 
   ngOnInit(): void {
     this.initializeForm();
+    this.loaderService.hidePageLoader();
   }
 
   private initializeForm() {
@@ -66,6 +71,8 @@ export class SignInComponent implements OnInit {
       return;
     }
 
+    this.loaderService.showSectionLoader();
+
     const signinUser: ISigninDto = this.signinForm.value;
 
     try {
@@ -74,7 +81,7 @@ export class SignInComponent implements OnInit {
     } catch (ex) {
       throw ex;
     } finally {
-      // this.pageLoader.hideLoader()
+      this.loaderService.hideSectionLoader();
     }
   }
 }

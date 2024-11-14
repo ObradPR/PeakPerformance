@@ -2,13 +2,15 @@ import { Component, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
 import { take } from 'rxjs';
-import { formAnimation } from '../../animations/form-animation';
+import { formAnimation } from '../../animations/form.animation';
 import { Constants, RouteConstants } from '../../constants';
 import { CodeVerificationComponent } from './code-verification/code-verification.component';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { ISignupDto, IValidateUserDto } from '../../_generated/interfaces';
 import { PasswordRecoveryComponent } from './password-recovery/password-recovery.component';
+import { createRoutePath } from '../../extensions/string.extension';
+import { LoaderService } from '../../services/loader.service';
 
 type TLayoutType = 'sign-in' | 'sign-up';
 type TUrlSegment = string | null | TLayoutType | undefined;
@@ -29,7 +31,7 @@ type TUrlSegment = string | null | TLayoutType | undefined;
 })
 export class AuthComponent implements OnInit {
   formType?: TUrlSegment;
-  isSigninForm = signal(true);
+  isSigninForm = signal(false);
   isSignupForm = signal(false);
   isCodeVerify = signal(false);
   isPasswordRecovery = signal(false);
@@ -51,20 +53,25 @@ export class AuthComponent implements OnInit {
     navSpeed: 1000,
   };
 
-  constructor(private route: ActivatedRoute, private router: Router) {}
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private loaderService: LoaderService
+  ) { }
 
   ngOnInit(): void {
+    this.loaderService.showPageLoader();
     this.takeUrlParam();
   }
 
   toggleForms(type: TUrlSegment, isSignin: boolean) {
     if (type === RouteConstants.ROUTE_SIGN_UP) {
       this.router.navigateByUrl(
-        RouteConstants.ROUTE_AUTH + '/' + RouteConstants.ROUTE_SIGN_UP
+        createRoutePath(RouteConstants.ROUTE_AUTH, RouteConstants.ROUTE_SIGN_UP)
       );
     } else if (type === RouteConstants.ROUTE_SIGN_IN) {
       this.router.navigateByUrl(
-        RouteConstants.ROUTE_AUTH + '/' + RouteConstants.ROUTE_SIGN_IN
+        createRoutePath(RouteConstants.ROUTE_AUTH, RouteConstants.ROUTE_SIGN_IN)
       );
     }
 

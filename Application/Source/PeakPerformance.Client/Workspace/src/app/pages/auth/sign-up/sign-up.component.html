@@ -228,7 +228,15 @@
 
     <div class="form-row">
       <div class="form-items-group-column">
-        <input type="submit" value="Sign up" />
+        <button class="btn-yellow" [disabled]="loaderService.sectionLoaderSignal()">
+          @if (loaderService.sectionLoaderSignal()) {
+            <app-section-loader/>
+          }
+          @else {
+            Sign up
+          }
+        </button>
+        <!-- <input type="submit" value="Sign up" /> -->
         <a class="already-have-acc-msg" (click)="onShowSignin()"
           >Already have an account? Sign in</a
         >

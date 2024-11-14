@@ -11,11 +11,13 @@ import {
 } from '../../../_generated/interfaces';
 import { AuthService } from '../../../services/auth.service';
 import { ToastService } from '../../../services/toast.service';
+import { LoaderService } from '../../../services/loader.service';
+import { SectionLoaderComponent } from '../../../components/section-loader/section-loader.component';
 
 @Component({
   selector: 'app-code-verification',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, InputOtpModule],
+  imports: [FormsModule, ReactiveFormsModule, InputOtpModule, SectionLoaderComponent],
   templateUrl: './code-verification.component.html',
   styleUrl: './code-verification.component.scss',
 })
@@ -27,12 +29,15 @@ export class CodeVerificationComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    public loaderService: LoaderService
   ) { }
 
   ngOnInit(): void { }
 
   async onCodeVerify() {
+    this.loaderService.showSectionLoader();
+
     if (this.signupUser()) {
       try {
         this.signupUser()!.verificationCode = +this.codeValue;
@@ -41,7 +46,7 @@ export class CodeVerificationComponent implements OnInit {
       } catch (ex) {
         throw ex;
       } finally {
-        // this.pageLoader.hideLoader();
+        this.loaderService.hideSectionLoader();
       }
     } else if (this.passwordRecoveryUser()) {
       const validateCode: IValidateUserCodeDto = {
@@ -60,7 +65,7 @@ export class CodeVerificationComponent implements OnInit {
       } catch (ex) {
         throw ex;
       } finally {
-        // this.pageLoader.hideLoader();
+        this.loaderService.hideSectionLoader();
       }
     }
   }

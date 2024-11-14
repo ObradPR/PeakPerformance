@@ -17,8 +17,8 @@ div.code-verification-holder {
     div.form-row {
       width: 100%;
 
-      [type="submit"] {
-        width: auto;
+      button.btn-yellow {
+        width: 30%;
         margin-bottom: 0.8rem;
       }
 

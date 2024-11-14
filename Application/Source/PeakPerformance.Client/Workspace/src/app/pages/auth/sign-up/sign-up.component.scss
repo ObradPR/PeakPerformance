@@ -54,13 +54,13 @@ div.sign-up-holder {
         width: 47%;
       }
 
-      [type="submit"],
+      button.btn-yellow,
       a.already-have-acc-msg,
       p {
         margin-bottom: 0.8rem;
       }
 
-      [type="submit"] {
+      button.btn-yellow {
         width: 25%;
         margin-top: 2rem;
       }

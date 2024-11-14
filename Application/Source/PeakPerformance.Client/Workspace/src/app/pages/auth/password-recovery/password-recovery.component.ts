@@ -19,6 +19,8 @@ import { Constants } from '../../../constants';
 import { AuthService } from '../../../services/auth.service';
 import { ToastService } from '../../../services/toast.service';
 import * as validators from '../../../validators';
+import { SectionLoaderComponent } from '../../../components/section-loader/section-loader.component';
+import { LoaderService } from '../../../services/loader.service';
 
 @Component({
   selector: 'app-password-recovery',
@@ -31,6 +33,7 @@ import * as validators from '../../../validators';
     InputMaskModule,
     PasswordModule,
     DividerModule,
+    SectionLoaderComponent
   ],
   templateUrl: './password-recovery.component.html',
   styleUrl: './password-recovery.component.scss',
@@ -46,7 +49,8 @@ export class PasswordRecoveryComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    public loaderService: LoaderService
   ) { }
 
   ngOnInit(): void {
@@ -75,7 +79,12 @@ export class PasswordRecoveryComponent implements OnInit {
   }
 
   async onPasswordRecovery() {
-    if (this.passwordRecoveryForm.invalid) return;
+    if (this.passwordRecoveryForm.invalid) {
+      this.toastService.showFormError();
+      return;
+    }
+
+    this.loaderService.showSectionLoader();
 
     const validateUser: IValidateUserDto = {
       username: this.passwordRecoveryForm.value.username,
@@ -88,7 +97,7 @@ export class PasswordRecoveryComponent implements OnInit {
     } catch (ex) {
       throw ex;
     } finally {
-      // this.pageLoader.hideLoader();
+      this.loaderService.hideSectionLoader();
     }
   }
 
@@ -101,6 +110,8 @@ export class PasswordRecoveryComponent implements OnInit {
       this.toastService.showFormError();
       return;
     }
+
+    this.loaderService.showSectionLoader();
 
     const user: IChangePasswordDto = {
       username: this.passwordRecoveryUser()?.username!,
@@ -116,7 +127,7 @@ export class PasswordRecoveryComponent implements OnInit {
     } catch (ex) {
       throw ex;
     } finally {
-      // this.pageLoader.hideLoader();
+      this.loaderService.hideSectionLoader();
     }
   }
 }

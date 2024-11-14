@@ -64,7 +64,8 @@ ol {
 [type="tel"],
 [type="date"],
 [type="number"],
-textarea {
+textarea,
+button.btn-yellow {
   padding: 0.4rem 0.7rem;
   border-radius: $border-radius;
   border: none;
@@ -96,13 +97,18 @@ textarea:focus {
   box-shadow: $input-box-shadow;
 }
 
-[type="submit"] {
+[type="submit"],
+button.btn-yellow {
   cursor: pointer;
   background-color: $yellow-hex;
 
   &:hover {
     background-color: $light-yellow-hex;
   }
+}
+
+button.btn-yellow {
+  @include size(100%, 2.2rem);
 }
 
 .is-invalid {

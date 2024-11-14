@@ -49,8 +49,8 @@ export class RouteConstants {
   static ROUTE_SIGN_UP = 'sign-up';
 
   // HUB
-  static ROUTE_HUB_HOME = 'hub';
-  static TITLE_HUB_HOME = 'HUB Home | ' + this.TITLE;
+  static ROUTE_HUB_DASHBOARD = 'hub';
+  static TITLE_HUB_DASHBOARD = 'HUB Dashboard | ' + this.TITLE;
 
   // Website
   static ROUTE_HOME = '/';

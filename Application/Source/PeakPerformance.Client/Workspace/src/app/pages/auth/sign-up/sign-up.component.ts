@@ -17,6 +17,8 @@ import { Constants, RouteConstants } from '../../../constants';
 import { AuthService } from '../../../services/auth.service';
 import { ToastService } from '../../../services/toast.service';
 import * as validators from '../../../validators';
+import { SectionLoaderComponent } from '../../../components/section-loader/section-loader.component';
+import { LoaderService } from '../../../services/loader.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -30,6 +32,7 @@ import * as validators from '../../../validators';
     ReactiveFormsModule,
     FormsModule,
     TooltipModule,
+    SectionLoaderComponent
   ],
   templateUrl: './sign-up.component.html',
   styleUrl: './sign-up.component.scss',
@@ -42,11 +45,13 @@ export class SignUpComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    public loaderService: LoaderService
   ) { }
 
   ngOnInit(): void {
     this.initializeForm();
+    this.loaderService.hidePageLoader();
   }
 
   private initializeForm() {
@@ -105,6 +110,8 @@ export class SignUpComponent implements OnInit {
       return;
     }
 
+    this.loaderService.showSectionLoader();
+
     const signupUser: ISignupDto = this.signupForm.value;
 
     const validateUser: IValidateUserDto = {
@@ -118,7 +125,7 @@ export class SignUpComponent implements OnInit {
     } catch (ex) {
       throw ex;
     } finally {
-      // this.pageLoader.hideLoader();
+      this.loaderService.hideSectionLoader();
     }
   }
 }

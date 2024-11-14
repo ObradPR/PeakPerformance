@@ -87,7 +87,7 @@ export class AuthService {
     this.storageService.set(Constants.AUTH_TOKEN, result.token);
     this.currentUserSource.set(userSource);
 
-    this.router.navigateByUrl(RouteConstants.ROUTE_HUB_HOME);
+    this.router.navigateByUrl(RouteConstants.ROUTE_HUB_DASHBOARD);
   }
 
   getDecodedToken(token: string) {
