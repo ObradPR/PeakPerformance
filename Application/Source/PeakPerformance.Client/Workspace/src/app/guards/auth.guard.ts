@@ -1,5 +1,7 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
+import { RouteConstants } from '../constants';
+import { createRoutePath } from '../extensions/string.extension';
 import { AuthService } from '../services/auth.service';
 
 export const authGuard: CanActivateFn = (route, state) => {
@@ -11,7 +13,9 @@ export const authGuard: CanActivateFn = (route, state) => {
   if (token) {
     return true;
   } else {
-    router.navigateByUrl('/auth/sign-in');
+    router.navigateByUrl(
+      createRoutePath(RouteConstants.ROUTE_AUTH, RouteConstants.ROUTE_SIGN_IN)
+    );
     return false;
   }
 };

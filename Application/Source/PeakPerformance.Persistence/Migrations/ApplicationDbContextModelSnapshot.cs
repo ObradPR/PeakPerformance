@@ -44,7 +44,7 @@ namespace PeakPerformance.Persistence.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("EndDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("date");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
@@ -56,7 +56,7 @@ namespace PeakPerformance.Persistence.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("date");
 
                     b.Property<decimal>("TargetBodyFatPercentage")
                         .HasPrecision(4, 2)
@@ -224,7 +224,7 @@ namespace PeakPerformance.Persistence.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("EndDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("date");
 
                     b.Property<int>("InjuryTypeId")
                         .HasColumnType("int");
@@ -239,7 +239,7 @@ namespace PeakPerformance.Persistence.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("StartDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("date");
 
                     b.Property<long>("UserId")
                         .HasColumnType("bigint");
@@ -543,7 +543,7 @@ namespace PeakPerformance.Persistence.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("EndDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("date");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
@@ -555,7 +555,7 @@ namespace PeakPerformance.Persistence.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("date");
 
                     b.Property<int>("TrainingGoalId")
                         .HasColumnType("int");
@@ -651,7 +651,7 @@ namespace PeakPerformance.Persistence.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("EndDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("date");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
@@ -663,7 +663,7 @@ namespace PeakPerformance.Persistence.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("date");
 
                     b.Property<decimal>("TargetWeight")
                         .HasPrecision(5, 2)

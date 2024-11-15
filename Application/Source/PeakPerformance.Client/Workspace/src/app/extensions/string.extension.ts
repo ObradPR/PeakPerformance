@@ -11,11 +11,19 @@ function appendArgument(this: string, ...args: string[]): string {
 
 function capitalize(this: string): string {
   return this.split(' ')
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .map((_) => _.charAt(0).toUpperCase() + _.slice(1).toLowerCase())
     .join(' ');
 }
 
 String.prototype.appendArgument = appendArgument;
 String.prototype.capitalize = capitalize;
 
-export {};
+function createRoutePath(...args: (string | number)[]): string {
+  return args
+    .filter(_ => _ !== null && _ !== undefined && _ !== '')
+    .join('/');
+}
+
+export {
+  createRoutePath
+};

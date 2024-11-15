@@ -26,7 +26,7 @@ BEGIN
             IF EXISTS (SELECT * FROM inserted)
             BEGIN
                 -- Handle INSERT and UPDATE
-                INSERT INTO ' + QUOTENAME(@AuditTableName) + ' (' + @Columns + ', ActionTypeId, DetailsJson)
+                INSERT INTO ' + QUOTENAME(@AuditTableName) + ' (' + @Columns + ', ActionTypeId, DetailsJson, AuditTimeStamp)
                 SELECT
                     ' + @InsertValues + ',
                     CASE
@@ -38,7 +38,8 @@ BEGIN
                             END
                         ELSE ' + CAST(@CreateAction AS NVARCHAR) + '
                     END,
-                    (SELECT CAST((SELECT * FROM inserted i FOR JSON PATH, WITHOUT_ARRAY_WRAPPER) AS NVARCHAR(MAX)))
+                    (SELECT CAST((SELECT * FROM inserted i FOR JSON PATH, WITHOUT_ARRAY_WRAPPER) AS NVARCHAR(MAX))),
+                    GETUTCDATE()
                 FROM inserted i
                 LEFT JOIN deleted d ON i.Id = d.Id
                 WHERE i.Id IS NOT NULL;
@@ -46,11 +47,12 @@ BEGIN
             ELSE IF EXISTS (SELECT * FROM deleted)
             BEGIN
                 -- Handle DELETE
-                INSERT INTO ' + QUOTENAME(@AuditTableName) + ' (' + @Columns + ', ActionTypeId, DetailsJson)
+                INSERT INTO ' + QUOTENAME(@AuditTableName) + ' (' + @Columns + ', ActionTypeId, DetailsJson, AuditTimeStamp)
                 SELECT
                     ' + @DeleteValues + ',
                     ' + CAST(@DeleteAction AS NVARCHAR) + ',
-                    (SELECT CAST((SELECT * FROM deleted d FOR JSON PATH, WITHOUT_ARRAY_WRAPPER) AS NVARCHAR(MAX)))
+                    (SELECT CAST((SELECT * FROM deleted d FOR JSON PATH, WITHOUT_ARRAY_WRAPPER) AS NVARCHAR(MAX))),
+                    GETUTCDATE()
                 FROM deleted d;
             END
         END

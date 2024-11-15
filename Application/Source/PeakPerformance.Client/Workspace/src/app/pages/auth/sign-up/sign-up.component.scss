@@ -54,19 +54,15 @@ div.sign-up-holder {
         width: 47%;
       }
 
-      [type="submit"],
+      button.btn-yellow,
       a.already-have-acc-msg,
       p {
         margin-bottom: 0.8rem;
       }
 
-      [type="submit"] {
+      button.btn-yellow {
         width: 25%;
         margin-top: 2rem;
-      }
-
-      [type="submit"]:hover {
-        background-color: $light-yellow-hex;
       }
 
       p {
@@ -75,12 +71,4 @@ div.sign-up-holder {
       }
     }
   }
-}
-
-::ng-deep.p-tooltip-text {
-  background-color: $red-hex;
-}
-
-::ng-deep.p-tooltip-arrow {
-  border-top-color: $red-hex;
 }

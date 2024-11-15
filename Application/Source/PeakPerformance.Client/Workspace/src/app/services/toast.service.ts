@@ -1,17 +1,26 @@
 import { Injectable } from '@angular/core';
 import { MessageService } from 'primeng/api';
+import { Constants } from '../constants';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ToastService {
-  constructor(private messageService: MessageService) {}
+  constructor(private messageService: MessageService) { }
 
   showSuccess(title: string, message: string) {
     this.messageService.add({
       severity: 'success',
       summary: title,
       detail: message,
+    });
+  }
+
+  showGeneralSuccess() {
+    this.messageService.add({
+      severity: 'success',
+      summary: Constants.SUCCESS,
+      detail: Constants.SUCCESS_MESSAGE,
     });
   }
 
@@ -42,9 +51,16 @@ export class ToastService {
   showGeneralError() {
     this.messageService.add({
       severity: 'error',
-      summary: 'Server Error',
-      detail:
-        'Something unexpected went wrong. Please contact administrator for more information.',
+      summary: Constants.ERROR_SERVER,
+      detail: Constants.ERROR_SERVER_MESSAGE,
+    });
+  }
+
+  showFormError() {
+    this.messageService.add({
+      severity: 'error',
+      summary: Constants.FAILED,
+      detail: Constants.FAILED_DATA_MESSAGE,
     });
   }
 }

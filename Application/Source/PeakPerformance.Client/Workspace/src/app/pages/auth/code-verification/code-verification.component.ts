@@ -1,25 +1,23 @@
 import { Component, input, OnInit, output } from '@angular/core';
 import {
-  FormBuilder,
-  FormGroup,
   FormsModule,
-  ReactiveFormsModule,
-  Validators,
+  ReactiveFormsModule
 } from '@angular/forms';
 import { InputOtpModule } from 'primeng/inputotp';
-import { AuthService } from '../../../services/auth.service';
-import { ToastService } from '../../../services/toast.service';
 import {
   ISignupDto,
   IValidateUserCodeDto,
   IValidateUserDto,
 } from '../../../_generated/interfaces';
-import { emit } from 'process';
+import { AuthService } from '../../../services/auth.service';
+import { ToastService } from '../../../services/toast.service';
+import { LoaderService } from '../../../services/loader.service';
+import { SectionLoaderComponent } from '../../../components/section-loader/section-loader.component';
 
 @Component({
   selector: 'app-code-verification',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, InputOtpModule],
+  imports: [FormsModule, ReactiveFormsModule, InputOtpModule, SectionLoaderComponent],
   templateUrl: './code-verification.component.html',
   styleUrl: './code-verification.component.scss',
 })
@@ -31,21 +29,24 @@ export class CodeVerificationComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private toastService: ToastService
-  ) {}
+    private toastService: ToastService,
+    public loaderService: LoaderService
+  ) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   async onCodeVerify() {
+    this.loaderService.showSectionLoader();
+
     if (this.signupUser()) {
       try {
         this.signupUser()!.verificationCode = +this.codeValue;
         await this.authService.signup(this.signupUser()!).toResult();
-        this.toastService.showSuccess('Success', 'Successfully signed up.');
+        this.toastService.showGeneralSuccess();
       } catch (ex) {
         throw ex;
       } finally {
-        // this.pageLoader.hideLoader();
+        this.loaderService.hideSectionLoader();
       }
     } else if (this.passwordRecoveryUser()) {
       const validateCode: IValidateUserCodeDto = {
@@ -64,7 +65,7 @@ export class CodeVerificationComponent implements OnInit {
       } catch (ex) {
         throw ex;
       } finally {
-        // this.pageLoader.hideLoader();
+        this.loaderService.hideSectionLoader();
       }
     }
   }

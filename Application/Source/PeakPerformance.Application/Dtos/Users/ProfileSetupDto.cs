@@ -25,6 +25,8 @@ public class ProfileSetupDto
 
     public string Description { get; set; }
 
+    public bool ReceiveNews { get; set; }
+
     public List<SocialMediaDto> SocialMedia { get; set; }
 
     public List<HealthInformationDto> HealthInformation { get; set; }

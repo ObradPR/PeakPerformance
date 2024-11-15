@@ -128,7 +128,7 @@ import { IProfileSetupDto } from './interfaces';
 }
 @Injectable() export class UserController extends BaseController
 {
-	public ProfileSetup(data: IProfileSetupDto) : Observable<any>
+	public ProfileSetup(data: FormData) : Observable<any>
 	{
 		const body = <any>data;
 		return this.httpClient.post<any>(

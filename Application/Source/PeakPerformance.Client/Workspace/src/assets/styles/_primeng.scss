@@ -18,7 +18,7 @@
 
 .p-tooltip {
   padding-bottom: 8px;
-  max-width: 300px;
+  max-width: 350px;
   width: auto;
   overflow: hidden;
   white-space: normal;
@@ -27,8 +27,9 @@
 .p-tooltip-text {
   padding: 0.5rem;
   width: auto;
-  max-width: 300px;
+  max-width: 350px;
   white-space: normal;
+  text-align:  center;
 }
 
 .p-tooltip-arrow {
@@ -37,4 +38,144 @@
 
 .p-inputotp {
   margin-bottom: 2rem;
+}
+
+button.p-ripple.p-button {
+  padding: 0.4rem 0.7rem;
+  border-radius: $border-radius;
+  border: none;
+  font-size: 1em;
+  transition: $transition;
+  cursor: pointer;
+  background-color: $yellow-hex;
+
+  &:hover {
+    background-color: $light-yellow-hex;
+  }
+}
+
+.p-button {
+  padding: 0.4rem 0.7rem;
+  border-radius: $border-radius;
+  border: none;
+  font-size: 1em;
+  transition: $transition;
+  cursor: pointer;
+  background-color: $blue-hex;
+
+  &:hover {
+    background-color: $light-blue-hex;
+  }
+}
+
+p-button.btn-success {
+  button.p-ripple.p-button {
+    background-color: $teal-hex;
+
+    &:hover {
+      background-color: $light-teal-hex;
+    }
+  }
+}
+
+p-button.btn-back {
+  button.p-ripple.p-button {
+    background-color: $blue-hex;
+
+    &:hover {
+      background-color: $light-blue-hex;
+    }
+  }
+}
+
+.p-inputtext {
+  padding: 0.4rem 0.7rem;
+}
+
+p-dropdown {
+  width: 100%;
+}
+
+.p-dropdown {
+  border-radius: $border-radius;
+  border: none;
+  font-size: 1em;
+  transition: $transition;
+  width: 100%;
+  margin-bottom: 1.5rem;
+
+  &:not(.p-disabled).p-focus {
+    outline: none;
+    box-shadow: $input-box-shadow;
+  }
+}
+
+.p-dropdown-panel .p-dropdown-items {
+  padding: 0.2rem;
+
+  .p-dropdown-item {
+    padding: 0.2rem 0.2rem;
+  }
+}
+
+.p-dropdown-item {
+  min-height: 30.38px;
+}
+
+.p-float-label label {
+  top: 33%;
+}
+
+.p-float-label textarea ~ label {
+  top: 10%;
+}
+
+.p-float-label input:focus ~ label,
+.p-float-label input.p-filled ~ label,
+.p-float-label textarea:focus ~ label,
+.p-float-label textarea.p-filled ~ label,
+.p-float-label .p-inputwrapper-focus ~ label,
+.p-float-label .p-inputwrapper-filled ~ label {
+  top: -0.6rem;
+}
+
+.p-fileupload-choose {
+  margin-bottom: 1.5rem;
+  width: 100%;
+}
+
+.p-tooltip-text {
+  background-color: $red-hex;
+}
+
+.p-tooltip-arrow {
+  border-top-color: $red-hex;
+}
+
+// pi icons
+.pi-times::before {
+  font-size: 1em;
+  cursor: pointer;
+  color: $red-hex;
+  float: right;
+  margin-bottom: 0.2rem;
+  transition: $transition;
+  position: absolute;
+  top: -18px;
+  right: 0;
+
+  &:hover {
+    color: $light-red-hex;
+  }
+}
+
+.pi-plus-circle{
+  font-size: 1.3em;
+  cursor: pointer;
+  color: $teal-hex;
+  transition: $transition;
+
+  &:hover{
+    color: $light-teal-hex;
+  }
 }

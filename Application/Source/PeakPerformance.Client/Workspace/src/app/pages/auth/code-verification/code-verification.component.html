@@ -11,7 +11,14 @@
       />
     </div>
     <div class="form-row">
-      <input type="submit" value="Submit code" />
+      <button class="btn-yellow" [disabled]="loaderService.sectionLoaderSignal()">
+        @if (loaderService.sectionLoaderSignal()) {
+          <app-section-loader/>
+        }
+        @else {
+          Submit
+        }
+      </button>
       <a (click)="onResendCode()">Resend Code</a>
     </div>
   </form>

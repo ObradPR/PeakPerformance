@@ -1,5 +1,6 @@
 @import "assets/styles/variables";
 @import "assets/styles/ngx-owl-carousel-o";
+@import "primeicons/primeicons.css";
 @import "assets/styles/primeng";
 
 // Mixins
@@ -34,14 +35,25 @@ span.highlight-text-yellow {
   color: $yellow-hex;
 }
 
-a {
+a,
+a:not([href]):not([class]) {
   color: $blue-hex;
   cursor: pointer;
   text-decoration: underline;
+
+  &:hover {
+    color: $light-blue-hex;
+  }
 }
 
-a:hover {
-  color: $light-blue-hex;
+p {
+  margin: 0;
+}
+
+ul,
+ol {
+  padding-left: 0;
+  margin-bottom: 0;
 }
 
 // Form
@@ -50,8 +62,11 @@ a:hover {
 [type="submit"],
 [type="email"],
 [type="tel"],
-[type="date"] {
-  padding: 0.7rem 1rem;
+[type="date"],
+[type="number"],
+textarea,
+button.btn-yellow {
+  padding: 0.4rem 0.7rem;
   border-radius: $border-radius;
   border: none;
   font-size: 1em;
@@ -59,21 +74,75 @@ a:hover {
   width: 100%;
 }
 
+[type="checkbox"] {
+  border-radius: $border-radius;
+  border: none;
+  transition: $transition;
+  margin-bottom: 1.5rem;
+  margin-top: 0.2rem;
+
+  & + label {
+    margin-left: 0.5rem;
+  }
+}
+
 [type="text"]:focus,
 [type="password"]:focus,
 [type="email"]:focus,
 [type="tel"]:focus,
-[type="date"]:focus {
+[type="date"]:focus,
+[type="number"]:focus,
+textarea:focus {
   outline: none;
   box-shadow: $input-box-shadow;
 }
 
-[type="submit"] {
+[type="submit"],
+button.btn-yellow {
   cursor: pointer;
   background-color: $yellow-hex;
+
+  &:hover {
+    background-color: $light-yellow-hex;
+  }
+}
+
+button.btn-yellow {
+  @include size(100%, 2.2rem);
 }
 
 .is-invalid {
   box-shadow: $is-invalid-box-shadow;
   border-radius: $border-radius;
+}
+
+fieldset legend {
+  font-size: 1.3em;
+  border-bottom: 1px solid $dark-grey-hex;
+  margin-bottom: 1.5rem;
+}
+
+button {
+  padding: 0.4rem 0.7rem;
+  border-radius: $border-radius;
+  border: none;
+  font-size: 1em;
+  transition: $transition;
+  cursor: pointer;
+
+  &.btn.btn-success {
+    background-color: $teal-hex;
+
+    &:hover {
+      background-color: $light-teal-hex;
+    }
+  }
+
+  &.btn.btn-danger {
+    background-color: $red-hex;
+
+    &:hover {
+      background-color: $light-red-hex;
+    }
+  }
 }

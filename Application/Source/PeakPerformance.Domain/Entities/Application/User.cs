@@ -1,6 +1,4 @@
-﻿using PeakPerformance.Common;
-
-namespace PeakPerformance.Domain.Entities.Application;
+﻿namespace PeakPerformance.Domain.Entities.Application;
 
 public class User : BaseIndexAuditedDomain<User, long>, IConfigurableEntity
 {

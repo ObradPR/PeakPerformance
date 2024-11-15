@@ -48,10 +48,19 @@
               signinForm.get('password')?.dirty)
         }"
       />
-      <a class="forgot-password" (click)="onShowPasswordRecovery()">Forgot Password?</a>
+      <a class="forgot-password" (click)="onShowPasswordRecovery()"
+        >Forgot Password?</a
+      >
     </div>
     <div class="form-row">
-      <input type="submit" value="Sign in" />
+      <button class="btn-yellow" [disabled]="loaderService.sectionLoaderSignal()">
+        @if (loaderService.sectionLoaderSignal()) {
+          <app-section-loader/>
+        }
+        @else {
+          Sign in
+        }
+      </button>
       <a (click)="onShowSignup()">Don't have an account? Sign up</a>
     </div>
   </form>
