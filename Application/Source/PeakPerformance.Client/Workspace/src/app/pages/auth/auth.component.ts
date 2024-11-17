@@ -1,16 +1,17 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { AfterViewInit, Component, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
 import { take } from 'rxjs';
+import { ISignupDto, IValidateUserDto } from '../../_generated/interfaces';
 import { formAnimation } from '../../animations/form.animation';
 import { Constants, RouteConstants } from '../../constants';
-import { CodeVerificationComponent } from './code-verification/code-verification.component';
-import { SignInComponent } from './sign-in/sign-in.component';
-import { SignUpComponent } from './sign-up/sign-up.component';
-import { ISignupDto, IValidateUserDto } from '../../_generated/interfaces';
-import { PasswordRecoveryComponent } from './password-recovery/password-recovery.component';
 import { createRoutePath } from '../../extensions/string.extension';
 import { LoaderService } from '../../services/loader.service';
+import { CodeVerificationComponent } from './code-verification/code-verification.component';
+import { PasswordRecoveryComponent } from './password-recovery/password-recovery.component';
+import { SignInComponent } from './sign-in/sign-in.component';
+import { SignUpComponent } from './sign-up/sign-up.component';
 
 type TLayoutType = 'sign-in' | 'sign-up';
 type TUrlSegment = string | null | TLayoutType | undefined;
@@ -24,20 +25,22 @@ type TUrlSegment = string | null | TLayoutType | undefined;
     CarouselModule,
     CodeVerificationComponent,
     PasswordRecoveryComponent,
+    CommonModule
   ],
   templateUrl: './auth.component.html',
   styleUrl: './auth.component.scss',
   animations: [formAnimation],
 })
 export class AuthComponent implements OnInit {
+  isSigninFormSignal = signal(false);
+  isSignupFormSignal = signal(false);
+  isCodeVerifySignal = signal(false);
+  isPasswordRecoverySignal = signal(false);
+  isChangePasswordSignal = signal(false);
   formType?: TUrlSegment;
-  isSigninForm = signal(false);
-  isSignupForm = signal(false);
-  isCodeVerify = signal(false);
-  isPasswordRecovery = signal(false);
-  isChangePassword = signal(false);
   signupUser: ISignupDto | undefined = undefined;
   passwordRecoveryUser: IValidateUserDto | undefined = undefined;
+  showForms = false;
 
   customOptions: OwlOptions = {
     loop: true,
@@ -56,12 +59,13 @@ export class AuthComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private loaderService: LoaderService
+    public loaderService: LoaderService,
   ) { }
 
   ngOnInit(): void {
     this.loaderService.showPageLoader();
     this.takeUrlParam();
+    this.showForms = true;
   }
 
   toggleForms(type: TUrlSegment, isSignin: boolean) {
@@ -76,33 +80,33 @@ export class AuthComponent implements OnInit {
     }
 
     if (isSignin) {
-      this.isSignupForm.set(false);
+      this.isSignupFormSignal.set(false);
 
       setTimeout(() => {
-        this.isSigninForm.set(true);
+        this.isSigninFormSignal.set(true);
       }, 6 * Constants.FORM_ANIMATION_PERIOD + 100);
     } else {
-      this.isSigninForm.set(false);
+      this.isSigninFormSignal.set(false);
       setTimeout(() => {
-        this.isSignupForm.set(true);
+        this.isSignupFormSignal.set(true);
       }, 3 * Constants.FORM_ANIMATION_PERIOD + 100);
     }
   }
 
   showCodeVerify(user: ISignupDto | IValidateUserDto) {
     if (this.isSignupDto(user)) {
-      this.isSignupForm.set(false);
+      this.isSignupFormSignal.set(false);
 
       setTimeout(() => {
         this.signupUser = user;
-        this.isCodeVerify.set(true);
+        this.isCodeVerifySignal.set(true);
       }, 6 * Constants.FORM_ANIMATION_PERIOD + 100);
     } else if (this.isValidateUserDto(user)) {
-      this.isPasswordRecovery.set(false);
+      this.isPasswordRecoverySignal.set(false);
 
       setTimeout(() => {
         this.passwordRecoveryUser = user;
-        this.isCodeVerify.set(true);
+        this.isCodeVerifySignal.set(true);
       }, 3 * Constants.FORM_ANIMATION_PERIOD + 100);
     }
   }
@@ -120,28 +124,28 @@ export class AuthComponent implements OnInit {
     changePassword: boolean
   ) {
     if (changePassword) {
-      this.isCodeVerify.set(false);
-      this.isChangePassword.set(true);
+      this.isCodeVerifySignal.set(false);
+      this.isChangePasswordSignal.set(true);
 
       setTimeout(() => {
         this.passwordRecoveryUser = user;
-        this.isPasswordRecovery.set(true);
+        this.isPasswordRecoverySignal.set(true);
       }, 2 * Constants.FORM_ANIMATION_PERIOD + 100);
     } else {
-      this.isSigninForm.set(false);
-      this.isChangePassword.set(false);
+      this.isSigninFormSignal.set(false);
+      this.isChangePasswordSignal.set(false);
 
       setTimeout(() => {
-        this.isPasswordRecovery.set(true);
+        this.isPasswordRecoverySignal.set(true);
       }, 3 * Constants.FORM_ANIMATION_PERIOD + 100);
     }
   }
 
   backToSignin() {
-    this.isPasswordRecovery.set(false);
+    this.isPasswordRecoverySignal.set(false);
 
     setTimeout(() => {
-      this.isSigninForm.set(true);
+      this.isSigninFormSignal.set(true);
     }, 3 * Constants.FORM_ANIMATION_PERIOD + 100);
   }
 

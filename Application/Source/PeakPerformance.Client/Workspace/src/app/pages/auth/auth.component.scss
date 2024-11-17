@@ -2,7 +2,8 @@
 
 main.auth {
   position: relative;
-  width: 100dvw;
+  @include size(100dvw, 100dvh);
+  overflow: hidden;
 
   section.auth-forms-holder {
     @include size(40%, 100dvh);
