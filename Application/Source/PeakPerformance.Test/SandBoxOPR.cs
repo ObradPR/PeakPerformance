@@ -1,5 +1,6 @@
-﻿using PeakPerformance.Persistence.Contexts;
-using PeakPerformance.Persistence.Extensions;
+﻿using PeakPerformance.Common;
+using PeakPerformance.Persistence.Contexts;
+using System.Reflection;
 
 namespace PeakPerformance.Test;
 
@@ -16,13 +17,12 @@ internal class SandBox
     [Test]
     public async Task SandBoxOPR()
     {
-        var injuryTypes = await db.InjuryTypes.GetListAsync();
-
-        //var user = await db.Users.FirstAsync();
-
-        //db.DeleteSingle(user);
-
-        //await db.SaveChangesAsync();
+        var applicationAssembly = Assembly.Load($"{Constants.SOLUTION_NAME}.Application");
+        var dtos = applicationAssembly
+            .GetTypes()
+            .Where(t => t.IsClass
+                && t.Namespace != null
+                && t.Namespace.Contains($"{Constants.SOLUTION_NAME}.Application.Dtos"));
     }
 
     [TearDown]

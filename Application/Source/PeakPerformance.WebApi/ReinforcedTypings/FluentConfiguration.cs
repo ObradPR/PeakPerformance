@@ -1,6 +1,4 @@
 ﻿using PeakPerformance.Common;
-using PeakPerformance.WebApi.Controllers._Base;
-using PeakPerformance.WebApi.ReinforcedTypings.Generator;
 using Reinforced.Typings.Ast.TypeNames;
 using Reinforced.Typings.Fluent;
 using System.Reflection;
@@ -60,7 +58,8 @@ public static class FluentConfiguration
             .GetTypes()
             .Where(t => t.IsClass
                 && t.Namespace != null
-                && t.Namespace.Contains($"{Constants.SOLUTION_NAME}.Application.Dtos"));
+                && t.Namespace.Contains($"{Constants.SOLUTION_NAME}.Application.Dtos")
+                && t.Name.EndsWith("Dto"));
 
         var additionalInterfaces = new List<Type>([typeof(IEnumProvider)]);
 

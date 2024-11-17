@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\PeakPerformance.Application\PeakPerformance.Application.csproj" />
     <ProjectReference Include="..\PeakPerformance.Persistence\PeakPerformance.Persistence.csproj" />
   </ItemGroup>
 
