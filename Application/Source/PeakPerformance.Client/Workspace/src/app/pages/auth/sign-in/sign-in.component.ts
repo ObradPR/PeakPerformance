@@ -75,13 +75,14 @@ export class SignInComponent implements OnInit {
 
     const signinUser: ISigninDto = this.signinForm.value;
 
-    try {
-      await this.authService.signin(signinUser).toResult();
-      this.toastService.showSuccess('Success', 'Successfully signed in.');
-    } catch (ex) {
-      throw ex;
-    } finally {
-      this.loaderService.hideSectionLoader();
-    }
+    this.authService.signin(signinUser).toPromise()
+      .then(_ => {
+        if (_) {
+          this.authService.setUser(_);
+          this.toastService.showSuccess('Success', 'Successfully signed in.')
+        }
+      })
+      .catch(ex => { throw ex; })
+      .finally(() => this.loaderService.hideSectionLoader());
   }
 }

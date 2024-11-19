@@ -103,6 +103,16 @@ export interface IProfileSetupDto
 	socialMedia: ISocialMediaDto[];
 	healthInformation: IHealthInformationDto[];
 }
+export interface IUserDto
+{
+	fullName: string;
+	username: string;
+	email: string;
+	dateOfBirth: Date;
+	phoneNumber: string;
+	description: string;
+	profilePictureUrl: string;
+}
 export interface ISocialMediaDto
 {
 	platformId: eSocialMediaPlatform;

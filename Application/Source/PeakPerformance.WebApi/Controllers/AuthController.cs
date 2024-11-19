@@ -22,8 +22,8 @@ public class AuthController(IMediator mediator, IVerificationCodeService verific
     [AngularMethod(typeof(AuthorizationDto))]
     public async Task<IActionResult> Signin(SigninDto data) => Ok(await Mediator.Send(new SigninCommand(data)));
 
-    [Authorization(eSystemRole.User, eSystemRole.Admin)]
     [HttpPost]
+    [Authorization(eSystemRole.User, eSystemRole.Admin)]
     [AngularMethod(typeof(void))]
     public async Task<IActionResult> Signout()
     {

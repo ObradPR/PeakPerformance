@@ -119,13 +119,9 @@ export class SignUpComponent implements OnInit {
       email: signupUser.email,
     };
 
-    try {
-      await this.authService.validateEmail(validateUser).toResult();
-      this.showCodeVerifyEvent.emit(signupUser);
-    } catch (ex) {
-      throw ex;
-    } finally {
-      this.loaderService.hideSectionLoader();
-    }
+    this.authService.validateEmail(validateUser).toPromise()
+      .then(_ => this.showCodeVerifyEvent.emit(signupUser))
+      .catch(ex => { throw ex; })
+      .finally(() => this.loaderService.hideSectionLoader());
   }
 }

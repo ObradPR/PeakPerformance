@@ -28,11 +28,16 @@ public abstract class BaseHandler<TRequest, TResponse> : BaseHandlerProcess, IRe
         _identityUser = identityUser;
     }
 
-    protected BaseHandler(IUnitOfWork unitOfWork, IMapper mapper, IIdentityUser identityUser, IMediator mediator, ILogger logger)
+    protected BaseHandler(IUnitOfWork unitOfWork, IIdentityUser identityUser, IMapper mapper)
         : this(unitOfWork, identityUser)
     {
-        _mediator = mediator;
         _mapper = mapper;
+    }
+
+    protected BaseHandler(IUnitOfWork unitOfWork, IIdentityUser identityUser, IMapper mapper, IMediator mediator, ILogger logger)
+        : this(unitOfWork, identityUser, mapper)
+    {
+        _mediator = mediator;
         _logger = logger;
     }
 

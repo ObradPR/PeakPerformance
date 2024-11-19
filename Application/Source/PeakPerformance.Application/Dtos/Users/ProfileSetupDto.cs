@@ -1,13 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using PeakPerformance.Application.Dtos.BodyFatGoals;
-using PeakPerformance.Application.Dtos.BodyMeasurements;
-using PeakPerformance.Application.Dtos.HealthInformation;
-using PeakPerformance.Application.Dtos.SocialMedia;
-using PeakPerformance.Application.Dtos.UserTrainingGoals;
-using PeakPerformance.Application.Dtos.WeightGoals;
-using PeakPerformance.Application.Dtos.Weights;
-
-namespace PeakPerformance.Application.Dtos.Users;
+﻿namespace PeakPerformance.Application.Dtos.Users;
 
 public class ProfileSetupDto
 {

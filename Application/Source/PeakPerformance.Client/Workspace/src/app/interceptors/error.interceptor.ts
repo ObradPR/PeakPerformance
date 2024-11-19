@@ -31,9 +31,11 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
           case 422:
             toast.showError(Constants.ERROR_VALIDATION, error.error.Message);
             break;
-          default:
+          case 500:
             toast.showGeneralError();
             console.error(error);
+            break;
+          default:
             break;
         }
       }

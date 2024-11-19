@@ -208,15 +208,13 @@ export class AccountSetupComponent implements OnInit {
       return;
     }
 
-    try {
-      const formData = this.createFormData(this.form.value);
-      await this.userService.profileSetup(formData).toResult();
-    } catch (ex) {
-      throw ex;
-    } finally {
-      this.toastService.showGeneralSuccess();
-      this.sharedService.setFromSignupSignal(false);
-    }
+    const formData = this.createFormData(this.form.value);
+    this.userService.profileSetup(formData).toPromise()
+      .catch(ex => { throw ex; })
+      .finally(() => {
+        this.toastService.showGeneralSuccess();
+        this.sharedService.setFromSignupSignal(false);
+      });
   }
 
   private createFormData(formValue: any): FormData {
