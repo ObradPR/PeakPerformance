@@ -91,14 +91,10 @@ export class PasswordRecoveryComponent implements OnInit {
       email: this.passwordRecoveryForm.value.email,
     };
 
-    try {
-      await this.authService.validateUser(validateUser).toResult();
-      this.showCodeVerifyEvent.emit(validateUser);
-    } catch (ex) {
-      throw ex;
-    } finally {
-      this.loaderService.hideSectionLoader();
-    }
+    this.authService.validateUser(validateUser).toPromise()
+      .then(_ => this.showCodeVerifyEvent.emit(validateUser))
+      .catch(ex => { throw ex; })
+      .finally(() => this.loaderService.hideSectionLoader());
   }
 
   onBackToSignin() {
@@ -120,14 +116,13 @@ export class PasswordRecoveryComponent implements OnInit {
       confirmPassword: this.passwordChangeForm.value.confirmPassword,
     };
 
-    try {
-      await this.authService.changePassword(user).toResult();
-      this.toastService.showGeneralSuccess();
-      this.onBackToSignin();
-    } catch (ex) {
-      throw ex;
-    } finally {
-      this.loaderService.hideSectionLoader();
-    }
+
+    this.authService.changePassword(user).toPromise()
+      .then(_ => {
+        this.toastService.showGeneralSuccess();
+        this.onBackToSignin();
+      })
+      .catch(ex => { throw ex; })
+      .finally(() => this.loaderService.hideSectionLoader());
   }
 }

@@ -17,8 +17,13 @@ public abstract class BaseQueryHandler<TQuery, TResponse> : BaseHandler<TQuery, 
     {
     }
 
-    protected BaseQueryHandler(IUnitOfWork unitOfWork, IMapper mapper, IIdentityUser identityUser, IMediator mediator, ILogger logger)
-        : base(unitOfWork, mapper, identityUser, mediator, logger)
+    protected BaseQueryHandler(IUnitOfWork unitOfWork, IIdentityUser identityUser, IMapper mapper)
+       : base(unitOfWork, identityUser, mapper)
+    {
+    }
+
+    protected BaseQueryHandler(IUnitOfWork unitOfWork, IIdentityUser identityUser, IMapper mapper, IMediator mediator, ILogger logger)
+        : base(unitOfWork, identityUser, mapper, mediator, logger)
     {
     }
 }

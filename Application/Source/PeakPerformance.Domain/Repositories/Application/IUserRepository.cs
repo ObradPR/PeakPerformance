@@ -1,4 +1,6 @@
-﻿namespace PeakPerformance.Domain.Repositories.Application;
+﻿using System.Linq.Expressions;
+
+namespace PeakPerformance.Domain.Repositories.Application;
 
 public interface IUserRepository
 {
@@ -9,6 +11,8 @@ public interface IUserRepository
     Task<User> GetByUsernameAsync(string username);
 
     Task<User> GetByIdAsync(long id);
+
+    Task<User> GetByIdAsync(Expression<Func<User, bool>> predicate, params Expression<Func<User, object>>[] includeProperties);
 
     // Add / Remove / Edit
 

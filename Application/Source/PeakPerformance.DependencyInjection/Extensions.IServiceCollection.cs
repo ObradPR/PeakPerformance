@@ -54,6 +54,7 @@ public static partial class Extensions
     {
         var assembly = typeof(BaseCommand<>).Assembly;
 
+        services.AddLogging();
         services.AddMediatR(config => config.RegisterServicesFromAssembly(assembly));
         services.AddValidatorsFromAssembly(assembly);
         services.AddAutoMapper(assembly);

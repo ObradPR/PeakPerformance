@@ -1,8 +1,6 @@
 import { Routes } from '@angular/router';
 import { RouteConstants } from './constants';
 import { authGuard } from './guards/auth.guard';
-import { guestGuard } from './guards/guest.guard';
-import { createRoutePath } from './extensions/string.extension';
 
 export const routes: Routes = [
   ///
@@ -10,7 +8,7 @@ export const routes: Routes = [
   ///
   {
     path: RouteConstants.ROUTE_AUTH,
-    canActivate: [guestGuard],
+    canActivate: [authGuard],
     children: [
       {
         path: '',

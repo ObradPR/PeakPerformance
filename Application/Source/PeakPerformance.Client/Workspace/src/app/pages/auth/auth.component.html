@@ -27,22 +27,25 @@
       </svg>
       <p>Home</p>
     </div>
-    <div class="bottom">
-      @if(isSigninForm()){
+    @if (showForms) {
+    <div class="bottom" [ngStyle]="{ 'display': loaderService.pageLoaderSignal() ? 'none' : 'block'}">
+      @if(isSigninFormSignal()){
       <app-sign-in
         (showSignupFormEvent)="toggleForms($event, false)"
         (showPasswordRecoveryEvent)="showPasswordRecovery(undefined, false)"
         [@formAnimation]
         class="form-container sign-in-form"
       />
-      } @if(isSignupForm()){
+      }
+      @else if(isSignupFormSignal()){
       <app-sign-up
         (showSigninFormEvent)="toggleForms($event, true)"
         (showCodeVerifyEvent)="showCodeVerify($event)"
         [@formAnimation]
         class="form-container sign-up-form"
       />
-      } @if(isCodeVerify()){
+      } 
+      @else if(isCodeVerifySignal()){
       <app-code-verification
         (showPasswordRecovery)="showPasswordRecovery($event, true)"
         [@formAnimation]
@@ -50,16 +53,18 @@
         [passwordRecoveryUser]="passwordRecoveryUser"
         class="form-container code-verify"
       />
-      } @if(isPasswordRecovery()){
+      } 
+      @else if(isPasswordRecoverySignal()){
       <app-password-recovery
         (backToSigninEvent)="backToSignin()"
         (showCodeVerifyEvent)="showCodeVerify($event)"
         [@formAnimation]
-        [isChangePassword]="isChangePassword()"
+        [isChangePassword]="isChangePasswordSignal()"
         [passwordRecoveryUser]="passwordRecoveryUser"
         class="form-container password-recovery"
       />
       }
     </div>
+    }
   </section>
 </main>

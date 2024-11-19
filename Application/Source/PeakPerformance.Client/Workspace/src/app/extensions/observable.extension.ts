@@ -2,14 +2,14 @@ import { Observable, lastValueFrom } from 'rxjs';
 
 declare module 'rxjs' {
   interface Observable<T> {
-    toResult<T>(this: Observable<T>): Promise<T>;
+    toPromise<T>(this: Observable<T>): Promise<T>;
   }
 }
 
-function toResult<T>(this: Observable<T>): Promise<T> {
+function toPromise<T>(this: Observable<T>): Promise<T> {
   return lastValueFrom(this);
 }
 
-Observable.prototype.toResult = toResult;
+Observable.prototype.toPromise = toPromise;
 
-export {};
+export { };

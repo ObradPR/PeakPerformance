@@ -7,95 +7,93 @@ import {
   IChangePasswordDto,
   ISigninDto,
   ISignupDto,
+  IUserDto,
   IValidateUserCodeDto,
-  IValidateUserDto,
+  IValidateUserDto
 } from '../_generated/interfaces';
-import { AuthController } from '../_generated/services';
+import { AuthController, UserController } from '../_generated/services';
 import { Constants, RouteConstants } from '../constants';
 import { SharedService } from './shared.service';
 import { StorageService } from './storage.service';
-
-// Interfaces
-interface IUserSource {
-  id: string;
-  username: string;
-  name: string;
-  email: string;
-  roles: string[];
-  token: string;
-  tokenExpireDate: Date;
-}
+import { LoaderService } from './loader.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  currentUserSource = signal<IUserSource | null>(null);
+  currentUserSource = signal<IUserDto | null>(null);
 
   constructor(
     private router: Router,
     private authController: AuthController,
     private storageService: StorageService,
-    private sharedService: SharedService
+    private sharedService: SharedService,
+    private loaderService: LoaderService,
+    private userController: UserController
   ) { }
 
   signin(user: ISigninDto) {
-    return this.authController.Signin(user).pipe(
-      map((result) => {
-        if (result)
-          this.setCurrentUser(result);
-
-        return result;
-      })
-    );
+    return this.authController.Signin(user);
   }
 
   signup(user: ISignupDto) {
-    return this.authController.Signup(user).pipe(
-      map((result) => {
-        if (result) {
-          this.sharedService.setFromSignupSignal(true);
-          this.setCurrentUser(result);
-        }
-        return result;
-      })
-    );
+    return this.authController.Signup(user);
   }
 
   signout() {
-    this.storageService.remove(Constants.AUTH_TOKEN);
-    this.currentUserSource.set(null);
-    this.router.navigateByUrl(RouteConstants.ROUTE_HOME);
+    this.authController.Signout().toPromise()
+      .catch(ex => { throw ex; })
+      .finally(() => {
+        this.storageService.remove(Constants.AUTH_TOKEN);
+        this.currentUserSource.set(null);
+        this.router.navigateByUrl(RouteConstants.ROUTE_HOME);
+      });
   }
 
-  setCurrentUser(result: IAuthorizationDto) {
-    const tokenInfo = this.getDecodedToken(result.token);
+  loadCurrentUser() {
+    const token = this.getToken();
+    if (!token) return;
 
-    const userSource: IUserSource = {
-      id: tokenInfo.ID,
-      username: tokenInfo.USERNAME,
-      name: tokenInfo.FULLNAME,
-      email: tokenInfo.EMAIL,
-      roles: [],
-      token: result.token,
-      tokenExpireDate: DateTime.fromMillis(tokenInfo.exp * 1000).toJSDate(),
-    };
-    Array.isArray(tokenInfo.roles)
-      ? (userSource.roles = tokenInfo.ROLES)
-      : userSource.roles.push(tokenInfo.ROLES);
+    this.loaderService.showPageLoader();
+    this.userController.GetCurrent().toPromise()
+      .then(_ => this.currentUserSource.set(_))
+      .catch(ex => { throw ex; })
+      .finally(() => this.loaderService.hidePageLoader());
+  }
 
-    this.storageService.set(Constants.AUTH_TOKEN, result.token);
-    this.currentUserSource.set(userSource);
+  setUser(data: IAuthorizationDto) {
+    const token = this.getToken();
 
-    this.router.navigateByUrl(RouteConstants.ROUTE_HUB_DASHBOARD);
+    this.setToken(data.token);
+
+    if (!token) {
+      this.router.navigateByUrl(RouteConstants.ROUTE_HUB_DASHBOARD);
+      this.loadCurrentUser();
+    }
   }
 
   getDecodedToken(token: string) {
     return JSON.parse(atob(token.split('.')[1]));
   }
 
-  getToken() {
-    return this.storageService.get(Constants.AUTH_TOKEN);
+  setToken(token: string) {
+    this.storageService.set(Constants.AUTH_TOKEN, token);
+  }
+
+  getToken(): string | null {
+    const token = this.storageService.get(Constants.AUTH_TOKEN);
+    if (!token)
+      return null;
+
+    const decodedToken = this.getDecodedToken(token);
+    if (!decodedToken.exp)
+      return null;
+
+    const currentTimestamp = DateTime.now().toSeconds();
+    if (currentTimestamp >= decodedToken.exp)
+      return null;
+
+    return token;
   }
 
   validateEmail(validateUser: IValidateUserDto) {

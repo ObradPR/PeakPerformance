@@ -9,6 +9,7 @@ import { ISigninDto } from './interfaces';
 import { IValidateUserDto } from './interfaces';
 import { IValidateUserCodeDto } from './interfaces';
 import { IChangePasswordDto } from './interfaces';
+import { IUserDto } from './interfaces';
 import { IProfileSetupDto } from './interfaces';
 
 @Injectable() export abstract class BaseController
@@ -128,6 +129,18 @@ import { IProfileSetupDto } from './interfaces';
 }
 @Injectable() export class UserController extends BaseController
 {
+	public GetCurrent() : Observable<IUserDto | null>
+	{
+		return this.httpClient.get<IUserDto>(
+		this.settingsService.createApiUrl('User/GetCurrent'),
+		{
+			responseType: 'json',
+			observe: 'response',
+			withCredentials: true
+		})
+		.pipe(map(response => response.body));
+		
+	}
 	public ProfileSetup(data: FormData) : Observable<any>
 	{
 		const body = <any>data;
