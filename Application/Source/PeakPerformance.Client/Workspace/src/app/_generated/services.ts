@@ -11,6 +11,8 @@ import { IValidateUserCodeDto } from './interfaces';
 import { IChangePasswordDto } from './interfaces';
 import { IUserDto } from './interfaces';
 import { IProfileSetupDto } from './interfaces';
+import { IPagingResultDto } from './interfaces';
+import { IWeightSearchOptionsDto } from './interfaces';
 
 @Injectable() export abstract class BaseController
 {
@@ -120,13 +122,6 @@ import { IProfileSetupDto } from './interfaces';
 		super(httpClient, settingsService);
 	}
 }
-@Injectable() export class TestController extends BaseController
-{
-	constructor (httpClient: HttpClient, settingsService: SettingsService)
-	{
-		super(httpClient, settingsService);
-	}
-}
 @Injectable() export class UserController extends BaseController
 {
 	public GetCurrent() : Observable<IUserDto | null>
@@ -146,6 +141,27 @@ import { IProfileSetupDto } from './interfaces';
 		const body = <any>data;
 		return this.httpClient.post<any>(
 		this.settingsService.createApiUrl('User/ProfileSetup'),
+		body,
+		{
+			responseType: 'json',
+			observe: 'response',
+			withCredentials: true
+		})
+		.pipe(map(response => response.body));
+		
+	}
+	constructor (httpClient: HttpClient, settingsService: SettingsService)
+	{
+		super(httpClient, settingsService);
+	}
+}
+@Injectable() export class WeightController extends BaseController
+{
+	public Search(options: IWeightSearchOptionsDto) : Observable<IPagingResultDto | null>
+	{
+		const body = <any>options;
+		return this.httpClient.post<IPagingResultDto>(
+		this.settingsService.createApiUrl('Weight/Search'),
 		body,
 		{
 			responseType: 'json',

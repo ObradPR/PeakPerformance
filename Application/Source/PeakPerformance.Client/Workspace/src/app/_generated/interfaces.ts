@@ -90,6 +90,25 @@ export interface ILookupValueDto
 	name: string;
 	description: string;
 }
+export interface IPagingResultDto
+{
+	data: any[];
+	total: number;
+}
+export interface ISearchOptionsDto
+{
+	skip: number;
+	take: number;
+	sortingOptions: ISortingOptionsDto[];
+	filter: string;
+	totalCount?: boolean;
+}
+export interface ISortingOptionsDto
+{
+	field: string;
+	dir: string;
+	desc: boolean;
+}
 export interface IProfileSetupDto
 {
 	weight: IWeightDto;
@@ -136,4 +155,7 @@ export interface IWeightGoalDto
 	targetWeight: number;
 	startDate: Date;
 	endDate: Date;
+}
+export interface IWeightSearchOptionsDto extends ISearchOptionsDto
+{
 }

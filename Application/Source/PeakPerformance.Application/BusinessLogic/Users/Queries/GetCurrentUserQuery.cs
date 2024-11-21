@@ -2,7 +2,7 @@
 
 namespace PeakPerformance.Application.BusinessLogic.Users.Queries;
 
-public class GetCurrentUserQuery() : BaseQuery<UserDto>
+public class GetCurrentUserQuery : BaseQuery<UserDto>
 {
     public class GetCurrentUserQueryHandler(IUnitOfWork unitOfWork, IIdentityUser identityUser, IMapper mapper)
         : BaseQueryHandler<GetCurrentUserQuery, UserDto>(unitOfWork, identityUser, mapper)
