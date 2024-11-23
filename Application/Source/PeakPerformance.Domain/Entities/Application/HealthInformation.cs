@@ -15,6 +15,8 @@ public class HealthInformation : BaseAuditedDomain<long>
     [Column(TypeName = Constants.DB_TYPE_DATE)]
     public DateTime? EndDate { get; set; }
 
+    public bool IsCondition { get; set; }
+
     //
     // Relationships
     //

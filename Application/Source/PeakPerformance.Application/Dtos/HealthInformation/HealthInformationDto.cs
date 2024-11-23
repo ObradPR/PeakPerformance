@@ -1,4 +1,5 @@
-﻿using HealthInformation_ = PeakPerformance.Domain.Entities.Application.HealthInformation;
+﻿using PeakPerformance.Common.Enums.Attributes;
+using HealthInformation_ = PeakPerformance.Domain.Entities.Application.HealthInformation;
 
 namespace PeakPerformance.Application.Dtos.HealthInformation;
 
@@ -25,5 +26,14 @@ public class HealthInformationDto
         model.Description = Description;
         model.StartDate = StartDate;
         model.EndDate = EndDate;
+        model.IsCondition = IsCondition(InjuryTypeId);
+    }
+
+    public static bool IsCondition(eInjuryType injuryTypeId)
+    {
+        var type = typeof(eInjuryType);
+        var memberInfo = type.GetMember(injuryTypeId.ToString()).FirstOrDefault();
+
+        return memberInfo != null && memberInfo.GetCustomAttributes(typeof(ConditionAttribute), false).Length != 0;
     }
 }
