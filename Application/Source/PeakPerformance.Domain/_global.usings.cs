@@ -13,3 +13,4 @@ global using PeakPerformance.Domain.Entities.Audits;
 global using PeakPerformance.Domain.Searches;
 global using System.ComponentModel.DataAnnotations;
 global using System.ComponentModel.DataAnnotations.Schema;
+global using System.Linq.Expressions;

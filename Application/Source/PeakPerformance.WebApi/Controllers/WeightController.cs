@@ -1,7 +1,5 @@
 ﻿using PeakPerformance.Application.BusinessLogic.Weights.Queries;
 using PeakPerformance.Application.Dtos.Weights;
-using PeakPerformance.Domain._Grid;
-using PeakPerformance.Domain.Searches;
 
 namespace PeakPerformance.WebApi.Controllers;
 

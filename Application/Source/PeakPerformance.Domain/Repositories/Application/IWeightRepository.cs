@@ -1,6 +1,4 @@
-﻿using System.Linq.Expressions;
-
-namespace PeakPerformance.Domain.Repositories.Application;
+﻿namespace PeakPerformance.Domain.Repositories.Application;
 
 public interface IWeightRepository
 {

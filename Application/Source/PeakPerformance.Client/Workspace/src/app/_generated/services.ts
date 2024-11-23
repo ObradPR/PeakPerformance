@@ -12,6 +12,8 @@ import { IChangePasswordDto } from './interfaces';
 import { IPagingResult } from './interfaces';
 import { IBodyMeasurementDto } from './interfaces';
 import { IBodyMeasurementSearchOptions } from './interfaces';
+import { IHealthInformationDto } from './interfaces';
+import { IHealthInformationSearchOptions } from './interfaces';
 import { IUserDto } from './interfaces';
 import { IProfileSetupDto } from './interfaces';
 import { IWeightDto } from './interfaces';
@@ -132,6 +134,27 @@ import { IWeightSearchOptions } from './interfaces';
 		const body = <any>options;
 		return this.httpClient.post<IPagingResult<IBodyMeasurementDto>>(
 		this.settingsService.createApiUrl('BodyMeasurement/Search'),
+		body,
+		{
+			responseType: 'json',
+			observe: 'response',
+			withCredentials: true
+		})
+		.pipe(map(response => response.body));
+		
+	}
+	constructor (httpClient: HttpClient, settingsService: SettingsService)
+	{
+		super(httpClient, settingsService);
+	}
+}
+@Injectable() export class HealthInformationController extends BaseController
+{
+	public Search(options: IHealthInformationSearchOptions) : Observable<IPagingResult<IHealthInformationDto> | null>
+	{
+		const body = <any>options;
+		return this.httpClient.post<IPagingResult<IHealthInformationDto>>(
+		this.settingsService.createApiUrl('HealthInformation/Search'),
 		body,
 		{
 			responseType: 'json',

@@ -77,6 +77,7 @@ export interface IHealthInformationDto
 	description: string;
 	startDate?: Date | null;
 	endDate?: Date | null;
+	isCondition: boolean;
 }
 export interface IEnumProvider
 {
@@ -161,6 +162,10 @@ export interface IWeightSearchOptions extends ISearchOptions
 	userId?: number;
 }
 export interface IBodyMeasurementSearchOptions extends ISearchOptions
+{
+	userId?: number;
+}
+export interface IHealthInformationSearchOptions extends ISearchOptions
 {
 	userId?: number;
 }

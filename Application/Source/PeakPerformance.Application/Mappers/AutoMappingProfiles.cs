@@ -15,5 +15,7 @@ public class AutoMappingProfiles : BaseAutoMapperProfile
         CreateMap<Weight, WeightDto>();
 
         CreateMap<BodyMeasurement, BodyMeasurementDto>();
+
+        CreateMap<HealthInformation, HealthInformationDto>();
     }
 }

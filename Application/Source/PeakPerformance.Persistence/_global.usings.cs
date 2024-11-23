@@ -20,6 +20,7 @@ global using PeakPerformance.Domain.Entities.Application_lu;
 global using PeakPerformance.Domain.Entities.Audits;
 global using PeakPerformance.Domain.Repositories;
 global using PeakPerformance.Domain.Repositories.Application;
+global using PeakPerformance.Domain.Searches;
 global using PeakPerformance.Persistence.Contexts;
 global using PeakPerformance.Persistence.Enums;
 global using PeakPerformance.Persistence.Extensions;

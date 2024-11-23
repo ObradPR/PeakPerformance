@@ -17,6 +17,8 @@ public class HealthInformationDto
     [Display(Name = "End date")]
     public DateTime? EndDate { get; set; }
 
+    public bool IsCondition { get; set; }
+
     // methods
 
     public void ToModel(HealthInformation_ model, long userId)
@@ -26,10 +28,11 @@ public class HealthInformationDto
         model.Description = Description;
         model.StartDate = StartDate;
         model.EndDate = EndDate;
-        model.IsCondition = IsCondition(InjuryTypeId);
+
+        model.IsCondition = InjuryClassification(InjuryTypeId);
     }
 
-    public static bool IsCondition(eInjuryType injuryTypeId)
+    public static bool InjuryClassification(eInjuryType injuryTypeId)
     {
         var type = typeof(eInjuryType);
         var memberInfo = type.GetMember(injuryTypeId.ToString()).FirstOrDefault();

@@ -6,6 +6,8 @@ public interface IHealthInformationRepository
 {
     // Get
 
+    Task<PagingResult<HealthInformation>> SearchAsync(HealthInformationSearchOptions options, List<Expression<Func<HealthInformation, bool>>> predicates);
+
     // Add / Remove / Edit
 
     Task AddRangeAsync(IEnumerable<HealthInformation_> models);
