@@ -21,6 +21,8 @@ public class UserRepository(ApplicationDbContext context) : BaseRepository(conte
     public async Task<User> GetByIdAsync(Expression<Func<User, bool>> predicate, params Expression<Func<User, object>>[] includeProperties)
         => await db.Users.GetSingleAsync(predicate, includeProperties);
 
+    public async Task<bool> CheckByIdAsync(long id) => await db.Users.AnyAsync(_ => _.Id == id);
+
     // Add / Remove / Edit
 
     public async Task AddAsync(User user) => await db.CreateAsync(user);

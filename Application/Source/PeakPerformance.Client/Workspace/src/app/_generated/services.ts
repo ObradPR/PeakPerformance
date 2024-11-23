@@ -11,8 +11,9 @@ import { IValidateUserCodeDto } from './interfaces';
 import { IChangePasswordDto } from './interfaces';
 import { IUserDto } from './interfaces';
 import { IProfileSetupDto } from './interfaces';
-import { IPagingResultDto } from './interfaces';
-import { IWeightSearchOptionsDto } from './interfaces';
+import { IPagingResult } from './interfaces';
+import { IWeightDto } from './interfaces';
+import { IWeightSearchOptions } from './interfaces';
 
 @Injectable() export abstract class BaseController
 {
@@ -157,10 +158,10 @@ import { IWeightSearchOptionsDto } from './interfaces';
 }
 @Injectable() export class WeightController extends BaseController
 {
-	public Search(options: IWeightSearchOptionsDto) : Observable<IPagingResultDto | null>
+	public Search(options: IWeightSearchOptions) : Observable<IPagingResult<IWeightDto> | null>
 	{
 		const body = <any>options;
-		return this.httpClient.post<IPagingResultDto>(
+		return this.httpClient.post<IPagingResult<IWeightDto>>(
 		this.settingsService.createApiUrl('Weight/Search'),
 		body,
 		{

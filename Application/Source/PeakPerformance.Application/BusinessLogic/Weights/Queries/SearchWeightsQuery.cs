@@ -1,22 +1,38 @@
-﻿using PeakPerformance.Application.Dtos._Grid;
-using PeakPerformance.Application.Dtos.Searches;
+﻿using PeakPerformance.Domain.Searches;
+using System.Linq.Expressions;
 
 namespace PeakPerformance.Application.BusinessLogic.Weights.Queries;
 
-public class SearchWeightsQuery(WeightSearchOptionsDto options) : BaseQuery<PagingResultDto>
+public class SearchWeightsQuery(WeightSearchOptions options) : BaseQuery<PagingResult<WeightDto>>
 {
-    public WeightSearchOptionsDto Options { get; set; } = options;
+    public WeightSearchOptions Options { get; set; } = options;
 
     public class SearchWeightsQueryHandler(IUnitOfWork unitOfWork, IIdentityUser identityUser, IMapper mapper)
-                : BaseQueryHandler<SearchWeightsQuery, PagingResultDto>(unitOfWork, identityUser, mapper)
+                : BaseQueryHandler<SearchWeightsQuery, PagingResult<WeightDto>>(unitOfWork, identityUser, mapper)
     {
-        public override async Task<PagingResultDto> Handle(SearchWeightsQuery request, CancellationToken cancellationToken)
+        public override async Task<PagingResult<WeightDto>> Handle(SearchWeightsQuery request, CancellationToken cancellationToken)
         {
-            var result = new PagingResultDto();
-            result.Data = new List<WeightDto>();
-            result.Total = 0;
+            var options = request.Options;
 
-            return result;
+            var id = options.UserId ?? _identityUser.Id;
+
+            var userExists = await _unitOfWork.UserRepository.CheckByIdAsync(id);
+
+            if (!userExists)
+                throw new NotFoundException();
+
+            var predicates = new List<Expression<Func<Weight, bool>>>();
+
+            if (id.IsNotEmpty())
+                predicates.Add(_ => _.Id == id);
+
+            var result = await _unitOfWork.WeightRepository.SearchAsync(options, predicates);
+
+            return new PagingResult<WeightDto>
+            {
+                Data = _mapper.Map<IEnumerable<WeightDto>>(result.Data),
+                Total = result.Total,
+            };
         }
     }
 }

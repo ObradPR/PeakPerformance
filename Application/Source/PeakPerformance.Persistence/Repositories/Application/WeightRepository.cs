@@ -1,9 +1,14 @@
-﻿namespace PeakPerformance.Persistence.Repositories.Application;
+﻿using PeakPerformance.Domain.Searches;
+
+namespace PeakPerformance.Persistence.Repositories.Application;
 
 public class WeightRepository(ApplicationDbContext context)
     : BaseRepository(context), IWeightRepository
 {
     // Get
+
+    public async Task<PagingResult<Weight>> SearchAsync(WeightSearchOptions options, List<Expression<Func<Weight, bool>>> predicates)
+        => await db.Weights.SearchAsync(options, _ => _.CreatedOn, true, predicates, null);
 
     // Add / Remove / Edit
 

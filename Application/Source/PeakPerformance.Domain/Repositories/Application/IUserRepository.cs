@@ -14,6 +14,8 @@ public interface IUserRepository
 
     Task<User> GetByIdAsync(Expression<Func<User, bool>> predicate, params Expression<Func<User, object>>[] includeProperties);
 
+    Task<bool> CheckByIdAsync(long id);
+
     // Add / Remove / Edit
 
     Task AddAsync(User user);
