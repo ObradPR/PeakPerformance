@@ -160,3 +160,7 @@ export interface IWeightSearchOptions extends ISearchOptions
 {
 	userId?: number;
 }
+export interface IBodyMeasurementSearchOptions extends ISearchOptions
+{
+	userId?: number;
+}

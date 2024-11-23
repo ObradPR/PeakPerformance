@@ -1,7 +1,4 @@
-﻿using PeakPerformance.Domain.Searches;
-using System.Linq.Expressions;
-
-namespace PeakPerformance.Application.BusinessLogic.Weights.Queries;
+﻿namespace PeakPerformance.Application.BusinessLogic.Weights.Queries;
 
 public class SearchWeightsQuery(WeightSearchOptions options) : BaseQuery<PagingResult<WeightDto>>
 {

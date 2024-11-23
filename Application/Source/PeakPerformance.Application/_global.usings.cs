@@ -23,5 +23,7 @@ global using PeakPerformance.Common.Resources;
 global using PeakPerformance.Domain._Grid;
 global using PeakPerformance.Domain.Entities.Application;
 global using PeakPerformance.Domain.Repositories;
+global using PeakPerformance.Domain.Searches;
 global using System.ComponentModel;
 global using System.ComponentModel.DataAnnotations;
+global using System.Linq.Expressions;

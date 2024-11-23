@@ -9,9 +9,11 @@ import { ISigninDto } from './interfaces';
 import { IValidateUserDto } from './interfaces';
 import { IValidateUserCodeDto } from './interfaces';
 import { IChangePasswordDto } from './interfaces';
+import { IPagingResult } from './interfaces';
+import { IBodyMeasurementDto } from './interfaces';
+import { IBodyMeasurementSearchOptions } from './interfaces';
 import { IUserDto } from './interfaces';
 import { IProfileSetupDto } from './interfaces';
-import { IPagingResult } from './interfaces';
 import { IWeightDto } from './interfaces';
 import { IWeightSearchOptions } from './interfaces';
 
@@ -109,6 +111,27 @@ import { IWeightSearchOptions } from './interfaces';
 		const body = <any>data;
 		return this.httpClient.post<any>(
 		this.settingsService.createApiUrl('Auth/ChangePassword'),
+		body,
+		{
+			responseType: 'json',
+			observe: 'response',
+			withCredentials: true
+		})
+		.pipe(map(response => response.body));
+		
+	}
+	constructor (httpClient: HttpClient, settingsService: SettingsService)
+	{
+		super(httpClient, settingsService);
+	}
+}
+@Injectable() export class BodyMeasurementController extends BaseController
+{
+	public Search(options: IBodyMeasurementSearchOptions) : Observable<IPagingResult<IBodyMeasurementDto> | null>
+	{
+		const body = <any>options;
+		return this.httpClient.post<IPagingResult<IBodyMeasurementDto>>(
+		this.settingsService.createApiUrl('BodyMeasurement/Search'),
 		body,
 		{
 			responseType: 'json',
