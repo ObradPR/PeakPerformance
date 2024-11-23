@@ -57,4 +57,28 @@ public static partial class Extensions
                type == typeof(float) || type == typeof(double) ||
                type == typeof(decimal);
     }
+
+    public static bool IsNullOrEmpty(this int? number)
+        => !number.HasValue || number.Value.IsEmpty();
+
+    public static bool IsNullOrEmpty(this long? number)
+        => !number.HasValue || number.Value.IsEmpty();
+
+    public static bool IsNotNullOrEmpty(this int? number)
+        => number.HasValue && number.Value.IsNotEmpty();
+
+    public static bool IsNotNullOrEmpty(this long? number)
+        => number.HasValue && number.Value.IsNotEmpty();
+
+    public static bool IsEmpty(this int number)
+        => number <= 0;
+
+    public static bool IsEmpty(this long number)
+        => number <= 0;
+
+    public static bool IsNotEmpty(this int number)
+        => number > 0;
+
+    public static bool IsNotEmpty(this long number)
+        => number > 0;
 }
