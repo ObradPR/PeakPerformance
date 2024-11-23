@@ -70,14 +70,23 @@ public static class FluentConfiguration
             _interfaceConfiguration
             );
 
-        //builder.ExportAsInterfaces(
-        //	Assembly.GetAssembly(typeof(Common.Grid.GridParameters)).ExportedTypes
-        //	.Where(i => i.Namespace.StartsWith($"{Constants.SOLUTION_NAME}.Common.Grid") && i.IsClass)
-        //	.OrderBy(i => i.Name)
-        //	.OrderBy(i => i.Name != nameof(Common.Grid.GridParameters))
-        //	.ToArray(),
-        //	_interfaceConfiguration
-        //	);
+        builder.ExportAsInterfaces(
+            Assembly.GetAssembly(typeof(Domain._Grid.PagingResult<>)).ExportedTypes
+            .Where(i => i.Namespace.StartsWith($"{Constants.SOLUTION_NAME}.Domain._Grid") && i.IsClass)
+            .OrderBy(i => i.Name)
+            .OrderBy(i => i.Name != nameof(Domain._Grid.PagingResult<object>))
+            .ToArray(),
+            _interfaceConfiguration
+            );
+
+        builder.ExportAsInterfaces(
+            Assembly.GetAssembly(typeof(Domain.Searches.WeightSearchOptions)).ExportedTypes
+            .Where(i => i.Namespace.StartsWith($"{Constants.SOLUTION_NAME}.Domain.Searches") && i.IsClass)
+            .OrderBy(i => i.Name)
+            .OrderBy(i => i.Name != nameof(Domain.Searches.WeightSearchOptions))
+            .ToArray(),
+            _interfaceConfiguration
+            );
 
         // Enums
 

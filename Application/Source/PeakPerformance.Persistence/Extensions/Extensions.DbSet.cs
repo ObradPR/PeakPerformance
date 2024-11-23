@@ -143,7 +143,9 @@ public static partial class Extensions
     public static async Task<PagingResult<TResult>> SearchAsync<TResult, TProperty, TEntity>(this DbSet<TEntity> dbSet, CancellationToken cancellationToken, SearchOptions options, Expression<Func<TEntity, TProperty>> defaultOrder, bool desc, Expression<Func<TEntity, TResult>> select, List<Expression<Func<TEntity, bool>>> predicates, params Expression<Func<TEntity, object>>[] includeProperties) where TEntity : class
     {
         var query = dbSet.AsQueryable();
-        query = predicates.Aggregate(query, (current, expression) => current.Where(expression));
+
+        if (predicates != null)
+            query = predicates.Aggregate(query, (current, expression) => current.Where(expression));
 
         var total = options.TotalCount == false ? 0 : await query.CountAsync(cancellationToken);
 

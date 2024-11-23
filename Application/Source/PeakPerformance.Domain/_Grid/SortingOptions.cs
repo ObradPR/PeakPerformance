@@ -1,4 +1,4 @@
-﻿namespace PeakPerformance.Persistence.Grid;
+﻿namespace PeakPerformance.Domain._Grid;
 
 public class SortingOptions
 {

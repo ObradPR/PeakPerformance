@@ -1,12 +1,12 @@
-﻿namespace PeakPerformance.Application.Dtos._Grid;
+﻿namespace PeakPerformance.Domain._Grid;
 
-public class SearchOptionsDto
+public class SearchOptions
 {
     public int Skip { get; set; }
 
     public int Take { get; set; }
 
-    public List<SortingOptionsDto> SortingOptions { get; set; }
+    public List<SortingOptions> SortingOptions { get; set; }
 
     public string Filter { get; set; }
 
