@@ -2,8 +2,6 @@
 
 public partial class ApplicationDbContext
 {
-    // Tables
-
     public virtual DbSet<ErrorLog> ErrorLogs { get; set; }
 
     public virtual DbSet<User> Users { get; set; }
@@ -27,4 +25,8 @@ public partial class ApplicationDbContext
     public virtual DbSet<SocialMedia> SocialMedia { get; set; }
 
     public virtual DbSet<HealthInformation> HealthInformation { get; set; }
+
+    public virtual DbSet<Challenge> Challenges { get; set; }
+
+    public virtual DbSet<ChallengeParticipant> ChallengeParticipants { get; set; }
 }

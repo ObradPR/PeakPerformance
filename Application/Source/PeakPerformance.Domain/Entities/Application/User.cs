@@ -66,6 +66,9 @@ public class User : BaseIndexAuditedDomain<User, long>, IConfigurableEntity
     [InverseProperty(nameof(User))]
     public virtual ICollection<HealthInformation> HealthInformation { get; set; } = [];
 
+    [InverseProperty(nameof(User))]
+    public virtual ICollection<ChallengeParticipant> ChallengeParticipants { get; set; } = [];
+
     #endregion Relationships
 
     //

@@ -11,4 +11,8 @@ public partial class ApplicationDbContext
     public virtual DbSet<UserTrainingGoal_aud> UserTrainingGoals_aud { get; set; }
 
     public virtual DbSet<HealthInformation_aud> HealthInformation_aud { get; set; }
+
+    public virtual DbSet<Challenge_aud> Challenge_aud { get; set; }
+
+    public virtual DbSet<ChallengeParticipant_aud> ChallengeParticipant_aud { get; set; }
 }
