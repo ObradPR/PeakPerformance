@@ -52,7 +52,10 @@ public static partial class Extensions
         {
             connection.Open();
 
-            connection.SetIdentityInsert<TEntity>();
+            var hasIdentity = connection.CheckIdentity<TEntity>(eTableType.Lookup);
+
+            if (hasIdentity)
+                connection.SetIdentityInsert<TEntity>();
 
             using (var command = new SqlCommand($"EXEC {Settings.usp_SeedLookupTables} @TableName, @IdAndDescriptions", connection))
             {
@@ -70,7 +73,8 @@ public static partial class Extensions
                 command.ExecuteNonQuery();
             }
 
-            connection.SetIdentityInsert<TEntity>(eIdentitySwitch.Off);
+            if (hasIdentity)
+                connection.SetIdentityInsert<TEntity>(eIdentitySwitch.Off);
         }
     }
 

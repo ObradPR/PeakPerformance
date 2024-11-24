@@ -30,4 +30,21 @@ public static partial class Extensions
             ? throw new ArgumentException($"Property '{propertyName}' not found on type '{typeof(T).Name}'")
             : $"[{property.Name}] IS NOT NULL";
     }
+
+    private static bool CheckIdentity<TEntity>(this SqlConnection connection, eTableType tableType, string columnName = "Id")
+       where TEntity : BaseDomain
+    {
+        var tableName = GetTableName<TEntity>(tableType);
+
+        var query = $@"
+            SELECT COLUMNPROPERTY(OBJECT_ID(TABLE_SCHEMA + '.' + TABLE_NAME), COLUMN_NAME, 'IsIdentity') AS IsIdentity
+            FROM INFORMATION_SCHEMA.COLUMNS
+            WHERE TABLE_NAME = '{tableName}' AND COLUMN_NAME = '{columnName}'";
+
+        using (var command = new SqlCommand(query, connection))
+        {
+            var result = command.ExecuteScalar();
+            return result != DBNull.Value && Convert.ToInt32(result) == 1;
+        }
+    }
 }
