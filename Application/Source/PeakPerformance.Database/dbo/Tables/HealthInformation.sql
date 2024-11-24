@@ -12,10 +12,13 @@
     [DeletedBy]    BIGINT         NULL,
     [IsActive]     BIT            NOT NULL,
     [CreatedBy]    BIGINT         DEFAULT (CONVERT([bigint],(0))) NOT NULL,
+    [IsCondition]  BIT            DEFAULT (CONVERT([bit],(0))) NOT NULL,
     CONSTRAINT [PK_HealthInformation] PRIMARY KEY CLUSTERED ([Id] ASC),
     CONSTRAINT [FK_HealthInformation_InjuryTypes_lu_InjuryTypeId] FOREIGN KEY ([InjuryTypeId]) REFERENCES [dbo].[InjuryTypes_lu] ([Id]),
     CONSTRAINT [FK_HealthInformation_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [dbo].[Users] ([Id]) ON DELETE CASCADE
 );
+
+
 
 
 
