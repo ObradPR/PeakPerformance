@@ -7,6 +7,7 @@ global using Microsoft.EntityFrameworkCore.Metadata.Internal;
 global using Microsoft.EntityFrameworkCore.Migrations;
 global using PeakPerformance.Common;
 global using PeakPerformance.Common.Enums;
+global using PeakPerformance.Common.Exceptions;
 global using PeakPerformance.Common.Extensions;
 global using PeakPerformance.Common.Interfaces;
 global using PeakPerformance.Domain;

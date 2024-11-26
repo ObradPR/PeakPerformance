@@ -1,4 +1,5 @@
 import { eMeasurementUnit } from './enums';
+import { eChallengeStatus } from './enums';
 import { eInjuryType } from './enums';
 import { eSocialMediaPlatform } from './enums';
 import { eTrainingGoal } from './enums';
@@ -64,6 +65,19 @@ export interface IBodyMeasurementDto
 	rightCalf?: number;
 	leftCalf?: number;
 	measurementUnitId: eMeasurementUnit;
+}
+export interface IChallengeDto
+{
+	name: string;
+	description: string;
+	startDate: Date;
+	endDate: Date;
+	maxParticipants?: number;
+	minParticipants?: number;
+	statusId: eChallengeStatus;
+	approvedBy?: number;
+	approvedOn?: Date | null;
+	isRestricted: boolean;
 }
 export interface IEmailDto
 {
@@ -162,6 +176,10 @@ export interface IWeightSearchOptions extends ISearchOptions
 	userId?: number;
 }
 export interface IBodyMeasurementSearchOptions extends ISearchOptions
+{
+	userId?: number;
+}
+export interface IChallengeSearchOptions extends ISearchOptions
 {
 	userId?: number;
 }

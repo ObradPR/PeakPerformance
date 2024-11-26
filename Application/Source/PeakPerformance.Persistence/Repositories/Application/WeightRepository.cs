@@ -1,6 +1,4 @@
-﻿using PeakPerformance.Domain.Searches;
-
-namespace PeakPerformance.Persistence.Repositories.Application;
+﻿namespace PeakPerformance.Persistence.Repositories.Application;
 
 public class WeightRepository(ApplicationDbContext context)
     : BaseRepository(context), IWeightRepository

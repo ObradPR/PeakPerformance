@@ -13,17 +13,17 @@ public class SearchHealthInformationQuery(HealthInformationSearchOptions options
         {
             var options = request.Options;
 
-            var id = options.UserId ?? _identityUser.Id;
+            var userId = options.UserId ?? _identityUser.Id;
 
-            var userExists = await _unitOfWork.UserRepository.CheckByIdAsync(id);
+            var userExists = await _unitOfWork.UserRepository.CheckByIdAsync(userId);
 
             if (!userExists)
                 throw new NotFoundException();
 
             var predicates = new List<Expression<Func<HealthInformation_, bool>>>();
 
-            if (id.IsNotEmpty())
-                predicates.Add(_ => _.Id == id);
+            if (userId.IsNotEmpty())
+                predicates.Add(_ => _.UserId == userId);
 
             var result = await _unitOfWork.HealthInformationRepository.SearchAsync(options, predicates);
 

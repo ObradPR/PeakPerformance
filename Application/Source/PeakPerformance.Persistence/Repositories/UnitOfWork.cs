@@ -1,6 +1,4 @@
-﻿using PeakPerformance.Common.Exceptions;
-
-namespace PeakPerformance.Persistence.Repositories;
+﻿namespace PeakPerformance.Persistence.Repositories;
 
 public class UnitOfWork(ApplicationDbContext context) : BaseRepository(context), IUnitOfWork
 {
@@ -27,6 +25,8 @@ public class UnitOfWork(ApplicationDbContext context) : BaseRepository(context),
     public ISocialMediaRepository SocialMediaRepository => new SocialMediaRepository(db);
 
     public IHealthInformationRepository HealthInformationRepository => new HealthInformationRepository(db);
+
+    public IChallengeRepository ChallengeRepository => new ChallengeRepository(db);
 
     // Methods
 

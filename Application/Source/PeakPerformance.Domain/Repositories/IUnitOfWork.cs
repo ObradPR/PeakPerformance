@@ -28,6 +28,8 @@ public interface IUnitOfWork
 
     IHealthInformationRepository HealthInformationRepository { get; }
 
+    IChallengeRepository ChallengeRepository { get; }
+
     // Methods
 
     Task SaveAsync();
