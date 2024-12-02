@@ -32,6 +32,13 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./pages/hub/hub.component').then(_ => _.HUBComponent),
     canActivate: [authGuard],
+    children: [
+      {
+        path: '',
+        loadComponent: () =>
+          import('./pages/hub/dashboard/dashboard.component').then(_ => _.DashboardComponent)
+      }
+    ]
   },
   ///
   /// Error Pages

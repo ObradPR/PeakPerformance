@@ -1,0 +1,22 @@
+@import "../../../styles.scss";
+
+main {
+    @include flex(row, center, nowrap, start);
+    width: 100%;
+
+    .left-menu {
+        @include size(16%, 100dvh);
+        background-color: $yellow-hex;
+    }
+
+    .body {
+        @include size(60%, 100dvh);
+        max-height: 100dvh;
+        overflow-y: scroll;
+    }
+
+    .user-panel {
+        @include size(24%, 100dvh);
+        background-color: $yellow-hex;
+    }
+}

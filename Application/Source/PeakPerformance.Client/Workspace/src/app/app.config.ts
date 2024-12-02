@@ -20,6 +20,7 @@ import './extensions/string.extension';
 import { errorInterceptor } from './interceptors/error.interceptor';
 import { jwtInterceptor } from './interceptors/jwt.interceptor';
 import { SettingsService } from './services/settings.service';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -32,7 +33,7 @@ export const appConfig: ApplicationConfig = {
       withInterceptors([jwtInterceptor, errorInterceptor])
     ),
     servicesProvider(),
-    controllersProvider(),
+    controllersProvider(), provideAnimationsAsync(),
   ],
 };
 
