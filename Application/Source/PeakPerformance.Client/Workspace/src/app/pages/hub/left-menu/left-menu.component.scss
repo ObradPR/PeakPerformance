@@ -41,16 +41,28 @@
                     font-weight: bold;
                     font-size: 1.2em;
                     margin-top: 0.6rem;
-                    transition: $transition;
-                    border-radius: $border-radius-20;
                     cursor: pointer;
+                    position: relative;
+                    width: 92%;
 
-                    &:hover, &:active {
+                    &:hover {
                         background-color: $light-blue-hex;
                         color: $white-hex;
 
                         svg {
                             filter: brightness(0) invert(1);
+                        }
+
+                        &::after {
+                            content: "";
+                            position: absolute;
+                            top: 0;
+                            right: -29.5px;
+                            width: 0;
+                            height: 0;
+                            border-style: solid;
+                            border-width: 18px 0 20px 30px;
+                            border-color: transparent transparent transparent $light-blue-hex; 
                         }
                     }
 
@@ -60,11 +72,31 @@
 
                     svg {
                         @include size(1.8rem, 1.8rem);
-                        transition: $transition;
                         margin-right: 0.4rem;
                     }
                 }
             }
         }
+    }
+}
+
+.active-link {
+    background-color: $light-blue-hex;
+    color: $white-hex;
+
+    svg {
+        filter: brightness(0) invert(1);
+    }
+
+    &::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: -29.5px;
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 18px 0 20px 30px;
+        border-color: transparent transparent transparent $light-blue-hex; 
     }
 }
