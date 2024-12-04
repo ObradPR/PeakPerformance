@@ -1,7 +1,9 @@
 @import '../../../../styles.scss';
 
 .wrapper {
+    @include flex(column, space-between, nowrap, start);
     padding: 1.8rem 2rem;
+    height: 100dvh;
 
     .left-menu-header {
         @include flex(row, start, wrap, center);
@@ -29,7 +31,9 @@
     }
 
     .left-menu-body {
+        width: 100%;
         padding: 1.8rem 0;
+        flex: 1;
 
         nav {
             ul {
@@ -41,9 +45,8 @@
                     font-weight: bold;
                     font-size: 1.2em;
                     margin-top: 0.6rem;
+                    border-radius: $border-radius-20;
                     cursor: pointer;
-                    position: relative;
-                    width: 92%;
 
                     &:hover {
                         background-color: $light-blue-hex;
@@ -51,18 +54,6 @@
 
                         svg {
                             filter: brightness(0) invert(1);
-                        }
-
-                        &::after {
-                            content: "";
-                            position: absolute;
-                            top: 0;
-                            right: -29.5px;
-                            width: 0;
-                            height: 0;
-                            border-style: solid;
-                            border-width: 18px 0 20px 30px;
-                            border-color: transparent transparent transparent $light-blue-hex; 
                         }
                     }
 
@@ -73,11 +64,72 @@
                     svg {
                         @include size(1.8rem, 1.8rem);
                         margin-right: 0.4rem;
+                        filter: invert(14%) sepia(8%) saturate(250%) hue-rotate(190deg) brightness(91%) contrast(86%);
                     }
                 }
             }
         }
     }
+
+    .left-menu-footer{
+        @include flex(column, normal, nowrap, start);
+        width: 100%;
+        border-top: 1px solid $dark-grey-hex;
+        padding-top: 1.4rem;
+
+        button {
+            color: $white-hex;
+            font-weight: 500;
+            font-size: 1.1em;
+            padding: 0.7rem;
+            height: auto;
+        }
+
+        a {
+            color: $dark-grey-hex;
+            font-weight: 600;
+            text-decoration: none;
+            font-size: 1.2em;
+            margin: 1rem 0;
+
+            &:hover {
+                color: $grey-hex;
+
+                svg {
+                    filter: invert(41%) sepia(5%) saturate(356%) hue-rotate(180deg) brightness(93%) contrast(89%);
+                }
+            }
+
+            &:last-child {
+                margin: 0;
+            }
+
+            svg {
+                @include size(2.3rem, 2.3rem);
+                margin-right: 0.4rem;
+                filter: invert(14%) sepia(8%) saturate(250%) hue-rotate(190deg) brightness(91%) contrast(86%);
+            }
+
+            &.sign-out {
+                color: $dark-red-hex;
+
+                &:hover {
+                    color: $red-hex;
+    
+                    svg {
+                        filter: invert(55%) sepia(71%) saturate(3206%) hue-rotate(331deg) brightness(101%) contrast(103%);
+                    }
+                }
+
+                svg {
+                    filter: invert(33%) sepia(47%) saturate(5605%) hue-rotate(352deg) brightness(93%) contrast(94%);
+                }
+            }
+
+            
+        }
+    }
+
 }
 
 .active-link {
@@ -85,18 +137,6 @@
     color: $white-hex;
 
     svg {
-        filter: brightness(0) invert(1);
-    }
-
-    &::after {
-        content: "";
-        position: absolute;
-        top: 0;
-        right: -29.5px;
-        width: 0;
-        height: 0;
-        border-style: solid;
-        border-width: 18px 0 20px 30px;
-        border-color: transparent transparent transparent $light-blue-hex; 
+        filter: brightness(0) invert(1) !important;
     }
 }
