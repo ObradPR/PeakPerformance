@@ -7,16 +7,28 @@ main {
     .left-menu {
         @include size(16%, 100dvh);
         background-color: $yellow-hex;
+        padding: 1.8rem 2rem;
     }
 
     .body {
         @include size(60%, 100dvh);
         max-height: 100dvh;
         overflow-y: scroll;
+        padding: 1.8rem 2rem;
     }
 
     .user-panel {
         @include size(24%, 100dvh);
         background-color: $yellow-hex;
+        padding: 1.8rem 2rem;
     }
+}
+
+::ng-deep.p-menuitem-link {
+    text-decoration: none;
+}
+
+::ng-deep.p-menuitem-icon.pi.pi-home {
+    color: $dark-grey-hex;
+    font-weight: 600;
 }

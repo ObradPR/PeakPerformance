@@ -8,6 +8,11 @@
     </section>
 
     <section class="body">
+        <p-breadcrumb 
+            [model]="sharedService.breadCrumbItemsSignal()"
+            [home]="breadcrumbItemHome"
+            >
+        </p-breadcrumb>
         <router-outlet></router-outlet>
     </section>
 

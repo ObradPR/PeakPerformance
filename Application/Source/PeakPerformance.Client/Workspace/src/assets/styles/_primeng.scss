@@ -152,7 +152,23 @@ p-dropdown {
   border-top-color: $red-hex;
 }
 
+.p-breadcrumb {
+  border: none;
+  height: 2.4rem;
+  align-content: center;
+  padding: 0;
+}
+
+.p-menuitem-text {
+  color: $dark-grey-hex;
+  font-weight: 500;
+  font-size: 1.2em;
+}
+
+//
 // pi icons
+//
+
 .pi-times::before {
   font-size: 1em;
   cursor: pointer;
