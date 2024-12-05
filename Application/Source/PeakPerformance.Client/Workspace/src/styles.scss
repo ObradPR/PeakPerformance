@@ -65,9 +65,11 @@ ol {
 [type="tel"],
 [type="date"],
 [type="number"],
+[type="search"],
 textarea,
 button.btn-yellow,
-button.btn-blue {
+button.btn-blue,
+button.btn-grey {
   padding: 0.4rem 0.7rem;
   border-radius: $border-radius;
   border: none;
@@ -94,6 +96,7 @@ button.btn-blue {
 [type="tel"]:focus,
 [type="date"]:focus,
 [type="number"]:focus,
+[type="search"]:focus,
 textarea:focus {
   outline: none;
   box-shadow: $input-box-shadow;
@@ -120,8 +123,20 @@ button.btn-blue {
   }
 }
 
+button.btn-grey {
+  cursor: pointer;
+  background-color: $light-grey-2-hex;
+  color: $dark-grey-hex;
+  font-weight: 500;
+  
+  &:hover {
+    background-color: $grey-hex;
+  }
+}
+
 button.btn-yellow, 
-button.btn-blue {
+button.btn-blue,
+button.btn-grey  {
   @include size(100%, 2.2rem);
 }
 

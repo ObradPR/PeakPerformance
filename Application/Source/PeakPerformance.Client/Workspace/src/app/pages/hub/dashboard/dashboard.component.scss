@@ -1,0 +1,24 @@
+@import '../../../../styles.scss';
+
+.wrapper {
+    padding-top: 1.8rem;
+
+    .search {
+        @include flex(row, space-between, nowrap, center);
+        width: 100%;
+
+        button.btn-blue, button.btn-grey {
+            width: 12%;
+        }
+    }
+}
+
+::ng-deep.p-icon-field-left > .p-inputtext {
+    padding-left: 2.5rem;
+    background-color: $light-grey-hex;
+    border-radius: $border-radius-20;
+}
+
+::ng-deep p-iconfield {
+    width: 74% !important;
+}
