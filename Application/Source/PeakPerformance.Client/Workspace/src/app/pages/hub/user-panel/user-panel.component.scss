@@ -157,4 +157,52 @@
             }
         }
     }
+
+    .labels {
+        @include flex(row, center, wrap, center);
+        gap: 0.8rem;
+        width: 100%;
+        font-size: 0.75em;
+        font-weight: 500;
+
+        .label {
+            padding: 0.2rem 0.6rem;
+            border-radius: $border-radius-5;
+            
+            &.injury {
+                border: 1px solid $dark-red-hex;
+                color: $dark-red-hex;
+                box-shadow: 0px 0px 5px 1px $dark-red-hex;
+            }
+
+            &.condition {
+                border: 1px solid $dark-orange-hex;
+                color: $dark-orange-hex;
+                box-shadow: 0px 0px 5px 1px $dark-orange-hex;
+
+            }
+
+            &.fitness-goal {
+                border: 1px solid $dark-blue-hex;
+                color: $dark-blue-hex;
+                box-shadow: 0px 0px 5px 1px $dark-blue-hex;
+
+            }
+
+            &.target-body-goal {
+                border: 1px solid $dark-teal-hex;
+                color: $dark-teal-hex;
+                box-shadow: 0px 0px 5px 1px $dark-teal-hex;
+
+            }
+
+            &.target-weight-goal {
+                border: 1px solid $grey-hex;
+                color: $grey-hex;
+                box-shadow: 0px 0px 5px 1px $grey-hex;
+
+            }
+        }
+
+    }
 }
