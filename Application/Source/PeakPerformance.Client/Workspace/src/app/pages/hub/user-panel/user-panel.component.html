@@ -1,88 +1,103 @@
-<div class="user-panel-header">
-    <div class="notification-wrapper">
-        @if (notificationBadgeValue !== '') {
-        <i class="pi pi-bell" pBadge [value]="notificationBadgeValue" severity="danger" style="font-size: 1.2em"></i>
-        }
-        @else {
-        <i class="pi pi-bell" style="font-size: 1.2em"></i>
-        }
-    </div>
-</div>
-
-<div class="user-panel-body">
-    <div class="profile-details">
-        <div class="profile-image">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>account</title><path d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" /></svg>
-
-            <div class="edit-profile-image">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>pencil</title><path d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z" /></svg>
-            </div>
-        </div>
-
-        <h2>Username</h2>
-        <p class="description">
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus, nam nihil molestiae recusandae labore atque officia ipsam mollitia at porro laudantium facere vitae. Officia culpa temporibus iusto beatae fugiat nulla. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus, nam nihil molestiae recusandae labore atque officia ipsam mollitia at porro laudantium facere vitae. Officia culpa temporibus iusto beatae fugiat nulla. Lorem, ipsum dolor sit amet consectetur adipisici.
-        </p>
-
-        <div class="user-account-stats">
-            <p>547 workouts</p>
-            <p>2 followers</p>
-            <p>3 following</p>
-        </div>
-
-        <div class="tags">
-            <div class="tag">206.8 lbs</div>
-            <div class="tag">N/A</div>
-            <div class="tag">22 yso</div>
-            <div class="tag">male</div>
-            <div class="tag">N/A</div>
+<div class="user-panel">
+    
+    <div class="user-panel-header">
+        <div class="notification-wrapper">
+            @if (notificationBadgeValue !== '') {
+            <i class="pi pi-bell" pBadge [value]="notificationBadgeValue" severity="danger" style="font-size: 1.2em"></i>
+            }
+            @else {
+            <i class="pi pi-bell" style="font-size: 1.2em"></i>
+            }
         </div>
     </div>
-
-    <div class="week-activity">
-        <h3>Streak 1 days</h3>
-
-        <div class="dates">
-            <div class="date streak-day">
-                <p class="date-number">2</p>
-                <p class="day-of-week">Mon</p>
+    
+    <div class="user-panel-body">
+        <div class="profile-details">
+            <div class="profile-image">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>account</title><path d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" /></svg>
+    
+                <div class="edit-profile-image">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>pencil</title><path d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z" /></svg>
+                </div>
             </div>
-            <div class="date">
-                <p class="date-number">3</p>
-                <p class="day-of-week">Tue</p>
+    
+            <h2>Username</h2>
+            <p class="description">
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus, nam nihil molestiae recusandae labore atque officia ipsam mollitia at porro laudantium facere vitae. Officia culpa temporibus iusto beatae fugiat nulla. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus, nam nihil molestiae recusandae labore atque officia ipsam mollitia at porro laudantium facere vitae. Officia culpa temporibus iusto beatae fugiat nulla. Lorem, ipsum dolor sit amet consectetur adipisici.
+            </p>
+    
+            <div class="user-account-stats">
+                <p>547 workouts</p>
+                <p>2 followers</p>
+                <p>3 following</p>
             </div>
-            <div class="date streak-day">
-                <p class="date-number">4</p>
-                <p class="day-of-week">Wed</p>
-            </div>
-            <div class="date current-day">
-                <p class="date-number">5</p>
-                <p class="day-of-week">Thu</p>
-            </div>
-            <div class="date">
-                <p class="date-number">6</p>
-                <p class="day-of-week">Fri</p>
-            </div>
-            <div class="date">
-                <p class="date-number">7</p>
-                <p class="day-of-week">Sat</p>
-            </div>
-            <div class="date">
-                <p class="date-number">8</p>
-                <p class="day-of-week">Sun</p>
+    
+            <div class="tags">
+                <div class="tag">206.8 lbs</div>
+                <div class="tag">N/A</div>
+                <div class="tag">22 yso</div>
+                <div class="tag">male</div>
+                <div class="tag">N/A</div>
             </div>
         </div>
+    
+        <div class="week-activity">
+            <h3>Streak 1 days</h3>
+    
+            <div class="dates">
+                <div class="date streak-day">
+                    <p class="date-number">2</p>
+                    <p class="day-of-week">Mon</p>
+                </div>
+                <div class="date">
+                    <p class="date-number">3</p>
+                    <p class="day-of-week">Tue</p>
+                </div>
+                <div class="date streak-day">
+                    <p class="date-number">4</p>
+                    <p class="day-of-week">Wed</p>
+                </div>
+                <div class="date current-day">
+                    <p class="date-number">5</p>
+                    <p class="day-of-week">Thu</p>
+                </div>
+                <div class="date">
+                    <p class="date-number">6</p>
+                    <p class="day-of-week">Fri</p>
+                </div>
+                <div class="date">
+                    <p class="date-number">7</p>
+                    <p class="day-of-week">Sat</p>
+                </div>
+                <div class="date">
+                    <p class="date-number">8</p>
+                    <p class="day-of-week">Sun</p>
+                </div>
+            </div>
+        </div>
+    
+        <div class="labels">
+            <div class="label injury">Elbow injury</div>
+            <div class="label condition">Asthma</div>
+            <div class="label fitness-goal">Bulking</div>
+            <div class="label target-body-goal">Target 15% bf</div>
+            <div class="label target-body-goal">Target 220.2 lbs</div>
+            <div class="label target-weight-goal">Target 100kg bench press</div>
+            <div class="label target-weight-goal">Target 80kg squat</div>
+            <div class="label target-weight-goal">Target 260kg deadlift</div>
+        </div>
+    
     </div>
-
-    <div class="labels">
-        <div class="label injury">Elbow injury</div>
-        <div class="label condition">Asthma</div>
-        <div class="label fitness-goal">Bulking</div>
-        <div class="label target-body-goal">Target 15% bf</div>
-        <div class="label target-body-goal">Target 220.2 lbs</div>
-        <div class="label target-weight-goal">Target 100kg bench press</div>
-        <div class="label target-weight-goal">Target 80kg squat</div>
-        <div class="label target-weight-goal">Target 260kg deadlift</div>
+    
+    <div class="user-panel-footer">
+        <div class="social-media">
+            <i class="pi pi-linkedin"></i>
+            <i class="pi pi-instagram"></i>
+            <i class="pi pi-whatsapp"></i>
+            <i class="pi pi-youtube"></i>
+            <i class="pi pi-facebook"></i>
+        </div>
+        <button class="btn-blue">Edit Profile</button>
     </div>
 
 </div>

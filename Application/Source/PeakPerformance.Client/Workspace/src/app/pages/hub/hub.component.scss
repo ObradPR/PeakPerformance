@@ -19,8 +19,6 @@ main {
 
     .user-panel {
         @include size(24%, 100dvh);
-        background-color: $yellow-hex;
-        padding: 1.8rem 2rem;
     }
 }
 

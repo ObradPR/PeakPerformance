@@ -112,6 +112,8 @@ button.btn-yellow {
 button.btn-blue {
   cursor: pointer;
   background-color: $blue-hex;
+  color: $white-hex;
+  font-weight: 500;
 
   &:hover {
     background-color: $light-blue-hex;

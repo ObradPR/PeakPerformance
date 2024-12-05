@@ -1,208 +1,245 @@
 @import '../../../../styles.scss';
 
-.user-panel-header {
-    height: 2.4rem;
+.user-panel {
+    @include size(100%, 100dvh);
+    @include flex(column, space-between, nowrap, normal);
+    background-color: $yellow-hex;
+    padding: 1.8rem 2rem;
 
-    .notification-wrapper {
-        @include size(2.4rem, 2.4rem);
-        @include flex(row, center, nowrap, center);
-        background-color: $light-grey-2-hex;
-        border-radius: 100%;
-        float: inline-end;
-        cursor: pointer;
-        transition: $transition;
 
-        &:hover {
-            background-color: $light-grey-hex;
-
-            i.pi.pi-bell {
-                color: $grey-hex;
-            }
-        }
-
-        i.pi-pi-bell {
-            color: $dark-grey-hex;
+    .user-panel-header {
+        height: 2.4rem;
+    
+        .notification-wrapper {
+            @include size(2.4rem, 2.4rem);
+            @include flex(row, center, nowrap, center);
+            background-color: $light-grey-2-hex;
+            border-radius: 100%;
+            float: inline-end;
+            cursor: pointer;
             transition: $transition;
+    
+            &:hover {
+                background-color: $light-grey-hex;
+    
+                i.pi.pi-bell {
+                    color: $grey-hex;
+                }
+            }
+    
+            i.pi-pi-bell {
+                color: $dark-grey-hex;
+                transition: $transition;
+            }
         }
     }
-}
-
-.user-panel-body {
-    @include flex(column, center, nowrap, center);
-    margin-top: 1.8rem;
-    width: 100%;
     
-    .profile-details {
-        background-color: $light-blue-hex;
-        border-radius: $border-radius-20;
+    .user-panel-body {
+        flex: 1;
+        overflow-y: auto;
+        margin-top: 1.8rem;
         width: 100%;
-        padding: 1.6rem;
-        text-align: center;
-
-        .profile-image {
-            @include flex(row, center, nowrap, center);
-            @include size(6rem, 6rem);
-            margin: 0 auto;
-            background-color: $grey-hex;
-            border-radius: 100%;
-            position: relative;
+        
+        .profile-details {
+            background-color: $light-blue-hex;
+            border-radius: $border-radius-20;
+            width: 100%;
+            padding: 1.6rem;
+            text-align: center;
     
-            svg {
-                @include size(80%, 80%);
-                filter: brightness(0) invert(1);
-            }
-
-            .edit-profile-image {
+            .profile-image {
                 @include flex(row, center, nowrap, center);
-                @include size(1.4rem, 1.4rem);
-                background-color: $light-grey-2-hex;
+                @include size(6rem, 6rem);
+                margin: 0 auto;
+                background-color: $grey-hex;
                 border-radius: 100%;
-                position: absolute;
-                bottom: 0;
-                right: 0;
-                cursor: pointer;
-
-                &:hover {
-                    background-color: $light-grey-hex;
-
+                position: relative;
+        
+                svg {
+                    @include size(80%, 80%);
+                    filter: brightness(0) invert(1);
+                }
+    
+                .edit-profile-image {
+                    @include flex(row, center, nowrap, center);
+                    @include size(1.4rem, 1.4rem);
+                    background-color: $light-grey-2-hex;
+                    border-radius: 100%;
+                    position: absolute;
+                    bottom: 0;
+                    right: 0;
+                    cursor: pointer;
+    
+                    &:hover {
+                        background-color: $light-grey-hex;
+    
+                        svg {
+                            filter: invert(41%) sepia(5%) saturate(356%) hue-rotate(180deg) brightness(93%) contrast(89%);
+                        }
+                    }
+                    
                     svg {
-                        filter: invert(41%) sepia(5%) saturate(356%) hue-rotate(180deg) brightness(93%) contrast(89%);
+                        filter: invert(14%) sepia(8%) saturate(250%) hue-rotate(190deg) brightness(91%) contrast(86%);
                     }
                 }
-                
-                svg {
-                    filter: invert(14%) sepia(8%) saturate(250%) hue-rotate(190deg) brightness(91%) contrast(86%);
+            }
+    
+            h2 {
+                font-size: 1.4em;
+                margin: 0.8rem 0 0.5rem;
+            }
+    
+            p.description {
+                font-size: 0.8em;
+                font-weight: 500;
+                line-height: 1.2;
+            }
+    
+            .user-account-stats {
+                @include flex(row, space-around, nowrap, center);
+                border-top: 1px solid $dark-grey-hex;
+                border-bottom: 1px solid $dark-grey-hex;
+                margin: 0.6rem 0;
+                padding: 0.5rem 0;
+    
+                p {
+                    cursor: pointer;
+    
+                    &:hover {
+                        color: $grey-hex;
+                    }
+                }
+            }
+    
+            .tags {
+                @include flex(row, space-between, nowrap, center);
+    
+                .tag {
+                    font-size: 0.7em;
+                    width: 17%;
+                    background-color: $light-grey-hex;
+                    border-radius: $border-radius-5;
+                    padding: 0.1rem 0;
                 }
             }
         }
-
-        h2 {
-            font-size: 1.4em;
-            margin: 0.8rem 0 0.5rem;
-        }
-
-        p.description {
-            font-size: 0.8em;
-            font-weight: 500;
-            line-height: 1.2;
-        }
-
-        .user-account-stats {
-            @include flex(row, space-around, nowrap, center);
-            border-top: 1px solid $dark-grey-hex;
+    
+        .week-activity {
+            text-align: center;
+            width: 100%;
+            margin: 1.8rem 0;
             border-bottom: 1px solid $dark-grey-hex;
-            margin: 0.6rem 0;
-            padding: 0.5rem 0;
-
-            p {
+    
+            h3 {
+                font-size: 1.2em;
+            }
+    
+            .dates {
+                @include flex(row, stretch, nowrap, center);
+                width: 100%;
+                margin: 1.2rem 0;
+    
+                .date {
+                    width: calc(100% / 7);
+                    border-right: 1px solid $dark-grey-hex;
+    
+                    &:last-child {
+                        border-right: none;
+                    }
+    
+                    p.date-number {
+                        font-weight: bold;
+                    }
+    
+                    p.day-of-week {
+                        font-size: 0.75em;
+                    }
+                }
+    
+                .current-day {
+                    background-color: $light-yellow-hex;
+                }
+    
+                .streak-day {
+                    background-color: $light-teal-hex;
+                }
+            }
+        }
+    
+        .labels {
+            @include flex(row, center, wrap, center);
+            gap: 0.8rem;
+            width: 100%;
+            font-size: 0.75em;
+            font-weight: 500;
+    
+            .label {
+                padding: 0.2rem 0.6rem;
+                border-radius: $border-radius-5;
+                
+                &.injury {
+                    border: 1px solid $dark-red-hex;
+                    color: $dark-red-hex;
+                    box-shadow: 0px 0px 5px 1px $dark-red-hex;
+                }
+    
+                &.condition {
+                    border: 1px solid $dark-orange-hex;
+                    color: $dark-orange-hex;
+                    box-shadow: 0px 0px 5px 1px $dark-orange-hex;
+    
+                }
+    
+                &.fitness-goal {
+                    border: 1px solid $dark-blue-hex;
+                    color: $dark-blue-hex;
+                    box-shadow: 0px 0px 5px 1px $dark-blue-hex;
+    
+                }
+    
+                &.target-body-goal {
+                    border: 1px solid $dark-teal-hex;
+                    color: $dark-teal-hex;
+                    box-shadow: 0px 0px 5px 1px $dark-teal-hex;
+    
+                }
+    
+                &.target-weight-goal {
+                    border: 1px solid $grey-hex;
+                    color: $grey-hex;
+                    box-shadow: 0px 0px 5px 1px $grey-hex;
+    
+                }
+            }
+        }
+    }
+    
+    .user-panel-footer {
+        margin-top: 1.8rem;
+    
+        .social-media {
+            @include flex(row, center, wrap, center);
+            gap: 0.5rem;
+            width: 100%;
+            padding-bottom: 1.8rem;
+            border-bottom: 1px solid $dark-grey-hex;
+            
+            i {
+                font-size: 1.3em;
                 cursor: pointer;
-
+                color: $dark-grey-hex;
+    
                 &:hover {
                     color: $grey-hex;
                 }
             }
         }
-
-        .tags {
-            @include flex(row, space-between, nowrap, center);
-
-            .tag {
-                font-size: 0.7em;
-                width: 17%;
-                background-color: $light-grey-hex;
-                border-radius: $border-radius-5;
-                padding: 0.1rem 0;
-            }
+    
+        button {
+            margin-top: 1.8rem;
+            height: auto;
+            padding: 0.7rem;
+            font-size: 1.1em;
         }
-    }
-
-    .week-activity {
-        text-align: center;
-        width: 100%;
-        margin: 1.8rem 0;
-        border-bottom: 1px solid $dark-grey-hex;
-
-        h3 {
-            font-size: 1.2em;
-        }
-
-        .dates {
-            @include flex(row, stretch, nowrap, center);
-            width: 100%;
-            margin: 1.2rem 0;
-
-            .date {
-                width: calc(100% / 7);
-                border-right: 1px solid $dark-grey-hex;
-
-                &:last-child {
-                    border-right: none;
-                }
-
-                p.date-number {
-                    font-weight: bold;
-                }
-
-                p.day-of-week {
-                    font-size: 0.75em;
-                }
-            }
-
-            .current-day {
-                background-color: $light-yellow-hex;
-            }
-
-            .streak-day {
-                background-color: $light-teal-hex;
-            }
-        }
-    }
-
-    .labels {
-        @include flex(row, center, wrap, center);
-        gap: 0.8rem;
-        width: 100%;
-        font-size: 0.75em;
-        font-weight: 500;
-
-        .label {
-            padding: 0.2rem 0.6rem;
-            border-radius: $border-radius-5;
-            
-            &.injury {
-                border: 1px solid $dark-red-hex;
-                color: $dark-red-hex;
-                box-shadow: 0px 0px 5px 1px $dark-red-hex;
-            }
-
-            &.condition {
-                border: 1px solid $dark-orange-hex;
-                color: $dark-orange-hex;
-                box-shadow: 0px 0px 5px 1px $dark-orange-hex;
-
-            }
-
-            &.fitness-goal {
-                border: 1px solid $dark-blue-hex;
-                color: $dark-blue-hex;
-                box-shadow: 0px 0px 5px 1px $dark-blue-hex;
-
-            }
-
-            &.target-body-goal {
-                border: 1px solid $dark-teal-hex;
-                color: $dark-teal-hex;
-                box-shadow: 0px 0px 5px 1px $dark-teal-hex;
-
-            }
-
-            &.target-weight-goal {
-                border: 1px solid $grey-hex;
-                color: $grey-hex;
-                box-shadow: 0px 0px 5px 1px $grey-hex;
-
-            }
-        }
-
     }
 }
