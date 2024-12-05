@@ -163,6 +163,14 @@ p-dropdown {
   color: $dark-grey-hex;
   font-weight: 500;
   font-size: 1.2em;
+
+  &:hover {
+    color: $grey-hex;
+  }
+}
+
+.p-overlay-badge .p-badge {
+  font-size: 0.55em;
 }
 
 //
