@@ -31,10 +31,10 @@
     @include flex(column, center, nowrap, center);
     margin-top: 1.8rem;
     width: 100%;
-    background-color: $light-blue-hex;
-    border-radius: $border-radius-20;
-
+    
     .profile-details {
+        background-color: $light-blue-hex;
+        border-radius: $border-radius-20;
         width: 100%;
         padding: 1.6rem;
         text-align: center;
@@ -116,4 +116,45 @@
         }
     }
 
+    .week-activity {
+        text-align: center;
+        width: 100%;
+        margin: 1.8rem 0;
+        border-bottom: 1px solid $dark-grey-hex;
+
+        h3 {
+            font-size: 1.2em;
+        }
+
+        .dates {
+            @include flex(row, stretch, nowrap, center);
+            width: 100%;
+            margin: 1.2rem 0;
+
+            .date {
+                width: calc(100% / 7);
+                border-right: 1px solid $dark-grey-hex;
+
+                &:last-child {
+                    border-right: none;
+                }
+
+                p.date-number {
+                    font-weight: bold;
+                }
+
+                p.day-of-week {
+                    font-size: 0.75em;
+                }
+            }
+
+            .current-day {
+                background-color: $light-yellow-hex;
+            }
+
+            .streak-day {
+                background-color: $light-teal-hex;
+            }
+        }
+    }
 }
