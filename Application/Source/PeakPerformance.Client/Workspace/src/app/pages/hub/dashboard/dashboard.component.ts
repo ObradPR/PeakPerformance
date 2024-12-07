@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { DateTime } from 'luxon';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
-import { ChartBodyweightsComponent } from '../../../components/charts/chart-bodyweights/chart-bodyweights.component';
 import { IPagingResult, IWeightDto, IWeightSearchOptions } from '../../../_generated/interfaces';
 import { WeightController } from '../../../_generated/services';
-import { DateTime } from 'luxon';
+import { AreaChartComponent } from "../../../components/charts/area-chart/area-chart.component";
+import { IAreaChartOptions } from '../../../components/charts/interfaces/area-chart-options.interface';
 @Component({
   selector: 'app-dashboard',
   standalone: true,
@@ -13,13 +14,21 @@ import { DateTime } from 'luxon';
     IconFieldModule,
     InputIconModule,
     InputTextModule,
-    ChartBodyweightsComponent
+    AreaChartComponent
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
 export class DashboardComponent implements OnInit {
   bodyweights: IPagingResult<IWeightDto>;
+  bodyweightsChartsOptions: IAreaChartOptions = {
+    xField: 'createdOn',
+    yField: 'weight',
+    yFieldDefaultValue: 100,
+    height: 200,
+    showToolbar: false,
+    xType: 'datetime'
+  }
 
   constructor(private weightController: WeightController) { }
 

@@ -29,6 +29,14 @@ export class Constants {
   // Image
   static IMAGE_MAX_SIZE_MB = 5;
   static IMAGE_MAX_SIZE_BYTE = 5 * 1024 * 1024;
+
+  // Colors
+  static WHITE_HEX = '#FFFFFF';
+  static TEAL_HEX = '#20C997';
+  static DARK_GREY_HEX = '#343A40';
+
+  // Font
+  static APP_FONT = 'Roboto, sans-serif';
 }
 
 export class RouteConstants {

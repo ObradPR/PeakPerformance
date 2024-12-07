@@ -1,14 +1,12 @@
-<div class="wrapper">
-    @if (bodyweights()){
-        <apx-chart
-            [series]="series"
-            [chart]="chart"
-            [xaxis]="xaxis"
-            [title]="title"
-            [annotations]="annotations"
-        >
-        </apx-chart>
-    }
+@if (data()) {
+    <apx-chart
+        [series]="series"
+        [chart]="chart"
+        [xaxis]="xaxis"
+        [title]="title"
+        [annotations]="annotations"
+    >
+    </apx-chart>
     <!-- <apx-chart
         [series]="series"
         [chart]="chart"
@@ -22,4 +20,4 @@
         [autoUpdateSeries]="true"
     >
     </apx-chart> -->
-</div>
+}
