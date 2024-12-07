@@ -1,6 +1,8 @@
 @import '../../../../styles.scss';
 
 .wrapper {
+    @include size(100%, 100%);
+    @include flex(column, flex-start, nowrap, normal);
     padding-top: 1.8rem;
 
     .search {
@@ -11,6 +13,47 @@
             width: 12%;
         }
     }
+
+    .dashboard-body {
+        @include size(100%, 100%);
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(4, 1fr);
+        grid-column-gap: 20px;
+        grid-row-gap: 20px;
+        padding-top: 1.8rem;
+        
+        .preview {
+            background-color: $light-grey-hex;
+            border-radius: $border-radius-20;
+        }
+
+        .preview-workouts { 
+            grid-area: 1 / 1 / 3 / 3; 
+        }
+        .preview-bodyweights { 
+            grid-area: 1 / 3 / 2 / 4; 
+        }
+        .preview-measurements { 
+            grid-area: 2 / 3 / 3 / 4; 
+        }
+        .preview-recovery-logs { 
+            grid-area: 3 / 1 / 4 / 2; 
+        }
+        .preview-injury-logs { 
+            grid-area: 3 / 2 / 4 / 3; 
+        }
+        .preview-programs { 
+            grid-area: 3 / 3 / 4 / 4; 
+        }
+        .preview-challenges { 
+            grid-area: 4 / 1 / 5 / 3; 
+        }
+        .preview-achievements { 
+            grid-area: 4 / 3 / 5 / 4; 
+        }
+    }
+
 }
 
 ::ng-deep.p-icon-field-left > .p-inputtext {
