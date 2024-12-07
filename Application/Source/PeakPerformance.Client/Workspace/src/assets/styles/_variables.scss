@@ -38,9 +38,18 @@ $orange-hex: #ffac1c;
 $light-orange-rgb: rgba(255, 210, 74, 1);
 $light-orange-hex: #ffd24a;
 
+$border-hr: 1px solid $dark-grey-hex;
 $border-radius-5: 5px;
-$border-radius: 10px;
+$border-radius-10: 10px;
 $border-radius-20: 20px;
+
 $transition: all 0.2s ease-in-out;
-$input-box-shadow: 0px 0px 3px 4px $yellow-hex;
-$is-invalid-box-shadow: 0px 0px 3px 4px $red-hex;
+
+$box-shadow-input: 0px 0px 3px 4px $yellow-hex;
+$box-shadow-is-invalid: 0px 0px 3px 4px $red-hex;
+
+$filter-white: brightness(0) invert(1);
+$filter-dark-grey: invert(14%) sepia(8%) saturate(250%) hue-rotate(190deg) brightness(91%) contrast(86%);
+$filter-grey: invert(41%) sepia(5%) saturate(356%) hue-rotate(180deg) brightness(93%) contrast(89%);
+$filter-dark-red: invert(33%) sepia(47%) saturate(5605%) hue-rotate(352deg) brightness(93%) contrast(94%);
+$filter-red: invert(55%) sepia(71%) saturate(3206%) hue-rotate(331deg) brightness(101%) contrast(103%);

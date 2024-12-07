@@ -36,7 +36,7 @@
 
 *::-webkit-scrollbar-thumb {
   background-color: $light-grey-2-hex;
-  border-radius: $border-radius;
+  border-radius: $border-radius-10;
 }
 
 body {
@@ -86,7 +86,7 @@ button.btn-yellow,
 button.btn-blue,
 button.btn-grey {
   padding: 0.4rem 0.7rem;
-  border-radius: $border-radius;
+  border-radius: $border-radius-10;
   border: none;
   font-size: 1em;
   transition: $transition;
@@ -94,7 +94,7 @@ button.btn-grey {
 }
 
 [type="checkbox"] {
-  border-radius: $border-radius;
+  border-radius: $border-radius-10;
   border: none;
   transition: $transition;
   margin-bottom: 1.5rem;
@@ -114,7 +114,7 @@ button.btn-grey {
 [type="search"]:focus,
 textarea:focus {
   outline: none;
-  box-shadow: $input-box-shadow;
+  box-shadow: $box-shadow-input;
 }
 
 [type="submit"],
@@ -156,8 +156,8 @@ button.btn-grey  {
 }
 
 .is-invalid {
-  box-shadow: $is-invalid-box-shadow;
-  border-radius: $border-radius;
+  box-shadow: $box-shadow-is-invalid;
+  border-radius: $border-radius-10;
 }
 
 fieldset legend {
@@ -168,7 +168,7 @@ fieldset legend {
 
 button {
   padding: 0.4rem 0.7rem;
-  border-radius: $border-radius;
+  border-radius: $border-radius-10;
   border: none;
   font-size: 1em;
   transition: $transition;

@@ -42,7 +42,7 @@
 
 button.p-ripple.p-button {
   padding: 0.4rem 0.7rem;
-  border-radius: $border-radius;
+  border-radius: $border-radius-10;
   border: none;
   font-size: 1em;
   transition: $transition;
@@ -56,7 +56,7 @@ button.p-ripple.p-button {
 
 .p-button {
   padding: 0.4rem 0.7rem;
-  border-radius: $border-radius;
+  border-radius: $border-radius-10;
   border: none;
   font-size: 1em;
   transition: $transition;
@@ -97,7 +97,7 @@ p-dropdown {
 }
 
 .p-dropdown {
-  border-radius: $border-radius;
+  border-radius: $border-radius-10;
   border: none;
   font-size: 1em;
   transition: $transition;
@@ -106,7 +106,7 @@ p-dropdown {
 
   &:not(.p-disabled).p-focus {
     outline: none;
-    box-shadow: $input-box-shadow;
+    box-shadow: $box-shadow-input;
   }
 }
 
