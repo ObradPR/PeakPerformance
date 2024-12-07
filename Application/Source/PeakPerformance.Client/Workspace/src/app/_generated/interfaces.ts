@@ -145,6 +145,7 @@ export interface IWeightDto
 	weight?: number;
 	weightUnitId: eMeasurementUnit;
 	bodyFatPercentage?: number;
+	createdOn: Date;
 }
 export interface IWeightGoalDto
 {
@@ -174,6 +175,8 @@ export interface ISortingOptions
 export interface IWeightSearchOptions extends ISearchOptions
 {
 	userId?: number;
+	fromDate?: Date | null;
+	toDate?: Date | null;
 }
 export interface IBodyMeasurementSearchOptions extends ISearchOptions
 {

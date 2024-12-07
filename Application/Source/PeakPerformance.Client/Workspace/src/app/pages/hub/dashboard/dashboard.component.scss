@@ -23,16 +23,26 @@
         grid-row-gap: 20px;
         padding-top: 1.8rem;
         
-        .preview {
-            background-color: $light-grey-hex;
-            border-radius: $border-radius-20;
-        }
+        // .preview {
+        //     background-color: $light-grey-hex;
+        //     border-radius: $border-radius-20;
+        // }
 
         .preview-workouts { 
             grid-area: 1 / 1 / 3 / 3; 
         }
         .preview-bodyweights { 
             grid-area: 1 / 3 / 2 / 4; 
+            text-align: end;
+
+            button {
+                width: 50%;
+
+                svg {
+                    @include size(1.2rem, 1.2rem);
+                    filter: brightness(0) invert(1);
+                }
+            }
         }
         .preview-measurements { 
             grid-area: 2 / 3 / 3 / 4; 

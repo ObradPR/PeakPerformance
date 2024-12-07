@@ -11,6 +11,8 @@ public class WeightDto
     [Display(Name = "Body fat percentage")]
     public decimal? BodyFatPercentage { get; set; }
 
+    public DateTime CreatedOn { get; set; }
+
     // methods
 
     public void ToModel(Weight model, long userId)

@@ -23,7 +23,15 @@ public class SearchWeightsQuery(WeightSearchOptions options) : BaseQuery<PagingR
             if (userId.IsNotEmpty())
                 predicates.Add(_ => _.UserId == userId);
 
+            if (request.Options.FromDate.IsNotNullOrEmpty())
+                predicates.Add(_ => _.CreatedOn >= request.Options.FromDate.Value);
+
+            if (request.Options.ToDate.IsNotNullOrEmpty())
+                predicates.Add(_ => _.CreatedOn <= request.Options.ToDate.Value);
+
             var result = await _unitOfWork.WeightRepository.SearchAsync(options, predicates);
+
+            var mapping = _mapper.Map<IEnumerable<WeightDto>>(result.Data);
 
             return new PagingResult<WeightDto>
             {

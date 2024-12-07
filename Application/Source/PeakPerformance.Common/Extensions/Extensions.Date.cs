@@ -53,4 +53,8 @@ public static partial class Extensions
     public static bool IsEarlierThan(this DateTime date, DateTime comparison) => date < comparison;
 
     public static bool IsBetween(this DateTime date, DateTime start, DateTime end) => date >= start && date <= end;
+
+    public static bool IsNullOrEmpty(this DateTime? date) => !date.HasValue || date.Value == default;
+
+    public static bool IsNotNullOrEmpty(this DateTime? date) => date.HasValue && date.Value != default;
 }
