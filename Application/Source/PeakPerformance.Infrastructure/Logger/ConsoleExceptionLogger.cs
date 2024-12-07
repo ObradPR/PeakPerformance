@@ -1,4 +1,4 @@
-﻿using PeakPerformance.Common.Interfaces;
+﻿using PeakPerformance.Domain.Interfaces;
 using Serilog;
 
 namespace PeakPerformance.Infrastructure.Logger;

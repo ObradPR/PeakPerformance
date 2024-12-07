@@ -1,6 +1,4 @@
-﻿using System.ComponentModel;
-
-namespace PeakPerformance.Common.Enums;
+﻿namespace PeakPerformance.Domain.Enums;
 
 public enum eChallengeStatus
 {

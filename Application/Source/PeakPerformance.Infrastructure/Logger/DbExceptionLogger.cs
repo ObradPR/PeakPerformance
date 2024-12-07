@@ -1,5 +1,5 @@
-﻿using PeakPerformance.Common.Interfaces;
-using PeakPerformance.Domain.Entities.Application;
+﻿using PeakPerformance.Domain.Entities.Application;
+using PeakPerformance.Domain.Interfaces;
 using PeakPerformance.Domain.Repositories;
 
 namespace PeakPerformance.Infrastructure.Logger;

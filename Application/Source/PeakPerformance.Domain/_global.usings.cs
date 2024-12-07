@@ -1,6 +1,5 @@
 ﻿global using Microsoft.EntityFrameworkCore;
 global using PeakPerformance.Common;
-global using PeakPerformance.Common.Enums;
 global using PeakPerformance.Common.Extensions;
 global using PeakPerformance.Domain._Grid;
 global using PeakPerformance.Domain.Attributes;
@@ -10,7 +9,9 @@ global using PeakPerformance.Domain.Entities._Base.Interfaces;
 global using PeakPerformance.Domain.Entities.Application;
 global using PeakPerformance.Domain.Entities.Application_lu;
 global using PeakPerformance.Domain.Entities.Audits;
+global using PeakPerformance.Domain.Enums;
 global using PeakPerformance.Domain.Searches;
+global using System.ComponentModel;
 global using System.ComponentModel.DataAnnotations;
 global using System.ComponentModel.DataAnnotations.Schema;
 global using System.Linq.Expressions;

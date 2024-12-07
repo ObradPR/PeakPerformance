@@ -1,5 +1,5 @@
 ﻿using PeakPerformance.Application.Dtos.Users.Auth;
-using ValidationException = PeakPerformance.Common.Exceptions.ValidationException;
+using ValidationException = PeakPerformance.Domain.Exceptions.ValidationException;
 
 namespace PeakPerformance.Application.BusinessLogic.Users.Commands;
 

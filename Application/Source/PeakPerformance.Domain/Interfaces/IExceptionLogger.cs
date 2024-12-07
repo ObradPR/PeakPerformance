@@ -1,4 +1,4 @@
-﻿namespace PeakPerformance.Common.Interfaces;
+﻿namespace PeakPerformance.Domain.Interfaces;
 
 public interface IExceptionLogger
 {

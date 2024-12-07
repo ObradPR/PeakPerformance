@@ -1,4 +1,4 @@
-﻿using PeakPerformance.Common.Enums.Attributes;
+﻿using PeakPerformance.Domain.Enums.Attributes;
 using HealthInformation_ = PeakPerformance.Domain.Entities.Application.HealthInformation;
 
 namespace PeakPerformance.Application.Dtos.HealthInformation;

@@ -1,9 +1,3 @@
-import { eMeasurementUnit } from './enums';
-import { eChallengeStatus } from './enums';
-import { eInjuryType } from './enums';
-import { eSocialMediaPlatform } from './enums';
-import { eTrainingGoal } from './enums';
-
 export interface IAuthorizationDto
 {
 	token: string;
@@ -64,7 +58,7 @@ export interface IBodyMeasurementDto
 	leftThigh?: number;
 	rightCalf?: number;
 	leftCalf?: number;
-	measurementUnitId: eMeasurementUnit;
+	measurementUnitId: number;
 }
 export interface IChallengeDto
 {
@@ -74,7 +68,7 @@ export interface IChallengeDto
 	endDate: Date;
 	maxParticipants?: number;
 	minParticipants?: number;
-	statusId: eChallengeStatus;
+	statusId: number;
 	approvedBy?: number;
 	approvedOn?: Date | null;
 	isRestricted: boolean;
@@ -87,7 +81,7 @@ export interface IEmailDto
 }
 export interface IHealthInformationDto
 {
-	injuryTypeId: eInjuryType;
+	injuryTypeId: number;
 	description: string;
 	startDate?: Date | null;
 	endDate?: Date | null;
@@ -130,20 +124,20 @@ export interface IUserDto
 }
 export interface ISocialMediaDto
 {
-	platformId: eSocialMediaPlatform;
+	platformId: number;
 	link: string;
 	phoneNumber: string;
 }
 export interface IUserTrainingGoalDto
 {
-	trainingGoalId: eTrainingGoal;
+	trainingGoalId: number;
 	startDate: Date;
 	endDate?: Date | null;
 }
 export interface IWeightDto
 {
 	weight?: number;
-	weightUnitId: eMeasurementUnit;
+	weightUnitId: number;
 	bodyFatPercentage?: number;
 	createdOn: Date;
 }

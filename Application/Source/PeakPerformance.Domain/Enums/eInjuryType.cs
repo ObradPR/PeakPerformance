@@ -1,7 +1,6 @@
-﻿using PeakPerformance.Common.Enums.Attributes;
-using System.ComponentModel;
+﻿using PeakPerformance.Domain.Enums.Attributes;
 
-namespace PeakPerformance.Common.Enums;
+namespace PeakPerformance.Domain.Enums;
 
 public enum eInjuryType
 {

@@ -14,7 +14,7 @@ using PeakPerformance.Application.Interfaces;
 using PeakPerformance.Application.Services;
 using PeakPerformance.Common;
 using PeakPerformance.Common.Extensions;
-using PeakPerformance.Common.Interfaces;
+using PeakPerformance.Domain.Interfaces;
 using PeakPerformance.Domain.Repositories;
 using PeakPerformance.Infrastructure.Logger;
 using PeakPerformance.Infrastructure.Storage.Interfaces;

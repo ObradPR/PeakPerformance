@@ -1,4 +1,4 @@
-﻿namespace PeakPerformance.Common.Enums.Attributes;
+﻿namespace PeakPerformance.Domain.Enums.Attributes;
 
 [AttributeUsage(AttributeTargets.Field, AllowMultiple = false)]
 public class ConditionAttribute : Attribute

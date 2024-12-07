@@ -1,6 +1,4 @@
-﻿using PeakPerformance.Common.Enums;
-
-namespace PeakPerformance.Common.Interfaces;
+﻿namespace PeakPerformance.Domain.Interfaces;
 
 public interface IIdentityUser
 {

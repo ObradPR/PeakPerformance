@@ -1,6 +1,4 @@
-﻿using PeakPerformance.Common.Extensions;
-
-namespace PeakPerformance.Common.Exceptions;
+﻿namespace PeakPerformance.Domain.Exceptions;
 
 public class AccountExistsException() : Exception("Account with given email or username already exists.");
 
