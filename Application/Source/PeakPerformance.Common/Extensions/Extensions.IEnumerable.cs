@@ -2,17 +2,13 @@
 
 public static partial class Extensions
 {
-    public static bool IsNullOrEmpty<T>(this IEnumerable<T> source)
-        => source == null || !source.Any();
+    public static bool IsNullOrEmpty<T>(this IEnumerable<T> source) => source == null || !source.Any();
 
-    public static bool IsNotNullOrEmpty<T>(this IEnumerable<T> source)
-        => !source.IsNullOrEmpty();
+    public static bool IsNotNullOrEmpty<T>(this IEnumerable<T> source) => !source.IsNullOrEmpty();
 
-    public static IEnumerable<T> IfNotNull<T>(this IEnumerable<T> source)
-        => source ?? [];
+    public static IEnumerable<T> IfNotNull<T>(this IEnumerable<T> source) => source ?? [];
 
-    public static IEnumerable<T> IfNotNullOrEmpty<T>(this IEnumerable<T> source)
-        => source != null && source.Any() ? source : [];
+    public static IEnumerable<T> IfNotNullOrEmpty<T>(this IEnumerable<T> source) => source != null && source.Any() ? source : [];
 
     public static bool HasDuplicates<T>(this IEnumerable<T> source)
     {
@@ -54,8 +50,7 @@ public static partial class Extensions
         where TKey : notnull
         => source.ToDictionary(keySelector, v => v);
 
-    public static HashSet<T> ToHashSet<T>(this IEnumerable<T> source)
-        => new(source);
+    public static HashSet<T> ToHashSet<T>(this IEnumerable<T> source) => new(source);
 
     public static IEnumerable<T> Shuffle<T>(this IEnumerable<T> source)
     {

@@ -2,11 +2,9 @@
 
 public static partial class Extensions
 {
-    public static bool IsWeekend(this DateTime date)
-        => date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday;
+    public static bool IsWeekend(this DateTime date) => date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday;
 
-    public static bool IsWeekday(this DateTime date)
-        => !date.IsWeekend();
+    public static bool IsWeekday(this DateTime date) => !date.IsWeekend();
 
     public static DateTime NextDayOfWeek(this DateTime date, DayOfWeek day)
     {
@@ -14,8 +12,7 @@ public static partial class Extensions
         return date.AddDays(daysToAdd == 0 ? 7 : daysToAdd);
     }
 
-    public static int DaysUntil(this DateTime date, DateTime untilDate)
-        => (untilDate - date).Days;
+    public static int DaysUntil(this DateTime date, DateTime untilDate) => (untilDate - date).Days;
 
     public static DateTime AddBusinessDays(this DateTime date, int businessDays)
     {
