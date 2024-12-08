@@ -7,9 +7,39 @@
     padding: 1.8rem 2rem;
 
 
-    .user-panel-header {
-        height: 2.4rem;
+    // .user-panel-header {
+    //     height: 2.4rem;
     
+    //     .notification-wrapper {
+    //         @include size(2.4rem, 2.4rem);
+    //         @include flex(row, center, nowrap, center);
+    //         background-color: $light-grey-2-hex;
+    //         border-radius: 100%;
+    //         float: inline-end;
+    //         cursor: pointer;
+    //         transition: $transition;
+    
+    //         &:hover {
+    //             background-color: $light-grey-hex;
+    
+    //             i.pi.pi-bell {
+    //                 color: $grey-hex;
+    //             }
+    //         }
+    
+    //         i.pi-pi-bell {
+    //             color: $dark-grey-hex;
+    //             transition: $transition;
+    //         }
+    //     }
+    // }
+    
+    .user-panel-body {
+        flex: 1;
+        overflow-y: auto;
+        width: 100%;
+        position: relative;
+
         .notification-wrapper {
             @include size(2.4rem, 2.4rem);
             @include flex(row, center, nowrap, center);
@@ -18,6 +48,9 @@
             float: inline-end;
             cursor: pointer;
             transition: $transition;
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
     
             &:hover {
                 background-color: $light-grey-hex;
@@ -32,13 +65,6 @@
                 transition: $transition;
             }
         }
-    }
-    
-    .user-panel-body {
-        flex: 1;
-        overflow-y: auto;
-        margin-top: 1.8rem;
-        width: 100%;
         
         .profile-details {
             background-color: $light-blue-hex;
