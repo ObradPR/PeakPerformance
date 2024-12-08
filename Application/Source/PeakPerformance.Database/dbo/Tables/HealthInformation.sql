@@ -23,6 +23,8 @@
 
 
 
+
+
 GO
 CREATE NONCLUSTERED INDEX [IX_HealthInformation_UserId]
     ON [dbo].[HealthInformation]([UserId] ASC);
@@ -45,9 +47,9 @@ GO
             IF EXISTS (SELECT * FROM inserted)
             BEGIN
                 -- Handle INSERT and UPDATE
-                INSERT INTO [HealthInformation_aud] (UserId, Id, CreatedOn, ModifiedOn, ModifiedBy, DeletedOn, DeletedBy, IsActive, ActionTypeId, DetailsJson, AuditTimeStamp)
+                INSERT INTO [HealthInformation_aud] (UserId, InjuryTypeId, Id, CreatedOn, ModifiedOn, ModifiedBy, DeletedOn, DeletedBy, IsActive, ActionTypeId, DetailsJson, AuditTimeStamp)
                 SELECT
-                    i.UserId, i.Id, i.CreatedOn, i.ModifiedOn, i.ModifiedBy, i.DeletedOn, i.DeletedBy, i.IsActive,
+                    i.UserId, i.InjuryTypeId, i.Id, i.CreatedOn, i.ModifiedOn, i.ModifiedBy, i.DeletedOn, i.DeletedBy, i.IsActive,
                     CASE
                         WHEN EXISTS (SELECT * FROM deleted) THEN
                             CASE
@@ -66,9 +68,9 @@ GO
             ELSE IF EXISTS (SELECT * FROM deleted)
             BEGIN
                 -- Handle DELETE
-                INSERT INTO [HealthInformation_aud] (UserId, Id, CreatedOn, ModifiedOn, ModifiedBy, DeletedOn, DeletedBy, IsActive, ActionTypeId, DetailsJson, AuditTimeStamp)
+                INSERT INTO [HealthInformation_aud] (UserId, InjuryTypeId, Id, CreatedOn, ModifiedOn, ModifiedBy, DeletedOn, DeletedBy, IsActive, ActionTypeId, DetailsJson, AuditTimeStamp)
                 SELECT
-                    d.UserId, d.Id, d.CreatedOn, d.ModifiedOn, d.ModifiedBy, d.DeletedOn, d.DeletedBy, d.IsActive,
+                    d.UserId, d.InjuryTypeId, d.Id, d.CreatedOn, d.ModifiedOn, d.ModifiedBy, d.DeletedOn, d.DeletedBy, d.IsActive,
                     3,
                     (SELECT CAST((SELECT * FROM deleted d FOR JSON PATH, WITHOUT_ARRAY_WRAPPER) AS NVARCHAR(MAX))),
                     GETUTCDATE()

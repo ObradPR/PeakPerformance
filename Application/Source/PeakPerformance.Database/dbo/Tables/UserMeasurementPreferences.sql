@@ -19,6 +19,8 @@
 
 
 
+
+
 GO
 CREATE NONCLUSTERED INDEX [IX_UserMeasurementPreferences_WeightUnitId]
     ON [dbo].[UserMeasurementPreferences]([WeightUnitId] ASC);
@@ -48,9 +50,9 @@ GO
             IF EXISTS (SELECT * FROM inserted)
             BEGIN
                 -- Handle INSERT and UPDATE
-                INSERT INTO [UserMeasurementPreferences_aud] (UserId, Id, CreatedOn, ModifiedOn, ModifiedBy, DeletedOn, DeletedBy, IsActive, ActionTypeId, DetailsJson, AuditTimeStamp)
+                INSERT INTO [UserMeasurementPreferences_aud] (UserId, WeightUnitId, MeasurementUnitId, Id, CreatedOn, ModifiedOn, ModifiedBy, DeletedOn, DeletedBy, IsActive, ActionTypeId, DetailsJson, AuditTimeStamp)
                 SELECT
-                    i.UserId, i.Id, i.CreatedOn, i.ModifiedOn, i.ModifiedBy, i.DeletedOn, i.DeletedBy, i.IsActive,
+                    i.UserId, i.WeightUnitId, i.MeasurementUnitId, i.Id, i.CreatedOn, i.ModifiedOn, i.ModifiedBy, i.DeletedOn, i.DeletedBy, i.IsActive,
                     CASE
                         WHEN EXISTS (SELECT * FROM deleted) THEN
                             CASE
@@ -69,9 +71,9 @@ GO
             ELSE IF EXISTS (SELECT * FROM deleted)
             BEGIN
                 -- Handle DELETE
-                INSERT INTO [UserMeasurementPreferences_aud] (UserId, Id, CreatedOn, ModifiedOn, ModifiedBy, DeletedOn, DeletedBy, IsActive, ActionTypeId, DetailsJson, AuditTimeStamp)
+                INSERT INTO [UserMeasurementPreferences_aud] (UserId, WeightUnitId, MeasurementUnitId, Id, CreatedOn, ModifiedOn, ModifiedBy, DeletedOn, DeletedBy, IsActive, ActionTypeId, DetailsJson, AuditTimeStamp)
                 SELECT
-                    d.UserId, d.Id, d.CreatedOn, d.ModifiedOn, d.ModifiedBy, d.DeletedOn, d.DeletedBy, d.IsActive,
+                    d.UserId, d.WeightUnitId, d.MeasurementUnitId, d.Id, d.CreatedOn, d.ModifiedOn, d.ModifiedBy, d.DeletedOn, d.DeletedBy, d.IsActive,
                     3,
                     (SELECT CAST((SELECT * FROM deleted d FOR JSON PATH, WITHOUT_ARRAY_WRAPPER) AS NVARCHAR(MAX))),
                     GETUTCDATE()
