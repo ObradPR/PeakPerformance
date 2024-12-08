@@ -23,6 +23,8 @@ public static partial class Extensions
         var tableName = GetTableName<TEntity>();
         var auditTableName = GetTableName<TEntity>(eTableType.Audit);
 
+        migrationBuilder.Sql($"DROP TRIGGER IF EXISTS {triggerName}"); // OPR: The whole logic for triggers or usp should be created and used like DatabaseIndex.cs
+
         var columns = GetAuditColumnsOrValues<TAudit>();
         var insertValues = GetAuditColumnsOrValues<TAudit>("i");
         var deleteValues = GetAuditColumnsOrValues<TAudit>("d");
