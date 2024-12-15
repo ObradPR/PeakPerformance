@@ -7,6 +7,7 @@ import { IPagingResult, IWeightDto, IWeightSearchOptions } from '../../../_gener
 import { WeightController } from '../../../_generated/services';
 import { AreaChartComponent } from "../../../components/charts/area-chart/area-chart.component";
 import { IAreaChartOptions } from '../../../components/charts/interfaces/area-chart-options.interface';
+import { ModalService } from '../../../services/modal.service';
 @Component({
   selector: 'app-dashboard',
   standalone: true,
@@ -30,7 +31,7 @@ export class DashboardComponent implements OnInit {
     xType: 'datetime'
   }
 
-  constructor(private weightController: WeightController) { }
+  constructor(private weightController: WeightController, public modalService: ModalService) { }
 
   ngOnInit(): void {
     this.getBodyweights();

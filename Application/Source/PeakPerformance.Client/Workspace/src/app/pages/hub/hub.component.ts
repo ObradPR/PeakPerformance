@@ -6,6 +6,7 @@ import { UserPanelComponent } from "./user-panel/user-panel.component";
 import { RouterOutlet } from '@angular/router';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { MenuItem } from 'primeng/api';
+import { ModalComponent } from '../../components/modal/modal.component';
 
 @Component({
   selector: 'app-hub',
@@ -15,7 +16,8 @@ import { MenuItem } from 'primeng/api';
     LeftMenuComponent,
     UserPanelComponent,
     RouterOutlet,
-    BreadcrumbModule
+    BreadcrumbModule,
+    ModalComponent
   ],
   templateUrl: './hub.component.html',
   styleUrl: './hub.component.scss',

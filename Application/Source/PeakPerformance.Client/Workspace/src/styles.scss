@@ -193,3 +193,75 @@ button {
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.my-modal {
+  @include size(auto, auto);
+  max-height: 95dvh;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  background-color: $white-hex;
+  display: block;
+  box-shadow: $box-shadow-block;
+  border-radius: $border-radius-10;
+  
+
+  &.xs {
+    width: 350px;
+  }
+  &.sm {
+    width: 550px;
+  }
+  &.md {
+    width: 850px;
+  }
+  &.lg {
+    width: 1350px;
+  }
+
+  .my-modal-header {
+    @include flex(row, space-between, nowrap, center);
+    border-bottom: $border-hr;
+    padding: 1rem 1.2rem 0.7rem;
+
+    h3 {
+      font-size: 1.3em;
+      margin-bottom: 0
+    }
+
+    i {
+      font-size: 1.1em;
+      cursor: pointer;
+
+      &:hover {
+        color: $grey-hex;
+      }
+    }
+  }
+
+  .my-modal-body {
+    padding: 1.5rem 1.2rem 0;
+  }
+
+  .my-modal-footer {
+    @include flex(row, space-between, nowrap, center);
+    border-top: $border-hr;
+    padding: 0.7rem 1.2rem 1rem;
+
+    button {
+      width: auto;
+      font-size: 0.9em;
+    }
+  }
+}
+
+.my-backdrop {
+  @include size(100%, 100%);
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  position: fixed;
+  top: 0;
+  left: 0;
+}

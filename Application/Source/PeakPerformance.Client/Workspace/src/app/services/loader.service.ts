@@ -10,8 +10,6 @@ export class LoaderService {
   readonly pageLoaderSignal = this.pageLoader.asReadonly();
   readonly sectionLoaderSignal = this.sectionLoader.asReadonly();
 
-  constructor() { }
-
   // Page Loader
 
   showPageLoader() {

@@ -45,8 +45,9 @@ $border-radius-20: 20px;
 
 $transition: all 0.2s ease-in-out;
 
-$box-shadow-input: 0px 0px 3px 4px $yellow-hex;
-$box-shadow-is-invalid: 0px 0px 3px 4px $red-hex;
+$box-shadow-block: 0px 0px 5px 1px $dark-grey-hex;
+$box-shadow-input: 0px 0px 3px 3px $yellow-hex;
+$box-shadow-is-invalid: 0px 0px 3px 2px $red-hex;
 
 $filter-white: brightness(0) invert(1);
 $filter-dark-grey: invert(14%) sepia(8%) saturate(250%) hue-rotate(190deg) brightness(91%) contrast(86%);

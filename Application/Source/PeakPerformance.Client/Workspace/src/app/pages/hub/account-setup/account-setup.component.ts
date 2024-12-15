@@ -56,6 +56,12 @@ export class AccountSetupComponent implements OnInit {
   uploadedPicture: any = null;
   eSocialMediaPlatform = eSocialMediaPlatform;
 
+  weightPreferenceUnits: IEnumProvider[] = [];
+  measurementPreferenceUnits: IEnumProvider[] = [];
+  trainingGoals: IEnumProvider[] = [];
+  platforms: IEnumProvider[] = [];
+  injuries: IEnumProvider[] = [];
+
   constructor(
     private fb: FormBuilder,
     private referenceService: Providers,
@@ -64,11 +70,6 @@ export class AccountSetupComponent implements OnInit {
     private sharedService: SharedService
   ) { }
 
-  weightPreferenceUnits: IEnumProvider[] = [];
-  measurementPreferenceUnits: IEnumProvider[] = [];
-  trainingGoals: IEnumProvider[] = [];
-  platforms: IEnumProvider[] = [];
-  injuries: IEnumProvider[] = [];
 
   ngOnInit() {
     this.formInit();
