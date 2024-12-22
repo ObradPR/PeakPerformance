@@ -23,7 +23,7 @@ import { ModalService } from '../../../services/modal.service';
 export class DashboardComponent implements OnInit {
   bodyweights: IPagingResult<IWeightDto>;
   bodyweightsChartsOptions: IAreaChartOptions = {
-    xField: 'createdOn',
+    xField: 'logDate',
     yField: 'weight',
     yFieldDefaultValue: 100,
     height: 200,

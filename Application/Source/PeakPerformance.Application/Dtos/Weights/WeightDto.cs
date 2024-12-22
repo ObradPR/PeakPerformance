@@ -11,7 +11,7 @@ public class WeightDto
     [Display(Name = "Body fat percentage")]
     public decimal? BodyFatPercentage { get; set; }
 
-    public DateTime CreatedOn { get; set; }
+    public DateTime? LogDate { get; set; }
 
     // methods
 
@@ -21,5 +21,6 @@ public class WeightDto
         model.WeightUnitId = WeightUnitId;
         model.BodyFatPercentage = BodyFatPercentage;
         model.UserId = userId;
+        model.LogDate = LogDate ?? DateTime.UtcNow;
     }
 }

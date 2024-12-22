@@ -13,8 +13,7 @@ public class AutoMappingProfiles : BaseAutoMapperProfile
         CreateMap<User, UserDto>();
 
         CreateMap<Weight, WeightDto>()
-            .ForMember(dest => dest.Weight, opt => opt.MapFrom(src => src.Value))
-            .ForMember(dest => dest.CreatedOn, opt => opt.MapFrom(src => src.CreatedOn.Date));
+            .ForMember(dest => dest.Weight, opt => opt.MapFrom(src => src.Value));
 
         CreateMap<BodyMeasurement, BodyMeasurementDto>();
 

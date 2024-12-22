@@ -139,7 +139,7 @@ export interface IWeightDto
 	weight?: number;
 	weightUnitId: number;
 	bodyFatPercentage?: number;
-	createdOn: Date;
+	logDate?: Date | null;
 }
 export interface IWeightGoalDto
 {
