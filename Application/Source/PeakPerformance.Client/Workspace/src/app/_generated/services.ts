@@ -241,6 +241,20 @@ import { IWeightSearchOptions } from './interfaces';
 		.pipe(map(response => response.body));
 		
 	}
+	public Add(data: IWeightDto) : Observable<any>
+	{
+		const body = <any>data;
+		return this.httpClient.post<any>(
+		this.settingsService.createApiUrl('Weight/Add'),
+		body,
+		{
+			responseType: 'json',
+			observe: 'response',
+			withCredentials: true
+		})
+		.pipe(map(response => response.body));
+		
+	}
 	constructor (httpClient: HttpClient, settingsService: SettingsService)
 	{
 		super(httpClient, settingsService);

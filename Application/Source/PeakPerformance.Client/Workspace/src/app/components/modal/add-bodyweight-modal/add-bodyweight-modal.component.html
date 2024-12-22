@@ -85,7 +85,14 @@
     </div>
 
     <div class="my-modal-footer">
-        <button class="btn-blue">Add Bodyweight</button>
+        <button class="btn-blue" (click)="addBodyweight()">
+          @if (loaderService.sectionLoaderSignal()) {
+            <app-section-loader/>
+          }
+          @else {
+            Add Bodyweight
+          }
+        </button>
         <button class="btn-grey" (click)="closeModal()">Close</button>
     </div>
 </section>

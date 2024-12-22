@@ -11,6 +11,11 @@ import { DropdownModule } from 'primeng/dropdown';
 import { IEnumProvider } from '../../../_generated/interfaces';
 import { Providers } from '../../../_generated/providers';
 import { eMeasurementUnit } from '../../../_generated/enums';
+import { ToastService } from '../../../services/toast.service';
+import { LoaderService } from '../../../services/loader.service';
+import { WeightController } from '../../../_generated/services';
+import { SectionLoaderComponent } from '../../section-loader/section-loader.component';
+import { ModalService } from '../../../services/modal.service';
 
 @Component({
   selector: 'app-add-bodyweight-modal',
@@ -23,7 +28,8 @@ import { eMeasurementUnit } from '../../../_generated/enums';
     CalendarModule,
     RequiredMarkComponent,
     DropdownResetDirective,
-    DropdownModule
+    DropdownModule,
+    SectionLoaderComponent
   ],
   templateUrl: './add-bodyweight-modal.component.html',
   styleUrl: './add-bodyweight-modal.component.scss'
@@ -34,7 +40,14 @@ export class AddBodyweightModalComponent implements IModalMethods {
 
   weightUnits: IEnumProvider[] = [];
 
-  constructor(private fb: FormBuilder, private referenceService: Providers) {
+  constructor(
+    private fb: FormBuilder,
+    private referenceService: Providers,
+    private toastService: ToastService,
+    public loaderService: LoaderService,
+    private weigthController: WeightController,
+    private modalService: ModalService
+  ) {
     this.formInit();
   }
 
@@ -44,7 +57,7 @@ export class AddBodyweightModalComponent implements IModalMethods {
 
   formInit(): void {
     this.form = this.fb.group({
-      logDate: [null, Validators.required],
+      logDate: [new Date(), Validators.required],
       weight: [null, [Validators.required, Validators.min(20.1), Validators.max(999.9)]],
       weightUnitId: [null, [Validators.required]],
       bodyFatPercentage: [null, [Validators.min(1.1), Validators.max(99.9)]],
@@ -54,6 +67,23 @@ export class AddBodyweightModalComponent implements IModalMethods {
       .map(_ => {
         if (_.id === eMeasurementUnit.Kilograms || _.id === eMeasurementUnit.Pounds)
           this.weightUnits.push(_);
+      });
+  }
+
+  async addBodyweight() {
+    if (this.form.invalid) {
+      this.toastService.showFormError();
+      return;
+    }
+
+    this.loaderService.showSectionLoader();
+
+    this.weigthController.Add(this.form.value).toPromise()
+      .then()
+      .catch(ex => { throw ex; })
+      .finally(() => {
+        this.loaderService.hideSectionLoader();
+        this.modalService.hideAddBodyweightModal();
       });
   }
 }

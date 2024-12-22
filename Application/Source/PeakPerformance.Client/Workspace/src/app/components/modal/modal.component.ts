@@ -10,7 +10,5 @@ import { AddBodyweightModalComponent } from './add-bodyweight-modal/add-bodyweig
   styles: ``
 })
 export class ModalComponent {
-  constructor(public modalService: ModalService) {
-    this.modalService.showAddBodyweightModal();
-  }
+  constructor(public modalService: ModalService) { }
 }
