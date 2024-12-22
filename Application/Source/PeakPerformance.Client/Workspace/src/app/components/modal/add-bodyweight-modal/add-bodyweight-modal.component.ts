@@ -1,21 +1,22 @@
+import { CommonModule } from '@angular/common';
 import { Component, output, OutputEmitterRef } from '@angular/core';
-import { IModalMethods } from '../interfaces/modal-methods.interface';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { CalendarModule } from 'primeng/calendar';
+import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
 import { TooltipModule } from 'primeng/tooltip';
-import { CommonModule } from '@angular/common';
-import { CalendarModule } from 'primeng/calendar';
-import { RequiredMarkComponent } from '../../required-mark/required-mark.component';
-import { DropdownResetDirective } from '../../../directives/dropdown-reset.directive';
-import { DropdownModule } from 'primeng/dropdown';
+import { eMeasurementUnit } from '../../../_generated/enums';
 import { IEnumProvider } from '../../../_generated/interfaces';
 import { Providers } from '../../../_generated/providers';
-import { eMeasurementUnit } from '../../../_generated/enums';
-import { ToastService } from '../../../services/toast.service';
-import { LoaderService } from '../../../services/loader.service';
 import { WeightController } from '../../../_generated/services';
-import { SectionLoaderComponent } from '../../section-loader/section-loader.component';
+import { DropdownResetDirective } from '../../../directives/dropdown-reset.directive';
+import { BodyweightService } from '../../../services/bodyweight.service';
+import { LoaderService } from '../../../services/loader.service';
 import { ModalService } from '../../../services/modal.service';
+import { ToastService } from '../../../services/toast.service';
+import { RequiredMarkComponent } from '../../required-mark/required-mark.component';
+import { SectionLoaderComponent } from '../../section-loader/section-loader.component';
+import { IModalMethods } from '../interfaces/modal-methods.interface';
 
 @Component({
   selector: 'app-add-bodyweight-modal',
@@ -46,7 +47,8 @@ export class AddBodyweightModalComponent implements IModalMethods {
     private toastService: ToastService,
     public loaderService: LoaderService,
     private weigthController: WeightController,
-    private modalService: ModalService
+    private modalService: ModalService,
+    private bodyweightService: BodyweightService
   ) {
     this.formInit();
   }
@@ -88,6 +90,7 @@ export class AddBodyweightModalComponent implements IModalMethods {
       .catch(ex => { throw ex; })
       .finally(() => {
         this.loaderService.hideSectionLoader();
+        this.bodyweightService.triggerBodyweightChart();
         this.modalService.hideAddBodyweightModal();
       });
   }

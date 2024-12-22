@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, effect, OnInit } from '@angular/core';
 import { DateTime } from 'luxon';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
@@ -7,6 +7,7 @@ import { IPagingResult, IWeightDto, IWeightSearchOptions } from '../../../_gener
 import { WeightController } from '../../../_generated/services';
 import { AreaChartComponent } from "../../../components/charts/area-chart/area-chart.component";
 import { IAreaChartOptions } from '../../../components/charts/interfaces/area-chart-options.interface';
+import { BodyweightService } from '../../../services/bodyweight.service';
 import { ModalService } from '../../../services/modal.service';
 @Component({
   selector: 'app-dashboard',
@@ -31,10 +32,19 @@ export class DashboardComponent implements OnInit {
     xType: 'datetime'
   }
 
-  constructor(private weightController: WeightController, public modalService: ModalService) { }
+  constructor(
+    private weightController: WeightController,
+    public modalService: ModalService,
+    private bodyweightService: BodyweightService
+  ) {
+    effect(() => {
+      this.bodyweightService.bodyweightChartSignal();
+      this.getBodyweights();
+    }, { allowSignalWrites: true })
+  }
 
   ngOnInit(): void {
-    this.getBodyweights();
+    // this.getBodyweights();
   }
 
   private getBodyweights() {
