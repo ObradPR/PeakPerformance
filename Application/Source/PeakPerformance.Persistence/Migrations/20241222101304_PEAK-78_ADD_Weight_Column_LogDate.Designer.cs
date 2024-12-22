@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PeakPerformance.Persistence.Contexts;
 
@@ -11,9 +12,11 @@ using PeakPerformance.Persistence.Contexts;
 namespace PeakPerformance.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241222101304_PEAK-78_ADD_Weight_Column_LogDate")]
+    partial class PEAK78_ADD_Weight_Column_LogDate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -739,7 +742,7 @@ namespace PeakPerformance.Persistence.Migrations
                         .HasColumnType("bit");
 
                     b.Property<DateTime?>("LogDate")
-                        .HasColumnType("date");
+                        .HasColumnType("datetime2");
 
                     b.Property<long?>("ModifiedBy")
                         .HasColumnType("bigint");

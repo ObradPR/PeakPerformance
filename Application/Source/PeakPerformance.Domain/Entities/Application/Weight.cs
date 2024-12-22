@@ -10,6 +10,9 @@ public class Weight : BaseAuditedDomain<long>, IConfigurableEntity
 
     public decimal? BodyFatPercentage { get; set; }
 
+    [Column(TypeName = Constants.DB_TYPE_DATE)]
+    public DateTime? LogDate { get; set; }
+
     //
     // Relationships
     //
