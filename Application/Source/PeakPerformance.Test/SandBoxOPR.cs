@@ -1,6 +1,5 @@
-﻿using PeakPerformance.Common;
+﻿using PeakPerformance.Common.Extensions;
 using PeakPerformance.Persistence.Contexts;
-using System.Reflection;
 
 namespace PeakPerformance.Test;
 
@@ -17,12 +16,11 @@ internal class SandBox
     [Test]
     public async Task SandBoxOPR()
     {
-        var applicationAssembly = Assembly.Load($"{Constants.SOLUTION_NAME}.Application");
-        var dtos = applicationAssembly
-            .GetTypes()
-            .Where(t => t.IsClass
-                && t.Namespace != null
-                && t.Namespace.Contains($"{Constants.SOLUTION_NAME}.Application.Dtos"));
+        var date = DateTime.UtcNow;
+        var date2 = DateTime.Now;
+
+        var result = date.ConvertToUtc();
+        var result2 = date2.ConvertToUtc();
     }
 
     [TearDown]

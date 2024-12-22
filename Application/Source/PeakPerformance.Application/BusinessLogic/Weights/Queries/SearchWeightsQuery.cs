@@ -24,10 +24,10 @@ public class SearchWeightsQuery(WeightSearchOptions options) : BaseQuery<PagingR
                 predicates.Add(_ => _.UserId == userId);
 
             if (request.Options.FromDate.IsNotNullOrEmpty())
-                predicates.Add(_ => _.CreatedOn >= request.Options.FromDate.Value);
+                predicates.Add(_ => _.LogDate >= request.Options.FromDate.Value);
 
             if (request.Options.ToDate.IsNotNullOrEmpty())
-                predicates.Add(_ => _.CreatedOn <= request.Options.ToDate.Value);
+                predicates.Add(_ => _.LogDate <= request.Options.ToDate.Value);
 
             var result = await _unitOfWork.WeightRepository.SearchAsync(options, predicates);
 

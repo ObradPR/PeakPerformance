@@ -29,11 +29,13 @@ export class AreaChartComponent extends BaseChartComponent implements OnChanges 
     const seriesData: IDataPoint[] = [];
     this.data()?.data
       .filter(_ => _[this.areaChartOptions()!.yField] !== undefined)
-      .forEach(_ =>
+      .forEach(_ => {
+        const date = new Date(_[this.areaChartOptions()!.xField] + "Z");
         seriesData.push({
-          x: new Date(_[this.areaChartOptions()!.xField]).getTime(),
+          x: date.getTime() - date.getTimezoneOffset() * 60000,
           y: _[this.areaChartOptions()!.yField] ?? this.areaChartOptions()?.yFieldDefaultValue
         })
+      }
       );
 
     this.series = [

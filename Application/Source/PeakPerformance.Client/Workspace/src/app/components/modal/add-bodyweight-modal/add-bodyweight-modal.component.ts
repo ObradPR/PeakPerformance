@@ -56,8 +56,11 @@ export class AddBodyweightModalComponent implements IModalMethods {
   }
 
   formInit(): void {
+    const date = new Date();
+    date.setHours(0, 0, 0);
+
     this.form = this.fb.group({
-      logDate: [new Date(), Validators.required],
+      logDate: [date, Validators.required],
       weight: [null, [Validators.required, Validators.min(20.1), Validators.max(999.9)]],
       weightUnitId: [null, [Validators.required]],
       bodyFatPercentage: [null, [Validators.min(1.1), Validators.max(99.9)]],
@@ -75,6 +78,8 @@ export class AddBodyweightModalComponent implements IModalMethods {
       this.toastService.showFormError();
       return;
     }
+
+    console.log(this.form.value);
 
     this.loaderService.showSectionLoader();
 
