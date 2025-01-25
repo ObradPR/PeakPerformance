@@ -26,8 +26,6 @@ public class UnitOfWork(ApplicationDbContext context) : BaseRepository(context),
 
     public IHealthInformationRepository HealthInformationRepository => new HealthInformationRepository(db);
 
-    public IChallengeRepository ChallengeRepository => new ChallengeRepository(db);
-
     // Methods
 
     public async Task SaveAsync()

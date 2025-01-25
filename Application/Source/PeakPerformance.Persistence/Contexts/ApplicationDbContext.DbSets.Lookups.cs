@@ -13,8 +13,4 @@ public partial class ApplicationDbContext
     public virtual DbSet<SocialMediaPlatform> SocialMediaPlatforms { get; set; }
 
     public virtual DbSet<InjuryType> InjuryTypes { get; set; }
-
-    public virtual DbSet<ChallengeStatus> ChallengeStatuses { get; set; }
-
-    public virtual DbSet<ChallengeParticipantStatus> ChallengeParticipantStatuses { get; set; }
 }

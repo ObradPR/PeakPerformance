@@ -12,8 +12,6 @@ import { IChangePasswordDto } from './interfaces';
 import { IPagingResult } from './interfaces';
 import { IBodyMeasurementDto } from './interfaces';
 import { IBodyMeasurementSearchOptions } from './interfaces';
-import { IChallengeDto } from './interfaces';
-import { IChallengeSearchOptions } from './interfaces';
 import { IHealthInformationDto } from './interfaces';
 import { IHealthInformationSearchOptions } from './interfaces';
 import { IUserDto } from './interfaces';
@@ -136,27 +134,6 @@ import { IWeightSearchOptions } from './interfaces';
 		const body = <any>options;
 		return this.httpClient.post<IPagingResult<IBodyMeasurementDto>>(
 		this.settingsService.createApiUrl('BodyMeasurement/Search'),
-		body,
-		{
-			responseType: 'json',
-			observe: 'response',
-			withCredentials: true
-		})
-		.pipe(map(response => response.body));
-		
-	}
-	constructor (httpClient: HttpClient, settingsService: SettingsService)
-	{
-		super(httpClient, settingsService);
-	}
-}
-@Injectable() export class ChallengeController extends BaseController
-{
-	public Search(options: IChallengeSearchOptions) : Observable<IPagingResult<IChallengeDto> | null>
-	{
-		const body = <any>options;
-		return this.httpClient.post<IPagingResult<IChallengeDto>>(
-		this.settingsService.createApiUrl('Challenge/Search'),
 		body,
 		{
 			responseType: 'json',

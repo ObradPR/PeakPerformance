@@ -60,19 +60,6 @@ export interface IBodyMeasurementDto
 	leftCalf?: number;
 	measurementUnitId: number;
 }
-export interface IChallengeDto
-{
-	name: string;
-	description: string;
-	startDate: Date;
-	endDate: Date;
-	maxParticipants?: number;
-	minParticipants?: number;
-	statusId: number;
-	approvedBy?: number;
-	approvedOn?: Date | null;
-	isRestricted: boolean;
-}
 export interface IEmailDto
 {
 	toEmail: string;

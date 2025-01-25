@@ -8,8 +8,10 @@ namespace PeakPerformance.Persistence.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.SeedLookupTable<ChallengeStatus, eChallengeStatus>();
-            migrationBuilder.SeedLookupTable<ChallengeParticipantStatus, eChallengeParticipantStatus>();
+            // REMOVED in PEAK-82_AppSimplificatino // PRESERVED in dev_old
+
+            //migrationBuilder.SeedLookupTable<ChallengeStatus, eChallengeStatus>();
+            //migrationBuilder.SeedLookupTable<ChallengeParticipantStatus, eChallengeParticipantStatus>();
         }
 
         /// <inheritdoc />
