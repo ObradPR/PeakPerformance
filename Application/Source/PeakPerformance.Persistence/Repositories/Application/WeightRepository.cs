@@ -6,7 +6,7 @@ public class WeightRepository(ApplicationDbContext context)
     // Get
 
     public async Task<PagingResult<Weight>> SearchAsync(WeightSearchOptions options, List<Expression<Func<Weight, bool>>> predicates)
-        => await db.Weights.SearchAsync(options, _ => _.LogDate, true, predicates, null);
+        => await db.Weights.SearchAsync(options, _ => _.LogDate, false, predicates, null);
 
     // Add / Remove / Edit
 

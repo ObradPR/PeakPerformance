@@ -37,6 +37,12 @@ export const routes: Routes = [
         path: '',
         loadComponent: () =>
           import('./pages/hub/dashboard/dashboard.component').then(_ => _.DashboardComponent)
+      },
+      {
+        path: RouteConstants.ROUTE_HUB_BODYWEIGHT,
+        title: RouteConstants.TITLE_HUB_BODYWEIGHT,
+        loadComponent: () =>
+          import('./pages/hub/bodyweight/bodyweight.component').then(_ => _.BodyweightComponent)
       }
     ]
   },

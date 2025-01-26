@@ -76,4 +76,13 @@ import { IEnumProvider } from './interfaces';
 		    { id: 9, name: 'Agility', description: 'Agility' }
 		];
 	}
+	getChartTimespans() : IEnumProvider[]
+	{
+		return [
+		    { id: 3, name: 'Last3Months', description: 'Last 3 Months' },
+		    { id: 6, name: 'Last6Months', description: 'Last 6 Months' },
+		    { id: 12, name: 'Last12Months', description: 'Last 12 Months' },
+		    { id: 100, name: 'AllTime', description: 'All Time' }
+		];
+	}
 }

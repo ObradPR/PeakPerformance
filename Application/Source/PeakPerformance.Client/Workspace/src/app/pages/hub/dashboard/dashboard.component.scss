@@ -3,7 +3,6 @@
 .wrapper {
     @include size(100%, 100%);
     @include flex(column, flex-start, nowrap, normal);
-    padding-top: 1.8rem;
 
     .search {
         @include flex(row, space-between, nowrap, center);

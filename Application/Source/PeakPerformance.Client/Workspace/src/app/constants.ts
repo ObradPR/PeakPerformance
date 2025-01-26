@@ -59,6 +59,8 @@ export class RouteConstants {
   // HUB
   static ROUTE_HUB_DASHBOARD = 'hub';
   static TITLE_HUB_DASHBOARD = 'HUB Dashboard | ' + this.TITLE;
+  static ROUTE_HUB_BODYWEIGHT = 'bodyweight';
+  static TITLE_HUB_BODYWEIGHT = 'HUB Bodyweight | ' + this.TITLE;
 
   // Website
   static ROUTE_HOME = '/';

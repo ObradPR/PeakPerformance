@@ -13,4 +13,7 @@ public enum Providers
 
     [EnumProvider<eTrainingGoal>]
     TrainingGoals,
+
+    [EnumProvider<eChartTimespan>]
+    ChartTimespans,
 }

@@ -1,3 +1,9 @@
+import { eMeasurementUnit } from './enums';
+import { eInjuryType } from './enums';
+import { eSocialMediaPlatform } from './enums';
+import { eTrainingGoal } from './enums';
+import { eChartTimespan } from './enums';
+
 export interface IAuthorizationDto
 {
 	token: string;
@@ -58,7 +64,7 @@ export interface IBodyMeasurementDto
 	leftThigh?: number;
 	rightCalf?: number;
 	leftCalf?: number;
-	measurementUnitId: number;
+	measurementUnitId: eMeasurementUnit;
 }
 export interface IEmailDto
 {
@@ -68,7 +74,7 @@ export interface IEmailDto
 }
 export interface IHealthInformationDto
 {
-	injuryTypeId: number;
+	injuryTypeId: eInjuryType;
 	description: string;
 	startDate?: Date | null;
 	endDate?: Date | null;
@@ -111,20 +117,20 @@ export interface IUserDto
 }
 export interface ISocialMediaDto
 {
-	platformId: number;
+	platformId: eSocialMediaPlatform;
 	link: string;
 	phoneNumber: string;
 }
 export interface IUserTrainingGoalDto
 {
-	trainingGoalId: number;
+	trainingGoalId: eTrainingGoal;
 	startDate: Date;
 	endDate?: Date | null;
 }
 export interface IWeightDto
 {
 	weight?: number;
-	weightUnitId: number;
+	weightUnitId: eMeasurementUnit;
 	bodyFatPercentage?: number;
 	logDate?: Date | null;
 }
@@ -158,6 +164,7 @@ export interface IWeightSearchOptions extends ISearchOptions
 	userId?: number;
 	fromDate?: Date | null;
 	toDate?: Date | null;
+	chartTimespanId?: eChartTimespan;
 }
 export interface IBodyMeasurementSearchOptions extends ISearchOptions
 {

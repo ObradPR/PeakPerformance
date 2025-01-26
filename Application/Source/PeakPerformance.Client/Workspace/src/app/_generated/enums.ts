@@ -7,25 +7,11 @@ export enum eActionType {
 	Signin = 6,
 	Signout = 7
 }
-export enum eChallengeParticipantStatus {
-	Joined = 1,
-	Completed = 2,
-	Dropped = 3,
-	Disqualified = 4,
-	Pending = 5,
-	Inactive = 6,
-	Failed = 7,
-	Suspended = 8,
-	Mastered = 9
-}
-export enum eChallengeStatus {
-	Pending = 1,
-	Approved = 2,
-	InProgress = 3,
-	Completed = 4,
-	Rejected = 5,
-	Cancelled = 6,
-	Failed = 7
+export enum eChartTimespan {
+	Last3Months = 3,
+	Last6Months = 6,
+	Last12Months = 12,
+	AllTime = 100
 }
 export enum eInjuryType {
 	NotSet = 0,

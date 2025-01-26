@@ -1,0 +1,76 @@
+@import '../../../../styles.scss';
+
+.wrapper {
+    @include size(100%, 100%);
+    @include flex(row, space-between, nowrap, normal);
+
+    .left-block {
+        @include size(65%, 100%);
+
+        .base-info {
+            @include size(100%, 100px);
+            @include flex(row, space-between, nowrap, center);
+            text-align: center;
+            border-bottom: $border-hr-light;
+
+            .info-block {
+                width: 30%;
+            }    
+        }
+
+        .chart-info {
+            padding-top: 1rem;
+
+            .chart-dds {
+                @include flex(row, flex-start, nowrap, center);
+
+                .chart-targets-dd {
+                    width: 180px;
+                }
+
+                .chart-timespans-dd {
+                    width: 200px;
+                    margin-left: 0.5rem;
+                }
+            }
+            canvas {
+                max-width: 100%;
+                height: auto !important;
+            }
+        }
+    }
+
+    .right-block {
+        @include size(33%, 100%);
+
+        .top-btns {
+            @include size(100%, 100px);
+            @include flex(row, flex-start, nowrap, center);
+            button {
+                 &:nth-child(1) {
+                    width: 50%;
+
+                    svg {
+                        filter: $filter-white;
+                    }
+                 }
+                 &:nth-child(2) {
+                    width: 40%;
+                    margin-left: 0.5rem;
+
+                    svg {
+                        filter: $filter-dark-grey;
+                    }
+                 }
+
+                svg {
+                    @include size(1.2rem, 1.2rem);
+                }
+            }
+        }
+    }
+}
+
+::ng-deep.p-dropdown {
+    border: 1px solid $light-grey-2-hex;
+}

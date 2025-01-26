@@ -29,6 +29,19 @@ public class SearchWeightsQuery(WeightSearchOptions options) : BaseQuery<PagingR
             if (request.Options.ToDate.IsNotNullOrEmpty())
                 predicates.Add(_ => _.LogDate <= request.Options.ToDate.Value);
 
+            if (request.Options.ChartTimespanId.HasValue)
+            {
+                var chartTimespanId = request.Options.ChartTimespanId;
+                var today = Functions.TODAY;
+
+                if (chartTimespanId == eChartTimespan.Last3Months)
+                    predicates.Add(_ => _.LogDate <= today && _.LogDate >= today.AddMonths(-3));
+                else if (chartTimespanId == eChartTimespan.Last6Months)
+                    predicates.Add(_ => _.LogDate <= today && _.LogDate >= today.AddMonths(-6));
+                else if (chartTimespanId == eChartTimespan.Last12Months)
+                    predicates.Add(_ => _.LogDate <= today && _.LogDate >= today.AddMonths(-12));
+            }
+
             var result = await _unitOfWork.WeightRepository.SearchAsync(options, predicates);
 
             var mapping = _mapper.Map<IEnumerable<WeightDto>>(result.Data);

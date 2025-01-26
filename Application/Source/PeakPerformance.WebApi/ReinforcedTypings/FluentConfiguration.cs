@@ -40,10 +40,10 @@ public static class FluentConfiguration
 
         // Enums
 
-        var commonAssembly = Assembly.Load($"{Constants.SOLUTION_NAME}.Common");
+        var commonAssembly = Assembly.Load($"{Constants.SOLUTION_NAME}.Domain");
         var enums = commonAssembly
             .GetTypes()
-            .Where(t => t.IsEnum && t.Namespace != null && t.Namespace.Contains($"{Constants.SOLUTION_NAME}.Common.Enums"));
+            .Where(t => t.IsEnum && t.Namespace != null && t.Namespace.Contains($"{Constants.SOLUTION_NAME}.Domain.Enums"));
 
         builder.ExportAsEnums(enums,
             config =>
