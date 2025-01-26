@@ -57,5 +57,44 @@
             </button>
         </div>
 
+        <div class="bottom-data">
+            
+            <div class="tabs">
+                @for (tab of tabs; track tab; let idx = $index) {
+                    <div [ngClass]="{'tab': true, 'active': selectedTab === idx}" (click)="onSelectTab(idx)">
+                        @if (tab.icon) {
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                <title>{{ tab.iconTitle }}</title>
+                                <path [attr.d]="tab.icon" />
+                            </svg>
+                        }
+                        {{ tab.label }}
+                    </div>
+                }
+                <!-- Empty filler div for the remaining space -->
+                <div class="filler"></div>
+            </div>
+
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Bodyweight</th>
+                        <th>Body Fat</th>
+                        <th></th> <!-- Empty heading for edit dots -->
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (row of tableRows; track row; let idx = $index) {
+                        <tr [ngClass]="{'odd-row': idx % 2 !== 0}">
+                            <td>{{ row.date }}</td>
+                            <td>{{ row.bodyweight }}</td>
+                            <td>{{ row.bodyFat }}</td>
+                            <td><span class="edit-dots">⋮</span></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>

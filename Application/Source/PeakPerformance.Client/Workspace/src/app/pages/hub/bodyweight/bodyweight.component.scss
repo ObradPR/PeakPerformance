@@ -68,6 +68,87 @@
                 }
             }
         }
+
+        .bottom-data {
+            .tabs {
+                @include flex(row, flex-start, nowrap, center);
+
+                .tab {
+                    cursor: pointer;
+                    padding: 0.5rem 0.8rem;
+                    text-align: center;
+
+                    &:not(.active) {
+                        border-bottom: $border-hr-light;
+                    }
+
+                    &.active {
+                        border-left: $border-hr-light;
+                        border-top: $border-hr-light;
+                        border-right: $border-hr-light;
+                        border-bottom: none;
+                        border-top-left-radius: $border-radius-5;
+                        border-top-right-radius: $border-radius-5;
+                    }
+
+                    svg {
+                        @include size(1.2rem, 1.2rem);
+                        filter: $filter-dark-grey;
+                    }
+                }
+
+                .filler {
+                    flex-grow: 1;
+                    align-self: stretch;
+                    border-bottom: $border-hr-light;
+                }
+            }
+
+            .data-table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-top: 1rem;
+                
+                th, td {
+                    padding: 0.3rem;
+                    text-align: left;
+
+                    &:nth-child(2) {
+                        text-align: center;
+                    }
+
+                    &:nth-child(3) {
+                        text-align: right;
+                    }
+
+                    &:nth-child(4) {
+                        width: 30px;
+                        text-align: center;
+                    }
+                }
+        
+                th {
+                    background-color: #f4f4f4;
+                    font-weight: bold;
+                }
+        
+                td {
+                    font-size: 0.95em;
+                }
+        
+                .odd-row {
+                    background-color: #f7f7f7;
+                }
+            }
+        
+            /* Edit dots styling */
+            .edit-dots {
+                cursor: pointer;
+                color: $blue-hex;
+                font-size: 1.5rem;
+                font-weight: bold;
+            }
+        }
     }
 }
 
