@@ -129,6 +129,7 @@ export interface IUserTrainingGoalDto
 }
 export interface IWeightDto
 {
+	id: number;
 	weight?: number;
 	weightUnitId: eMeasurementUnit;
 	bodyFatPercentage?: number;

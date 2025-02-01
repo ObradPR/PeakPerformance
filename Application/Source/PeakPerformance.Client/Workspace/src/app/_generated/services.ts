@@ -232,6 +232,20 @@ import { IWeightSearchOptions } from './interfaces';
 		.pipe(map(response => response.body));
 		
 	}
+	public Remove(id: number) : Observable<any>
+	{
+		const body = <any>{'id': id};
+		return this.httpClient.delete<any>(
+		this.settingsService.createApiUrl('Weight/Remove'),
+		{
+			params: new HttpParams({ fromObject: body }),
+			responseType: 'json',
+			observe: 'response',
+			withCredentials: true
+		})
+		.pipe(map(response => response.body));
+		
+	}
 	constructor (httpClient: HttpClient, settingsService: SettingsService)
 	{
 		super(httpClient, settingsService);

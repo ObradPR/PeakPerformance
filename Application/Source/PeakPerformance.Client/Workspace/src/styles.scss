@@ -265,3 +265,11 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   top: 0;
   left: 0;
 }
+
+.delete-item {
+  color: $dark-red-hex;
+
+  svg.delete-svg {
+    filter: $filter-dark-red;
+  }
+}

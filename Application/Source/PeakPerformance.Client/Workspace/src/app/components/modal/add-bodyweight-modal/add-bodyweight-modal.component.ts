@@ -90,7 +90,7 @@ export class AddBodyweightModalComponent implements IModalMethods {
       .catch(ex => { throw ex; })
       .finally(() => {
         this.loaderService.hideSectionLoader();
-        this.bodyweightService.triggerBodyweightChart();
+        this.bodyweightService.triggerBodyweights();
         this.modalService.hideAddBodyweightModal();
       });
   }

@@ -2,6 +2,8 @@
 
 public class WeightDto
 {
+    public long Id { get; set; }
+
     [Display(Name = "Weight")]
     public decimal? Weight { get; set; }
 

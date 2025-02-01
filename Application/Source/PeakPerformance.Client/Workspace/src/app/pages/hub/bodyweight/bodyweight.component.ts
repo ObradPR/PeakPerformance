@@ -11,7 +11,7 @@ import { BodyweightService } from '../../../services/bodyweight.service';
 import { ModalService } from '../../../services/modal.service';
 import { SharedService } from '../../../services/shared.service';
 import { CommonModule } from '@angular/common';
-import { PaginatorModule } from 'primeng/paginator';
+import { PaginatorModule, PaginatorState } from 'primeng/paginator';
 import { UtcToLocalPipe } from '../../../pipes/utc-to-local.pipe';
 
 enum eChartTarget {
@@ -75,6 +75,8 @@ export class BodyweightComponent implements OnInit, OnDestroy {
   bodyweightsFirst = 0;
   rows = 7;
 
+  selectedBodyweightMenu: number | null;
+
   constructor(
     private sharedService: SharedService,
     private weightController: WeightController,
@@ -83,7 +85,7 @@ export class BodyweightComponent implements OnInit, OnDestroy {
     private referenceService: Providers
   ) {
     effect(() => {
-      this.bodyweightService.bodyweightChartSignal();
+      this.bodyweightService.bodyweightsSignal();
       this.getBodyweights();
     }, { allowSignalWrites: true })
 
@@ -92,10 +94,9 @@ export class BodyweightComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void { }
 
-  onSelectTab(idx: number): void {
-    this.selectedTab = idx;
-  }
+  // events
 
+  onSelectTab = (idx: number) => this.selectedTab = idx;
   onTimespanChange = () => this.getBodyweightsChart();
   onTargetChange(event: DropdownChangeEvent) {
     if (event.value === eChartTarget.Bodyweight)
@@ -105,13 +106,32 @@ export class BodyweightComponent implements OnInit, OnDestroy {
 
     this.getBodyweightsChart();
   }
-  onPageChange(event: any) {
-    console.log(event);
-    this.bodyweightsFirst = event.first;
-    this.rows = event.rows;
+  onPageChange(event: PaginatorState) {
+    this.bodyweightsFirst = event.first ?? this.bodyweightsFirst;
+    this.rows = event.rows ?? this.rows;
     this.getPaginatedBodyweights(this.bodyweightsFirst, this.rows);
   }
+  onOpenBodyweightsMenu(idx: number) {
+    if (this.selectedBodyweightMenu === idx)
+      this.selectedBodyweightMenu = null;
+    else
+      this.selectedBodyweightMenu = idx;
+  }
 
+  // methods
+
+  editBodyweight(data: IWeightDto) {
+    this.selectedBodyweightMenu = null;
+  }
+  deleteBodyweight(id: number) {
+    this.selectedBodyweightMenu = null;
+    this.weightController.Remove(id).toPromise()
+      .then(_ => this.bodyweightService.triggerBodyweights())
+      .catch(ex => { throw ex; })
+  }
+
+
+  // private
 
   private getBodyweights() {
     this.getBodyweightsChart();

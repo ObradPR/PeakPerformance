@@ -6,10 +6,10 @@ import { Injectable, signal } from '@angular/core';
 export class BodyweightService {
 
   // Chart - Bodyweight
-  private bodyweightChart = signal<boolean>(false);
-  readonly bodyweightChartSignal = this.bodyweightChart.asReadonly();
+  private bodyweights = signal<boolean>(false);
+  readonly bodyweightsSignal = this.bodyweights.asReadonly();
 
-  triggerBodyweightChart() {
-    this.bodyweightChart.set(!this.bodyweightChart());
+  triggerBodyweights() {
+    this.bodyweights.set(!this.bodyweights());
   }
 }

@@ -139,14 +139,50 @@
                 .odd-row {
                     background-color: #f7f7f7;
                 }
-            }
+
+                .edit-dots {
+                    cursor: pointer;
+                    color: $blue-hex;
+                    font-size: 1.5rem;
+                    font-weight: bold;
+                }
         
-            /* Edit dots styling */
-            .edit-dots {
-                cursor: pointer;
-                color: $blue-hex;
-                font-size: 1.5rem;
-                font-weight: bold;
+                .edit-menu {
+                    position: absolute;
+                    background-color: $white-hex;
+                    border: $border-hr-light;
+                    z-index: 10;
+                    width: 150px;
+                    margin-left: -130px;
+                    padding: 0.5rem 0;
+                    text-align: start;
+                    align-items: center;
+                    border-radius: $border-radius-5;
+
+                    ul {
+                        list-style-type: none;
+                        padding: 0;
+                        margin: 0;
+
+                        li {
+                            padding: 0.3rem 0.8rem;
+                            cursor: pointer;
+
+                            &:hover {
+                                background-color: $light-grey-hex;
+                            }
+
+                            svg {
+                                @include size(1.2rem, 1.2rem);
+                                filter: $filter-dark-grey;
+
+                                &.delete-svg {
+                                    filter: $filter-dark-red;
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
     }

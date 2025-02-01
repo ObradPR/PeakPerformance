@@ -38,7 +38,7 @@ export class DashboardComponent implements OnInit {
     private bodyweightService: BodyweightService
   ) {
     effect(() => {
-      this.bodyweightService.bodyweightChartSignal();
+      this.bodyweightService.bodyweightsSignal();
       this.getBodyweights();
     }, { allowSignalWrites: true })
   }

@@ -20,4 +20,14 @@ public class WeightController(IMediator mediator) : BaseController(mediator)
 
         return NoContent();
     }
+
+    [HttpDelete]
+    [Authorization(eSystemRole.User, eSystemRole.Admin)]
+    [AngularMethod(typeof(void))]
+    public async Task<IActionResult> Remove([FromQuery] long id)
+    {
+        await Mediator.Send(new RemoveBodyweightCommand(id));
+
+        return NoContent();
+    }
 }
