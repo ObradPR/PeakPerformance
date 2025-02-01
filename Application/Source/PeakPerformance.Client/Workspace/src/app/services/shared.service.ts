@@ -28,4 +28,10 @@ export class SharedService {
     else
       this.breadcrumbItems.set([...currentArr, item]);
   }
+
+  // Nunmber
+
+  roundToNearestTen(value: number): number {
+    return Math.round(value / 10) * 10;
+  }
 }

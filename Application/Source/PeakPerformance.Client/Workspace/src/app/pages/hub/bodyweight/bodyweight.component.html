@@ -85,16 +85,24 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @for (row of tableRows; track row; let idx = $index) {
+                    @for (row of bodyweights?.data; track row; let idx = $index) {
                         <tr [ngClass]="{'odd-row': idx % 2 !== 0}">
-                            <td>{{ row.date }}</td>
-                            <td>{{ row.bodyweight }}</td>
-                            <td>{{ row.bodyFat }}</td>
+                            <td>{{ row.logDate! | utcToLocal }}</td>
+                            <td>{{ row.weight }}</td>
+                            <td>{{ row.bodyFatPercentage }}</td>
                             <td><span class="edit-dots">⋮</span></td>
                         </tr>
                     }
                 </tbody>
             </table>
+
+            <div class="card flex justify-center">
+                <p-paginator (onPageChange)="onPageChange($event)" 
+                    [first]="bodyweightsFirst" 
+                    [rows]="rows" 
+                    [totalRecords]="bodyweights?.total"
+                    [showFirstLastIcon]="false" />
+            </div>
         </div>
     </div>
 </div>

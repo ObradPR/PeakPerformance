@@ -4,13 +4,15 @@ import { Chart } from 'chart.js/auto';
 import { DateTime } from 'luxon';
 import { DropdownChangeEvent, DropdownModule } from 'primeng/dropdown';
 import { eChartTimespan } from '../../../_generated/enums';
-import { IEnumProvider, IPagingResult, IWeightDto, IWeightSearchOptions } from '../../../_generated/interfaces';
+import { IEnumProvider, IPagingResult, ISortingOptions, IWeightDto, IWeightSearchOptions } from '../../../_generated/interfaces';
 import { Providers } from '../../../_generated/providers';
 import { WeightController } from '../../../_generated/services';
 import { BodyweightService } from '../../../services/bodyweight.service';
 import { ModalService } from '../../../services/modal.service';
 import { SharedService } from '../../../services/shared.service';
 import { CommonModule } from '@angular/common';
+import { PaginatorModule } from 'primeng/paginator';
+import { UtcToLocalPipe } from '../../../pipes/utc-to-local.pipe';
 
 enum eChartTarget {
   Bodyweight = 1,
@@ -24,14 +26,17 @@ type TChartTarget = 'weight' | 'bodyFatPercentage';
   imports: [
     DropdownModule,
     FormsModule,
-    CommonModule
+    CommonModule,
+    PaginatorModule,
+    UtcToLocalPipe
   ],
   templateUrl: './bodyweight.component.html',
   styleUrl: './bodyweight.component.scss'
 })
 export class BodyweightComponent implements OnInit, OnDestroy {
   private chart!: Chart;
-  bodyweights: IPagingResult<IWeightDto>;
+  bodyweightsChart: IPagingResult<IWeightDto>;
+  bodyweights?: IPagingResult<IWeightDto>;
 
   chartTimespans: IEnumProvider[] = this.referenceService.getChartTimespans();
   selectedTimespan: number = eChartTimespan.Last3Months;
@@ -67,15 +72,8 @@ export class BodyweightComponent implements OnInit, OnDestroy {
     }
   ];
 
-  tableRows = [
-    { date: '2025-01-01', bodyweight: '70kg', bodyFat: '15%' },
-    { date: '2025-01-02', bodyweight: '70.5kg', bodyFat: '14%' },
-    { date: '2025-01-03', bodyweight: '71kg', bodyFat: '14.5%' },
-    { date: '2025-01-04', bodyweight: '71.5kg', bodyFat: '14%' },
-    { date: '2025-01-05', bodyweight: '72kg', bodyFat: '13.8%' },
-    { date: '2025-01-06', bodyweight: '72.3kg', bodyFat: '13.5%' },
-    { date: '2025-01-07', bodyweight: '72.8kg', bodyFat: '13.2%' }
-  ];
+  bodyweightsFirst = 0;
+  rows = 7;
 
   constructor(
     private sharedService: SharedService,
@@ -98,17 +96,44 @@ export class BodyweightComponent implements OnInit, OnDestroy {
     this.selectedTab = idx;
   }
 
-  onTimespanChange = () => this.getBodyweights();
+  onTimespanChange = () => this.getBodyweightsChart();
   onTargetChange(event: DropdownChangeEvent) {
     if (event.value === eChartTarget.Bodyweight)
       this.selectedTarget = 'weight';
     else if (event.value === eChartTarget.BodyFatPercentage)
       this.selectedTarget = 'bodyFatPercentage';
 
-    this.getBodyweights();
+    this.getBodyweightsChart();
+  }
+  onPageChange(event: any) {
+    console.log(event);
+    this.bodyweightsFirst = event.first;
+    this.rows = event.rows;
+    this.getPaginatedBodyweights(this.bodyweightsFirst, this.rows);
   }
 
+
   private getBodyweights() {
+    this.getBodyweightsChart();
+    this.getPaginatedBodyweights(this.bodyweightsFirst, this.rows);
+  }
+
+  private getPaginatedBodyweights(skip: number, take: number) {
+    const options = {} as IWeightSearchOptions;
+    options.take = take;
+    options.skip = skip;
+    options.sortingOptions = [{ field: 'LogDate', dir: 'desc' }] as ISortingOptions[];
+
+    this.weightController.Search(options).toPromise()
+      .then(_ => {
+        if (_ !== null) {
+          this.bodyweights = _;
+        }
+      })
+      .catch(ex => { throw ex; });
+  }
+
+  private getBodyweightsChart() {
     this.destroyChart();
 
     const options = {} as IWeightSearchOptions;
@@ -117,7 +142,7 @@ export class BodyweightComponent implements OnInit, OnDestroy {
     this.weightController.Search(options).toPromise()
       .then(_ => {
         if (_ !== null) {
-          this.bodyweights = _;
+          this.bodyweightsChart = _;
           this.chartInit(this.selectedTarget);
           this.infoInit();
         }
@@ -127,7 +152,7 @@ export class BodyweightComponent implements OnInit, OnDestroy {
 
   private getStartDate() {
     const earliestTimestamp = new Date(
-      Math.min(...this.bodyweights.data.map(_ => new Date(_.logDate!).getTime()))
+      Math.min(...this.bodyweightsChart.data.map(_ => new Date(_.logDate!).getTime()))
     );
 
     const earliestDate = new Date(earliestTimestamp.getTime() - earliestTimestamp.getTimezoneOffset() * 60000);
@@ -150,7 +175,7 @@ export class BodyweightComponent implements OnInit, OnDestroy {
     const dataForChart: (number | null)[] = allDates.map(date => {
       // const formattedDate = DateTime.fromFormat(date, 'MMM ddd'); // this can be useful for year maybe (for all time showcase)
 
-      const log = this.bodyweights.data.find(_ => {
+      const log = this.bodyweightsChart.data.find(_ => {
         const logDate = new Date(_.logDate as Date);
         const localDate = new Date(logDate.getTime() - logDate.getTimezoneOffset() * 60000);
         return DateTime.fromJSDate(localDate).toFormat('MMM dd yyyy') === date;
@@ -159,7 +184,7 @@ export class BodyweightComponent implements OnInit, OnDestroy {
       return log ? log[target]! : null;
     });
 
-    const values = this.bodyweights.data
+    const values = this.bodyweightsChart.data
       .map(_ => _[target]!)
       .filter(_ => _ !== undefined && _ !== null);
 
@@ -188,8 +213,8 @@ export class BodyweightComponent implements OnInit, OnDestroy {
             }
           },
           y: {
-            min: Math.round(Math.min(...values) - 10),
-            max: Math.round(Math.max(...values) + 10),
+            min: this.sharedService.roundToNearestTen(Math.max(0, Math.round(Math.min(...values) - 30))),
+            max: this.sharedService.roundToNearestTen(Math.round(Math.max(...values) + 30)),
           },
         },
       },
@@ -197,21 +222,21 @@ export class BodyweightComponent implements OnInit, OnDestroy {
   }
 
   private infoInit() {
-    this.currentBodyweight = this.bodyweights.data
+    this.currentBodyweight = this.bodyweightsChart.data
       .filter(_ => _.weight !== undefined && _.weight !== null)
       .reduce((latest, current) => {
         const latestDate = new Date(latest.logDate!).getTime();
         const currentDate = new Date(current.logDate!).getTime();
         return currentDate > latestDate ? current : latest;
-      }, this.bodyweights.data[0]).weight!;
+      }, this.bodyweightsChart.data[0]).weight!;
 
-    this.currentBodyFat = this.bodyweights.data
+    this.currentBodyFat = this.bodyweightsChart.data
       .filter(_ => _.bodyFatPercentage !== undefined && _.bodyFatPercentage !== null)
       .reduce((latest, current) => {
         const latestDate = new Date(latest.logDate!).getTime();
         const currentDate = new Date(current.logDate!).getTime();
         return currentDate > latestDate ? current : latest;
-      }, this.bodyweights.data[0]).bodyFatPercentage!;
+      }, this.bodyweightsChart.data[0]).bodyFatPercentage!;
   }
 
   private destroyChart() {
