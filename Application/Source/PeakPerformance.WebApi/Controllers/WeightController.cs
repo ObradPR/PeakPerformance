@@ -17,7 +17,15 @@ public class WeightController(IMediator mediator) : BaseController(mediator)
     public async Task<IActionResult> Add(WeightDto data)
     {
         await Mediator.Send(new AddBodyweightCommand(data));
+        return NoContent();
+    }
 
+    [HttpPut]
+    [Authorization(eSystemRole.User, eSystemRole.Admin)]
+    [AngularMethod(typeof(void))]
+    public async Task<IActionResult> Edit(WeightDto data)
+    {
+        await Mediator.Send(new EditBodyweightCommand(data));
         return NoContent();
     }
 
@@ -27,7 +35,6 @@ public class WeightController(IMediator mediator) : BaseController(mediator)
     public async Task<IActionResult> Remove([FromQuery] long id)
     {
         await Mediator.Send(new RemoveBodyweightCommand(id));
-
         return NoContent();
     }
 }

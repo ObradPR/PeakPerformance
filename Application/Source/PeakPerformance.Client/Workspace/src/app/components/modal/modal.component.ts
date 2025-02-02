@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { ModalService } from '../../services/modal.service';
-import { AddBodyweightModalComponent } from './add-bodyweight-modal/add-bodyweight-modal.component';
+import { BodyweightModalComponent } from './bodyweight-modal/bodyweight-modal.component';
+
 
 @Component({
   selector: 'app-modal',
   standalone: true,
-  imports: [AddBodyweightModalComponent],
+  imports: [BodyweightModalComponent],
   templateUrl: `./modal.component.html`,
   styles: ``
 })

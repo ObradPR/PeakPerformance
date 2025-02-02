@@ -13,6 +13,7 @@ import { SharedService } from '../../../services/shared.service';
 import { CommonModule } from '@angular/common';
 import { PaginatorModule, PaginatorState } from 'primeng/paginator';
 import { UtcToLocalPipe } from '../../../pipes/utc-to-local.pipe';
+import { ClickOutsideDirective } from '../../../directives/click-outside.directive';
 
 enum eChartTarget {
   Bodyweight = 1,
@@ -28,7 +29,8 @@ type TChartTarget = 'weight' | 'bodyFatPercentage';
     FormsModule,
     CommonModule,
     PaginatorModule,
-    UtcToLocalPipe
+    UtcToLocalPipe,
+    ClickOutsideDirective
   ],
   templateUrl: './bodyweight.component.html',
   styleUrl: './bodyweight.component.scss'
@@ -122,6 +124,7 @@ export class BodyweightComponent implements OnInit, OnDestroy {
 
   editBodyweight(data: IWeightDto) {
     this.selectedBodyweightMenu = null;
+    this.modalService.showEditBodyweightModal(data);
   }
   deleteBodyweight(id: number) {
     this.selectedBodyweightMenu = null;
@@ -196,8 +199,7 @@ export class BodyweightComponent implements OnInit, OnDestroy {
       // const formattedDate = DateTime.fromFormat(date, 'MMM ddd'); // this can be useful for year maybe (for all time showcase)
 
       const log = this.bodyweightsChart.data.find(_ => {
-        const logDate = new Date(_.logDate as Date);
-        const localDate = new Date(logDate.getTime() - logDate.getTimezoneOffset() * 60000);
+        const localDate = this.sharedService.getLocalDate(_.logDate);
         return DateTime.fromJSDate(localDate).toFormat('MMM dd yyyy') === date;
       });
 

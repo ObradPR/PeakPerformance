@@ -1,7 +1,7 @@
 <div class="my-backdrop"></div>
 <section class="my-modal xs">
     <div class="my-modal-header">
-        <h3>Add Bodyweight</h3>
+        <h3>{{ modalService.bodyweightModalTypeSignal() === 'add' ? 'Add Bodyweight': 'Edit Bodyweight' }}</h3>
         <i class="pi pi-times-circle" (click)="closeModal()"></i>
     </div>
 
@@ -15,7 +15,7 @@
               appendTo="body"  
             ></p-calendar>
             <label for="weight-log-date">
-              Start<app-required-mark/>
+              Date<app-required-mark/>
             </label>
           </span>
 
@@ -85,12 +85,12 @@
     </div>
 
     <div class="my-modal-footer">
-        <button class="btn-blue" (click)="addBodyweight()">
+        <button class="btn-blue" (click)="submitBodyweight()">
           @if (loaderService.sectionLoaderSignal()) {
             <app-section-loader/>
           }
           @else {
-            Add Bodyweight
+            {{ modalService.bodyweightModalTypeSignal() === 'add' ? 'Add Bodyweight': 'Edit Bodyweight' }}
           }
         </button>
         <button class="btn-grey" (click)="closeModal()">Close</button>

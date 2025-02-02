@@ -1,18 +1,32 @@
 import { Injectable, signal } from '@angular/core';
+import { IWeightDto } from '../_generated/interfaces';
+
+export type TModal = 'add' | 'edit';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ModalService {
-  private addBodyweightModal = signal<boolean>(false);
+  private bodyweightModal = signal<boolean>(false);
+  private bodyweightModalType = signal<TModal | null>(null);
+  private selectedBodyweight = signal<IWeightDto | null>(null);
 
-  readonly addBodyweightModalSignal = this.addBodyweightModal.asReadonly();
+  readonly bodyweightModalSignal = this.bodyweightModal.asReadonly();
+  readonly bodyweightModalTypeSignal = this.bodyweightModalType.asReadonly();
+  readonly selectedBodyweightSignal = this.selectedBodyweight.asReadonly();
 
   showAddBodyweightModal() {
-    this.addBodyweightModal.set(true);
+    this.bodyweightModalType.set('add');
+    this.bodyweightModal.set(true);
   }
-
-  hideAddBodyweightModal() {
-    this.addBodyweightModal.set(false);
+  showEditBodyweightModal(data: IWeightDto) {
+    this.bodyweightModalType.set('edit');
+    this.selectedBodyweight.set(data);
+    this.bodyweightModal.set(true);
+  }
+  hideBodyweightModal() {
+    this.bodyweightModal.set(false);
+    this.bodyweightModalType.set(null);
+    this.selectedBodyweight.set(null);
   }
 }

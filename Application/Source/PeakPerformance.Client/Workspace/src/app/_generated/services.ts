@@ -232,6 +232,20 @@ import { IWeightSearchOptions } from './interfaces';
 		.pipe(map(response => response.body));
 		
 	}
+	public Edit(data: IWeightDto) : Observable<any>
+	{
+		const body = <any>data;
+		return this.httpClient.put<any>(
+		this.settingsService.createApiUrl('Weight/Edit'),
+		body,
+		{
+			responseType: 'json',
+			observe: 'response',
+			withCredentials: true
+		})
+		.pipe(map(response => response.body));
+		
+	}
 	public Remove(id: number) : Observable<any>
 	{
 		const body = <any>{'id': id};
