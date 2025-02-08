@@ -13,7 +13,7 @@ import {
 import { provideClientHydration } from '@angular/platform-browser';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { MessageService } from 'primeng/api';
-import { AuthController, UserController, WeightController } from './_generated/services';
+import { AuthController, UserController, WeightController, WeightGoalController } from './_generated/services';
 import { routes } from './app.routes';
 import './extensions/observable.extension';
 import './extensions/string.extension';
@@ -38,7 +38,12 @@ export const appConfig: ApplicationConfig = {
 };
 
 function controllersProvider(): Provider[] {
-  return [AuthController, UserController, WeightController];
+  return [
+    AuthController,
+    UserController,
+    WeightController,
+    WeightGoalController
+  ];
 }
 
 function servicesProvider(): Provider[] {

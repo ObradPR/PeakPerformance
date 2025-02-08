@@ -1,3 +1,6 @@
 @if (modalService.bodyweightModalSignal()) {
     <app-bodyweight-modal (closeModalEvent)="modalService.hideBodyweightModal()"></app-bodyweight-modal>
 }
+@else if (modalService.bodyweightGoalModalSignal()) {
+    <app-bodyweight-goal-modal (closeModalEvent)="modalService.hideBodyweightGoalModal()"></app-bodyweight-goal-modal>
+}

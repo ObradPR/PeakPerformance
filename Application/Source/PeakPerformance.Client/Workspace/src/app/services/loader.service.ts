@@ -23,6 +23,9 @@ export class LoaderService {
   // Section Loader
 
   showSectionLoader() {
+    if (this.sectionLoader())
+      this.sectionLoader.set(false);
+
     this.sectionLoader.set(true);
   }
 

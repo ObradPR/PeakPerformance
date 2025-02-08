@@ -18,6 +18,9 @@ public class MeasurementUnit : BaseLookupDomain<MeasurementUnit, eMeasurementUni
     [InverseProperty(nameof(Weight.WeightUnit))]
     public virtual ICollection<Weight> Weights { get; set; } = [];
 
+    [InverseProperty(nameof(Weight.WeightUnit))]
+    public virtual ICollection<WeightGoal> WeightGoals { get; set; } = [];
+
     [InverseProperty(nameof(MeasurementUnit))]
     public virtual ICollection<BodyMeasurement> BodyMeasurements { get; set; } = [];
 

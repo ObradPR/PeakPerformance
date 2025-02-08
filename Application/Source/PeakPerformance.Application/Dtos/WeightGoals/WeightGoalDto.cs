@@ -2,6 +2,8 @@
 
 public class WeightGoalDto
 {
+    public long Id { get; set; }
+
     [Display(Name = "Target weight")]
     public decimal TargetWeight { get; set; }
 
@@ -13,11 +15,12 @@ public class WeightGoalDto
 
     // methods
 
-    public void ToModel(WeightGoal model, long userId)
+    public void ToModel(WeightGoal model, eMeasurementUnit weightUnitId, long userId)
     {
         model.UserId = userId;
         model.TargetWeight = TargetWeight;
         model.StartDate = StartDate;
         model.EndDate = EndDate;
+        model.WeightUnitId = weightUnitId;
     }
 }

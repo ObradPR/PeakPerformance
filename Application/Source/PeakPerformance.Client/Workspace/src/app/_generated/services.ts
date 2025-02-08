@@ -18,6 +18,7 @@ import { IUserDto } from './interfaces';
 import { IProfileSetupDto } from './interfaces';
 import { IWeightDto } from './interfaces';
 import { IWeightSearchOptions } from './interfaces';
+import { IWeightGoalDto } from './interfaces';
 
 @Injectable() export abstract class BaseController
 {
@@ -251,6 +252,55 @@ import { IWeightSearchOptions } from './interfaces';
 		const body = <any>{'id': id};
 		return this.httpClient.delete<any>(
 		this.settingsService.createApiUrl('Weight/Remove'),
+		{
+			params: new HttpParams({ fromObject: body }),
+			responseType: 'json',
+			observe: 'response',
+			withCredentials: true
+		})
+		.pipe(map(response => response.body));
+		
+	}
+	constructor (httpClient: HttpClient, settingsService: SettingsService)
+	{
+		super(httpClient, settingsService);
+	}
+}
+@Injectable() export class WeightGoalController extends BaseController
+{
+	public Add(data: IWeightGoalDto) : Observable<any>
+	{
+		const body = <any>data;
+		return this.httpClient.post<any>(
+		this.settingsService.createApiUrl('WeightGoal/Add'),
+		body,
+		{
+			responseType: 'json',
+			observe: 'response',
+			withCredentials: true
+		})
+		.pipe(map(response => response.body));
+		
+	}
+	public Edit(data: IWeightGoalDto) : Observable<any>
+	{
+		const body = <any>data;
+		return this.httpClient.put<any>(
+		this.settingsService.createApiUrl('WeightGoal/Edit'),
+		body,
+		{
+			responseType: 'json',
+			observe: 'response',
+			withCredentials: true
+		})
+		.pipe(map(response => response.body));
+		
+	}
+	public Remove(id: number) : Observable<any>
+	{
+		const body = <any>{'id': id};
+		return this.httpClient.delete<any>(
+		this.settingsService.createApiUrl('WeightGoal/Remove'),
 		{
 			params: new HttpParams({ fromObject: body }),
 			responseType: 'json',

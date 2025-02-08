@@ -137,6 +137,7 @@ export interface IWeightDto
 }
 export interface IWeightGoalDto
 {
+	id: number;
 	targetWeight: number;
 	startDate: Date;
 	endDate: Date;

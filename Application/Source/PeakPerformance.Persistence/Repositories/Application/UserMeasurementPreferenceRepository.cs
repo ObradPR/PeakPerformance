@@ -5,6 +5,8 @@ public class UserMeasurementPreferenceRepository(ApplicationDbContext context)
 {
     // Get
 
+    public async Task<UserMeasurementPreference> GetByUserIdAsync(long userId) => await db.UserMeasurementPreferences.GetSingleAsync(_ => _.UserId == userId);
+
     // Add / Remove / Edit
 
     public async Task AddAsync(UserMeasurementPreference model) => await db.CreateAsync(model);

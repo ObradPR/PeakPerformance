@@ -6,6 +6,8 @@ public class WeightGoal : BaseAuditedDomain<long>, IConfigurableEntity
 
     public decimal TargetWeight { get; set; }
 
+    public eMeasurementUnit WeightUnitId { get; set; }
+
     [Column(TypeName = Constants.DB_TYPE_DATE)]
     public DateTime StartDate { get; set; }
 
@@ -20,6 +22,9 @@ public class WeightGoal : BaseAuditedDomain<long>, IConfigurableEntity
 
     [ForeignKey(nameof(UserId))]
     public virtual User User { get; set; }
+
+    [ForeignKey(nameof(WeightUnitId))]
+    public virtual MeasurementUnit WeightUnit { get; set; }
 
     #endregion Relationships
 
