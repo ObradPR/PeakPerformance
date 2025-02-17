@@ -11,7 +11,7 @@ public class EditBodyweightCommand(WeightDto data) : BaseCommand<Unit>
             var userId = _identityUser.Id;
             var data = request.Data;
 
-            var model = await _unitOfWork.WeightRepository.GetByIdAsync(data.Id)
+            var model = await _unitOfWork.WeightRepository.GetSingleAsync(data.Id)
                 ?? throw new NotFoundException();
 
             data.ToModel(model, userId);

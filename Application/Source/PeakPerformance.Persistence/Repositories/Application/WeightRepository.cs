@@ -5,7 +5,7 @@ public class WeightRepository(ApplicationDbContext context)
 {
     // Get
 
-    public async Task<Weight> GetByIdAsync(long id) => await db.Weights.GetSingleAsync(id);
+    public async Task<Weight> GetSingleAsync(long id) => await db.Weights.GetSingleAsync(id);
 
     public async Task<PagingResult<Weight>> SearchAsync(WeightSearchOptions options, List<Expression<Func<Weight, bool>>> predicates)
         => await db.Weights.SearchAsync(options, _ => _.LogDate, false, predicates, null);
@@ -14,5 +14,5 @@ public class WeightRepository(ApplicationDbContext context)
 
     public async Task AddAsync(Weight model) => await db.CreateAsync(model);
 
-    public async Task RemoveAsync(long id) => db.DeleteSingle(await GetByIdAsync(id));
+    public async Task RemoveAsync(long id) => db.DeleteSingle(await GetSingleAsync(id));
 }

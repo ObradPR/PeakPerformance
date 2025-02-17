@@ -3,6 +3,7 @@
 public class UserRepository(ApplicationDbContext context) : BaseRepository(context), IUserRepository
 {
     // Get
+    public async Task<User> GetSingleAsync(long id) => await db.Users.GetSingleAsync(id);
 
     public async Task<User> GetExistingAsync(string email, string username, bool strict)
         => await db.Users.GetSingleAsync(_ => strict
@@ -15,11 +16,6 @@ public class UserRepository(ApplicationDbContext context) : BaseRepository(conte
                 _ => _.UserRoles,
                 _ => _.UserRoles.Select(_ => _.Role)
             ]);
-
-    public async Task<User> GetByIdAsync(long id) => await db.Users.GetSingleAsync(id);
-
-    public async Task<User> GetByIdAsync(Expression<Func<User, bool>> predicate, params Expression<Func<User, object>>[] includeProperties)
-        => await db.Users.GetSingleAsync(predicate, includeProperties);
 
     public async Task<bool> CheckByIdAsync(long id) => await db.Users.AnyAsync(_ => _.Id == id);
 

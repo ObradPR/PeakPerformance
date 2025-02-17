@@ -3,7 +3,7 @@
 public interface IWeightRepository
 {
     // Get
-    Task<Weight> GetByIdAsync(long id);
+    Task<Weight> GetSingleAsync(long id);
 
     Task<PagingResult<Weight>> SearchAsync(WeightSearchOptions options, List<Expression<Func<Weight, bool>>> predicates);
 

@@ -4,7 +4,7 @@ public interface IWeightGoalRepository
 {
     // Get
 
-    Task<WeightGoal> GetByIdAsync(long id);
+    Task<WeightGoal> GetSingleAsync(long id);
 
     Task<PagingResult<WeightGoal>> SearchAsync(WeightGoalSearchOptions options, List<Expression<Func<WeightGoal, bool>>> predicates);
 

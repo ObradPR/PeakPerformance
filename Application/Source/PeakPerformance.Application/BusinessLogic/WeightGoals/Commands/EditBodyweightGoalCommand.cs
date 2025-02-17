@@ -11,7 +11,7 @@ public class EditBodyweightGoalCommand(WeightGoalDto data) : BaseCommand<Unit>
             var userId = _identityUser.Id;
             var data = request.Data;
 
-            var model = await _unitOfWork.WeightGoalRepository.GetByIdAsync(data.Id)
+            var model = await _unitOfWork.WeightGoalRepository.GetSingleAsync(data.Id)
                 ?? throw new NotFoundException();
 
             var weightUnitId = (await _unitOfWork.UserMeasurementPreferenceRepository.GetByUserIdAsync(userId))?.WeightUnitId

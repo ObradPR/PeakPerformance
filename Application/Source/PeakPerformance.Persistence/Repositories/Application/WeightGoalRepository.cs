@@ -5,7 +5,7 @@ public class WeightGoalRepository(ApplicationDbContext context)
 {
     // Get
 
-    public async Task<WeightGoal> GetByIdAsync(long id) => await db.WeightGoals.GetSingleAsync(id);
+    public async Task<WeightGoal> GetSingleAsync(long id) => await db.WeightGoals.GetSingleAsync(id);
 
     public async Task<PagingResult<WeightGoal>> SearchAsync(WeightGoalSearchOptions options, List<Expression<Func<WeightGoal, bool>>> predicates)
     => await db.WeightGoals.SearchAsync(options, _ => _.StartDate, false, predicates, null);
@@ -14,5 +14,5 @@ public class WeightGoalRepository(ApplicationDbContext context)
 
     public async Task AddAsync(WeightGoal model) => await db.CreateAsync(model);
 
-    public async Task RemoveAsync(long id) => db.DeleteSingle(await GetByIdAsync(id));
+    public async Task RemoveAsync(long id) => db.DeleteSingle(await GetSingleAsync(id));
 }
