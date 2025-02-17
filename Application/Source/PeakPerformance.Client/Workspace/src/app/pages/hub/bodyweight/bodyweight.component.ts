@@ -15,6 +15,7 @@ import { PaginatorModule, PaginatorState } from 'primeng/paginator';
 import { UtcToLocalPipe } from '../../../pipes/utc-to-local.pipe';
 import { ClickOutsideDirective } from '../../../directives/click-outside.directive';
 import { QService } from '../../../services/q.service';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 // LOCALS
 
@@ -261,9 +262,10 @@ export class BodyweightComponent implements OnInit, OnDestroy {
       this.destroyChart();
 
     const today = DateTime.local().startOf('day');
-    const startDate = this.selectedTimespan !== eChartTimespan.AllTime
+    const startDate = (this.selectedTimespan !== eChartTimespan.AllTime
       ? today.minus({ months: this.selectedTimespan })
-      : this.getStartDate();
+      : this.getStartDate())
+      .minus({ days: 7 }); // padding for start of the chart
 
     const allDates: string[] = [];
     let totalDays = today.diff(startDate, 'days').days;
@@ -277,6 +279,7 @@ export class BodyweightComponent implements OnInit, OnDestroy {
       maxGoalEndDate = DateTime.fromJSDate(maxGoalEndDateLocal) as DateTime<true>;
     }
 
+    maxGoalEndDate = maxGoalEndDate.plus({ days: 10 }); // padding for end of the chart
     totalDays = maxGoalEndDate.diff(startDate, 'days').days;
     for (let i = 0; i <= totalDays; i++) {
       const date = startDate.plus({ days: i });
@@ -346,6 +349,7 @@ export class BodyweightComponent implements OnInit, OnDestroy {
         goalDatasets.push({
           label: `Goal ${idx + 1}`,
           data: goalData,
+          backgroundColor: 'rgba(255, 0, 0, 1)',
           borderColor: 'rgba(255, 0, 0, 1)',
           borderWidth: 2,
           borderDash: [10, 5],
@@ -356,6 +360,7 @@ export class BodyweightComponent implements OnInit, OnDestroy {
       });
     }
 
+    Chart.register(ChartDataLabels);
 
     this.chart = new Chart('bodyweights-line-chart', {
       type: 'line',
@@ -371,7 +376,33 @@ export class BodyweightComponent implements OnInit, OnDestroy {
             tension: 0.3,
             spanGaps: true,
           },
-          ...goalDatasets
+          ...goalDatasets.map((dataset, idx) => ({
+            ...dataset,
+            datalabels: {
+              display: true,
+              align: 'top',
+              anchor: 'end',
+              formatter: (value: any, ctx: any) => {
+                if (value === null) return '';
+
+                const dataIdx = ctx.dataIndex;
+                const firstIdx = dataset.data.findIndex((_: any) => _ !== null);
+                const lastIdx = dataset.data.lastIndexOf(value);
+
+                if (dataIdx === firstIdx)
+                  return `Start`;
+                else if (dataIdx === lastIdx)
+                  return `Goal ${idx + 1}`
+
+                return '';
+              },
+              color: 'rgba(255, 0, 0, 1)',
+              font: {
+                weight: 'bold',
+                size: 12
+              }
+            }
+          })),
         ],
       },
       options: {
@@ -389,10 +420,14 @@ export class BodyweightComponent implements OnInit, OnDestroy {
         },
         plugins: {
           legend: {
+            display: false,
+          },
+          datalabels: {
             display: false
           }
         }
       },
+      plugins: [ChartDataLabels]
     });
   }
 
