@@ -300,47 +300,60 @@ export class BodyweightComponent implements OnInit, OnDestroy {
 
     // MAP GOALS
 
-    let goalValues: number[] = [];
-    let goalData: (number | null)[] = new Array(allDates.length).fill(null);
+    const goalDatasets: any[] = [];
+    const goalValues: number[] = [];
 
     if (target === 'weight' && this.bodyweightGoalsChart?.data) {
       const maxGoalWeight = Math.max(...this.bodyweightGoalsChart.data.map(_ => _.targetWeight));
       goalValues.push(maxGoalWeight);
 
-      this.bodyweightGoalsChart.data.forEach(_ => {
-        // End date
-        const goalEndDate = DateTime.fromJSDate(new Date(_.endDate)).toFormat('MMM dd yyyy');
-        const endIdx = allDates.indexOf(goalEndDate);
-        if (endIdx !== -1)
-          goalData[endIdx] = _.targetWeight;
+      this.bodyweightGoalsChart.data.forEach((goal, idx) => {
+        let goalData: (number | null)[] = new Array(allDates.length).fill(null);
 
+        // End date
+        const goalEndDate = DateTime.fromJSDate(new Date(goal.endDate)).toFormat('MMM dd yyyy');
+        const endIdx = allDates.indexOf(goalEndDate);
+        if (endIdx !== -1) goalData[endIdx] = goal.targetWeight;
 
         // Start date
         let goalStartWeight: number | null = null;
-        const goalStartDate = DateTime.fromJSDate(new Date(_.startDate)).toFormat('MMM dd yyyy');
+        const goalStartDate = DateTime.fromJSDate(new Date(goal.startDate)).toFormat('MMM dd yyyy');
         const startIdx = allDates.indexOf(goalStartDate);
 
         if (startIdx !== -1) {
-          const log = this.bodyweightsChart.data.find(_ =>
-            DateTime.fromJSDate(this.sharedService.getLocalDate(_.logDate)).toFormat('MMM dd yyyy') === goalStartDate
+          const log = this.bodyweightsChart.data.find(log =>
+            DateTime.fromJSDate(this.sharedService.getLocalDate(log.logDate)).toFormat('MMM dd yyyy') === goalStartDate
           );
-          goalStartWeight = log ? log[target]! : null;
+          goalStartWeight = log ? log[target]! : null; // setting a start of the goal to weight at that time
         }
 
         if (!goalStartWeight) {
           const closestLog = [...this.bodyweightsChart.data]
-            .filter(log => this.sharedService.getLocalDate(log.logDate) < this.sharedService.getLocalDate(_.startDate))
+            .filter(log => this.sharedService.getLocalDate(log.logDate) < this.sharedService.getLocalDate(goal.startDate))
             .sort((a, b) =>
               DateTime.fromJSDate(this.sharedService.getLocalDate(b.logDate))
                 .diff(DateTime.fromJSDate(this.sharedService.getLocalDate(a.logDate)), 'milliseconds')
                 .milliseconds
             )[0];
-          goalStartWeight = closestLog ? closestLog[target]! : null;
+          goalStartWeight = closestLog ? closestLog[target]! : null; // setting a start of the goal to closest weight at that time
         }
 
-        if (startIdx !== -1 && goalStartWeight !== null)
+        if (startIdx !== -1 && goalStartWeight !== null) {
           goalData[startIdx] = goalStartWeight;
-      })
+        }
+
+        // Push a separate dataset for each goal
+        goalDatasets.push({
+          label: `Goal ${idx + 1}`,
+          data: goalData,
+          borderColor: 'rgba(255, 0, 0, 1)',
+          borderWidth: 2,
+          borderDash: [10, 5],
+          fill: false,
+          tension: 0.3,
+          spanGaps: true,
+        });
+      });
     }
 
 
@@ -358,20 +371,7 @@ export class BodyweightComponent implements OnInit, OnDestroy {
             tension: 0.3,
             spanGaps: true,
           },
-          ...(target === 'weight'
-            ? [{
-              label: 'Goal',
-              data: goalData,
-              borderColor: 'rgba(255, 0, 0, 1)',
-              borderWidth: 2,
-              borderDash: [5, 5],
-              fill: false,
-              tension: 0.3,
-              spanGaps: true
-            }]
-            : []
-          )
-
+          ...goalDatasets
         ],
       },
       options: {
@@ -387,6 +387,11 @@ export class BodyweightComponent implements OnInit, OnDestroy {
             max: this.sharedService.roundToNearestTen(Math.round(Math.max(...values, ...goalValues) + 30)),
           },
         },
+        plugins: {
+          legend: {
+            display: false
+          }
+        }
       },
     });
   }

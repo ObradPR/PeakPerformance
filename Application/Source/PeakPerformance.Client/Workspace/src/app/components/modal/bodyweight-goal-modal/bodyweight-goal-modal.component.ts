@@ -96,7 +96,7 @@ export class BodyweightGoalModalComponent implements IModalMethods {
       .catch(ex => { throw ex; })
       .finally(() => {
         this.loaderService.hideSectionLoader();
-        // this.bodyweightService.triggerBodyweights();
+        this.bodyweightService.triggerBodyweights();
         this.modalService.hideBodyweightGoalModal();
       });
   }
