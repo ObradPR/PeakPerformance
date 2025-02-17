@@ -75,50 +75,96 @@
                 <div class="filler"></div>
             </div>
 
-            <table class="data-table">
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Bodyweight</th>
-                        <th>Body Fat</th>
-                        <th></th> <!-- Empty heading for edit dots -->
-                    </tr>
-                </thead>
-                <tbody>
-                    @for (row of bodyweights?.data; track row; let idx = $index) {
-                        <tr [ngClass]="{'odd-row': idx % 2 !== 0}">
-                            <td>{{ row.logDate! | utcToLocal }}</td>
-                            <td>{{ row.weight }}</td>
-                            <td>{{ row.bodyFatPercentage }}</td>
-                            <td>
-                                <span class="edit-dots" (click)="onOpenBodyweightsMenu(idx)">⋮</span>
-                                @if (selectedBodyweightMenu === idx) {
-                                    <div class="edit-menu" appClickOutside (clickOutside)="this.selectedBodyweightMenu = null">
-                                        <ul>
-                                            <li (click)="editBodyweight(row)">
-                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>pencil</title><path d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z" /></svg>
-                                                Edit
-                                            </li>
-                                            <li (click)="deleteBodyweight(row.id)" class="delete-item">
-                                                <svg class="delete-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>delete</title><path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z" /></svg>
-                                                Delete
-                                            </li>
-                                        </ul>
-                                    </div>
-                                }
-                            </td>
+            @if (selectedTab === 0) {
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Bodyweight</th>
+                            <th>Body Fat</th>
+                            <th></th> <!-- Empty heading for edit dots -->
                         </tr>
-                    }
-                </tbody>
-            </table>
-
-            <div class="card flex justify-center">
-                <p-paginator (onPageChange)="onPageChange($event)" 
-                    [first]="bodyweightsFirst" 
-                    [rows]="rows" 
-                    [totalRecords]="bodyweights?.total"
-                    [showFirstLastIcon]="false" />
-            </div>
+                    </thead>
+                    <tbody>
+                        @for (row of bodyweights?.data; track row; let idx = $index) {
+                            <tr [ngClass]="{'odd-row': idx % 2 !== 0}">
+                                <td>{{ row.logDate! | utcToLocal }}</td>
+                                <td>{{ row.weight }}</td>
+                                <td>{{ row.bodyFatPercentage }}</td>
+                                <td>
+                                    <span class="edit-dots" (click)="onOpenEditMenu(idx)">⋮</span>
+                                    @if (selectedBodyweightMenu === idx) {
+                                        <div class="edit-menu" appClickOutside (clickOutside)="this.selectedBodyweightMenu = null">
+                                            <ul>
+                                                <li (click)="editBodyweight(row)">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>pencil</title><path d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z" /></svg>
+                                                    Edit
+                                                </li>
+                                                <li (click)="deleteBodyweight(row.id)" class="delete-item">
+                                                    <svg class="delete-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>delete</title><path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z" /></svg>
+                                                    Delete
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <div class="card flex justify-center">
+                    <p-paginator (onPageChange)="onPageChange($event)" 
+                        [first]="bodyweightsFirst" 
+                        [rows]="rows" 
+                        [totalRecords]="bodyweights?.total"
+                        [showFirstLastIcon]="false" />
+                </div>
+            }
+            @else if (selectedTab === 1) {
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Start</th>
+                            <th>Finish</th>
+                            <th>Bodyweight</th>
+                            <th></th> <!-- Empty heading for edit dots -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (row of bodyweightGoals?.data; track row; let idx = $index) {
+                            <tr [ngClass]="{'odd-row': idx % 2 !== 0}">
+                                <td>{{ row.startDate! | utcToLocal }}</td>
+                                <td>{{ row.endDate! | utcToLocal }}</td>
+                                <td>{{ row.targetWeight }}</td>
+                                <td>
+                                    <span class="edit-dots" (click)="onOpenEditMenu(idx)">⋮</span>
+                                    @if (selectedBodyweightGoalMenu === idx) {
+                                        <div class="edit-menu" appClickOutside (clickOutside)="this.selectedBodyweightGoalMenu = null">
+                                            <ul>
+                                                <li (click)="editBodyweightGoal(row)">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>pencil</title><path d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z" /></svg>
+                                                    Edit
+                                                </li>
+                                                <li (click)="deleteBodyweightGoal(row.id)" class="delete-item">
+                                                    <svg class="delete-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>delete</title><path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z" /></svg>
+                                                    Delete
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <div class="card flex justify-center">
+                    <p-paginator (onPageChange)="onPageChange($event)" 
+                        [first]="bodyweightGoalsFirst" 
+                        [rows]="rows" 
+                        [totalRecords]="bodyweightGoals?.total"
+                        [showFirstLastIcon]="false" />
+                </div>
+            }       
         </div>
     </div>
 </div>

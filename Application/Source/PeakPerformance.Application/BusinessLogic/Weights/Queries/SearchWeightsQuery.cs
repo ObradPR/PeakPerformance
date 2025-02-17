@@ -44,8 +44,6 @@ public class SearchWeightsQuery(WeightSearchOptions options) : BaseQuery<PagingR
 
             var result = await _unitOfWork.WeightRepository.SearchAsync(options, predicates);
 
-            var mapping = _mapper.Map<IEnumerable<WeightDto>>(result.Data);
-
             return new PagingResult<WeightDto>
             {
                 Data = _mapper.Map<IEnumerable<WeightDto>>(result.Data),

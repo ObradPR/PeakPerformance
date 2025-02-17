@@ -19,6 +19,7 @@ import { IProfileSetupDto } from './interfaces';
 import { IWeightDto } from './interfaces';
 import { IWeightSearchOptions } from './interfaces';
 import { IWeightGoalDto } from './interfaces';
+import { IWeightGoalSearchOptions } from './interfaces';
 
 @Injectable() export abstract class BaseController
 {
@@ -268,6 +269,20 @@ import { IWeightGoalDto } from './interfaces';
 }
 @Injectable() export class WeightGoalController extends BaseController
 {
+	public Search(options: IWeightGoalSearchOptions) : Observable<IPagingResult<IWeightGoalDto> | null>
+	{
+		const body = <any>options;
+		return this.httpClient.post<IPagingResult<IWeightGoalDto>>(
+		this.settingsService.createApiUrl('WeightGoal/Search'),
+		body,
+		{
+			responseType: 'json',
+			observe: 'response',
+			withCredentials: true
+		})
+		.pipe(map(response => response.body));
+		
+	}
 	public Add(data: IWeightGoalDto) : Observable<any>
 	{
 		const body = <any>data;

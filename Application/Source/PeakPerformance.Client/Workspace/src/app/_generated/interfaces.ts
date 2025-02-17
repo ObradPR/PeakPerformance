@@ -180,3 +180,10 @@ export interface IHealthInformationSearchOptions extends ISearchOptions
 {
 	userId?: number;
 }
+export interface IWeightGoalSearchOptions extends ISearchOptions
+{
+	userId?: number;
+	fromDate?: Date | null;
+	toDate?: Date | null;
+	chartTimespanId?: eChartTimespan;
+}

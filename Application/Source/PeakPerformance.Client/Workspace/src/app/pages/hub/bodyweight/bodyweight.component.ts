@@ -4,9 +4,9 @@ import { Chart } from 'chart.js/auto';
 import { DateTime } from 'luxon';
 import { DropdownChangeEvent, DropdownModule } from 'primeng/dropdown';
 import { eChartTimespan } from '../../../_generated/enums';
-import { IEnumProvider, IPagingResult, ISortingOptions, IWeightDto, IWeightSearchOptions } from '../../../_generated/interfaces';
+import { IEnumProvider, IPagingResult, ISortingOptions, IWeightDto, IWeightGoalDto, IWeightGoalSearchOptions, IWeightSearchOptions } from '../../../_generated/interfaces';
 import { Providers } from '../../../_generated/providers';
-import { WeightController } from '../../../_generated/services';
+import { WeightController, WeightGoalController } from '../../../_generated/services';
 import { BodyweightService } from '../../../services/bodyweight.service';
 import { ModalService } from '../../../services/modal.service';
 import { SharedService } from '../../../services/shared.service';
@@ -14,10 +14,17 @@ import { CommonModule } from '@angular/common';
 import { PaginatorModule, PaginatorState } from 'primeng/paginator';
 import { UtcToLocalPipe } from '../../../pipes/utc-to-local.pipe';
 import { ClickOutsideDirective } from '../../../directives/click-outside.directive';
+import { QService } from '../../../services/q.service';
+
+// LOCALS
 
 enum eChartTarget {
   Bodyweight = 1,
   BodyFatPercentage = 2,
+}
+enum eBodyweightInfoTab {
+  Bodyweights = 0,
+  Goals = 1,
 }
 type TChartTarget = 'weight' | 'bodyFatPercentage';
 
@@ -39,6 +46,8 @@ export class BodyweightComponent implements OnInit, OnDestroy {
   private chart!: Chart;
   bodyweightsChart: IPagingResult<IWeightDto>;
   bodyweights?: IPagingResult<IWeightDto>;
+  bodyweightGoalsChart: IPagingResult<IWeightGoalDto>;
+  bodyweightGoals?: IPagingResult<IWeightGoalDto>;
 
   chartTimespans: IEnumProvider[] = this.referenceService.getChartTimespans();
   selectedTimespan: number = eChartTimespan.Last3Months;
@@ -75,20 +84,26 @@ export class BodyweightComponent implements OnInit, OnDestroy {
   ];
 
   bodyweightsFirst = 0;
+  bodyweightGoalsFirst = 0;
   rows = 7;
 
   selectedBodyweightMenu: number | null;
+  selectedBodyweightGoalMenu: number | null;
+
 
   constructor(
     private sharedService: SharedService,
     private weightController: WeightController,
+    private weightGoalController: WeightGoalController,
     public modalService: ModalService,
     private bodyweightService: BodyweightService,
-    private referenceService: Providers
+    private referenceService: Providers,
+    private $q: QService
   ) {
     effect(() => {
       this.bodyweightService.bodyweightsSignal();
       this.getBodyweights();
+      this.getBodyweightGoals();
     }, { allowSignalWrites: true })
 
     this.sharedService.pushBreadcrumbItem({ label: 'Bodyweight', routerLink: '/hub/bodyweight' });
@@ -99,25 +114,45 @@ export class BodyweightComponent implements OnInit, OnDestroy {
   // events
 
   onSelectTab = (idx: number) => this.selectedTab = idx;
-  onTimespanChange = () => this.getBodyweightsChart();
+  onTimespanChange = () => this.getBodyweightsAndGoalsChart();
   onTargetChange(event: DropdownChangeEvent) {
     if (event.value === eChartTarget.Bodyweight)
       this.selectedTarget = 'weight';
     else if (event.value === eChartTarget.BodyFatPercentage)
       this.selectedTarget = 'bodyFatPercentage';
 
-    this.getBodyweightsChart();
+    this.getBodyweightsAndGoalsChart();
   }
   onPageChange(event: PaginatorState) {
-    this.bodyweightsFirst = event.first ?? this.bodyweightsFirst;
-    this.rows = event.rows ?? this.rows;
-    this.getPaginatedBodyweights(this.bodyweightsFirst, this.rows);
+    if (this.selectedTab === eBodyweightInfoTab.Bodyweights) {
+      this.bodyweightsFirst = event.first ?? this.bodyweightsFirst;
+      this.rows = event.rows ?? this.rows;
+      this.getPaginatedBodyweights(this.bodyweightsFirst, this.rows);
+    }
+    else if (this.selectedTab === eBodyweightInfoTab.Goals) {
+      this.bodyweightGoalsFirst = event.first ?? this.bodyweightGoalsFirst;
+      this.rows = event.rows ?? this.rows;
+      this.getPaginatedBodyweightGoals(this.bodyweightGoalsFirst, this.rows);
+    }
   }
-  onOpenBodyweightsMenu(idx: number) {
-    if (this.selectedBodyweightMenu === idx)
+  onOpenEditMenu(idx: number) {
+    if (this.selectedTab === eBodyweightInfoTab.Bodyweights) {
+      this.selectedBodyweightGoalMenu = null;
+
+      if (this.selectedBodyweightMenu === idx)
+        this.selectedBodyweightMenu = null;
+      else
+        this.selectedBodyweightMenu = idx;
+    }
+    else if (this.selectedTab === eBodyweightInfoTab.Goals) {
       this.selectedBodyweightMenu = null;
-    else
-      this.selectedBodyweightMenu = idx;
+
+      if (this.selectedBodyweightGoalMenu === idx)
+        this.selectedBodyweightGoalMenu = null;
+      else
+        this.selectedBodyweightGoalMenu = idx;
+    }
+
   }
 
   // methods
@@ -133,11 +168,41 @@ export class BodyweightComponent implements OnInit, OnDestroy {
       .catch(ex => { throw ex; })
   }
 
+  editBodyweightGoal(data: IWeightGoalDto) {
+    this.selectedBodyweightGoalMenu = null;
+    this.modalService.showEditBodyweightGoalModal(data);
+  }
+  deleteBodyweightGoal(id: number) {
+    this.selectedBodyweightGoalMenu = null;
+    this.weightGoalController.Remove(id).toPromise()
+      .then(_ => this.bodyweightService.triggerBodyweights())
+      .catch(ex => { throw ex; })
+  }
+
 
   // private
 
+  private getBodyweightGoals() {
+    this.getPaginatedBodyweightGoals(this.bodyweightGoalsFirst, this.rows);
+  }
+
+  private getPaginatedBodyweightGoals(skip: number, take: number) {
+    const options = {} as IWeightGoalSearchOptions;
+    options.take = take;
+    options.skip = skip;
+    options.sortingOptions = [{ field: 'EndDate', dir: 'desc' }] as ISortingOptions[];
+
+    this.weightGoalController.Search(options).toPromise()
+      .then(_ => {
+        if (_ !== null) {
+          this.bodyweightGoals = _;
+        }
+      })
+      .catch(ex => { throw ex; });
+  }
+
   private getBodyweights() {
-    this.getBodyweightsChart();
+    this.getBodyweightsAndGoalsChart();
     this.getPaginatedBodyweights(this.bodyweightsFirst, this.rows);
   }
 
@@ -156,21 +221,30 @@ export class BodyweightComponent implements OnInit, OnDestroy {
       .catch(ex => { throw ex; });
   }
 
-  private getBodyweightsChart() {
+  private getBodyweightsAndGoalsChart() {
     this.destroyChart();
 
     const options = {} as IWeightSearchOptions;
     options.chartTimespanId = this.selectedTimespan;
 
-    this.weightController.Search(options).toPromise()
-      .then(_ => {
-        if (_ !== null) {
-          this.bodyweightsChart = _;
-          this.chartInit(this.selectedTarget);
-          this.infoInit();
+    const goalOptions = {} as IWeightGoalSearchOptions;
+    goalOptions.chartTimespanId = this.selectedTimespan;
+
+    this.$q.all([
+      this.weightController.Search(options).toPromise(),
+      this.weightGoalController.Search(goalOptions).toPromise()
+    ])
+      .then(result => {
+        if (result[0] !== null) {
+          this.bodyweightsChart = result[0];
         }
+        if (result[1] !== null) {
+          this.bodyweightGoalsChart = result[1];
+        }
+
+        this.chartInit(this.selectedTarget);
+        this.infoInit();
       })
-      .catch(ex => { throw ex; });
   }
 
   private getStartDate() {
@@ -183,13 +257,27 @@ export class BodyweightComponent implements OnInit, OnDestroy {
   }
 
   private chartInit(target: TChartTarget) {
-    const today = DateTime.local();
+    if (this.chart)
+      this.destroyChart();
+
+    const today = DateTime.local().startOf('day');
     const startDate = this.selectedTimespan !== eChartTimespan.AllTime
       ? today.minus({ months: this.selectedTimespan })
       : this.getStartDate();
 
     const allDates: string[] = [];
-    const totalDays = today.diff(startDate, 'days').days;
+    let totalDays = today.diff(startDate, 'days').days;
+    let maxGoalEndDate = today;
+    if (target === 'weight' && this.bodyweightGoalsChart?.data?.length) {
+      const maxGoalEndDateTimespamp = new Date(
+        Math.max(...this.bodyweightGoalsChart.data.map(_ => new Date(_.endDate).getTime()))
+      );
+
+      const maxGoalEndDateLocal = new Date(maxGoalEndDateTimespamp.getTime() - maxGoalEndDateTimespamp.getTimezoneOffset() * 60000);
+      maxGoalEndDate = DateTime.fromJSDate(maxGoalEndDateLocal) as DateTime<true>;
+    }
+
+    totalDays = maxGoalEndDate.diff(startDate, 'days').days;
     for (let i = 0; i <= totalDays; i++) {
       const date = startDate.plus({ days: i });
       allDates.push(date.toFormat('MMM dd yyyy'));
@@ -210,20 +298,80 @@ export class BodyweightComponent implements OnInit, OnDestroy {
       .map(_ => _[target]!)
       .filter(_ => _ !== undefined && _ !== null);
 
+    // MAP GOALS
+
+    let goalValues: number[] = [];
+    let goalData: (number | null)[] = new Array(allDates.length).fill(null);
+
+    if (target === 'weight' && this.bodyweightGoalsChart?.data) {
+      const maxGoalWeight = Math.max(...this.bodyweightGoalsChart.data.map(_ => _.targetWeight));
+      goalValues.push(maxGoalWeight);
+
+      this.bodyweightGoalsChart.data.forEach(_ => {
+        // End date
+        const goalEndDate = DateTime.fromJSDate(new Date(_.endDate)).toFormat('MMM dd yyyy');
+        const endIdx = allDates.indexOf(goalEndDate);
+        if (endIdx !== -1)
+          goalData[endIdx] = _.targetWeight;
+
+
+        // Start date
+        let goalStartWeight: number | null = null;
+        const goalStartDate = DateTime.fromJSDate(new Date(_.startDate)).toFormat('MMM dd yyyy');
+        const startIdx = allDates.indexOf(goalStartDate);
+
+        if (startIdx !== -1) {
+          const log = this.bodyweightsChart.data.find(_ =>
+            DateTime.fromJSDate(this.sharedService.getLocalDate(_.logDate)).toFormat('MMM dd yyyy') === goalStartDate
+          );
+          goalStartWeight = log ? log[target]! : null;
+        }
+
+        if (!goalStartWeight) {
+          const closestLog = [...this.bodyweightsChart.data]
+            .filter(log => this.sharedService.getLocalDate(log.logDate) < this.sharedService.getLocalDate(_.startDate))
+            .sort((a, b) =>
+              DateTime.fromJSDate(this.sharedService.getLocalDate(b.logDate))
+                .diff(DateTime.fromJSDate(this.sharedService.getLocalDate(a.logDate)), 'milliseconds')
+                .milliseconds
+            )[0];
+          goalStartWeight = closestLog ? closestLog[target]! : null;
+        }
+
+        if (startIdx !== -1 && goalStartWeight !== null)
+          goalData[startIdx] = goalStartWeight;
+      })
+    }
+
+
     this.chart = new Chart('bodyweights-line-chart', {
       type: 'line',
       data: {
         labels: allDates,
         datasets: [
           {
-            label: 'Bodyweight',
+            label: target === 'weight' ? 'Bodyweight' : 'Body Fat',
             data: dataForChart,
             backgroundColor: 'rgba(0, 123, 255, 1)',
             borderColor: 'rgba(0, 123, 255, 1)',
             borderWidth: 2,
             tension: 0.3,
-            spanGaps: true
+            spanGaps: true,
           },
+          ...(target === 'weight'
+            ? [{
+              label: 'Goal',
+              data: goalData,
+              borderColor: 'rgba(255, 0, 0, 1)',
+              borderWidth: 2,
+              borderDash: [5, 5],
+              fill: false,
+              tension: 0.3,
+              spanGaps: true
+            }]
+            : []
+          )
+
         ],
       },
       options: {
@@ -236,7 +384,7 @@ export class BodyweightComponent implements OnInit, OnDestroy {
           },
           y: {
             min: this.sharedService.roundToNearestTen(Math.max(0, Math.round(Math.min(...values) - 30))),
-            max: this.sharedService.roundToNearestTen(Math.round(Math.max(...values) + 30)),
+            max: this.sharedService.roundToNearestTen(Math.round(Math.max(...values, ...goalValues) + 30)),
           },
         },
       },
@@ -244,7 +392,7 @@ export class BodyweightComponent implements OnInit, OnDestroy {
   }
 
   private infoInit() {
-    this.currentBodyweight = this.bodyweightsChart.data
+    this.currentBodyweight = this.bodyweightsChart?.data
       .filter(_ => _.weight !== undefined && _.weight !== null)
       .reduce((latest, current) => {
         const latestDate = new Date(latest.logDate!).getTime();
@@ -252,13 +400,21 @@ export class BodyweightComponent implements OnInit, OnDestroy {
         return currentDate > latestDate ? current : latest;
       }, this.bodyweightsChart.data[0]).weight!;
 
-    this.currentBodyFat = this.bodyweightsChart.data
+    this.currentBodyFat = this.bodyweightsChart?.data
       .filter(_ => _.bodyFatPercentage !== undefined && _.bodyFatPercentage !== null)
       .reduce((latest, current) => {
         const latestDate = new Date(latest.logDate!).getTime();
         const currentDate = new Date(current.logDate!).getTime();
         return currentDate > latestDate ? current : latest;
       }, this.bodyweightsChart.data[0]).bodyFatPercentage!;
+
+    this.currentGoal = this.bodyweightGoalsChart?.data
+      .filter(_ => _.targetWeight !== undefined && _.targetWeight !== null)
+      .reduce((latest, current) => {
+        const latestDate = new Date(latest.endDate!).getTime();
+        const currentDate = new Date(current.endDate!).getTime();
+        return currentDate > latestDate ? current : latest;
+      }, this.bodyweightGoalsChart.data[0]).targetWeight!;
   }
 
   private destroyChart() {

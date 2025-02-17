@@ -6,6 +6,8 @@ public interface IWeightGoalRepository
 
     Task<WeightGoal> GetByIdAsync(long id);
 
+    Task<PagingResult<WeightGoal>> SearchAsync(WeightGoalSearchOptions options, List<Expression<Func<WeightGoal, bool>>> predicates);
+
     // Add / Remove / Edit
 
     Task AddAsync(WeightGoal model);
