@@ -79,16 +79,15 @@
                     text-align: center;
 
                     &:not(.active) {
-                        border-bottom: $border-hr-light;
+                        box-shadow: inset 0 -1px 0 $light-grey-2-hex;
                     }
 
                     &.active {
-                        border-left: $border-hr-light;
-                        border-top: $border-hr-light;
-                        border-right: $border-hr-light;
-                        border-bottom: none;
-                        border-top-left-radius: $border-radius-5;
-                        border-top-right-radius: $border-radius-5;
+                        box-shadow:
+                            inset 0 1px 0 $light-grey-2-hex,  // Top border
+                            inset 1px 0 0 $light-grey-2-hex,  // Left border
+                            inset -1px 0 0 $light-grey-2-hex; // Right border
+                        border-radius: $border-radius-5 $border-radius-5 0 0;
                     }
 
                     svg {
@@ -100,13 +99,12 @@
                 .filler {
                     flex-grow: 1;
                     align-self: stretch;
-                    border-bottom: $border-hr-light;
+                    box-shadow: inset 0 -1px 0 $light-grey-2-hex;
                 }
             }
 
             .data-table {
                 width: 100%;
-                max-height: 50px;
                 border-collapse: collapse;
                 margin-top: 1rem;
                 
