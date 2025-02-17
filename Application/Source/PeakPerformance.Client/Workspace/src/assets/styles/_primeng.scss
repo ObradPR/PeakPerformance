@@ -177,6 +177,22 @@ p-iconfield {
   width: 100%;
 }
 
+.p-paginator .p-paginator-pages .p-paginator-page {
+  min-height: 2.5rem;
+  min-width: 2.5rem;
+}
+
+.p-paginator .p-paginator-pages .p-paginator-page {
+  border-radius: 50% !important;
+  height: auto;
+}
+
+.p-paginator .p-paginator-first, .p-paginator .p-paginator-prev, .p-paginator .p-paginator-next, .p-paginator .p-paginator-last {
+  min-width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50% !important;
+}
+
 //
 // pi icons
 //
