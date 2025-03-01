@@ -33,7 +33,8 @@ export const appConfig: ApplicationConfig = {
       withInterceptors([jwtInterceptor, errorInterceptor])
     ),
     servicesProvider(),
-    controllersProvider(), provideAnimationsAsync(),
+    controllersProvider(),
+    provideAnimationsAsync(),
   ],
 };
 

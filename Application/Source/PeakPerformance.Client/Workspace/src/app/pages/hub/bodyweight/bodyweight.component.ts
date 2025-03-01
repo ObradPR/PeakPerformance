@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { Chart } from 'chart.js/auto';
 import { DateTime } from 'luxon';
 import { DropdownChangeEvent, DropdownModule } from 'primeng/dropdown';
-import { eChartTimespan } from '../../../_generated/enums';
+import { eChartTimespan, eMeasurementUnit } from '../../../_generated/enums';
 import { IEnumProvider, IPagingResult, ISortingOptions, IWeightDto, IWeightGoalDto, IWeightGoalSearchOptions, IWeightSearchOptions } from '../../../_generated/interfaces';
 import { Providers } from '../../../_generated/providers';
 import { WeightController, WeightGoalController } from '../../../_generated/services';
@@ -16,6 +16,8 @@ import { UtcToLocalPipe } from '../../../pipes/utc-to-local.pipe';
 import { ClickOutsideDirective } from '../../../directives/click-outside.directive';
 import { QService } from '../../../services/q.service';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
+import { MeasurementConverterPipe } from '../../../pipes/measurement-converter.pipe';
+import { AuthService } from '../../../services/auth.service';
 
 // LOCALS
 
@@ -38,7 +40,8 @@ type TChartTarget = 'weight' | 'bodyFatPercentage';
     CommonModule,
     PaginatorModule,
     UtcToLocalPipe,
-    ClickOutsideDirective
+    ClickOutsideDirective,
+    MeasurementConverterPipe
   ],
   templateUrl: './bodyweight.component.html',
   styleUrl: './bodyweight.component.scss'
@@ -66,9 +69,15 @@ export class BodyweightComponent implements OnInit, OnDestroy {
   ]
   selectedTarget: TChartTarget = 'weight';
 
-  currentBodyweight: number;
   currentBodyFat: number;
-  currentGoal: number;
+  currentBodyweight: {
+    weight: number;
+    weightUnitId: eMeasurementUnit;
+  } = { weight: 0, weightUnitId: 0 };
+  currentGoal: {
+    weight: number;
+    weightUnitId: eMeasurementUnit;
+  } = { weight: 0, weightUnitId: 0 };
 
   selectedTab: number = 0;
   tabs = [
@@ -432,13 +441,37 @@ export class BodyweightComponent implements OnInit, OnDestroy {
   }
 
   private infoInit() {
-    this.currentBodyweight = this.bodyweightsChart?.data
+    this.currentBodyweight.weight = this.bodyweightsChart?.data
       .filter(_ => _.weight !== undefined && _.weight !== null)
       .reduce((latest, current) => {
         const latestDate = new Date(latest.logDate!).getTime();
         const currentDate = new Date(current.logDate!).getTime();
         return currentDate > latestDate ? current : latest;
       }, this.bodyweightsChart.data[0]).weight!;
+
+    this.currentBodyweight.weightUnitId = this.bodyweightsChart?.data
+      .filter(_ => _.weight !== undefined && _.weight !== null)
+      .reduce((latest, current) => {
+        const latestDate = new Date(latest.logDate!).getTime();
+        const currentDate = new Date(current.logDate!).getTime();
+        return currentDate > latestDate ? current : latest;
+      }, this.bodyweightsChart.data[0]).weightUnitId!;
+
+    this.currentGoal.weight = this.bodyweightGoalsChart?.data
+      .filter(_ => _.targetWeight !== undefined && _.targetWeight !== null)
+      .reduce((latest, current) => {
+        const latestDate = new Date(latest.endDate!).getTime();
+        const currentDate = new Date(current.endDate!).getTime();
+        return currentDate > latestDate ? current : latest;
+      }, this.bodyweightGoalsChart.data[0]).targetWeight!;
+
+    this.currentGoal.weightUnitId = this.bodyweightGoalsChart?.data
+      .filter(_ => _.targetWeight !== undefined && _.targetWeight !== null)
+      .reduce((latest, current) => {
+        const latestDate = new Date(latest.endDate!).getTime();
+        const currentDate = new Date(current.endDate!).getTime();
+        return currentDate > latestDate ? current : latest;
+      }, this.bodyweightGoalsChart.data[0]).weightUnitId!;
 
     this.currentBodyFat = this.bodyweightsChart?.data
       .filter(_ => _.bodyFatPercentage !== undefined && _.bodyFatPercentage !== null)
@@ -447,14 +480,6 @@ export class BodyweightComponent implements OnInit, OnDestroy {
         const currentDate = new Date(current.logDate!).getTime();
         return currentDate > latestDate ? current : latest;
       }, this.bodyweightsChart.data[0]).bodyFatPercentage!;
-
-    this.currentGoal = this.bodyweightGoalsChart?.data
-      .filter(_ => _.targetWeight !== undefined && _.targetWeight !== null)
-      .reduce((latest, current) => {
-        const latestDate = new Date(latest.endDate!).getTime();
-        const currentDate = new Date(current.endDate!).getTime();
-        return currentDate > latestDate ? current : latest;
-      }, this.bodyweightGoalsChart.data[0]).targetWeight!;
   }
 
   private destroyChart() {

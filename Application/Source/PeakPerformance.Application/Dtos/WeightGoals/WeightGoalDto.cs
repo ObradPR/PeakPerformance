@@ -7,6 +7,8 @@ public class WeightGoalDto
     [Display(Name = "Target weight")]
     public decimal TargetWeight { get; set; }
 
+    public eMeasurementUnit WeightUnitId { get; set; }
+
     public decimal? TargetBodyFatPercentage { get; set; }
 
     [Display(Name = "Start date")]

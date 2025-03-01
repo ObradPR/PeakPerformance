@@ -107,6 +107,8 @@ export interface IUserDto
 	phoneNumber: string;
 	description: string;
 	profilePictureUrl: string;
+	weightUnitId?: eMeasurementUnit;
+	measurementUnitId?: eMeasurementUnit;
 }
 export interface ISocialMediaDto
 {
@@ -132,6 +134,7 @@ export interface IWeightGoalDto
 {
 	id: number;
 	targetWeight: number;
+	weightUnitId: eMeasurementUnit;
 	targetBodyFatPercentage?: number;
 	startDate: Date;
 	endDate: Date;

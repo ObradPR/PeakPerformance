@@ -15,4 +15,8 @@ public class UserDto
     public string Description { get; set; }
 
     public string ProfilePictureUrl { get; set; }
+
+    public eMeasurementUnit? WeightUnitId { get; set; }
+
+    public eMeasurementUnit? MeasurementUnitId { get; set; }
 }
