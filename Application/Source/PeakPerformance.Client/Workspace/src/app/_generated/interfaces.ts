@@ -43,12 +43,6 @@ export interface IValidateUserDto
 	username: string;
 	email: string;
 }
-export interface IBodyFatGoalDto
-{
-	targetBodyFatPercentage: number;
-	startDate: Date;
-	endDate: Date;
-}
 export interface IBodyMeasurementDto
 {
 	waist?: number;
@@ -98,7 +92,6 @@ export interface IProfileSetupDto
 	bodyMeasurement: IBodyMeasurementDto;
 	userTrainingGoal: IUserTrainingGoalDto;
 	weightGoal: IWeightGoalDto;
-	bodyFatGoal: IBodyFatGoalDto;
 	image: any;
 	description: string;
 	receiveNews: boolean;
@@ -139,6 +132,7 @@ export interface IWeightGoalDto
 {
 	id: number;
 	targetWeight: number;
+	targetBodyFatPercentage?: number;
 	startDate: Date;
 	endDate: Date;
 }

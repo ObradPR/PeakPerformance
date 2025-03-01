@@ -58,9 +58,6 @@ public class User : BaseIndexAuditedDomain<User, long>, IConfigurableEntity
     public virtual ICollection<WeightGoal> WeightsGoals { get; set; } = [];
 
     [InverseProperty(nameof(User))]
-    public virtual ICollection<BodyFatGoal> BodyFatGoals { get; set; } = [];
-
-    [InverseProperty(nameof(User))]
     public virtual ICollection<SocialMedia> SocialMedia { get; set; } = [];
 
     [InverseProperty(nameof(User))]

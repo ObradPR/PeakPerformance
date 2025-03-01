@@ -20,8 +20,6 @@ public class UnitOfWork(ApplicationDbContext context) : BaseRepository(context),
 
     public IWeightGoalRepository WeightGoalRepository => new WeightGoalRepository(db);
 
-    public IBodyFatGoalRepository BodyFatGoalRepository => new BodyFatGoalRepository(db);
-
     public ISocialMediaRepository SocialMediaRepository => new SocialMediaRepository(db);
 
     public IHealthInformationRepository HealthInformationRepository => new HealthInformationRepository(db);

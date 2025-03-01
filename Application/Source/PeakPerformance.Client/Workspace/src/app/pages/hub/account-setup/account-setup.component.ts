@@ -124,16 +124,6 @@ export class AccountSetupComponent implements OnInit {
             null,
             [Validators.required, Validators.min(20.1), Validators.max(999.9)],
           ],
-          startDate: [
-            null,
-            [Validators.required, validators.goalStartDateValidator()],
-          ],
-          endDate: [null, [Validators.required]],
-        },
-        { validators: validators.endDateAfterStartDate('startDate', 'endDate') }
-      ),
-      bodyFatGoal: this.fb.group(
-        {
           targetBodyFatPercentage: [
             null,
             [Validators.required, Validators.min(1.1), Validators.max(99.9)],

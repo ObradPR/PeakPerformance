@@ -105,6 +105,11 @@ public class ProfileSetupValidator : AbstractValidator<ProfileSetupCommand>
             .GreaterThanAuto(20)
             .LessThanAuto(1000);
 
+        RuleFor(_ => _.Data.WeightGoal.TargetBodyFatPercentage)
+            .Required()
+            .GreaterThanAuto(1)
+            .LessThanAuto(100);
+
         RuleFor(_ => _.Data.WeightGoal.StartDate)
             .Required()
             .InValidRangeOfDate(Functions.GOAL_START_DATE_EARLIEST, Functions.GOAL_START_DATE_LATEST);
@@ -114,23 +119,6 @@ public class ProfileSetupValidator : AbstractValidator<ProfileSetupCommand>
             .InValidRangeOfDate(fromDateFunc: _ => _.Data.WeightGoal.StartDate);
 
         #endregion WeightGoal
-
-        #region BodyFatGoal
-
-        RuleFor(_ => _.Data.BodyFatGoal.TargetBodyFatPercentage)
-            .Required()
-            .GreaterThanAuto(1)
-            .LessThanAuto(100);
-
-        RuleFor(_ => _.Data.BodyFatGoal.StartDate)
-            .Required()
-            .InValidRangeOfDate(Functions.GOAL_START_DATE_EARLIEST, Functions.GOAL_START_DATE_LATEST);
-
-        RuleFor(_ => _.Data.BodyFatGoal.EndDate)
-            .Required()
-            .InValidRangeOfDate(fromDateFunc: _ => _.Data.BodyFatGoal.StartDate);
-
-        #endregion BodyFatGoal
 
         #region UserData
 

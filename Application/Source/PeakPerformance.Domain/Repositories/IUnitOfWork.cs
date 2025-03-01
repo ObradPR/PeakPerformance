@@ -22,8 +22,6 @@ public interface IUnitOfWork
 
     IWeightGoalRepository WeightGoalRepository { get; }
 
-    IBodyFatGoalRepository BodyFatGoalRepository { get; }
-
     ISocialMediaRepository SocialMediaRepository { get; }
 
     IHealthInformationRepository HealthInformationRepository { get; }

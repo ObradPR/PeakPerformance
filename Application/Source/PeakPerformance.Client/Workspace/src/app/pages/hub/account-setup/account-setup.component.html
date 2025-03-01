@@ -515,7 +515,37 @@
                           form.get('weightGoal.targetWeight')?.dirty)
                     }"
                   />
-                  <label for="target-weight">Weight<app-required-mark /></label>
+                  <label for="target-weight">Target Weight<app-required-mark /></label>
+                </span>
+                <span class="p-float-label">
+                  <input
+                    type="number"
+                    id="target-bodyfat"
+                    pInputText
+                    formControlName="targetBodyFatPercentage"
+                    pTooltip="Value must be in range from 1 to 100"
+                    tooltipPosition="top"
+                    tooltipEvent="focus"
+                    [tooltipDisabled]="
+                      !(
+                        form.get('weightGoal.targetBodyFatPercentage')
+                          ?.touched &&
+                        form.get('weightGoal.targetBodyFatPercentage')?.invalid
+                      )
+                    "
+                    [ngClass]="{
+                      'is-invalid':
+                        form.get('weightGoal.targetBodyFatPercentage')
+                          ?.invalid &&
+                        (form.get('weightGoal.targetBodyFatPercentage')
+                          ?.touched ||
+                          form.get('weightGoal.targetBodyFatPercentage')
+                            ?.dirty)
+                    }"
+                  />
+                  <label for="target-bodyfat"
+                    >Target BodyFat Percentage<app-required-mark
+                  /></label>
                 </span>
                 <div class="d-flex justify-content-between">
                   <span class="p-float-label" style="width: 47%">
@@ -537,64 +567,6 @@
                       appendTo="body"  
                     ></p-calendar>
                     <label for="weight-goal-end"
-                      >End<app-required-mark
-                    /></label>
-                  </span>
-                </div>
-              </fieldset>
-
-              <fieldset class="content-2-block" formGroupName="bodyFatGoal">
-                <legend>BodyFat goal</legend>
-                <span class="p-float-label">
-                  <input
-                    type="number"
-                    id="target-bodyfat"
-                    pInputText
-                    formControlName="targetBodyFatPercentage"
-                    pTooltip="Value must be in range from 1 to 100"
-                    tooltipPosition="top"
-                    tooltipEvent="focus"
-                    [tooltipDisabled]="
-                      !(
-                        form.get('bodyFatGoal.targetBodyFatPercentage')
-                          ?.touched &&
-                        form.get('bodyFatGoal.targetBodyFatPercentage')?.invalid
-                      )
-                    "
-                    [ngClass]="{
-                      'is-invalid':
-                        form.get('bodyFatGoal.targetBodyFatPercentage')
-                          ?.invalid &&
-                        (form.get('bodyFatGoal.targetBodyFatPercentage')
-                          ?.touched ||
-                          form.get('bodyFatGoal.targetBodyFatPercentage')
-                            ?.dirty)
-                    }"
-                  />
-                  <label for="target-bodyfat"
-                    >Target BodyFat Percentage<app-required-mark
-                  /></label>
-                </span>
-                <div class="d-flex justify-content-between">
-                  <span class="p-float-label" style="width: 47%">
-                    <p-calendar
-                      inputId="bodyfat-goal-start"
-                      formControlName="startDate"
-                      dateFormat="dd.mm.yy"
-                      appendTo="body"  
-                    ></p-calendar>
-                    <label for="bodyfat-goal-start"
-                      >Start<app-required-mark
-                    /></label>
-                  </span>
-                  <span class="p-float-label" style="width: 47%">
-                    <p-calendar
-                      inputId="bodyfat-goal-end"
-                      formControlName="endDate"
-                      dateFormat="dd.mm.yy"
-                      appendTo="body"  
-                    ></p-calendar>
-                    <label for="bodyfat-goal-end"
                       >End<app-required-mark
                     /></label>
                   </span>

@@ -4,7 +4,6 @@ global using MediatR;
 global using Microsoft.AspNetCore.Http;
 global using Microsoft.Extensions.Logging;
 global using PeakPerformance.Application.BusinessLogic._Base;
-global using PeakPerformance.Application.Dtos.BodyFatGoals;
 global using PeakPerformance.Application.Dtos.BodyMeasurements;
 global using PeakPerformance.Application.Dtos.HealthInformation;
 global using PeakPerformance.Application.Dtos.SocialMedia;

@@ -8,6 +8,8 @@ public class WeightGoal : BaseAuditedDomain<long>, IConfigurableEntity
 
     public eMeasurementUnit WeightUnitId { get; set; }
 
+    public decimal? TargetBodyFatPercentage { get; set; }
+
     [Column(TypeName = Constants.DB_TYPE_DATE)]
     public DateTime StartDate { get; set; }
 
@@ -37,6 +39,7 @@ public class WeightGoal : BaseAuditedDomain<long>, IConfigurableEntity
         builder.Entity<WeightGoal>(_ =>
         {
             _.Property(_ => _.TargetWeight).HasPrecision(5, 2).IsRequired();
+            _.Property(_ => _.TargetBodyFatPercentage).HasPrecision(4, 2);
         });
     }
 }

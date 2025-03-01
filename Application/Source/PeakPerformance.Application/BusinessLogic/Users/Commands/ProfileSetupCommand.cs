@@ -59,12 +59,6 @@ public class ProfileSetupCommand(ProfileSetupDto data) : BaseCommand<Unit>
             data.WeightGoal.ToModel(weightGoal, data.Weight.WeightUnitId, userId);
             await _unitOfWork.WeightGoalRepository.AddAsync(weightGoal);
 
-            // Body Fat Goal
-
-            var bodyFatGoal = new BodyFatGoal();
-            data.BodyFatGoal.ToModel(bodyFatGoal, userId);
-            await _unitOfWork.BodyFatGoalRepository.AddAsync(bodyFatGoal);
-
             // User Data
 
             var user = await _unitOfWork.UserRepository.GetSingleAsync(userId);

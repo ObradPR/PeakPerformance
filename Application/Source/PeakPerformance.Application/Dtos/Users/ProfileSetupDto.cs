@@ -10,8 +10,6 @@ public class ProfileSetupDto
 
     public WeightGoalDto WeightGoal { get; set; }
 
-    public BodyFatGoalDto BodyFatGoal { get; set; }
-
     public IFormFile Image { get; set; }
 
     public string Description { get; set; }

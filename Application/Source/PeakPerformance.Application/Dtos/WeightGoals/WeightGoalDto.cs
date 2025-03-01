@@ -7,6 +7,8 @@ public class WeightGoalDto
     [Display(Name = "Target weight")]
     public decimal TargetWeight { get; set; }
 
+    public decimal? TargetBodyFatPercentage { get; set; }
+
     [Display(Name = "Start date")]
     public DateTime StartDate { get; set; }
 
@@ -19,6 +21,7 @@ public class WeightGoalDto
     {
         model.UserId = userId;
         model.TargetWeight = TargetWeight;
+        model.TargetBodyFatPercentage = TargetBodyFatPercentage;
         model.StartDate = StartDate;
         model.EndDate = EndDate;
         model.WeightUnitId = weightUnitId;
