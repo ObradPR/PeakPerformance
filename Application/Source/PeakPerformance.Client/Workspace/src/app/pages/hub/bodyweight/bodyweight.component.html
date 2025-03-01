@@ -89,8 +89,8 @@
                         @for (row of bodyweights?.data; track row; let idx = $index) {
                             <tr [ngClass]="{'odd-row': idx % 2 !== 0}">
                                 <td>{{ row.logDate! | utcToLocal }}</td>
-                                <td>{{ row.weight }}</td>
-                                <td>{{ row.bodyFatPercentage }}</td>
+                                <td>{{ row.weight + ' pipe' }}</td>
+                                <td>{{ row.bodyFatPercentage + '%' }}</td>
                                 <td>
                                     <span class="edit-dots" (click)="onOpenEditMenu(idx)">⋮</span>
                                     @if (selectedBodyweightMenu === idx) {
@@ -126,7 +126,7 @@
                         <tr>
                             <th>Start</th>
                             <th>Finish</th>
-                            <th>Bodyweight</th>
+                            <th>BW / BF</th>
                             <th></th> <!-- Empty heading for edit dots -->
                         </tr>
                     </thead>
@@ -135,7 +135,7 @@
                             <tr [ngClass]="{'odd-row': idx % 2 !== 0}">
                                 <td>{{ row.startDate! | utcToLocal }}</td>
                                 <td>{{ row.endDate! | utcToLocal }}</td>
-                                <td>{{ row.targetWeight }}</td>
+                                <td>{{ row.targetWeight + ' pipe' }} {{ row.targetBodyFatPercentage !== null ? ' / ' + row.targetBodyFatPercentage + '%' : "" }}</td>
                                 <td>
                                     <span class="edit-dots" (click)="onOpenEditMenu(idx)">⋮</span>
                                     @if (selectedBodyweightGoalMenu === idx) {

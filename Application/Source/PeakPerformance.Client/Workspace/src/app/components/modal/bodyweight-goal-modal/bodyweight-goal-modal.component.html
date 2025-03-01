@@ -10,27 +10,46 @@
 
             <span class="p-float-label">
                 <input
-                type="number"
-                id="target-weight"
-                pInputText
-                formControlName="targetWeight"
-                pTooltip="Target weight must be in range from 20 to 1000"
-                tooltipPosition="top"
-                tooltipEvent="focus"
-                [tooltipDisabled]="
-                    !(
-                    form.get('targetWeight')?.touched &&
-                    form.get('targetWeight')?.invalid
-                    )
-                "
-                [ngClass]="{
-                    'is-invalid':
-                    form.get('targetWeight')?.invalid &&
-                    (form.get('targetWeight')?.touched || form.get('targetWeight')?.dirty)
-                }"
+                  type="number"
+                  id="target-weight"
+                  pInputText
+                  formControlName="targetWeight"
+                  pTooltip="Target weight must be in range from 20 to 1000"
+                  tooltipPosition="top"
+                  tooltipEvent="focus"
+                  [tooltipDisabled]="
+                      !(
+                      form.get('targetWeight')?.touched &&
+                      form.get('targetWeight')?.invalid
+                      )
+                  "
+                  [ngClass]="{
+                      'is-invalid':
+                      form.get('targetWeight')?.invalid &&
+                      (form.get('targetWeight')?.touched || form.get('targetWeight')?.dirty)
+                  }"
                 />
                 <label for="target-weight">Target Weight<app-required-mark/></label>
             </span>
+
+            <span class="p-float-label">
+                <input
+                  type="number"
+                  id="target-bodyfat"
+                  pInputText
+                  formControlName="targetBodyFatPercentage"
+                  pTooltip="Target body fat must be in range from 1 to 100"
+                  tooltipPosition="top"
+                  tooltipEvent="focus"
+                  [tooltipDisabled]="!(form.get('targetBodyFatPercentage')?.touched && form.get('targetBodyFatPercentage')?.invalid)"
+                  [ngClass]="{
+                    'is-invalid':
+                      form.get('targetBodyFatPercentage')?.invalid &&
+                      (form.get('targetBodyFatPercentage')?.touched || form.get('targetBodyFatPercentage')?.dirty)
+                  }"
+                />
+                <label for="target-bodyfat">Target BodyFat Percentage</label>
+              </span>
 
             <span class="p-float-label" style="width: 47%">
                 <p-calendar
