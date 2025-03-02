@@ -7,7 +7,10 @@
             </div>
             <div class="info-block">
                 <p>GOAL</p>
-                <p>{{ currentGoal.weight ? (currentGoal.weight | measurementConverter:currentGoal.weightUnitId) : '' }}</p>
+                <p>
+                    {{ currentGoal.weight && currentGoal.weightUnitId ? (currentGoal.weight | measurementConverter:currentGoal.weightUnitId) : '' }}
+                    {{ currentGoal.bodyFat ? ' / ' + currentGoal.bodyFat + ' %' : '' }}
+                </p>
             </div>
             <div class="info-block">
                 <p>BODY FAT</p>

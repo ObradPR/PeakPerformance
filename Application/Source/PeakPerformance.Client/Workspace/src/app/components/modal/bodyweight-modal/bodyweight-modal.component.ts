@@ -94,8 +94,6 @@ export class BodyweightModalComponent implements IModalMethods {
       return;
     }
 
-    console.log(this.form);
-
     this.loaderService.showSectionLoader();
 
     if (this.selectedBodyweight !== null)

@@ -75,9 +75,10 @@ export class BodyweightComponent implements OnInit, OnDestroy {
     weightUnitId: eMeasurementUnit;
   } = { weight: 0, weightUnitId: 0 };
   currentGoal: {
-    weight: number;
-    weightUnitId: eMeasurementUnit;
-  } = { weight: 0, weightUnitId: 0 };
+    weight: number | null;
+    weightUnitId: eMeasurementUnit | null;
+    bodyFat: number | null
+  } = { weight: null, weightUnitId: null, bodyFat: null };
 
   selectedTab: number = 0;
   tabs = [
@@ -280,13 +281,26 @@ export class BodyweightComponent implements OnInit, OnDestroy {
     const allDates: string[] = [];
     let totalDays = today.diff(startDate, 'days').days;
     let maxGoalEndDate = today;
-    if (target === 'weight' && this.bodyweightGoalsChart?.data?.length) {
-      const maxGoalEndDateTimespamp = new Date(
-        Math.max(...this.bodyweightGoalsChart.data.map(_ => new Date(_.endDate).getTime()))
-      );
 
-      const maxGoalEndDateLocal = new Date(maxGoalEndDateTimespamp.getTime() - maxGoalEndDateTimespamp.getTimezoneOffset() * 60000);
-      maxGoalEndDate = DateTime.fromJSDate(maxGoalEndDateLocal) as DateTime<true>;
+    if (this.bodyweightGoalsChart?.data?.length) {
+      if (target === 'weight') {
+        const maxGoalEndDateTimespamp = new Date(
+          Math.max(...this.bodyweightGoalsChart.data.map(_ => new Date(_.endDate).getTime()))
+        );
+        const maxGoalEndDateLocal = this.sharedService.getLocalDate(maxGoalEndDateTimespamp);
+        maxGoalEndDate = DateTime.fromJSDate(maxGoalEndDateLocal) as DateTime<true>;
+      }
+      else if (target === 'bodyFatPercentage') {
+        const maxGoalEndDateTimespamp = new Date(
+          Math.max(
+            ...this.bodyweightGoalsChart.data
+              .filter(_ => _.targetBodyFatPercentage !== undefined && _.targetBodyFatPercentage !== null)
+              .map(_ => new Date(_.endDate).getTime())
+          )
+        );
+        const maxGoalEndDateLocal = this.sharedService.getLocalDate(maxGoalEndDateTimespamp);
+        maxGoalEndDate = DateTime.fromJSDate(maxGoalEndDateLocal) as DateTime<true>;
+      }
     }
 
     maxGoalEndDate = maxGoalEndDate.plus({ days: 10 }); // padding for end of the chart
@@ -359,6 +373,18 @@ export class BodyweightComponent implements OnInit, OnDestroy {
                 .milliseconds
             )[0];
           goalStartWeight = closestLog ? parseFloat(this.measurementConverterPipe.transform(closestLog[target]!, closestLog.weightUnitId)) : null; // setting a start of the goal to closest weight at that time
+
+          if (!goalStartWeight) {
+            const closestLog = [...this.bodyweightsChart.data]
+              .filter(log => this.sharedService.getLocalDate(log.logDate) > this.sharedService.getLocalDate(goal.startDate))
+              .sort((a, b) =>
+                DateTime.fromJSDate(this.sharedService.getLocalDate(a.logDate))
+                  .diff(DateTime.fromJSDate(this.sharedService.getLocalDate(b.logDate)), 'milliseconds')
+                  .milliseconds
+              )[0];
+
+            goalStartWeight = closestLog ? closestLog[target]! : null; // setting a start of the goal to closest body fat at that time
+          }
         }
 
         if (startIdx !== -1 && goalStartWeight !== null) {
@@ -378,6 +404,78 @@ export class BodyweightComponent implements OnInit, OnDestroy {
           spanGaps: true,
         });
       });
+    }
+    else if (target === 'bodyFatPercentage' && this.bodyweightGoalsChart?.data) {
+      const maxGoalEntry = this.bodyweightGoalsChart.data
+        .filter(_ => _.targetBodyFatPercentage !== null && _.targetBodyFatPercentage !== undefined)
+        .reduce((max, current) => (current.targetBodyFatPercentage! > max.targetBodyFatPercentage! ? current : max), this.bodyweightGoalsChart.data[0]);
+      const maxGoalBodyFat = maxGoalEntry.targetBodyFatPercentage!;
+      goalValues.push(maxGoalBodyFat);
+
+      this.bodyweightGoalsChart.data
+        .filter(_ => _.targetBodyFatPercentage !== null && _.targetBodyFatPercentage !== undefined)
+        .forEach((goal, idx) => {
+          let goalData: (number | null)[] = new Array(allDates.length).fill(null);
+
+          // End date
+          const goalEndDate = DateTime.fromJSDate(new Date(goal.endDate)).toFormat('MMM dd yyyy');
+          const endIdx = allDates.indexOf(goalEndDate);
+          if (endIdx !== -1) goalData[endIdx] = goal.targetBodyFatPercentage!;
+
+          // Start date
+          let goalStartBodyFat: number | null = null;
+          const goalStartDate = DateTime.fromJSDate(new Date(goal.startDate)).toFormat('MMM dd yyyy');
+          const startIdx = allDates.indexOf(goalStartDate);
+
+          if (startIdx !== -1) {
+            const log = this.bodyweightsChart.data.find(log =>
+              DateTime.fromJSDate(this.sharedService.getLocalDate(log.logDate)).toFormat('MMM dd yyyy') === goalStartDate
+            );
+
+            goalStartBodyFat = log ? log[target]! : null; // setting a start of the goal to body fat at that time
+          }
+
+          if (!goalStartBodyFat) {
+            const closestLog = [...this.bodyweightsChart.data.filter(_ => _.bodyFatPercentage !== null && _.bodyFatPercentage !== undefined)]
+              .filter(log => this.sharedService.getLocalDate(log.logDate) < this.sharedService.getLocalDate(goal.startDate))
+              .sort((a, b) =>
+                DateTime.fromJSDate(this.sharedService.getLocalDate(b.logDate))
+                  .diff(DateTime.fromJSDate(this.sharedService.getLocalDate(a.logDate)), 'milliseconds')
+                  .milliseconds
+              )[0];
+
+
+            goalStartBodyFat = closestLog ? closestLog[target]! : null; // setting a start of the goal to closest body fat at that time
+            if (!goalStartBodyFat) {
+              const closestLog = [...this.bodyweightsChart.data.filter(_ => _.bodyFatPercentage !== null && _.bodyFatPercentage !== undefined)]
+                .filter(log => this.sharedService.getLocalDate(log.logDate) > this.sharedService.getLocalDate(goal.startDate))
+                .sort((a, b) =>
+                  DateTime.fromJSDate(this.sharedService.getLocalDate(a.logDate))
+                    .diff(DateTime.fromJSDate(this.sharedService.getLocalDate(b.logDate)), 'milliseconds')
+                    .milliseconds
+                )[0];
+
+              goalStartBodyFat = closestLog ? closestLog[target]! : null; // setting a start of the goal to closest body fat at that time
+            }
+          }
+
+          if (startIdx !== -1 && goalStartBodyFat !== null) {
+            goalData[startIdx] = goalStartBodyFat;
+          }
+
+          // Push a separate dataset for each goal
+          goalDatasets.push({
+            label: `Goal ${idx + 1}`,
+            data: goalData,
+            backgroundColor: 'rgba(255, 0, 0, 1)',
+            borderColor: 'rgba(255, 0, 0, 1)',
+            borderWidth: 2,
+            borderDash: [10, 5],
+            fill: false,
+            tension: 0.3,
+            spanGaps: true,
+          });
+        });
     }
 
     Chart.register(ChartDataLabels);
@@ -452,44 +550,45 @@ export class BodyweightComponent implements OnInit, OnDestroy {
   }
 
   private infoInit() {
+    const today = new Date().getTime();
+
     this.currentBodyweight.weight = this.bodyweightsChart?.data
       .filter(_ => _.weight !== undefined && _.weight !== null)
       .reduce((latest, current) => {
-        const latestDate = new Date(latest.logDate!).getTime();
-        const currentDate = new Date(current.logDate!).getTime();
-        return currentDate > latestDate ? current : latest;
+        return new Date(current.logDate!).getTime() > new Date(latest.logDate!).getTime() ? current : latest;
       }, this.bodyweightsChart.data[0]).weight!;
 
     this.currentBodyweight.weightUnitId = this.bodyweightsChart?.data
       .filter(_ => _.weight !== undefined && _.weight !== null)
       .reduce((latest, current) => {
-        const latestDate = new Date(latest.logDate!).getTime();
-        const currentDate = new Date(current.logDate!).getTime();
-        return currentDate > latestDate ? current : latest;
+        return new Date(current.logDate!).getTime() > new Date(latest.logDate!).getTime() ? current : latest;
       }, this.bodyweightsChart.data[0]).weightUnitId!;
 
     this.currentGoal.weight = this.bodyweightGoalsChart?.data
-      .filter(_ => _.targetWeight !== undefined && _.targetWeight !== null)
+      .filter(_ => _.targetWeight !== undefined && _.targetWeight !== null && new Date(_.endDate!).getTime() > today)
       .reduce((latest, current) => {
-        const latestDate = new Date(latest.endDate!).getTime();
-        const currentDate = new Date(current.endDate!).getTime();
-        return currentDate > latestDate ? current : latest;
-      }, this.bodyweightGoalsChart.data[0]).targetWeight!;
+        if (!latest) return current;
+        return new Date(current.endDate!).getTime() > new Date(latest.endDate!).getTime() ? current : latest;
+      }, null as typeof this.bodyweightGoalsChart.data[number] | null)?.targetWeight ?? null;
 
     this.currentGoal.weightUnitId = this.bodyweightGoalsChart?.data
-      .filter(_ => _.targetWeight !== undefined && _.targetWeight !== null)
+      .filter(_ => _.targetWeight !== undefined && _.targetWeight !== null && new Date(_.endDate!).getTime() > today)
       .reduce((latest, current) => {
-        const latestDate = new Date(latest.endDate!).getTime();
-        const currentDate = new Date(current.endDate!).getTime();
-        return currentDate > latestDate ? current : latest;
-      }, this.bodyweightGoalsChart.data[0]).weightUnitId!;
+        if (!latest) return current;
+        return new Date(current.endDate!).getTime() > new Date(latest.endDate!).getTime() ? current : latest;
+      }, null as typeof this.bodyweightGoalsChart.data[number] | null)?.weightUnitId ?? null;
+
+    this.currentGoal.bodyFat = this.bodyweightGoalsChart?.data
+      .filter(_ => _.targetBodyFatPercentage !== undefined && _.targetBodyFatPercentage !== null && new Date(_.endDate!).getTime() > today)
+      .reduce((latest, current) => {
+        if (!latest) return current;
+        return new Date(current.endDate!).getTime() > new Date(latest.endDate!).getTime() ? current : latest;
+      }, null as typeof this.bodyweightGoalsChart.data[number] | null)?.targetBodyFatPercentage ?? null;
 
     this.currentBodyFat = this.bodyweightsChart?.data
       .filter(_ => _.bodyFatPercentage !== undefined && _.bodyFatPercentage !== null)
       .reduce((latest, current) => {
-        const latestDate = new Date(latest.logDate!).getTime();
-        const currentDate = new Date(current.logDate!).getTime();
-        return currentDate > latestDate ? current : latest;
+        return new Date(current.logDate!).getTime() > new Date(latest.logDate!).getTime() ? current : latest;
       }, this.bodyweightsChart.data[0]).bodyFatPercentage!;
   }
 
