@@ -21,59 +21,55 @@
             <label for="rForearm">Bodyweight</label>
             <div class="my-input-group">
               <div class="my-input-group-element">
-                <span class="p-float-label">
-                  <input
-                    type="number"
-                    id="weight"
-                    pInputText
-                    formControlName="weight"
-                    pTooltip="Weight must be in range from 20 to 1000"
-                    tooltipPosition="top"
-                    tooltipEvent="focus"
-                    [tooltipDisabled]="
-                      !(
-                        form.get('weight')?.touched &&
-                        form.get('weight')?.invalid
-                      )
-                    "
-                    [ngClass]="{
-                      'is-invalid':
-                        form.get('weight')?.invalid &&
-                        (form.get('weight')?.touched || form.get('weight')?.dirty)
-                    }"
-                  />
-                </span>
+                <input
+                  type="number"
+                  id="weight"
+                  pInputText
+                  formControlName="weight"
+                  pTooltip="Weight must be in range from 20 to 1000"
+                  tooltipPosition="top"
+                  tooltipEvent="focus"
+                  [tooltipDisabled]="
+                    !(
+                      form.get('weight')?.touched &&
+                      form.get('weight')?.invalid
+                    )
+                  "
+                  [ngClass]="{
+                    'is-invalid':
+                      form.get('weight')?.invalid &&
+                      (form.get('weight')?.touched || form.get('weight')?.dirty)
+                  }"
+                />
               </div>
               <div class="my-input-group-addon right">{{ userWeightPreference | measurementUnitDescription }}</div>
             </div>
           </div>
 
-          <div class="d-flex justify-content-between align-items-center mb-2">
+          <div class="d-flex justify-content-between align-items-center">
             <label for="bodyfat">Body fat</label>
             <div class="my-input-group">
               <div class="my-input-group-element">
-                <span class="p-float-label">
-                  <input
-                    type="number"
-                    id="bodyfat"
-                    pInputText
-                    formControlName="bodyFatPercentage"
-                    pTooltip="Bodyfat must be in range from 1 to 100"
-                    tooltipPosition="top"
-                    tooltipEvent="focus"
-                    [tooltipDisabled]="
-                      !(
-                        form.get('bodyFatPercentage')?.touched &&
-                        form.get('bodyFatPercentage')?.invalid
-                      )
-                    "
-                    [ngClass]="{
-                      'is-invalid':
-                        form.get('bodyFatPercentage')?.invalid &&
-                        (form.get('bodyFatPercentage')?.touched || form.get('bodyFatPercentage')?.dirty)
-                    }"
-                  />
-                </span>
+                <input
+                  type="number"
+                  id="bodyfat"
+                  pInputText
+                  formControlName="bodyFatPercentage"
+                  pTooltip="Bodyfat must be in range from 1 to 100"
+                  tooltipPosition="top"
+                  tooltipEvent="focus"
+                  [tooltipDisabled]="
+                    !(
+                      form.get('bodyFatPercentage')?.touched &&
+                      form.get('bodyFatPercentage')?.invalid
+                    )
+                  "
+                  [ngClass]="{
+                    'is-invalid':
+                      form.get('bodyFatPercentage')?.invalid &&
+                      (form.get('bodyFatPercentage')?.touched || form.get('bodyFatPercentage')?.dirty)
+                  }"
+                />
               </div>
               <div class="my-input-group-addon right">%</div>
             </div>
