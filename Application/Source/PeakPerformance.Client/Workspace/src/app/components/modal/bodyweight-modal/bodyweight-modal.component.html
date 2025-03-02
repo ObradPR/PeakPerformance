@@ -47,7 +47,7 @@
           </div>
 
           <div class="d-flex justify-content-between align-items-center">
-            <label for="bodyfat">Body fat</label>
+            <label for="bodyfat">Body Fat</label>
             <div class="my-input-group">
               <div class="my-input-group-element">
                 <input
@@ -84,7 +84,7 @@
             <app-section-loader/>
           }
           @else {
-            {{ modalService.bodyweightModalTypeSignal() === 'add' ? 'Add Bodyweight': 'Edit Bodyweight' }}
+            {{ modalService.bodyweightModalTypeSignal() === 'add' ? 'Add Bodyweight': 'Save' }}
           }
         </button>
         <button class="btn-grey" (click)="closeModal()">Close</button>

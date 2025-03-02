@@ -1,14 +1,17 @@
 <div class="my-backdrop"></div>
-<section class="my-modal xs">
+<section class="my-modal sm">
     <div class="my-modal-header">
         <h3>{{ modalService.bodyweightGoalModalTypeSignal() === 'add' ? 'Add Goal': 'Edit Goal' }}</h3>
         <i class="pi pi-times-circle" (click)="closeModal()"></i>
     </div>
 
     <div class="my-modal-body">
-        <form [formGroup]="form">
+      <form [formGroup]="form">
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <label for="target-weight">Bodyweight</label>
 
-            <span class="p-float-label">
+            <div class="my-input-group">
+              <div class="my-input-group-element">
                 <input
                   type="number"
                   id="target-weight"
@@ -29,10 +32,15 @@
                       (form.get('targetWeight')?.touched || form.get('targetWeight')?.dirty)
                   }"
                 />
-                <label for="target-weight">Target Weight<app-required-mark/></label>
-            </span>
+              </div>
+              <div class="my-input-group-addon right">{{ userWeightPreference | measurementUnitDescription }}</div>
+            </div>
+          </div>
 
-            <span class="p-float-label">
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <label for="target-bodyfat">Body Fat</label>
+            <div class="my-input-group">
+              <div class="my-input-group-element">
                 <input
                   type="number"
                   id="target-bodyfat"
@@ -41,35 +49,43 @@
                   pTooltip="Target body fat must be in range from 1 to 100"
                   tooltipPosition="top"
                   tooltipEvent="focus"
-                  [tooltipDisabled]="!(form.get('targetBodyFatPercentage')?.touched && form.get('targetBodyFatPercentage')?.invalid)"
+                  [tooltipDisabled]="
+                    !(
+                      form.get('targetBodyFatPercentage')?.touched && 
+                      form.get('targetBodyFatPercentage')?.invalid
+                    )
+                  "
                   [ngClass]="{
                     'is-invalid':
                       form.get('targetBodyFatPercentage')?.invalid &&
                       (form.get('targetBodyFatPercentage')?.touched || form.get('targetBodyFatPercentage')?.dirty)
                   }"
                 />
-                <label for="target-bodyfat">Target BodyFat Percentage</label>
-              </span>
+              </div>
+              <div class="my-input-group-addon right">%</div>
+            </div>
+          </div>
 
-            <span class="p-float-label" style="width: 47%">
-                <p-calendar
-                    inputId="start-date"
-                    formControlName="startDate"
-                    dateFormat="dd.mm.yy"
-                    appendTo="body"  
-                ></p-calendar>
-                <label for="start-date">Start Date<app-required-mark/></label>
-            </span>
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <label for="start-date">Start Date</label>
+            <p-calendar
+                inputId="start-date"
+                formControlName="startDate"
+                dateFormat="dd.mm.yy"
+                appendTo="body"  
+            ></p-calendar>
+          </div>
 
-            <span class="p-float-label" style="width: 47%">
-                <p-calendar
-                    inputId="end-date"
-                    formControlName="endDate"
-                    dateFormat="dd.mm.yy"
-                    appendTo="body"  
-                ></p-calendar>
-                <label for="end-date">End Date<app-required-mark/></label>
-            </span>
+          <div class="d-flex justify-content-between align-items-center">
+            <label for="end-date">End Date</label>
+            <p-calendar
+                inputId="end-date"
+                formControlName="endDate"
+                dateFormat="dd.mm.yy"
+                appendTo="body"  
+            ></p-calendar>
+          </div>
+
         </form>
     </div>
 
@@ -79,7 +95,7 @@
             <app-section-loader/>
           }
           @else {
-            {{ modalService.bodyweightGoalModalTypeSignal() === 'add' ? 'Add Goal': 'Edit Goal' }}
+            {{ modalService.bodyweightGoalModalTypeSignal() === 'add' ? 'Add Goal': 'Save' }}
           }
         </button>
         <button class="btn-grey" (click)="closeModal()">Close</button>

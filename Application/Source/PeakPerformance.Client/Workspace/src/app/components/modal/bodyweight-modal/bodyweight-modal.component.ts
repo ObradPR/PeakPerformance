@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, output, OutputEmitterRef } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CalendarModule } from 'primeng/calendar';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
@@ -9,16 +9,15 @@ import { eMeasurementUnit } from '../../../_generated/enums';
 import { IEnumProvider, IWeightDto } from '../../../_generated/interfaces';
 import { Providers } from '../../../_generated/providers';
 import { WeightController } from '../../../_generated/services';
+import { MeasurementUnitDescriptionPipe } from '../../../pipes/measurement-unit-description.pipe';
+import { AuthService } from '../../../services/auth.service';
 import { BodyweightService } from '../../../services/bodyweight.service';
 import { LoaderService } from '../../../services/loader.service';
 import { ModalService } from '../../../services/modal.service';
 import { SharedService } from '../../../services/shared.service';
 import { ToastService } from '../../../services/toast.service';
-import { RequiredMarkComponent } from '../../required-mark/required-mark.component';
 import { SectionLoaderComponent } from '../../section-loader/section-loader.component';
 import { IModalMethods } from '../interfaces/modal-methods.interface';
-import { AuthService } from '../../../services/auth.service';
-import { MeasurementUnitDescriptionPipe } from '../../../pipes/measurement-unit-description.pipe';
 
 @Component({
   selector: 'app-bodyweight-modal',
@@ -29,7 +28,6 @@ import { MeasurementUnitDescriptionPipe } from '../../../pipes/measurement-unit-
     InputTextModule,
     TooltipModule,
     CalendarModule,
-    RequiredMarkComponent,
     DropdownModule,
     SectionLoaderComponent,
     MeasurementUnitDescriptionPipe

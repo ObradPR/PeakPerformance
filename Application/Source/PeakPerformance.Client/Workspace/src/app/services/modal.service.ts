@@ -9,7 +9,7 @@ export type TModal = 'add' | 'edit';
 export class ModalService {
   // Bodyweight
 
-  private bodyweightModal = signal<boolean>(true);
+  private bodyweightModal = signal<boolean>(false);
   private bodyweightModalType = signal<TModal | null>(null);
   private selectedBodyweight = signal<IWeightDto | null>(null);
 

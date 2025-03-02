@@ -15,6 +15,8 @@ import { ToastService } from '../../../services/toast.service';
 import { RequiredMarkComponent } from '../../required-mark/required-mark.component';
 import { SectionLoaderComponent } from '../../section-loader/section-loader.component';
 import { IModalMethods } from '../interfaces/modal-methods.interface';
+import { MeasurementUnitDescriptionPipe } from '../../../pipes/measurement-unit-description.pipe';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-bodyweight-goal-modal',
@@ -27,7 +29,8 @@ import { IModalMethods } from '../interfaces/modal-methods.interface';
     CalendarModule,
     RequiredMarkComponent,
     DropdownModule,
-    SectionLoaderComponent
+    SectionLoaderComponent,
+    MeasurementUnitDescriptionPipe
   ],
   templateUrl: './bodyweight-goal-modal.component.html',
   styleUrl: './bodyweight-goal-modal.component.scss'
@@ -37,6 +40,9 @@ export class BodyweightGoalModalComponent implements IModalMethods {
   form: FormGroup = this.fb.group({});
   selectedBodyweightGoal: IWeightGoalDto | null = null;
 
+  userWeightPreference?: number;
+
+
   constructor(
     private fb: FormBuilder,
     private toastService: ToastService,
@@ -44,8 +50,10 @@ export class BodyweightGoalModalComponent implements IModalMethods {
     private weigthGoalController: WeightGoalController,
     public modalService: ModalService,
     private bodyweightService: BodyweightService,
-    private sharedService: SharedService
+    private sharedService: SharedService,
+    private authService: AuthService
   ) {
+    this.userWeightPreference = this.authService.currentUserSource()?.weightUnitId;
     this.selectedBodyweightGoal = this.modalService.selectedBodyweightGoalSignal();
     this.formInit();
   }
@@ -73,7 +81,7 @@ export class BodyweightGoalModalComponent implements IModalMethods {
       startDate: [startLocalDate, Validators.required],
       endDate: [endLocalDate, Validators.required],
       targetWeight: [this.selectedBodyweightGoal?.targetWeight, [Validators.required, Validators.min(20.1), Validators.max(999.9)]],
-      targetBodyFatPercentage: [this.selectedBodyweightGoal?.targetBodyFatPercentage, [Validators.required, Validators.min(1.1), Validators.max(99.9)]],
+      targetBodyFatPercentage: [this.selectedBodyweightGoal?.targetBodyFatPercentage, [Validators.min(1.1), Validators.max(99.9)]],
     });
   }
 

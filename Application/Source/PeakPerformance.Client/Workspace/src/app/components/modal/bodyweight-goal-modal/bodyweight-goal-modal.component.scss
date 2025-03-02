@@ -2,29 +2,37 @@
 
 .my-modal {
     .my-modal-body {
-        [type="number"], .p-calendar {
-            margin-bottom: 1.5rem;
+        form {
+            label {
+                width: 15%;
+                text-align: end;
+            }
+
+            p-calendar,
+            .my-input-group {
+                width: 80%;
+            }
         }
     }
 }
 
-::ng-deep.p-float-label {
-    width: 100% !important;
-}
+// ::ng-deep.p-float-label {
+//     width: 100% !important;
+// }
 
-::ng-deep.p-calendar .p-inputtext {
-    margin-bottom: 1.5rem;
-    width: 100%;
-}
+// ::ng-deep.p-calendar .p-inputtext {
+//     margin-bottom: 1.5rem;
+//     width: 100%;
+// }
 
-::ng-deep.form-row .p-float-label {
-    width: 65% !important;
+// ::ng-deep.form-row .p-float-label {
+//     width: 65% !important;
 
-    &:last-child {
-        width: 30% !important;
-    }
+//     &:last-child {
+//         width: 30% !important;
+//     }
 
-    .p-dropdown {
-        width: 100%;
-    }
-}
+//     .p-dropdown {
+//         width: 100%;
+//     }
+// }
