@@ -42,10 +42,9 @@
 
 button.p-ripple.p-button {
   padding: 0.4rem 0.7rem;
-  border-radius: $border-radius-10;
+  border-radius: $border-radius-6;
   border: none;
   font-size: 1em;
-  transition: $transition;
   cursor: pointer;
   background-color: $yellow-hex;
 
@@ -56,10 +55,9 @@ button.p-ripple.p-button {
 
 .p-button {
   padding: 0.4rem 0.7rem;
-  border-radius: $border-radius-10;
+  border-radius: $border-radius-6;
   border: none;
   font-size: 1em;
-  transition: $transition;
   cursor: pointer;
   background-color: $blue-hex;
 
@@ -97,10 +95,9 @@ p-dropdown {
 }
 
 .p-dropdown {
-  border-radius: $border-radius-10;
+  border-radius: $border-radius-6;
   border: none;
   font-size: 1em;
-  transition: $transition;
   width: 100%;
   margin-bottom: 1.5rem;
 
@@ -203,7 +200,6 @@ p-iconfield {
   color: $red-hex;
   float: right;
   margin-bottom: 0.2rem;
-  transition: $transition;
   position: absolute;
   top: -18px;
   right: 0;
@@ -217,7 +213,6 @@ p-iconfield {
   font-size: 1.3em;
   cursor: pointer;
   color: $teal-hex;
-  transition: $transition;
 
   &:hover{
     color: $light-teal-hex;

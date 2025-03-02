@@ -19,7 +19,6 @@
             border-radius: 100%;
             float: inline-end;
             cursor: pointer;
-            transition: $transition;
             position: absolute;
             top: 1rem;
             right: 1rem;
@@ -34,7 +33,6 @@
     
             i.pi-pi-bell {
                 color: $dark-grey-hex;
-                transition: $transition;
             }
         }
         

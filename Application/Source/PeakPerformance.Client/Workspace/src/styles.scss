@@ -89,14 +89,12 @@ button.btn-grey {
   border-radius: $border-radius-6;
   border: 1px solid $light-grey-3-hsl;
   font-size: 1em;
-  transition: $transition;
   width: 100%;
 }
 
 [type="checkbox"] {
   border-radius: $border-radius-6;
   border: 1px solid $light-grey-3-hsl;
-  transition: $transition;
   margin-bottom: 1.5rem;
   margin-top: 0.2rem;
 
@@ -172,7 +170,6 @@ button {
   border-radius: $border-radius-6;
   border: none;
   font-size: 1em;
-  transition: $transition;
   cursor: pointer;
 
   &.btn.btn-success {
