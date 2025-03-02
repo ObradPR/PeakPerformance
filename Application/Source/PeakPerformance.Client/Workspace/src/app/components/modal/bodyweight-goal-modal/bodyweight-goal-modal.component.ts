@@ -81,7 +81,10 @@ export class BodyweightGoalModalComponent implements IModalMethods {
     this.form = this.fb.group({
       startDate: [startLocalDate, Validators.required],
       endDate: [endLocalDate, Validators.required],
-      targetWeight: [parseFloat(this.measurementConverterPipe.transform(this.selectedBodyweightGoal?.targetWeight, this.selectedBodyweightGoal?.weightUnitId)), [Validators.required, Validators.min(20.1), Validators.max(999.9)]],
+      targetWeight: [
+        this.selectedBodyweightGoal?.targetWeight ? parseFloat(this.measurementConverterPipe.transform(this.selectedBodyweightGoal?.targetWeight, this.selectedBodyweightGoal?.weightUnitId)) : null,
+        [Validators.required, Validators.min(20.1), Validators.max(999.9)]
+      ],
       targetBodyFatPercentage: [this.selectedBodyweightGoal?.targetBodyFatPercentage, [Validators.min(1.1), Validators.max(99.9)]],
     });
   }

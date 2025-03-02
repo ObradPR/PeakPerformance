@@ -73,7 +73,10 @@ export class BodyweightModalComponent implements IModalMethods {
 
     this.form = this.fb.group({
       logDate: [localDate, Validators.required],
-      weight: [parseFloat(this.measurementConverterPipe.transform(this.selectedBodyweight?.weight, this.selectedBodyweight?.weightUnitId)), [Validators.required, Validators.min(20.1), Validators.max(999.9)]],
+      weight: [
+        this.selectedBodyweight?.weight ? parseFloat(this.measurementConverterPipe.transform(this.selectedBodyweight?.weight, this.selectedBodyweight?.weightUnitId)) : null,
+        [Validators.required, Validators.min(20.1), Validators.max(999.9)]
+      ],
       weightUnitId: [this.userWeightPreference],
       bodyFatPercentage: [this.selectedBodyweight?.bodyFatPercentage, [Validators.min(1.1), Validators.max(99.9)]],
     });
@@ -90,6 +93,8 @@ export class BodyweightModalComponent implements IModalMethods {
       this.toastService.showFormError();
       return;
     }
+
+    console.log(this.form);
 
     this.loaderService.showSectionLoader();
 
