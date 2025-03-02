@@ -1,5 +1,5 @@
 <div class="my-backdrop"></div>
-<section class="my-modal xs">
+<section class="my-modal sm">
     <div class="my-modal-header">
         <h3>{{ modalService.bodyweightModalTypeSignal() === 'add' ? 'Add Bodyweight': 'Edit Bodyweight' }}</h3>
         <i class="pi pi-times-circle" (click)="closeModal()"></i>
@@ -7,80 +7,78 @@
 
     <div class="my-modal-body">
         <form [formGroup]="form">
-          <span class="p-float-label" style="width: 47%">
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <label for="weight-log-date">Date</label>
             <p-calendar
               inputId="weight-log-date"
               formControlName="logDate"
               dateFormat="dd.mm.yy"
-              appendTo="body"  
+              appendTo="body"
             ></p-calendar>
-            <label for="weight-log-date">
-              Date<app-required-mark/>
-            </label>
-          </span>
-
-          <div class="form-row d-flex justify-content-between">
-            <span class="p-float-label">
-              <input
-                type="number"
-                id="weight"
-                pInputText
-                formControlName="weight"
-                pTooltip="Weight must be in range from 20 to 1000"
-                tooltipPosition="top"
-                tooltipEvent="focus"
-                [tooltipDisabled]="
-                  !(
-                    form.get('weight')?.touched &&
-                    form.get('weight')?.invalid
-                  )
-                "
-                [ngClass]="{
-                  'is-invalid':
-                    form.get('weight')?.invalid &&
-                    (form.get('weight')?.touched || form.get('weight')?.dirty)
-                }"
-              />
-              <label for="rForearm">Weight</label>
-            </span>
-            <span class="p-float-label">
-              <p-dropdown
-                inputId="weight-unit"
-                [options]="weightUnits"
-                optionLabel="description"
-                optionValue="id"
-                formControlName="weightUnitId"
-                [appDropdownReset]="0"
-              />
-              <label for="weight-unit">
-                Unit<app-required-mark/>
-              </label>
-            </span>
           </div>
 
-          <span class="p-float-label">
-            <input
-              type="number"
-              id="bodyfat"
-              pInputText
-              formControlName="bodyFatPercentage"
-              pTooltip="Bodyfat must be in range from 1 to 100"
-              tooltipPosition="top"
-              tooltipEvent="focus"
-              [tooltipDisabled]="
-                !(
-                  form.get('bodyFatPercentage')?.touched &&
-                  form.get('bodyFatPercentage')?.invalid
-                )
-              "
-              [ngClass]="{
-                'is-invalid':
-                  form.get('bodyFatPercentage')?.invalid &&
-                  (form.get('bodyFatPercentage')?.touched || form.get('bodyFatPercentage')?.dirty)
-              }"
-            />
-            <label for="bodyfat">Bodyfat Percentage</label>
-          </span>
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <label for="rForearm">Bodyweight</label>
+            <div class="my-input-group">
+              <div class="my-input-group-element">
+                <span class="p-float-label">
+                  <input
+                    type="number"
+                    id="weight"
+                    pInputText
+                    formControlName="weight"
+                    pTooltip="Weight must be in range from 20 to 1000"
+                    tooltipPosition="top"
+                    tooltipEvent="focus"
+                    [tooltipDisabled]="
+                      !(
+                        form.get('weight')?.touched &&
+                        form.get('weight')?.invalid
+                      )
+                    "
+                    [ngClass]="{
+                      'is-invalid':
+                        form.get('weight')?.invalid &&
+                        (form.get('weight')?.touched || form.get('weight')?.dirty)
+                    }"
+                  />
+                </span>
+              </div>
+              <div class="my-input-group-addon right">{{ userWeightPreference | measurementUnitDescription }}</div>
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <label for="bodyfat">Body fat</label>
+            <div class="my-input-group">
+              <div class="my-input-group-element">
+                <span class="p-float-label">
+                  <input
+                    type="number"
+                    id="bodyfat"
+                    pInputText
+                    formControlName="bodyFatPercentage"
+                    pTooltip="Bodyfat must be in range from 1 to 100"
+                    tooltipPosition="top"
+                    tooltipEvent="focus"
+                    [tooltipDisabled]="
+                      !(
+                        form.get('bodyFatPercentage')?.touched &&
+                        form.get('bodyFatPercentage')?.invalid
+                      )
+                    "
+                    [ngClass]="{
+                      'is-invalid':
+                        form.get('bodyFatPercentage')?.invalid &&
+                        (form.get('bodyFatPercentage')?.touched || form.get('bodyFatPercentage')?.dirty)
+                    }"
+                  />
+                </span>
+              </div>
+              <div class="my-input-group-addon right">%</div>
+            </div>
+          </div>
+        
         </form>
     </div>
 

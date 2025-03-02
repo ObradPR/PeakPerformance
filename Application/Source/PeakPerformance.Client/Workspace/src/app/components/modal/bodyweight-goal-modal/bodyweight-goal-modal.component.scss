@@ -4,7 +4,6 @@
     .my-modal-body {
         [type="number"], .p-calendar {
             margin-bottom: 1.5rem;
-            border: 1px solid $grey-hex;
         }
     }
 }
@@ -15,7 +14,6 @@
 
 ::ng-deep.p-calendar .p-inputtext {
     margin-bottom: 1.5rem;
-    border: 1px solid $grey-hex;
     width: 100%;
 }
 
@@ -27,7 +25,6 @@
     }
 
     .p-dropdown {
-        border: 1px solid $grey-hex;
         width: 100%;
     }
 }

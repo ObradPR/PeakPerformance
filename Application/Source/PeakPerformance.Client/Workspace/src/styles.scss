@@ -86,16 +86,16 @@ button.btn-yellow,
 button.btn-blue,
 button.btn-grey {
   padding: 0.4rem 0.7rem;
-  border-radius: $border-radius-10;
-  border: none;
+  border-radius: $border-radius-6;
+  border: 1px solid $light-grey-3-hsl;
   font-size: 1em;
   transition: $transition;
   width: 100%;
 }
 
 [type="checkbox"] {
-  border-radius: $border-radius-10;
-  border: none;
+  border-radius: $border-radius-6;
+  border: 1px solid $light-grey-3-hsl;
   transition: $transition;
   margin-bottom: 1.5rem;
   margin-top: 0.2rem;
@@ -153,11 +153,12 @@ button.btn-yellow,
 button.btn-blue,
 button.btn-grey  {
   @include size(100%, 2.2rem);
+  border: none;
 }
 
 .is-invalid {
   box-shadow: $box-shadow-is-invalid;
-  border-radius: $border-radius-10;
+  border-radius: $border-radius-6;
 }
 
 fieldset legend {
@@ -168,7 +169,7 @@ fieldset legend {
 
 button {
   padding: 0.4rem 0.7rem;
-  border-radius: $border-radius-10;
+  border-radius: $border-radius-6;
   border: none;
   font-size: 1em;
   transition: $transition;
@@ -187,6 +188,35 @@ button {
 
     &:hover {
       background-color: $light-red-hex;
+    }
+  }
+}
+
+.my-input-group {
+  @include flex(row, flex-start, nowrap, center);
+  width: 100%;
+
+  .my-input-group-element {
+    width: 83%;
+
+    [type="number"] {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+  }
+
+  .my-input-group-addon {
+    @include flex(row, center, nowrap, center);
+    width: 17%;
+    border: 1px solid $light-grey-3-hsl;
+    border-left: none;
+    background: $light-grey-4-hsl;
+    color: $grey-2-hsl;
+    align-self: stretch;
+
+    &.right {
+      border-top-right-radius: $border-radius-6;
+      border-bottom-right-radius: $border-radius-6;
     }
   }
 }
@@ -242,7 +272,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   }
 
   .my-modal-body {
-    padding: 1.5rem 1.2rem 0;
+    padding: 1.2rem 1.2rem;
   }
 
   .my-modal-footer {
