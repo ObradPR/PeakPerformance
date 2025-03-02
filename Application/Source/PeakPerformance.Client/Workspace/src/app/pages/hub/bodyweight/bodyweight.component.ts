@@ -108,7 +108,8 @@ export class BodyweightComponent implements OnInit, OnDestroy {
     public modalService: ModalService,
     private bodyweightService: BodyweightService,
     private referenceService: Providers,
-    private $q: QService
+    private $q: QService,
+    private measurementConverterPipe: MeasurementConverterPipe
   ) {
     effect(() => {
       this.bodyweightService.bodyweightsSignal();
@@ -303,12 +304,20 @@ export class BodyweightComponent implements OnInit, OnDestroy {
         return DateTime.fromJSDate(localDate).toFormat('MMM dd yyyy') === date;
       });
 
-      return log ? log[target]! : null;
+      let data = null;
+      if (target === 'weight')
+        data = log
+          ? parseFloat(this.measurementConverterPipe.transform(log[target], log['weightUnitId']))
+          : null;
+      else
+        data = log ? log[target]! : null;
+
+      return data;
     });
 
     const values = this.bodyweightsChart.data
-      .map(_ => _[target]!)
-      .filter(_ => _ !== undefined && _ !== null);
+      .filter(_ => _[target] !== undefined && _[target] !== null)
+      .map(_ => parseFloat(this.measurementConverterPipe.transform(_[target], _.weightUnitId)));
 
     // MAP GOALS
 
@@ -316,7 +325,9 @@ export class BodyweightComponent implements OnInit, OnDestroy {
     const goalValues: number[] = [];
 
     if (target === 'weight' && this.bodyweightGoalsChart?.data) {
-      const maxGoalWeight = Math.max(...this.bodyweightGoalsChart.data.map(_ => _.targetWeight));
+      const maxGoalEntry = this.bodyweightGoalsChart.data
+        .reduce((max, current) => (current.targetWeight > max.targetWeight ? current : max), this.bodyweightGoalsChart.data[0]);
+      const maxGoalWeight = parseFloat(this.measurementConverterPipe.transform(maxGoalEntry.targetWeight, maxGoalEntry.weightUnitId));
       goalValues.push(maxGoalWeight);
 
       this.bodyweightGoalsChart.data.forEach((goal, idx) => {
@@ -325,7 +336,7 @@ export class BodyweightComponent implements OnInit, OnDestroy {
         // End date
         const goalEndDate = DateTime.fromJSDate(new Date(goal.endDate)).toFormat('MMM dd yyyy');
         const endIdx = allDates.indexOf(goalEndDate);
-        if (endIdx !== -1) goalData[endIdx] = goal.targetWeight;
+        if (endIdx !== -1) goalData[endIdx] = parseFloat(this.measurementConverterPipe.transform(goal.targetWeight, goal.weightUnitId));
 
         // Start date
         let goalStartWeight: number | null = null;
@@ -336,7 +347,7 @@ export class BodyweightComponent implements OnInit, OnDestroy {
           const log = this.bodyweightsChart.data.find(log =>
             DateTime.fromJSDate(this.sharedService.getLocalDate(log.logDate)).toFormat('MMM dd yyyy') === goalStartDate
           );
-          goalStartWeight = log ? log[target]! : null; // setting a start of the goal to weight at that time
+          goalStartWeight = log ? parseFloat(this.measurementConverterPipe.transform(log[target]!, log.weightUnitId)) : null; // setting a start of the goal to weight at that time
         }
 
         if (!goalStartWeight) {
@@ -347,7 +358,7 @@ export class BodyweightComponent implements OnInit, OnDestroy {
                 .diff(DateTime.fromJSDate(this.sharedService.getLocalDate(a.logDate)), 'milliseconds')
                 .milliseconds
             )[0];
-          goalStartWeight = closestLog ? closestLog[target]! : null; // setting a start of the goal to closest weight at that time
+          goalStartWeight = closestLog ? parseFloat(this.measurementConverterPipe.transform(closestLog[target]!, closestLog.weightUnitId)) : null; // setting a start of the goal to closest weight at that time
         }
 
         if (startIdx !== -1 && goalStartWeight !== null) {
