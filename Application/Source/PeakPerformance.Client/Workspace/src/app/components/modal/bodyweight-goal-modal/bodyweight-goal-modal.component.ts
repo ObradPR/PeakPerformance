@@ -7,16 +7,16 @@ import { InputTextModule } from 'primeng/inputtext';
 import { TooltipModule } from 'primeng/tooltip';
 import { IWeightGoalDto } from '../../../_generated/interfaces';
 import { WeightGoalController } from '../../../_generated/services';
+import { MeasurementUnitDescriptionPipe } from '../../../pipes/measurement-unit-description.pipe';
+import { AuthService } from '../../../services/auth.service';
 import { BodyweightService } from '../../../services/bodyweight.service';
 import { LoaderService } from '../../../services/loader.service';
 import { ModalService } from '../../../services/modal.service';
 import { SharedService } from '../../../services/shared.service';
 import { ToastService } from '../../../services/toast.service';
-import { RequiredMarkComponent } from '../../required-mark/required-mark.component';
 import { SectionLoaderComponent } from '../../section-loader/section-loader.component';
 import { IModalMethods } from '../interfaces/modal-methods.interface';
-import { MeasurementUnitDescriptionPipe } from '../../../pipes/measurement-unit-description.pipe';
-import { AuthService } from '../../../services/auth.service';
+import { MeasurementConverterPipe } from '../../../pipes/measurement-converter.pipe';
 
 @Component({
   selector: 'app-bodyweight-goal-modal',
@@ -27,7 +27,6 @@ import { AuthService } from '../../../services/auth.service';
     InputTextModule,
     TooltipModule,
     CalendarModule,
-    RequiredMarkComponent,
     DropdownModule,
     SectionLoaderComponent,
     MeasurementUnitDescriptionPipe
@@ -51,7 +50,9 @@ export class BodyweightGoalModalComponent implements IModalMethods {
     public modalService: ModalService,
     private bodyweightService: BodyweightService,
     private sharedService: SharedService,
-    private authService: AuthService
+    private authService: AuthService,
+    private measurementConverterPipe: MeasurementConverterPipe
+
   ) {
     this.userWeightPreference = this.authService.currentUserSource()?.weightUnitId;
     this.selectedBodyweightGoal = this.modalService.selectedBodyweightGoalSignal();
@@ -80,7 +81,7 @@ export class BodyweightGoalModalComponent implements IModalMethods {
     this.form = this.fb.group({
       startDate: [startLocalDate, Validators.required],
       endDate: [endLocalDate, Validators.required],
-      targetWeight: [this.selectedBodyweightGoal?.targetWeight, [Validators.required, Validators.min(20.1), Validators.max(999.9)]],
+      targetWeight: [parseFloat(this.measurementConverterPipe.transform(this.selectedBodyweightGoal?.targetWeight, this.selectedBodyweightGoal?.weightUnitId)), [Validators.required, Validators.min(20.1), Validators.max(999.9)]],
       targetBodyFatPercentage: [this.selectedBodyweightGoal?.targetBodyFatPercentage, [Validators.min(1.1), Validators.max(99.9)]],
     });
   }

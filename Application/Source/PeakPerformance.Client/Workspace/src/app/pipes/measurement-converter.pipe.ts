@@ -1,4 +1,4 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import { Injectable, Pipe, PipeTransform } from '@angular/core';
 import { eMeasurementUnit } from '../_generated/enums';
 import { Functions } from '../functions';
 import { AuthService } from '../services/auth.service';
@@ -6,6 +6,9 @@ import { AuthService } from '../services/auth.service';
 @Pipe({
   name: 'measurementConverter',
   standalone: true
+})
+@Injectable({
+  providedIn: 'root'
 })
 export class MeasurementConverterPipe implements PipeTransform {
 

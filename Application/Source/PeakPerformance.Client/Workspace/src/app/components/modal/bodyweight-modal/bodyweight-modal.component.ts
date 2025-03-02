@@ -18,6 +18,7 @@ import { SharedService } from '../../../services/shared.service';
 import { ToastService } from '../../../services/toast.service';
 import { SectionLoaderComponent } from '../../section-loader/section-loader.component';
 import { IModalMethods } from '../interfaces/modal-methods.interface';
+import { MeasurementConverterPipe } from '../../../pipes/measurement-converter.pipe';
 
 @Component({
   selector: 'app-bodyweight-modal',
@@ -53,7 +54,8 @@ export class BodyweightModalComponent implements IModalMethods {
     public modalService: ModalService,
     private bodyweightService: BodyweightService,
     private sharedService: SharedService,
-    private authService: AuthService
+    private authService: AuthService,
+    private measurementConverterPipe: MeasurementConverterPipe
   ) {
     this.userWeightPreference = this.authService.currentUserSource()?.weightUnitId;
     this.selectedBodyweight = this.modalService.selectedBodyweightSignal();
@@ -69,11 +71,9 @@ export class BodyweightModalComponent implements IModalMethods {
     const localDate = this.sharedService.getLocalDate(date);
     localDate.setHours(0, 0, 0);
 
-    console.log(date);
-
     this.form = this.fb.group({
       logDate: [localDate, Validators.required],
-      weight: [this.selectedBodyweight?.weight, [Validators.required, Validators.min(20.1), Validators.max(999.9)]],
+      weight: [parseFloat(this.measurementConverterPipe.transform(this.selectedBodyweight?.weight, this.selectedBodyweight?.weightUnitId)), [Validators.required, Validators.min(20.1), Validators.max(999.9)]],
       weightUnitId: [this.userWeightPreference],
       bodyFatPercentage: [this.selectedBodyweight?.bodyFatPercentage, [Validators.min(1.1), Validators.max(99.9)]],
     });
